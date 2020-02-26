@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using UsersWebAPI.Contracts;
 using UsersWebAPI.Data;
 using UsersWebAPI.Data.Entity;
 using UsersWebAPI.Models;
@@ -15,9 +16,9 @@ namespace UsersWebAPI.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly UsersRepository _usersRepository;
+        private readonly IUsersRepository _usersRepository;
 
-        public UsersController(UsersRepository usersRepository)
+        public UsersController(IUsersRepository usersRepository)
         {
             _usersRepository = usersRepository;
         }
