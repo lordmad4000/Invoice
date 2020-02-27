@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Swashbuckle.AspNetCore.Swagger;
 using UsersWebAPI.Data;
 using UsersWebAPI.Models;
+using UsersWebAPI.Contracts;
 
 namespace UsersWebAPI
 {
@@ -25,7 +26,7 @@ namespace UsersWebAPI
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<UserContext>(options => options.UseSqlServer(connection));
             services.AddControllers();
-            services.AddScoped<UsersRepository>();
+            services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddMvc(options => options.EnableEndpointRouting = false);
             services.AddSwaggerGen(c =>
             {
