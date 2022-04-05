@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Users.Domain.Entities;
+using Users.Infra.Mappings;
 
 namespace Users.Infra.Data
 {
@@ -8,8 +10,11 @@ namespace Users.Infra.Data
         {
         }
 
+        public DbSet<User> User { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {            
+            modelBuilder.ApplyConfiguration(new UserMap());
             base.OnModelCreating(modelBuilder);
         }
     }
