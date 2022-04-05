@@ -2,7 +2,7 @@ using System;
 using Users.Domain.Base;
 using Users.Domain.ValueObjects;
 
-namespace Users.Domain.User
+namespace Users.Domain.Entities
 {
     public partial class User : BaseEntity<Guid>
     {
