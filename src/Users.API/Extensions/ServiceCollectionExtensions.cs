@@ -5,6 +5,7 @@ using Users.Infra.Repositories;
 using Users.Domain.Interfaces;
 using Users.Infra.Data;
 using Users.Application.Services;
+using Users.Application.Interfaces;
 
 namespace Users.API.Extensions
 {
@@ -30,7 +31,7 @@ namespace Users.API.Extensions
 
         public static IServiceCollection AddBusinessServices(this IServiceCollection services)
         {
-            return services.AddScoped<UserService>();
+            return services.AddScoped<IUserService, UserService>();
         }
     }
 }

@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Users.Application.Interfaces;
 using Users.Domain.Entities;
 using Users.Domain.Interfaces;
-using Users.Domain.ValueObjects;
 
 namespace Users.Application.Services
 {
-    public class UserService
+
+    public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
 
