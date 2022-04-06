@@ -1,15 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Users.API.Extensions;
 
 namespace Users.API
 {
@@ -25,11 +19,11 @@ namespace Users.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connection = Configuration.GetConnectionString("DefaultConnection");
-            //services.AddDbContext<UserContext>(options => options.UseSqlServer(connection));
+            services.AddDatabase(Configuration);
+            services.AddUnitOfWork();
+            services.AddRepositories();
+            services.AddBusinessServices();
             services.AddControllers();
-            //services.AddScoped<IUsersRepository, UsersRepository>();
-            services.AddMvc(options => options.EnableEndpointRouting = false);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "UserWebAPI", Description = "Users Core API" });
@@ -55,7 +49,6 @@ namespace Users.API
                 endpoints.MapControllers();
             });
 
-            app.UseMvc();
 
             app.UseSwagger();
 
