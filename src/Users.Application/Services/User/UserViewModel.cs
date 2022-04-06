@@ -24,16 +24,5 @@ namespace Users.Application.Services
         [Required(ErrorMessage = "Email is required.")]
         [StringLength(40, ErrorMessage = "Email cannot be longer than 40 characters.")]
         public string Email { get; set; }
-        public User MapToUser() => new User(UserName, Password, FirstName, LastName, new EmailAddress(Email));
-        public void MapFromUser(User user)
-        {
-            Id = user.Id;
-            UserName = user.UserName;
-            Password = user.Password;
-            FirstName = user.FirstName;
-            LastName = user.LastName;
-            Password = user.Password.ToString();
-        }
-        
     }
 }
