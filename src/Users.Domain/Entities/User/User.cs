@@ -10,7 +10,7 @@ namespace Users.Domain.Entities
         public string Password { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public EmailAddress EmailAddress { get; set; }
+        public string EmailAddress { get; set; }
         
     }
 }

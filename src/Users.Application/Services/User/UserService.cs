@@ -54,16 +54,17 @@ namespace Users.Application.Services
 
         // TODO AGREGAR AUTOMAPPER Y QUITAR
 
-        private User MapUserViewModelToUser(UserViewModel userVM) => new User(userVM.UserName, userVM.Password, userVM.FirstName, userVM.LastName, new EmailAddress(userVM.Email));
+        private User MapUserViewModelToUser(UserViewModel userVM) => new User(userVM.UserName, userVM.Password, userVM.FirstName, userVM.LastName, userVM.Email);
         private UserViewModel MapUserToUserViewModel(User user)
         {
             return new UserViewModel()
             {
                 Id = user.Id,
                 UserName = user.UserName,
-                Password = user.Password.ToString(),
+                Password = user.Password,
                 FirstName = user.FirstName,
-                LastName = user.LastName
+                LastName = user.LastName,
+                Email = user.EmailAddress
             };
         }
 
