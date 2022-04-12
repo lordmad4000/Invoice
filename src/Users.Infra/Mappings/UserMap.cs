@@ -8,8 +8,13 @@ namespace Users.Infra.Mappings
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.Property(c => c.Id)
-                   .HasColumnName("Id");
+            builder.HasIndex(c => c.Id)
+                   .IsUnique();
+
+            builder.OwnsOne(c => c.EmailAddress)
+                   .Property(c => c.Address)
+                   .HasColumnName("EmailAddress")
+                   .IsRequired();
         }
 
     }
