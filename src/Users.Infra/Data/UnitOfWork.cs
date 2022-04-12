@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Users.Domain.Base;
 using Users.Domain.Interfaces;
 using Users.Infra.Repositories;
@@ -22,6 +23,11 @@ namespace Users.Infra.Data
         public Task<int> SaveChangesAsync()
         {
             return _dbContext.SaveChangesAsync();
+        }
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
         }
     }
 }
