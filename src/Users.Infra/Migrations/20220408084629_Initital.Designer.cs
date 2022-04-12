@@ -9,8 +9,8 @@ using Users.Infra.Data;
 namespace Users.Infra.Migrations
 {
     [DbContext(typeof(EFContext))]
-    [Migration("20220406082805_Init")]
-    partial class Init
+    [Migration("20220408084629_Initital")]
+    partial class Initital
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,11 +23,7 @@ namespace Users.Infra.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("Id")
                         .HasColumnType("char(36)");
-
-                    b.Property<string>("EmailAddress")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -43,7 +39,31 @@ namespace Users.Infra.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Id")
+                        .IsUnique();
+
                     b.ToTable("User");
+                });
+
+            modelBuilder.Entity("Users.Domain.Entities.User", b =>
+                {
+                    b.OwnsOne("Users.Domain.ValueObjects.EmailAddress", "EmailAddress", b1 =>
+                        {
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("char(36)");
+
+                            b1.Property<string>("Address")
+                                .IsRequired()
+                                .HasColumnName("EmailAddress")
+                                .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("User");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
                 });
 #pragma warning restore 612, 618
         }
