@@ -12,5 +12,6 @@ namespace Users.Application.Interfaces
         Task PutUser(UserViewModel userVM);
         Task<UserViewModel> PostUser(UserViewModel userVM);
         Task<bool> DeleteUser(Guid id);
+        Task<bool> ActivateUser(string activationCode);
     }
 }

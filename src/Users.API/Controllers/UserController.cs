@@ -17,7 +17,7 @@ namespace Users.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetUsers()
+        public async Task<IActionResult> GetUsers()
         {
             try
             {
@@ -31,7 +31,7 @@ namespace Users.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetUser(Guid id)
+        public async Task<IActionResult> GetUser(Guid id)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace Users.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> PostUser([FromBody] UserViewModel userVM)
+        public async Task<IActionResult> PostUser([FromBody] UserViewModel userVM)
         {
             try
             {
@@ -73,11 +73,25 @@ namespace Users.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteUser(Guid id)
+        public async Task<IActionResult> DeleteUser(Guid id)
         {
             try
             {
                 var result = await _userService.DeleteUser(id);
+                return (Ok(result));
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("ActivateUser")]
+        public async Task<IActionResult> ActivateUser(string activationCode)
+        {
+            try
+            {
+                var result = await _userService.ActivateUser(activationCode);
                 return (Ok(result));
             }
             catch(Exception ex)

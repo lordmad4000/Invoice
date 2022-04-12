@@ -49,8 +49,14 @@ namespace Users.Application.Services
         public async Task<UserViewModel> PostUser(UserViewModel userVM)
         {
             userVM.Id = Guid.NewGuid();
-            var user = await _userRepository.AddAsync(MapUserViewModelToUser(userVM));
+            var user = MapUserViewModelToUser(userVM);
+            user.ActivationCode = Guid.NewGuid()
+                                      .ToString()
+                                      .Replace("-", "");
+
+            user = await _userRepository.AddAsync(user);
             await _unitOfWork.SaveChangesAsync();
+
             return MapUserToUserViewModel(user);
         }
 
@@ -61,6 +67,19 @@ namespace Users.Application.Services
                 await _unitOfWork.SaveChangesAsync();
 
             return result;
+        }
+
+        public async Task<bool> ActivateUser(string activationCode)
+        {
+            var user = await _userRepository.GetAsync(c => c.ActivationCode == activationCode && c.Active == false, false);
+            if (user == null)
+                return false;
+
+            user.Active = true;
+            await _userRepository.UpdateAsync(user);
+            await _unitOfWork.SaveChangesAsync();
+        
+            return true;
         }
 
         // TODO AGREGAR AUTOMAPPER Y QUITAR
