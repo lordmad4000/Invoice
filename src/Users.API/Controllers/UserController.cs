@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Users.Application.Interfaces;
+using Users.Application.Services;
 
 namespace Users.Controllers
 {
@@ -17,52 +19,71 @@ namespace Users.Controllers
         [HttpGet]
         public async Task<ActionResult> GetUsers()
         {
-            var users = await _userService.GetUsers();
-            return Ok(users);
+            try
+            {
+                var users = await _userService.GetUsers();
+                return (Ok(users));
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetUser(int id)
+        public async Task<ActionResult> GetUser(Guid id)
         {
-            ActionResult result = new OkResult();
-            await Task.Run(() =>
+            try
             {
-                result = Ok();
-            });
-            return result;
+                var userVM = await _userService.GetById(id);
+                return (Ok(userVM));
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser()
+        [HttpPut]
+        public async Task<IActionResult> PutUser([FromBody] UserViewModel userVM)
         {
-            ActionResult result = new OkResult();
-            await Task.Run(() =>
+            try
             {
-                result = Ok();
-            });
-            return result;
+                await _userService.PutUser(userVM);
+                return (Ok(userVM));
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
-        public async Task<ActionResult> PostUser()
+        public async Task<ActionResult> PostUser([FromBody] UserViewModel userVM)
         {
-            ActionResult result = new OkResult();
-            await Task.Run(() =>
+            try
             {
-                result = Ok();
-            });
-            return result;
+                userVM = await _userService.PostUser(userVM);
+                return (Ok(userVM));
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteUser(int id)
+        public async Task<ActionResult> DeleteUser(Guid id)
         {
-            ActionResult result = new OkResult();
-            await Task.Run(() =>
+            try
             {
-                result = Ok();
-            });
-            return result;
+                var result = await _userService.DeleteUser(id);
+                return (Ok(result));
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
