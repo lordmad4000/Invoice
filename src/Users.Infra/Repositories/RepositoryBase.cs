@@ -12,11 +12,13 @@ namespace Users.Infra.Repositories
 {
     public class RepositoryBase<T> : IAsyncRepository<T> where T : BaseEntity
     {
+        private readonly EFContext _context;
         private readonly DbSet<T> _dbSet;
 
-        public RepositoryBase(EFContext dbContext)
+        public RepositoryBase(EFContext context)
         {
-            _dbSet = dbContext.Set<T>();
+            _context = context;
+            _dbSet = context.Set<T>();
         }
 
         public async Task<T> AddAsync(T entity)
@@ -25,15 +27,31 @@ namespace Users.Infra.Repositories
             return entity;
         }
 
+        public Task<bool> DeleteAsync(Guid id)
+        {
+            var entity = _dbSet.Find(id);
+            if (entity != null)
+            {
+                _dbSet.Remove(entity);
+                return Task.FromResult(true);
+            }
+
+            return Task.FromResult(false);
+        }
+
         public Task<bool> DeleteAsync(T entity)
         {
             _dbSet.Remove(entity);
             return Task.FromResult(true);
         }
 
-        public Task<T> GetAsync(Expression<Func<T, bool>> expression)
+        public Task<T> GetAsync(Expression<Func<T, bool>> expression, bool tracking = true)
         {
-            return _dbSet.FirstOrDefaultAsync(expression);
+            if (tracking)
+                return _dbSet.FirstOrDefaultAsync(expression);
+
+            return _dbSet.AsNoTracking()
+                         .FirstOrDefaultAsync(expression);
         }
 
         public Task<List<T>> ListAsync(Expression<Func<T, bool>> expression)
