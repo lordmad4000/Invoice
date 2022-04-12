@@ -7,6 +7,10 @@ namespace Users.Domain.ValueObjects
 {
     public class EmailAddress : ValueObject
     {
+        private EmailAddress()
+        {
+        }
+        
         public EmailAddress(string address)
         {
 
@@ -14,6 +18,7 @@ namespace Users.Domain.ValueObjects
 
             Address = address;
         }
+
 
         public string Address { get; private set; }
 
@@ -29,10 +34,14 @@ namespace Users.Domain.ValueObjects
             }
         }
 
-
-        protected override IEnumerable<object> GetEqualityComponents()
+        protected override IEnumerable<object> GetAtomicValues()
         {
             yield return Address;
+        }
+
+        public override string ToString()
+        {
+            return Address;
         }
     }
 }
