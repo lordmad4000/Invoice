@@ -10,20 +10,33 @@ namespace Users.Domain.Entities
         {
         }
 
-        public User(Guid id, string userName, string password, string firstName, string lastName, EmailAddress emailAddress)
+        public User(string userName, string password, string firstName, string lastName, EmailAddress emailAddress)
         {
-            Update(id, userName, password, firstName, lastName, emailAddress, false);
+            Id = Guid.NewGuid();
+            ActivationCode = NewActivationCode();
+            EmailAddress = emailAddress;
+            Active = false;
+            Update(userName, password, firstName, lastName);
         }
 
-        public void Update(Guid id, string userName, string password, string firstName, string lastName, EmailAddress emailAddress, bool active)
+        public void Activate()
         {
-            Id = id;
+            Active = true;
+        }
+
+        public void Update(string userName, string password, string firstName, string lastName)
+        {
             UserName = userName;
             Password = password;
             FirstName = firstName;
             LastName = lastName;
-            EmailAddress = emailAddress;            
-            Active = active;
+        }
+
+        private string NewActivationCode()
+        {
+            return Guid.NewGuid()
+                       .ToString()
+                       .Replace("-", "");
         }
     }
 }
