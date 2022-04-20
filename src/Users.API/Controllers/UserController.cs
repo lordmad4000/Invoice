@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Users.Application.Interfaces;
 using Users.Application.Services;
 
 namespace Users.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
+    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -86,6 +88,7 @@ namespace Users.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet("ActivateUser")]
         public async Task<IActionResult> ActivateUser(string activationCode)
         {
