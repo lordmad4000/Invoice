@@ -13,5 +13,6 @@ namespace Users.Application.Interfaces
         Task<UserViewModel> PostUser(UserViewModel userVM);
         Task<bool> DeleteUser(Guid id);
         Task<bool> ActivateUser(string activationCode);
+        Task<bool> ValidateCredentials(string username, string password);
     }
 }

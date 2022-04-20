@@ -13,11 +13,13 @@ namespace Users.Application.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly INotificationService _notificationService;
 
-        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork)
+        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, INotificationService notificationService)
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
+            _notificationService = notificationService;
         }
 
         public async Task<IEnumerable<UserViewModel>> GetUsers()
@@ -38,24 +40,21 @@ namespace Users.Application.Services
 
         public async Task PutUser(UserViewModel userVM)
         {
-            if (await _userRepository.GetAsync(c => c.Id == userVM.Id, false) != null)
+            var user = await _userRepository.GetAsync(c => c.Id == userVM.Id, false);
+            if (user != null)
             {
-                var user = MapUserViewModelToUser(userVM);
-                await _userRepository.UpdateAsync(MapUserViewModelToUser(userVM));
+                user.Update(userVM.UserName, userVM.Password, userVM.FirstName, userVM.LastName);
+                await _userRepository.UpdateAsync(user);
                 await _unitOfWork.SaveChangesAsync();
             }
         }
 
         public async Task<UserViewModel> PostUser(UserViewModel userVM)
         {
-            userVM.Id = Guid.NewGuid();
             var user = MapUserViewModelToUser(userVM);
-            user.ActivationCode = Guid.NewGuid()
-                                      .ToString()
-                                      .Replace("-", "");
-
             user = await _userRepository.AddAsync(user);
             await _unitOfWork.SaveChangesAsync();
+            await _notificationService.SendAsync(userVM, user.ActivationCode);
 
             return MapUserToUserViewModel(user);
         }
@@ -75,15 +74,29 @@ namespace Users.Application.Services
             if (user == null)
                 return false;
 
-            user.Active = true;
+            user.Activate();
             await _userRepository.UpdateAsync(user);
             await _unitOfWork.SaveChangesAsync();
-        
+
+            return true;
+        }
+
+        public async Task<bool> ValidateCredentials(string username, string password)
+        {
+            var user = await _userRepository.GetAsync(c => c.UserName == username && c.Password == password && c.Active == true);
+            if (user == null)
+                return false;
+
             return true;
         }
 
         // TODO AGREGAR AUTOMAPPER Y QUITAR
-        private User MapUserViewModelToUser(UserViewModel userVM) => new User(userVM.Id, userVM.UserName, userVM.Password, userVM.FirstName, userVM.LastName, new EmailAddress(userVM.Email));
+        private User MapUserViewModelToUser(UserViewModel userVM)
+        {
+            var user = new User(userVM.UserName, userVM.Password, userVM.FirstName, userVM.LastName, new EmailAddress(userVM.Email));
+
+            return user;
+        }
         private UserViewModel MapUserToUserViewModel(User user)
         {
             return new UserViewModel()
