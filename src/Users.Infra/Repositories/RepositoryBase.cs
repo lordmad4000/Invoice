@@ -27,42 +27,42 @@ namespace Users.Infra.Repositories
             return entity;
         }
 
-        public Task<bool> DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
-            var entity = _dbSet.Find(id);
+            var entity = await _dbSet.FindAsync(id);
             if (entity != null)
             {
                 _dbSet.Remove(entity);
-                return Task.FromResult(true);
+                return await Task.FromResult(true);
             }
 
-            return Task.FromResult(false);
+            return await Task.FromResult(false);
         }
 
-        public Task<bool> DeleteAsync(T entity)
+        public async Task<bool> DeleteAsync(T entity)
         {
             _dbSet.Remove(entity);
-            return Task.FromResult(true);
+            return await Task.FromResult(true);
         }
 
-        public Task<T> GetAsync(Expression<Func<T, bool>> expression, bool tracking = true)
+        public async Task<T> GetAsync(Expression<Func<T, bool>> expression, bool tracking = true)
         {
             if (tracking)
-                return _dbSet.FirstOrDefaultAsync(expression);
+                return await _dbSet.FirstOrDefaultAsync(expression);
 
-            return _dbSet.AsNoTracking()
-                         .FirstOrDefaultAsync(expression);
+            return await _dbSet.AsNoTracking()
+                               .FirstOrDefaultAsync(expression);
         }
 
-        public Task<List<T>> ListAsync(Expression<Func<T, bool>> expression)
+        public async Task<List<T>> ListAsync(Expression<Func<T, bool>> expression)
         {
-            return _dbSet.Where(expression).ToListAsync();
+            return await _dbSet.Where(expression).ToListAsync();
         }
 
-        public Task<T> UpdateAsync(T entity)
+        public async Task<T> UpdateAsync(T entity)
         {
             _dbSet.Update(entity);
-            return Task.FromResult(entity);
+            return await Task.FromResult(entity);
         }
     }
 }
