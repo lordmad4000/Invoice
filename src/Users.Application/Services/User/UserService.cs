@@ -5,6 +5,9 @@ using Users.Application.Interfaces;
 using Users.Domain.Entities;
 using Users.Domain.Interfaces;
 using Users.Domain.ValueObjects;
+using Users.Domain.Validations;
+using Users.Domain.Exceptions;
+using System.Text;
 
 namespace Users.Application.Services
 {
@@ -14,12 +17,14 @@ namespace Users.Application.Services
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly INotificationService _notificationService;
+        private readonly UserValidator _userValidator;
 
         public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, INotificationService notificationService)
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
             _notificationService = notificationService;
+            _userValidator = new UserValidator();
         }
 
         public async Task<IEnumerable<UserViewModel>> GetUsers()
@@ -52,6 +57,19 @@ namespace Users.Application.Services
         public async Task<UserViewModel> PostUser(UserViewModel userVM)
         {
             var user = MapUserViewModelToUser(userVM);
+
+            var validator = _userValidator.Validate(user);
+
+            if (!validator.IsValid)
+            {
+                var errors = new StringBuilder();
+
+                foreach (var error in validator.Errors)
+                    errors.AppendLine(error.ErrorMessage);
+
+                throw new EntityValidationException(errors.ToString());
+            }
+            
             user = await _userRepository.AddAsync(user);
             await _unitOfWork.SaveChangesAsync();
             await _notificationService.SendAsync(userVM, user.ActivationCode);
