@@ -103,13 +103,13 @@ namespace Users.Application.Services
             return true;
         }
 
-        public async Task<bool> ValidateCredentials(string username, string password)
+        public async Task<UserViewModel> Login(string username, string password)
         {
             var user = await _userRepository.GetAsync(c => c.UserName == username && c.Password == password && c.Active == true);
             if (user == null)
-                return false;
+                return null;
 
-            return true;
+            return MapUserToUserViewModel(user);
         }
 
         public string GetToken(string userId, string userEmail, string secretKey)
