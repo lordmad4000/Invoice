@@ -8,6 +8,10 @@ using Users.Domain.ValueObjects;
 using Users.Domain.Validations;
 using Users.Domain.Exceptions;
 using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using Users.Application.Models.ViewModels;
 
 namespace Users.Application.Services
 {
@@ -69,7 +73,7 @@ namespace Users.Application.Services
 
                 throw new EntityValidationException(errors.ToString());
             }
-            
+
             user = await _userRepository.AddAsync(user);
             await _unitOfWork.SaveChangesAsync();
             await _notificationService.SendAsync(userVM, user.ActivationCode);
@@ -106,6 +110,26 @@ namespace Users.Application.Services
                 return false;
 
             return true;
+        }
+
+        public string GetToken(string userId, string userEmail, string secretKey)
+        {
+            var key = Encoding.ASCII.GetBytes(secretKey);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.NameIdentifier, userId),
+                    new Claim(ClaimTypes.Email, userEmail),
+                }),
+                Expires = DateTime.UtcNow.AddMinutes(30),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return tokenHandler.WriteToken(token);
         }
 
         // TODO AGREGAR AUTOMAPPER Y QUITAR

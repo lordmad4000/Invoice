@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Users.Application.Services;
+using Users.Application.Models.ViewModels;
 
 namespace Users.Application.Interfaces
 {
@@ -14,5 +14,6 @@ namespace Users.Application.Interfaces
         Task<bool> DeleteUser(Guid id);
         Task<bool> ActivateUser(string activationCode);
         Task<bool> ValidateCredentials(string username, string password);
+        string GetToken(string userId, string userEmail, string secretKey);
     }
 }
