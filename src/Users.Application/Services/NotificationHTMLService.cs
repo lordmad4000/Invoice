@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using Users.Application.Interfaces;
+using Users.Application.Models.ViewModels;
 
 namespace Users.Application.Services
 {

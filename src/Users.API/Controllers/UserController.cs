@@ -2,6 +2,9 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Users.API.Configuration;
+using Users.API.Models.Request;
 using Users.Application.Interfaces;
 using Users.Application.Models.ViewModels;
 
@@ -13,9 +16,11 @@ namespace Users.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-        public UserController(IUserService userService)
+        private readonly IConfiguration _configuration;
+        public UserController(IUserService userService, IConfiguration configuration)
         {
             _userService = userService;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -104,27 +109,17 @@ namespace Users.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("Login")]
-        public async Task<IActionResult> Login()
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login([FromBody] UserLoginRequest userLoginRequest)
         {
             try
             {
-                var token = _userService.GetToken("123123123", "pepe@rmail.com", "asdwda1d8a4sd8w4das8d*w8d*asd@#");
-                return (await Task.FromResult(Ok(token)));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+                var userVM = await _userService.Login(userLoginRequest.Username, userLoginRequest.Password);
+                if (userVM == null)
+                    return BadRequest("Invalid Username or Password.");
 
-        [AllowAnonymous]
-        [HttpGet("GetToken")]
-        public async Task<IActionResult> GetToken()
-        {
-            try
-            {
-                var token = _userService.GetToken("123123123", "pepe@rmail.com", "asdwda1d8a4sd8w4das8d*w8d*asd@#");
+                var jwtConfig = _configuration.GetSection("JWTConfig").Get<JWTConfig>();
+                var token = _userService.GetToken(userVM.Password, userVM.Email, jwtConfig.SecretKey);
                 return (await Task.FromResult(Ok(token)));
             }
             catch (Exception ex)
