@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Users.Application.Interfaces;
-using Users.Application.Services;
+using Users.Application.Models.ViewModels;
 
 namespace Users.Controllers
 {
@@ -26,7 +26,7 @@ namespace Users.Controllers
                 var users = await _userService.GetUsers();
                 return (Ok(users));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -40,7 +40,7 @@ namespace Users.Controllers
                 var userVM = await _userService.GetById(id);
                 return (Ok(userVM));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -54,7 +54,7 @@ namespace Users.Controllers
                 await _userService.PutUser(userVM);
                 return (Ok(userVM));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -68,7 +68,7 @@ namespace Users.Controllers
                 userVM = await _userService.PostUser(userVM);
                 return (Ok(userVM));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -82,7 +82,7 @@ namespace Users.Controllers
                 var result = await _userService.DeleteUser(id);
                 return (Ok(result));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -97,10 +97,41 @@ namespace Users.Controllers
                 var result = await _userService.ActivateUser(activationCode);
                 return (Ok(result));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+
+        [AllowAnonymous]
+        [HttpGet("Login")]
+        public async Task<IActionResult> Login()
+        {
+            try
+            {
+                var token = _userService.GetToken("123123123", "pepe@rmail.com", "asdwda1d8a4sd8w4das8d*w8d*asd@#");
+                return (await Task.FromResult(Ok(token)));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpGet("GetToken")]
+        public async Task<IActionResult> GetToken()
+        {
+            try
+            {
+                var token = _userService.GetToken("123123123", "pepe@rmail.com", "asdwda1d8a4sd8w4das8d*w8d*asd@#");
+                return (await Task.FromResult(Ok(token)));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }

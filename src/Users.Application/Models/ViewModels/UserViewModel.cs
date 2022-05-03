@@ -1,9 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using Users.Domain.Entities;
-using Users.Domain.ValueObjects;
 
-namespace Users.Application.Services
+namespace Users.Application.Models.ViewModels
 {
     public class UserViewModel
     {

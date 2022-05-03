@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Users.Application.Models.ViewModels;
 using Users.Application.Services;
 
 namespace Users.Application.Interfaces
