@@ -7,6 +7,10 @@ using Users.Infra.Data;
 using Users.Application.Services;
 using Users.Application.Interfaces;
 using Microsoft.OpenApi.Models;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Users.API.Extensions
 {
@@ -37,18 +41,66 @@ namespace Users.API.Extensions
             return services;
         }
 
+        public static IServiceCollection AddCORS(this IServiceCollection services, string policyName)
+        {
+            services.AddCors(opt =>
+            {
+                opt.AddPolicy(name: policyName,
+                              policy =>
+                              {
+                                  policy.WithHeaders("*");
+                                  policy.WithOrigins("*");
+                                  policy.WithMethods("*");
+                              });
+            });
+
+            return services;
+        }
+
+        public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, string secretKey)
+        {
+            var key = Encoding.ASCII.GetBytes(secretKey);
+
+            services.AddAuthorization(auth => 
+            {
+                auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                    .RequireAuthenticatedUser().Build());
+            });
+
+            services.AddAuthentication(c =>
+            {
+                c.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                c.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+             .AddJwtBearer(c =>
+             {
+                 c.RequireHttpsMetadata = false;
+                 c.SaveToken = true;
+                 c.TokenValidationParameters = new TokenValidationParameters
+                 {
+                     ValidateIssuerSigningKey = true,
+                     IssuerSigningKey = new SymmetricSecurityKey(key),
+                     ValidateIssuer = false,
+                     ValidateAudience = false
+                 };
+             });
+
+            return services;
+        }
+
         public static IServiceCollection AddSwagger(this IServiceCollection services)
         {
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UserWebAPI", Description = "Users Core API", Version = "v1" });
-                c.AddSecurityDefinition("basic", new OpenApiSecurityScheme
+
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
-                    Type = SecuritySchemeType.Http,
-                    Scheme = "basic",
                     In = ParameterLocation.Header,
-                    Description = "Basic Authorization header using the Bearer scheme."
+                    Type = SecuritySchemeType.ApiKey,
+                    Description = "Please insert JWT with Bearer into field."
                 });
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
@@ -58,14 +110,14 @@ namespace Users.API.Extensions
                                 Reference = new OpenApiReference
                                 {
                                     Type = ReferenceType.SecurityScheme,
-                                    Id = "basic"
+                                    Id = "Bearer"
                                 }
                             },
                             new string[] {}
                     }
                 });
             });
-            
+
             return services;
         }
 

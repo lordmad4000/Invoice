@@ -4,12 +4,16 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Users.API.Configuration;
 using Users.API.Extensions;
 
 namespace Users.API
 {
     public class Startup
     {
+
+        private string _myAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -20,16 +24,21 @@ namespace Users.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCORS(_myAllowSpecificOrigins);
+
             services.AddControllers();
 
             services.AddSwagger();
 
-            services.AddAuthentication("BasicAuthentication")
-                    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+            var jwtConfig = Configuration.GetSection("JWTConfig").Get<JWTConfig>();
+            services.AddJwtAuthentication(jwtConfig.SecretKey);
 
             services.AddDatabase(Configuration);
+
             services.AddUnitOfWork();
+
             services.AddRepositories();
+
             services.AddBusinessServices();
         }
 
@@ -46,8 +55,13 @@ namespace Users.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(_myAllowSpecificOrigins);
+
             app.UseAuthentication();
+
             app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
