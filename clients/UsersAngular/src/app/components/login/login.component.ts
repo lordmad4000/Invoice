@@ -3,8 +3,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ILogin } from 'src/app/models/ilogin';
-import { IResponse } from 'src/app/models/iresponse';
 import { UserLoginResponse } from 'src/app/models/userloginresponse';
 
 @Component({
