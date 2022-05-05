@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Login } from 'src/app/models/login';
 import { UserLoginResponse } from 'src/app/models/userloginresponse';
 
 @Component({
@@ -29,9 +30,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   Login() {
-    const usuarioLogin: ILogin = {
-      Username: this.formLogin.value.username,
-      Password: this.formLogin.value.password
+    const usuarioLogin: Login = {
+      username: this.formLogin.value.username,
+      password: this.formLogin.value.password
     };
 
     this.subscription = this.httpClient.post<UserLoginResponse>('https://localhost:5001/api/User/Login', usuarioLogin, { observe: 'response' })    
