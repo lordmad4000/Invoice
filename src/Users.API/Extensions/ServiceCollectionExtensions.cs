@@ -11,6 +11,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
+using Users.API.Configuration;
 
 namespace Users.API.Extensions
 {
@@ -38,6 +39,15 @@ namespace Users.API.Extensions
         {
             services.AddScoped<INotificationService, NotificationHTMLService>();
             services.AddScoped<IUserService, UserService>();
+            
+            return services;
+        }
+
+        public static IServiceCollection AddConfiguration(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<CacheConfig>(configuration.GetSection("CacheConfig"));
+            services.Configure<JWTConfig>(configuration.GetSection("JWTConfig"));
+
             return services;
         }
 
@@ -57,11 +67,13 @@ namespace Users.API.Extensions
             return services;
         }
 
-        public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, string secretKey)
+        public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
-            var key = Encoding.ASCII.GetBytes(secretKey);
+            var jwtConfig = configuration.GetSection("JWTConfig").Get<JWTConfig>();
 
-            services.AddAuthorization(auth => 
+            var key = Encoding.ASCII.GetBytes(jwtConfig.SecretKey);
+
+            services.AddAuthorization(auth =>
             {
                 auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
                     .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)

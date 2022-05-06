@@ -30,8 +30,9 @@ namespace Users.API
 
             services.AddSwagger();
 
-            var jwtConfig = Configuration.GetSection("JWTConfig").Get<JWTConfig>();
-            services.AddJwtAuthentication(jwtConfig.SecretKey);
+            services.AddConfiguration(Configuration);
+
+            services.AddJwtAuthentication(Configuration);
 
             services.AddDatabase(Configuration);
 
