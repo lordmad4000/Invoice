@@ -21,14 +21,12 @@ namespace Users.Application.Services
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly INotificationService _notificationService;
-        private readonly UserValidator _userValidator;
 
         public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, INotificationService notificationService)
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
             _notificationService = notificationService;
-            _userValidator = new UserValidator();
         }
 
         public async Task<IEnumerable<UserViewModel>> GetUsers()
@@ -49,6 +47,8 @@ namespace Users.Application.Services
 
         public async Task PutUser(UserViewModel userVM)
         {
+            ValidateModel(MapUserViewModelToUser(userVM));
+
             var user = await _userRepository.GetAsync(c => c.Id == userVM.Id, false);
             if (user != null)
             {
@@ -62,17 +62,7 @@ namespace Users.Application.Services
         {
             var user = MapUserViewModelToUser(userVM);
 
-            var validator = _userValidator.Validate(user);
-
-            if (!validator.IsValid)
-            {
-                var errors = new StringBuilder();
-
-                foreach (var error in validator.Errors)
-                    errors.AppendLine(error.ErrorMessage);
-
-                throw new EntityValidationException(errors.ToString());
-            }
+            ValidateModel(user);
 
             user = await _userRepository.AddAsync(user);
             await _unitOfWork.SaveChangesAsync();
@@ -132,6 +122,22 @@ namespace Users.Application.Services
             return tokenHandler.WriteToken(token);
         }
 
+        private void ValidateModel(User user)
+        {
+            var userValidator = new UserValidator();
+            var validator = userValidator.Validate(user);
+
+            if (!validator.IsValid)
+            {
+                var errors = new StringBuilder();
+
+                foreach (var error in validator.Errors)
+                    errors.AppendLine(error.ErrorMessage);
+
+                throw new EntityValidationException(errors.ToString());
+            }
+        }
+
         // TODO AGREGAR AUTOMAPPER Y QUITAR
         private User MapUserViewModelToUser(UserViewModel userVM)
         {
@@ -150,7 +156,7 @@ namespace Users.Application.Services
                 LastName = user.LastName,
                 Email = user.EmailAddress.ToString()
             };
-        }
+        }        
 
     }
 }
