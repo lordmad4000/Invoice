@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Users.API.Configuration;
 using Users.API.Models.Request;
+using Users.API.Models.Response;
 using Users.Application.Interfaces;
 using Users.Application.Models.ViewModels;
 
@@ -95,10 +96,11 @@ namespace Users.Controllers
 
         [AllowAnonymous]
         [HttpGet("ActivateUser")]
-        public async Task<IActionResult> ActivateUser(string activationCode)
+        public async Task<IActionResult> ActivateUser()
         {
             try
             {
+                string activationCode = "";
                 var result = await _userService.ActivateUser(activationCode);
                 return (Ok(result));
             }
@@ -119,8 +121,12 @@ namespace Users.Controllers
                     return BadRequest("Invalid Username or Password.");
 
                 var jwtConfig = _configuration.GetSection("JWTConfig").Get<JWTConfig>();
-                var token = _userService.GetToken(userVM.Password, userVM.Email, jwtConfig.SecretKey);
-                return (await Task.FromResult(Ok(token)));
+                var userLoginResponse = new UserLoginResponse
+                {
+                    Id = userVM.Id,
+                    Token = _userService.GetToken(userVM.Password, userVM.Email, jwtConfig.SecretKey)
+                };
+                return (await Task.FromResult(Ok(userLoginResponse)));
             }
             catch (Exception ex)
             {
