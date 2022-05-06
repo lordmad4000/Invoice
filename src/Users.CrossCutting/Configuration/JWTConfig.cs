@@ -1,4 +1,4 @@
-namespace Users.API.Configuration
+namespace Users.CrossCutting.Configuration
 {
     public class JWTConfig
     {
