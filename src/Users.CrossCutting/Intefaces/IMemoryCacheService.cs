@@ -1,6 +1,6 @@
 ﻿namespace Users.CrossCutting.Interfaces
 {
-    public interface ICacheService
+    public interface IMemoryCacheService
     {
         bool TryGet<T>(string cacheKey, out T value);
         T Set<T>(string cacheKey, T value);

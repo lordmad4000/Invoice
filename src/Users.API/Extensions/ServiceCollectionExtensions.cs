@@ -5,12 +5,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System;
 using System.Text;
 using Users.Application.Interfaces;
 using Users.Application.Services;
 using Users.CrossCutting.Configuration;
-using Users.CrossCutting.Enums;
 using Users.CrossCutting.Interfaces;
 using Users.Domain.Interfaces;
 using Users.Infra.Data;
@@ -33,18 +31,7 @@ namespace Users.API.Extensions
         {
             services.AddMemoryCache();
             
-            services.AddTransient<MemoryCacheService>();
-
-            services.AddTransient<Func<CacheTech, ICacheService>>(serviceProvider => key => 
-            {
-                switch (key)
-                {
-                    case CacheTech.Memory:
-                        return serviceProvider.GetService<MemoryCacheService>();
-                    default:
-                        return serviceProvider.GetService<MemoryCacheService>();
-                }
-            });
+            services.AddTransient<IMemoryCacheService, MemoryCacheService>();
 
             return services;
         }

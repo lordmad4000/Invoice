@@ -6,7 +6,7 @@ using Users.CrossCutting.Interfaces;
 
 namespace Users.Infra.Services
 {
-    public class MemoryCacheService : ICacheService
+    public class MemoryCacheService : IMemoryCacheService
     {
         private readonly IMemoryCache _memoryCache;
         private readonly CacheConfig _cacheConfig;

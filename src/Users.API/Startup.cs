@@ -30,13 +30,15 @@ namespace Users.API
 
             services.AddConfiguration(Configuration);
 
-            services.AddJwtAuthentication(Configuration);
+            services.AddJwtAuthentication(Configuration);            
 
             services.AddDatabase(Configuration);
 
             services.AddUnitOfWork();
 
             services.AddRepositories();
+
+            services.AddCache();
 
             services.AddBusinessServices();
         }
