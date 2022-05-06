@@ -1,17 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Users.Infra.Repositories;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System;
+using System.Text;
+using Users.Application.Interfaces;
+using Users.Application.Services;
+using Users.CrossCutting.Configuration;
+using Users.CrossCutting.Enums;
+using Users.CrossCutting.Interfaces;
 using Users.Domain.Interfaces;
 using Users.Infra.Data;
-using Users.Application.Services;
-using Users.Application.Interfaces;
-using Microsoft.OpenApi.Models;
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authorization;
-using Users.CrossCutting.Configuration;
+using Users.Infra.Repositories;
+using Users.Infra.Services;
 
 namespace Users.API.Extensions
 {
@@ -21,6 +25,26 @@ namespace Users.API.Extensions
         {
             services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));
             services.AddScoped<IUserRepository, UserRepository>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddCache(this IServiceCollection services)
+        {
+            services.AddMemoryCache();
+            
+            services.AddTransient<MemoryCacheService>();
+
+            services.AddTransient<Func<CacheTech, ICacheService>>(serviceProvider => key => 
+            {
+                switch (key)
+                {
+                    case CacheTech.Memory:
+                        return serviceProvider.GetService<MemoryCacheService>();
+                    default:
+                        return serviceProvider.GetService<MemoryCacheService>();
+                }
+            });
 
             return services;
         }
