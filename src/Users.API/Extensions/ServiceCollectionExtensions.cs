@@ -11,7 +11,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
-using Users.API.Configuration;
+using Users.CrossCutting.Configuration;
 
 namespace Users.API.Extensions
 {

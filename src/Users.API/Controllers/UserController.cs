@@ -2,12 +2,12 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Users.API.Configuration;
+using Microsoft.Extensions.Options;
 using Users.API.Models.Request;
 using Users.API.Models.Response;
 using Users.Application.Interfaces;
 using Users.Application.Models.ViewModels;
+using Users.CrossCutting.Configuration;
 
 namespace Users.Controllers
 {
@@ -17,11 +17,11 @@ namespace Users.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly IConfiguration _configuration;
-        public UserController(IUserService userService, IConfiguration configuration)
+        private readonly JWTConfig _jwtConfig;
+        public UserController(IUserService userService, IOptions<JWTConfig> jwtConfig)
         {
             _userService = userService;
-            _configuration = configuration;
+            _jwtConfig = jwtConfig.Value;
         }
 
         [HttpGet]
@@ -120,12 +120,12 @@ namespace Users.Controllers
                 if (userVM == null)
                     return BadRequest("Invalid Username or Password.");
 
-                var jwtConfig = _configuration.GetSection("JWTConfig").Get<JWTConfig>();
                 var userLoginResponse = new UserLoginResponse
                 {
                     Id = userVM.Id,
-                    Token = _userService.GetToken(userVM.Password, userVM.Email, jwtConfig.SecretKey)
+                    Token = _userService.GetToken(userVM.Password, userVM.Email, _jwtConfig.SecretKey)
                 };
+
                 return (await Task.FromResult(Ok(userLoginResponse)));
             }
             catch (Exception ex)
