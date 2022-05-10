@@ -2,13 +2,13 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using Users.Application.Interfaces;
-using Users.Application.Models.ViewModels;
+using Users.Application.Models;
 
 namespace Users.Application.Services
 {
     public class NotificationHTMLService : INotificationService
     {
-        public async Task<bool> SendAsync(UserViewModel userVM, string activationCode)
+        public async Task<bool> SendAsync(UserDto userVM, string activationCode)
         {
             try
             {

@@ -1,11 +1,11 @@
 using System.Threading.Tasks;
-using Users.Application.Models.ViewModels;
+using Users.Application.Models;
 using Users.Application.Services;
 
 namespace Users.Application.Interfaces
 {
     public interface INotificationService
     {
-        Task<bool> SendAsync(UserViewModel userVM, string activationCode);
+        Task<bool> SendAsync(UserDto userVM, string activationCode);
     }
 }

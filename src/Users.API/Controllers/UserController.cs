@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 using Users.API.Models.Request;
 using Users.API.Models.Response;
 using Users.Application.Interfaces;
-using Users.Application.Models.ViewModels;
+using Users.Application.Models;
 using Users.CrossCutting.Configuration;
 
 namespace Users.Controllers
@@ -53,7 +53,7 @@ namespace Users.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> PutUser([FromBody] UserViewModel userVM)
+        public async Task<IActionResult> PutUser([FromBody] UserDto userVM)
         {
             try
             {
@@ -67,12 +67,12 @@ namespace Users.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostUser([FromBody] UserViewModel userVM)
+        public async Task<IActionResult> PostUser([FromBody] UserDto userVM)
         {
             try
             {
                 userVM = await _userService.PostUser(userVM);
-                return (Ok(userVM));
+                return (Created("", userVM));
             }
             catch (Exception ex)
             {
@@ -133,6 +133,9 @@ namespace Users.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        // TODO
+        // [HttpPatch]
 
     }
 }

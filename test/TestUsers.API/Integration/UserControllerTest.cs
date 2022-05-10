@@ -23,7 +23,7 @@ namespace TestUsers.API
             {
                 var userController = serviceProvider.GetRequiredService<UserController>();
 
-                var testUser = new UserViewModel
+                var testUser = new UserDto
                 {
                     Id = Guid.Empty,
                     UserName = "pepe",
@@ -37,18 +37,18 @@ namespace TestUsers.API
                 var actionResult = await userController.PostUser(testUser);
 
                 var okObjectResult = Assert.IsType<OkObjectResult>(actionResult);
-                var user = Assert.IsType<UserViewModel>(okObjectResult.Value);
+                var user = Assert.IsType<UserDto>(okObjectResult.Value);
 
                 actionResult = await userController.GetUsers();
 
                 okObjectResult = Assert.IsType<OkObjectResult>(actionResult);
-                var users = Assert.IsType<List<UserViewModel>>(okObjectResult.Value);
+                var users = Assert.IsType<List<UserDto>>(okObjectResult.Value);
                 Assert.NotEmpty(users);
 
                 actionResult = await userController.GetUser(user.Id);
 
                 okObjectResult = Assert.IsType<OkObjectResult>(actionResult);
-                user = Assert.IsType<UserViewModel>(okObjectResult.Value);
+                user = Assert.IsType<UserDto>(okObjectResult.Value);
                 Assert.Equal(testUser.UserName, user.UserName);
                 Assert.Equal(testUser.Password, user.Password);
                 Assert.Equal(testUser.FirstName, user.FirstName);
@@ -59,10 +59,10 @@ namespace TestUsers.API
                 actionResult = await userController.PutUser(user);
 
                 okObjectResult = Assert.IsType<OkObjectResult>(actionResult);
-                user = Assert.IsType<UserViewModel>(okObjectResult.Value);
+                user = Assert.IsType<UserDto>(okObjectResult.Value);
                 actionResult = await userController.GetUser(user.Id);
                 okObjectResult = Assert.IsType<OkObjectResult>(actionResult);
-                user = Assert.IsType<UserViewModel>(okObjectResult.Value);
+                user = Assert.IsType<UserDto>(okObjectResult.Value);
                 Assert.Equal(updatedPassword, user.Password);
 
                 actionResult = await userController.DeleteUser(user.Id);

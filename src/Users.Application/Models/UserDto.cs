@@ -1,9 +1,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Users.Application.Models.ViewModels
+namespace Users.Application.Models
 {
-    public class UserViewModel
+    public class UserDto
     {
         public Guid Id { get; set; }
         [Required(ErrorMessage = "UserName is required.")]

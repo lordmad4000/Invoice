@@ -11,7 +11,7 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
-using Users.Application.Models.ViewModels;
+using Users.Application.Models;
 
 namespace Users.Application.Services
 {
@@ -29,25 +29,25 @@ namespace Users.Application.Services
             _notificationService = notificationService;
         }
 
-        public async Task<IEnumerable<UserViewModel>> GetUsers()
+        public async Task<IEnumerable<UserDto>> GetUsers()
         {
-            var usersVM = new List<UserViewModel>();
+            var usersVM = new List<UserDto>();
             var users = await _userRepository.ListAsync(c => c.Id != Guid.Empty);
             foreach (var user in users)
-                usersVM.Add(MapUserToUserViewModel(user));
+                usersVM.Add(MapUserToUserDto(user));
 
             return usersVM;
         }
 
-        public async Task<UserViewModel> GetById(Guid id)
+        public async Task<UserDto> GetById(Guid id)
         {
             var user = await _userRepository.GetAsync(c => c.Id == id);
-            return MapUserToUserViewModel(user);
+            return MapUserToUserDto(user);
         }
 
-        public async Task PutUser(UserViewModel userVM)
+        public async Task PutUser(UserDto userVM)
         {
-            ValidateModel(MapUserViewModelToUser(userVM));
+            ValidateModel(MapUserDtoToUser(userVM));
 
             var user = await _userRepository.GetAsync(c => c.Id == userVM.Id, false);
             if (user != null)
@@ -58,9 +58,9 @@ namespace Users.Application.Services
             }
         }
 
-        public async Task<UserViewModel> PostUser(UserViewModel userVM)
+        public async Task<UserDto> PostUser(UserDto userVM)
         {
-            var user = MapUserViewModelToUser(userVM);
+            var user = MapUserDtoToUser(userVM);
 
             ValidateModel(user);
 
@@ -68,7 +68,7 @@ namespace Users.Application.Services
             await _unitOfWork.SaveChangesAsync();
             await _notificationService.SendAsync(userVM, user.ActivationCode);
 
-            return MapUserToUserViewModel(user);
+            return MapUserToUserDto(user);
         }
 
         public async Task<bool> DeleteUser(Guid id)
@@ -93,13 +93,13 @@ namespace Users.Application.Services
             return true;
         }
 
-        public async Task<UserViewModel> Login(string username, string password)
+        public async Task<UserDto> Login(string username, string password)
         {
             var user = await _userRepository.GetAsync(c => c.UserName == username && c.Password == password && c.Active == true);
             if (user == null)
                 return null;
 
-            return MapUserToUserViewModel(user);
+            return MapUserToUserDto(user);
         }
 
         public string GetToken(string userId, string userEmail, string secretKey)
@@ -139,15 +139,15 @@ namespace Users.Application.Services
         }
 
         // TODO AGREGAR AUTOMAPPER Y QUITAR
-        private User MapUserViewModelToUser(UserViewModel userVM)
+        private User MapUserDtoToUser(UserDto userVM)
         {
             var user = new User(userVM.UserName, userVM.Password, userVM.FirstName, userVM.LastName, new EmailAddress(userVM.Email));
 
             return user;
         }
-        private UserViewModel MapUserToUserViewModel(User user)
+        private UserDto MapUserToUserDto(User user)
         {
-            return new UserViewModel()
+            return new UserDto()
             {
                 Id = user.Id,
                 UserName = user.UserName,
