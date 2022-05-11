@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
     });
 
     this.httpClient
-      .get<User[]>('https://localhost:5001/api/User', { headers: httpHeaders, })
+      .get<User[]>('http://localhost:21440/api/User', { headers: httpHeaders, })
       .subscribe({
         next: (res: any) => {
           this.users = res;
