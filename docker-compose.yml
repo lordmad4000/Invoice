@@ -10,3 +10,22 @@ services:
       - 1600:3306
     environment:
       MYSQL_ROOT_PASSWORD: RdlqT2BZUKyos832
+    networks:
+      - users-network
+  api:
+    image: dockerusersapi
+    build:
+      context: .
+      dockerfile: src/Users.API/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+      ConnectionStrings__DefaultConnection: "server=userswebapi;Database=users;uid=root;Password=RdlqT2BZUKyos832;persistsecurityinfo=True;"
+    ports:
+      - "21440:80"
+      - "44540:443"
+    networks:
+      - users-network
+networks:
+  users-network:
+    driver: bridge
