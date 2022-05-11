@@ -26,6 +26,14 @@ services:
       - "44540:443"
     networks:
       - users-network
+  angular:    
+    build: 
+      context: .
+      dockerfile: clients/UsersAngular/Dockerfile
+    ports:
+      - 4201:80
+    networks:
+      - users-network
 networks:
   users-network:
     driver: bridge
