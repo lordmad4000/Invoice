@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -9,7 +11,7 @@ using Users.Application.Interfaces;
 using Users.Application.Models;
 using Users.CrossCutting.Configuration;
 
-namespace Users.Controllers
+namespace Users.API.Controllers
 {
     [Authorize]
     [ApiController]
@@ -18,10 +20,12 @@ namespace Users.Controllers
     {
         private readonly IUserService _userService;
         private readonly JWTConfig _jwtConfig;
-        public UserController(IUserService userService, IOptions<JWTConfig> jwtConfig)
+        private readonly IMapper _mapper;
+        public UserController(IUserService userService, IOptions<JWTConfig> jwtConfig, IMapper mapper)
         {
             _userService = userService;
             _jwtConfig = jwtConfig.Value;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -30,7 +34,7 @@ namespace Users.Controllers
             try
             {
                 var users = await _userService.GetUsers();
-                return (Ok(users));
+                return (Ok(_mapper.Map<List<UserResponse>> (users)));
             }
             catch (Exception ex)
             {
@@ -44,7 +48,7 @@ namespace Users.Controllers
             try
             {
                 var userVM = await _userService.GetById(id);
-                return (Ok(userVM));
+                return (Ok(_mapper.Map<UserResponse> (userVM)));
             }
             catch (Exception ex)
             {
@@ -58,7 +62,7 @@ namespace Users.Controllers
             try
             {
                 await _userService.PutUser(userVM);
-                return (Ok(userVM));
+                return (Ok(_mapper.Map<UserResponse> (userVM)));
             }
             catch (Exception ex)
             {
