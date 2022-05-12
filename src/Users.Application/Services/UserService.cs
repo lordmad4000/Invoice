@@ -21,12 +21,14 @@ namespace Users.Application.Services
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly INotificationService _notificationService;
+        private readonly IPasswordEncryption _passwordEncryptionService;
 
-        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, INotificationService notificationService)
+        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, INotificationService notificationService, IPasswordEncryption passwordEncryptionService)
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
             _notificationService = notificationService;
+            _passwordEncryptionService = passwordEncryptionService;
         }
 
         public async Task<IEnumerable<UserDto>> GetUsers()
@@ -52,7 +54,7 @@ namespace Users.Application.Services
             var user = await _userRepository.GetAsync(c => c.Id == userVM.Id, false);
             if (user != null)
             {
-                user.Update(userVM.UserName, userVM.Password, userVM.FirstName, userVM.LastName);
+                user.Update(userVM.UserName, userVM.FirstName, userVM.LastName);
                 await _userRepository.UpdateAsync(user);
                 await _unitOfWork.SaveChangesAsync();
             }
@@ -63,6 +65,9 @@ namespace Users.Application.Services
             var user = MapUserDtoToUser(userVM);
 
             ValidateModel(user);
+
+            var password = GenerateUserPassword(user);
+            user = new User(user.UserName, password, user.FirstName, user.LastName, user.EmailAddress);
 
             user = await _userRepository.AddAsync(user);
             await _unitOfWork.SaveChangesAsync();
@@ -95,8 +100,9 @@ namespace Users.Application.Services
 
         public async Task<UserDto> Login(string username, string password)
         {
-            var user = await _userRepository.GetAsync(c => c.UserName == username && c.Password == password && c.Active == true);
-            if (user == null)
+            var user = await _userRepository.GetAsync(c => c.UserName == username && c.Active == true);
+
+            if (user == null || IsCorrectPassword(user, password) == false)
                 return null;
 
             return MapUserToUserDto(user);
@@ -120,6 +126,22 @@ namespace Users.Application.Services
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             return tokenHandler.WriteToken(token);
+        }
+
+        private string GenerateUserPassword(User user)
+        {
+            var salt = _passwordEncryptionService.GenerateSalt(16);
+            var hash = _passwordEncryptionService.GenerateHash($"{user.UserName}{user.Password}", salt);
+
+            return $"{salt},{hash}";
+        }
+
+        private bool IsCorrectPassword(User user, string password)
+        {
+            var splitSaltHashPassword = user.Password.Split(",");
+            var hash = _passwordEncryptionService.GenerateHash($"{user.UserName}{password}", splitSaltHashPassword[0]);
+
+            return hash.Equals(splitSaltHashPassword[1]);
         }
 
         private void ValidateModel(User user)
@@ -156,7 +178,7 @@ namespace Users.Application.Services
                 LastName = user.LastName,
                 Email = user.EmailAddress.ToString()
             };
-        }        
+        }
 
     }
 }
