@@ -11,6 +11,9 @@ namespace Users.Infra.Mappings
             builder.HasIndex(c => c.Id)
                    .IsUnique();
 
+            builder.HasIndex(c => c.UserName)
+                   .IsUnique();
+
             builder.OwnsOne(c => c.EmailAddress)
                    .Property(c => c.Address)
                    .HasColumnName("EmailAddress")
