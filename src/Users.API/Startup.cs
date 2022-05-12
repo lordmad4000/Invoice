@@ -24,6 +24,10 @@ namespace Users.API
         {
             services.AddCORS(_myAllowSpecificOrigins);
 
+            services.AddAutoMapper(typeof(Startup));
+
+            //services.AddAutomapper(services);
+
             services.AddControllers();
 
             services.AddSwagger();
