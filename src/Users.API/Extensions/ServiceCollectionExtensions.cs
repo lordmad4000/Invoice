@@ -11,6 +11,7 @@ using Users.Application.Services;
 using Users.CrossCutting.Configuration;
 using Users.CrossCutting.Interfaces;
 using Users.Domain.Interfaces;
+using Users.Domain.Services;
 using Users.Infra.Data;
 using Users.Infra.Repositories;
 using Users.Infra.Services;
@@ -50,6 +51,7 @@ namespace Users.API.Extensions
         {
             services.AddScoped<INotificationService, NotificationHTMLService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IPasswordEncryption, PasswordEncryptService>();
             
             return services;
         }
