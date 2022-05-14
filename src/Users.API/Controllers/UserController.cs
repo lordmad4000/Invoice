@@ -34,6 +34,7 @@ namespace Users.API.Controllers
             try
             {
                 var users = await _userService.GetUsers();
+
                 return (Ok(_mapper.Map<List<UserResponse>> (users)));
             }
             catch (Exception ex)
@@ -48,6 +49,7 @@ namespace Users.API.Controllers
             try
             {
                 var userDto = await _userService.GetById(id);
+
                 return (Ok(_mapper.Map<UserResponse> (userDto)));
             }
             catch (Exception ex)
@@ -62,6 +64,7 @@ namespace Users.API.Controllers
             try
             {
                 await _userService.PutUser(userDto);
+
                 return (Ok(_mapper.Map<UserResponse> (userDto)));
             }
             catch (Exception ex)
@@ -76,7 +79,9 @@ namespace Users.API.Controllers
             try
             {
                 userDto = await _userService.PostUser(userDto);
-                return (Created("", userDto));
+                var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/{userDto.Id}";
+
+                return (Created(url, _mapper.Map<UserResponse> (userDto)));
             }
             catch (Exception ex)
             {
@@ -106,6 +111,7 @@ namespace Users.API.Controllers
             {
                 string activationCode = "";
                 var result = await _userService.ActivateUser(activationCode);
+
                 return (Ok(result));
             }
             catch (Exception ex)
