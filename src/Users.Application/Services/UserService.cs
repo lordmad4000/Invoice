@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Users.Application.Interfaces;
 using Users.Domain.Entities;
 using Users.Domain.Interfaces;
-using Users.Domain.ValueObjects;
 using Users.Domain.Validations;
 using Users.Domain.Exceptions;
 using System.Text;
@@ -13,7 +12,6 @@ using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Users.Application.Models;
 using AutoMapper;
-using Users.API.AutoMapper;
 
 namespace Users.Application.Services
 {
