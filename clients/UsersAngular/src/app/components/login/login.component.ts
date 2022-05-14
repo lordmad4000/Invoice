@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Login } from 'src/app/models/login';
 import { UserLoginResponse } from 'src/app/models/userloginresponse';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -35,7 +36,19 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: this.formLogin.value.password
     };
 
-    this.subscription = this.httpClient.post<UserLoginResponse>('http://localhost:21440/api/User/Login', usuarioLogin, { observe: 'response' })    
+    const httpHeaders = new HttpHeaders({ 
+        "Access-Control-Allow-Origin":"*",
+        'Content-Type': 'application/json',
+      });
+
+    const url = `${environment.baseHttpUrl}/User/Login`;
+
+    this.subscription = this.httpClient.post<UserLoginResponse>('http://localhost:21440/api/User/Login', usuarioLogin,
+    //this.subscription = this.httpClient.post<UserLoginResponse>(url, usuarioLogin,
+      { 
+        headers: httpHeaders,
+        observe: 'response' 
+      }) 
       .subscribe({
         next: (res) => {          
           let token = res.body?.token;
