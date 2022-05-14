@@ -167,26 +167,6 @@ namespace Users.Application.Services
                 throw new EntityValidationException(errors.ToString());
             }
         }
-
-        // // TODO AGREGAR AUTOMAPPER Y QUITAR
-        // private User MapUserDtoToUser(UserDto userDto)
-        // {
-        //     var user = new User(userDto.UserName, userDto.Password, userDto.FirstName, userDto.LastName, new EmailAddress(userDto.Email));
-
-        //     return user;
-        // }
-        // private UserDto MapUserToUserDto(User user)
-        // {
-        //     return new UserDto()
-        //     {
-        //         Id = user.Id,
-        //         UserName = user.UserName,
-        //         Password = user.Password,
-        //         FirstName = user.FirstName,
-        //         LastName = user.LastName,
-        //         Email = user.EmailAddress.ToString()
-        //     };
-        // }
-
+        
     }
 }
