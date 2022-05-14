@@ -28,6 +28,8 @@ namespace Users.Infra.Repositories
         public async Task<T> AddAsync(T entity)
         {
             await _dbSet.AddAsync(entity);
+            _memoryCacheService.Remove(_cacheKey);
+
             return entity;
         }
 
@@ -39,6 +41,7 @@ namespace Users.Infra.Repositories
                 _dbSet.Remove(entity);
                 return await Task.FromResult(true);
             }
+            _memoryCacheService.Remove(_cacheKey);
 
             return await Task.FromResult(false);
         }
@@ -46,6 +49,8 @@ namespace Users.Infra.Repositories
         public async Task<bool> DeleteAsync(T entity)
         {
             _dbSet.Remove(entity);
+            _memoryCacheService.Remove(_cacheKey);
+
             return await Task.FromResult(true);
         }
 
@@ -78,6 +83,8 @@ namespace Users.Infra.Repositories
         public async Task<T> UpdateAsync(T entity)
         {
             _dbSet.Update(entity);
+            _memoryCacheService.Remove(_cacheKey);
+            
             return await Task.FromResult(entity);
         }
 
