@@ -41,12 +41,12 @@ namespace Users.Application.Services
 
         public async Task<IEnumerable<UserDto>> GetUsers()
         {
-            var usersVM = new List<UserDto>();
+            var usersDto = new List<UserDto>();
             var users = await _userRepository.ListAsync(c => c.Id != Guid.Empty);
             foreach (var user in users)
-                usersVM.Add(_mapper.Map<UserDto> (user));
+                usersDto.Add(_mapper.Map<UserDto> (user));
 
-            return usersVM;
+            return usersDto;
         }
 
         public async Task<UserDto> GetById(Guid id)
@@ -55,22 +55,22 @@ namespace Users.Application.Services
             return _mapper.Map<UserDto> (user);
         }
 
-        public async Task PutUser(UserDto userVM)
+        public async Task PutUser(UserDto userDto)
         {
-            ValidateModel(_mapper.Map<User> (userVM));
+            ValidateModel(_mapper.Map<User> (userDto));
 
-            var user = await _userRepository.GetAsync(c => c.Id == userVM.Id, false);
+            var user = await _userRepository.GetAsync(c => c.Id == userDto.Id, false);
             if (user != null)
             {
-                user.Update(userVM.UserName, userVM.FirstName, userVM.LastName);
+                user.Update(userDto.UserName, userDto.FirstName, userDto.LastName);
                 await _userRepository.UpdateAsync(user);
                 await _unitOfWork.SaveChangesAsync();
             }
         }
 
-        public async Task<UserDto> PostUser(UserDto userVM)
+        public async Task<UserDto> PostUser(UserDto userDto)
         {
-            var user = _mapper.Map<User> (userVM);
+            var user = _mapper.Map<User> (userDto);
 
             ValidateModel(user);
 
@@ -79,7 +79,7 @@ namespace Users.Application.Services
 
             user = await _userRepository.AddAsync(user);
             await _unitOfWork.SaveChangesAsync();
-            await _notificationService.SendAsync(userVM, user.ActivationCode);
+            await _notificationService.SendAsync(userDto, user.ActivationCode);
 
             return _mapper.Map<UserDto> (user);
         }
@@ -169,9 +169,9 @@ namespace Users.Application.Services
         }
 
         // // TODO AGREGAR AUTOMAPPER Y QUITAR
-        // private User MapUserDtoToUser(UserDto userVM)
+        // private User MapUserDtoToUser(UserDto userDto)
         // {
-        //     var user = new User(userVM.UserName, userVM.Password, userVM.FirstName, userVM.LastName, new EmailAddress(userVM.Email));
+        //     var user = new User(userDto.UserName, userDto.Password, userDto.FirstName, userDto.LastName, new EmailAddress(userDto.Email));
 
         //     return user;
         // }

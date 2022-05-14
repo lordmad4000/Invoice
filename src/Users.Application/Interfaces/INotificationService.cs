@@ -6,6 +6,6 @@ namespace Users.Application.Interfaces
 {
     public interface INotificationService
     {
-        Task<bool> SendAsync(UserDto userVM, string activationCode);
+        Task<bool> SendAsync(UserDto userDto, string activationCode);
     }
 }

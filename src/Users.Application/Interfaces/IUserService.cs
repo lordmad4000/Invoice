@@ -9,8 +9,8 @@ namespace Users.Application.Interfaces
     {
         Task<UserDto> GetById(Guid id);
         Task<IEnumerable<UserDto>> GetUsers();
-        Task PutUser(UserDto userVM);
-        Task<UserDto> PostUser(UserDto userVM);
+        Task PutUser(UserDto userDto);
+        Task<UserDto> PostUser(UserDto userDto);
         Task<bool> DeleteUser(Guid id);
         Task<bool> ActivateUser(string activationCode);
         Task<UserDto> Login(string username, string password);

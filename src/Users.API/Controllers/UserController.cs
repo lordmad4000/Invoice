@@ -47,8 +47,8 @@ namespace Users.API.Controllers
         {
             try
             {
-                var userVM = await _userService.GetById(id);
-                return (Ok(_mapper.Map<UserResponse> (userVM)));
+                var userDto = await _userService.GetById(id);
+                return (Ok(_mapper.Map<UserResponse> (userDto)));
             }
             catch (Exception ex)
             {
@@ -57,12 +57,12 @@ namespace Users.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> PutUser([FromBody] UserDto userVM)
+        public async Task<IActionResult> PutUser([FromBody] UserDto userDto)
         {
             try
             {
-                await _userService.PutUser(userVM);
-                return (Ok(_mapper.Map<UserResponse> (userVM)));
+                await _userService.PutUser(userDto);
+                return (Ok(_mapper.Map<UserResponse> (userDto)));
             }
             catch (Exception ex)
             {
@@ -71,12 +71,12 @@ namespace Users.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostUser([FromBody] UserDto userVM)
+        public async Task<IActionResult> PostUser([FromBody] UserDto userDto)
         {
             try
             {
-                userVM = await _userService.PostUser(userVM);
-                return (Created("", userVM));
+                userDto = await _userService.PostUser(userDto);
+                return (Created("", userDto));
             }
             catch (Exception ex)
             {
@@ -120,14 +120,14 @@ namespace Users.API.Controllers
         {
             try
             {
-                var userVM = await _userService.Login(userLoginRequest.Username, userLoginRequest.Password);
-                if (userVM == null)
+                var userDto = await _userService.Login(userLoginRequest.Username, userLoginRequest.Password);
+                if (userDto == null)
                     return BadRequest("Invalid Username or Password.");
 
                 var userLoginResponse = new UserLoginResponse
                 {
-                    Id = userVM.Id,
-                    Token = _userService.GetToken(userVM.Password, userVM.Email, _jwtConfig.SecretKey)
+                    Id = userDto.Id,
+                    Token = _userService.GetToken(userDto.Password, userDto.Email, _jwtConfig.SecretKey)
                 };
 
                 return (await Task.FromResult(Ok(userLoginResponse)));

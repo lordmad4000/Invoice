@@ -8,7 +8,7 @@ namespace Users.Application.Services
 {
     public class NotificationHTMLService : INotificationService
     {
-        public async Task<bool> SendAsync(UserDto userVM, string activationCode)
+        public async Task<bool> SendAsync(UserDto userDto, string activationCode)
         {
             try
             {
