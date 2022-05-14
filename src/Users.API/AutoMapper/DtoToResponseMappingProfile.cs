@@ -11,4 +11,5 @@ namespace Users.API.AutoMapper
             CreateMap<UserDto, UserResponse>();
         }
     }
+
 }

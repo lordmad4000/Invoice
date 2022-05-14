@@ -11,6 +11,7 @@ namespace Users.API.AutoMapper
                 cfg.AllowNullCollections = true;
                 cfg.AllowNullDestinationValues = true;
                 cfg.AddProfile(new DtoToResponseMappingProfile());
+                cfg.AddProfile(new EntityDtoMappingProfile());
             });
         }
     }

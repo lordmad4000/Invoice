@@ -12,6 +12,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Users.Application.Models;
+using AutoMapper;
+using Users.API.AutoMapper;
 
 namespace Users.Application.Services
 {
@@ -22,13 +24,19 @@ namespace Users.Application.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly INotificationService _notificationService;
         private readonly IPasswordEncryption _passwordEncryptionService;
+        private readonly IMapper _mapper;
 
-        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, INotificationService notificationService, IPasswordEncryption passwordEncryptionService)
+        public UserService(IUserRepository userRepository, 
+                           IUnitOfWork unitOfWork, 
+                           INotificationService notificationService, 
+                           IPasswordEncryption passwordEncryptionService, 
+                           IMapper mapper)
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
             _notificationService = notificationService;
             _passwordEncryptionService = passwordEncryptionService;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<UserDto>> GetUsers()
@@ -36,7 +44,7 @@ namespace Users.Application.Services
             var usersVM = new List<UserDto>();
             var users = await _userRepository.ListAsync(c => c.Id != Guid.Empty);
             foreach (var user in users)
-                usersVM.Add(MapUserToUserDto(user));
+                usersVM.Add(_mapper.Map<UserDto> (user));
 
             return usersVM;
         }
@@ -44,12 +52,12 @@ namespace Users.Application.Services
         public async Task<UserDto> GetById(Guid id)
         {
             var user = await _userRepository.GetAsync(c => c.Id == id);
-            return MapUserToUserDto(user);
+            return _mapper.Map<UserDto> (user);
         }
 
         public async Task PutUser(UserDto userVM)
         {
-            ValidateModel(MapUserDtoToUser(userVM));
+            ValidateModel(_mapper.Map<User> (userVM));
 
             var user = await _userRepository.GetAsync(c => c.Id == userVM.Id, false);
             if (user != null)
@@ -62,7 +70,7 @@ namespace Users.Application.Services
 
         public async Task<UserDto> PostUser(UserDto userVM)
         {
-            var user = MapUserDtoToUser(userVM);
+            var user = _mapper.Map<User> (userVM);
 
             ValidateModel(user);
 
@@ -73,7 +81,7 @@ namespace Users.Application.Services
             await _unitOfWork.SaveChangesAsync();
             await _notificationService.SendAsync(userVM, user.ActivationCode);
 
-            return MapUserToUserDto(user);
+            return _mapper.Map<UserDto> (user);
         }
 
         public async Task<bool> DeleteUser(Guid id)
@@ -105,7 +113,7 @@ namespace Users.Application.Services
             if (user == null || IsCorrectPassword(user, password) == false)
                 return null;
 
-            return MapUserToUserDto(user);
+            return _mapper.Map<UserDto> (user);
         }
 
         public string GetToken(string userId, string userEmail, string secretKey)
@@ -160,25 +168,25 @@ namespace Users.Application.Services
             }
         }
 
-        // TODO AGREGAR AUTOMAPPER Y QUITAR
-        private User MapUserDtoToUser(UserDto userVM)
-        {
-            var user = new User(userVM.UserName, userVM.Password, userVM.FirstName, userVM.LastName, new EmailAddress(userVM.Email));
+        // // TODO AGREGAR AUTOMAPPER Y QUITAR
+        // private User MapUserDtoToUser(UserDto userVM)
+        // {
+        //     var user = new User(userVM.UserName, userVM.Password, userVM.FirstName, userVM.LastName, new EmailAddress(userVM.Email));
 
-            return user;
-        }
-        private UserDto MapUserToUserDto(User user)
-        {
-            return new UserDto()
-            {
-                Id = user.Id,
-                UserName = user.UserName,
-                Password = user.Password,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.EmailAddress.ToString()
-            };
-        }
+        //     return user;
+        // }
+        // private UserDto MapUserToUserDto(User user)
+        // {
+        //     return new UserDto()
+        //     {
+        //         Id = user.Id,
+        //         UserName = user.UserName,
+        //         Password = user.Password,
+        //         FirstName = user.FirstName,
+        //         LastName = user.LastName,
+        //         Email = user.EmailAddress.ToString()
+        //     };
+        // }
 
     }
 }

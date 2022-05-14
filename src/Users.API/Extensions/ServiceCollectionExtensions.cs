@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using Users.API.AutoMapper;
 using Users.Application.Interfaces;
 using Users.Application.Services;
 using Users.CrossCutting.Configuration;
@@ -142,6 +143,14 @@ namespace Users.API.Extensions
                     }
                 });
             });
+
+            return services;
+        }
+
+        public static IServiceCollection AddAutoMapperSetup(this IServiceCollection services)
+        {
+            services.AddAutoMapper(typeof(DtoToResponseMappingProfile), typeof (EntityDtoMappingProfile));
+            AutoMapperConfig.RegisterMappings();
 
             return services;
         }

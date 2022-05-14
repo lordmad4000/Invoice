@@ -24,9 +24,7 @@ namespace Users.API
         {
             services.AddCORS(_myAllowSpecificOrigins);
 
-            services.AddAutoMapper(typeof(Startup));
-
-            //services.AddAutomapper(services);
+            services.AddAutoMapperSetup();
 
             services.AddControllers();
 
