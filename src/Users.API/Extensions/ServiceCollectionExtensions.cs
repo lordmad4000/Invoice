@@ -32,7 +32,7 @@ namespace Users.API.Extensions
         public static IServiceCollection AddCache(this IServiceCollection services)
         {
             services.AddMemoryCache();
-            
+
             services.AddTransient<IMemoryCacheService, MemoryCacheService>();
 
             return services;
@@ -53,7 +53,7 @@ namespace Users.API.Extensions
             services.AddScoped<INotificationService, NotificationHTMLService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPasswordEncryption, PasswordEncryptService>();
-            
+
             return services;
         }
 
@@ -61,22 +61,6 @@ namespace Users.API.Extensions
         {
             services.Configure<CacheConfig>(configuration.GetSection("CacheConfig"));
             services.Configure<JWTConfig>(configuration.GetSection("JWTConfig"));
-
-            return services;
-        }
-
-        public static IServiceCollection AddCORS(this IServiceCollection services, string policyName)
-        {
-            services.AddCors(opt =>
-            {
-                opt.AddPolicy(name: policyName,
-                              policy =>
-                              {
-                                  policy.WithHeaders("*");
-                                  policy.WithOrigins("*");
-                                  policy.WithMethods("*");
-                              });
-            });
 
             return services;
         }
@@ -149,7 +133,7 @@ namespace Users.API.Extensions
 
         public static IServiceCollection AddAutoMapperSetup(this IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(DtoToResponseMappingProfile), typeof (EntityDtoMappingProfile));
+            services.AddAutoMapper(typeof(DtoToResponseMappingProfile), typeof(EntityDtoMappingProfile));
             AutoMapperConfig.RegisterMappings();
 
             return services;

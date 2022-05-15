@@ -10,8 +10,6 @@ namespace Users.API
     public class Startup
     {
 
-        private string _myAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -22,7 +20,8 @@ namespace Users.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCORS(_myAllowSpecificOrigins);
+
+            services.AddCors();
 
             services.AddAutoMapperSetup();
 
@@ -55,11 +54,12 @@ namespace Users.API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Users Core API v1"));
             }
 
-            app.UseHttpsRedirection();
-
             app.UseRouting();
 
-            app.UseCors(_myAllowSpecificOrigins);
+            app.UseCors(x => x.AllowAnyMethod()
+                              .AllowAnyHeader()
+                              .SetIsOriginAllowed(origin => true)
+                              .AllowCredentials());                            
 
             app.UseAuthentication();
 
