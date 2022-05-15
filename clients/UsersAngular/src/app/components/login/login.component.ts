@@ -16,10 +16,12 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   formLogin: FormGroup;
   private subscription = new Subscription();
+  firstNameAutofilled: boolean = false;
+  lastNameAutofilled: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
-              private httpClient: HttpClient,
-              private router: Router
+    private httpClient: HttpClient,
+    private router: Router
   ) {
     this.formLogin = formBuilder.group({
       username: ['', Validators.required],
@@ -36,21 +38,12 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: this.formLogin.value.password
     };
 
-    const httpHeaders = new HttpHeaders({ 
-        "Access-Control-Allow-Origin":"*",
-        'Content-Type': 'application/json',
-      });
-
     const url = `${environment.baseHttpUrl}/User/Login`;
 
-    this.subscription = this.httpClient.post<UserLoginResponse>('http://localhost:21440/api/User/Login', usuarioLogin,
-    //this.subscription = this.httpClient.post<UserLoginResponse>(url, usuarioLogin,
-      { 
-        headers: httpHeaders,
-        observe: 'response' 
-      }) 
+    this.subscription = this.httpClient
+      .post<UserLoginResponse>(url, usuarioLogin, { observe: 'response' })
       .subscribe({
-        next: (res) => {          
+        next: (res) => {
           let token = res.body?.token;
           console.log('token', token);
           if (token !== undefined) {
@@ -61,7 +54,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.router.navigate(['/pagenotfound']);
           }
         },
-        error: (err) =>{
+        error: (err) => {
           console.log('Error en el login', err);
         }
       });
