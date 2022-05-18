@@ -11,7 +11,7 @@ import { NavmenuComponent } from './components/navmenu/navmenu.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material-module';
-import { AuthGuard } from './_guards/auth.guard';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
@@ -30,10 +30,9 @@ import { AuthGuard } from './_guards/auth.guard';
     FormsModule,
     MaterialModule,
     ReactiveFormsModule,
+    CoreModule,
   ],
-  providers: [
-    AuthGuard,
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

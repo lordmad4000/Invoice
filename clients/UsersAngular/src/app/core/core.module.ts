@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { CoreRoutingModule } from './core-routing.module';
 import { CoreComponent } from './core.component';
+import { AuthGuard } from './guards/auth.guard';
 
 
 @NgModule({
@@ -12,6 +13,9 @@ import { CoreComponent } from './core.component';
   imports: [
     CommonModule,
     CoreRoutingModule
-  ]
+  ],
+  providers: [
+    AuthGuard,
+  ],
 })
 export class CoreModule { }
