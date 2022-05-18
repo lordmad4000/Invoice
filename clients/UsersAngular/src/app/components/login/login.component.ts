@@ -1,24 +1,25 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Login } from 'src/app/models/login';
-import { UserLoginResponse } from 'src/app/models/userloginresponse';
+import { Login } from 'src/app/_models/login';
+import { UserLoginResponse } from 'src/app/_models/userloginresponse';
 import { environment } from 'src/environments/environment';
+import {ErrorStateMatcher} from '@angular/material/core';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent implements OnInit, OnDestroy {
 
   formLogin: FormGroup;
+  formLoginError: string = "";
   private subscription = new Subscription();
-  firstNameAutofilled: boolean = false;
-  lastNameAutofilled: boolean = false;
-
+  
   constructor(private formBuilder: FormBuilder,
     private httpClient: HttpClient,
     private router: Router
@@ -56,6 +57,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         },
         error: (err) => {
           console.log('Error en el login', err);
+          this.formLoginError = "Incorrect username or password."
         }
       });
   }

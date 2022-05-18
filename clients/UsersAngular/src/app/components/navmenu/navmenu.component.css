@@ -1,0 +1,38 @@
+mat-toolbar {
+    background: #009bee;
+    color: white;
+}
+
+mat-sidenav {
+    margin: 16px;
+    width: 200px;
+    border-right: none;
+    background: #009bee;
+    color: white;
+    border-radius: 20px;
+    padding: 16px;
+    text-align: left;
+}
+
+mat-icon {
+    padding-right: 8px;
+}
+
+.content {
+    height: calc(100vh - 98px);
+    border-radius: 10px;
+    margin: 16px;
+    margin-left: 32px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 1rem;
+    color: lightgray;
+}
+
+.mat-sidenav-container {
+    height: calc(100vh - 65px);
+    flex: 1;
+}

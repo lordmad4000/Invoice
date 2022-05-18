@@ -1,24 +1,19 @@
-<div>
-    LOGIN
-</div>
 <br>
-<form [formGroup]="formLogin" (ngSubmit)="Login()">
-    <div>
-        <label>Usuario</label>
-        <input type="text" formControlName="username">
-    </div>
+<form class="login-form" [formGroup]="formLogin" (ngSubmit)="Login()">
+    <h1>SIGN IN</h1>
+    <mat-form-field appearance="fill" mat-form-fieldAutoSize>
+        <mat-label>Usuario</mat-label>
+        <input type="text" matInput formControlName="username" matTextareaAutosize required>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Contraseña</mat-label>
+        <input type="password" matInput formControlName="password" required>
+    </mat-form-field>
+    <mat-error *ngIf="formLoginError.length > 0">
+        {{formLoginError}}
+    </mat-error>
     <br>
     <div>
-        <label>Contraseña</label>
-        <input type="password" formControlName="password">
-    </div>
-    <br>
-    <div>
-        <button mat-raised-button color="red" type="submit">
-            Iniciar Sesión
-        </button>
-        <br>
-        <br>
-        <button mat-flat-button color="primary">Hola</button>
+        <button mat-raised-button color="primary" type="submit"> Iniciar Sesión</button>
     </div>
 </form>

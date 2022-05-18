@@ -7,5 +7,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   IsAuthenticated = false;
-  title = 'UsersAngular';
 }
