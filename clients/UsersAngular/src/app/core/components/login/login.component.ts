@@ -1,4 +1,4 @@
-import { HttpClient  } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -17,15 +17,17 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   formLogin: FormGroup;
   formLoginError: string = "";
-  private subscription = new Subscription();
+  private subscription: Subscription | undefined;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(
+    private formBuilder: FormBuilder,
     private httpClient: HttpClient,
-    private router: Router
-  ) {
+    private router: Router) {
+
     this.formLogin = formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
+      
     });
   }
 
