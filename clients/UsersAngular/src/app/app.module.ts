@@ -5,14 +5,13 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/core.module';
+import { HomeModule } from './modules/home/home.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -23,6 +22,7 @@ import { CoreModule } from './core/core.module';
     FormsModule,
     ReactiveFormsModule,
     CoreModule,
+    HomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
