@@ -17,6 +17,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { MatInputModule } from '@angular/material/input';
     CoreComponent,
     NavmenuComponent,
     LoginComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -44,6 +46,7 @@ import { MatInputModule } from '@angular/material/input';
   exports: [
     NavmenuComponent,
     LoginComponent,
+    PageNotFoundComponent,
   ],
   providers: [
     NavmenuComponent,
