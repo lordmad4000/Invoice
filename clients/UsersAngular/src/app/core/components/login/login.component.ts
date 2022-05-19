@@ -3,9 +3,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Login } from 'src/app/_models/login';
-import { UserLoginResponse } from 'src/app/_models/userloginresponse';
 import { environment } from 'src/environments/environment';
+import { Login } from '../../models/login';
+import { UserLoginResponse } from '../../models/userloginresponse';
 
 @Component({
   selector: 'app-login',
