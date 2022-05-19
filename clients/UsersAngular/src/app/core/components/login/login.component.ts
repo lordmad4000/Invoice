@@ -1,12 +1,11 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient  } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Login } from 'src/app/_models/login';
 import { UserLoginResponse } from 'src/app/_models/userloginresponse';
 import { environment } from 'src/environments/environment';
-import {ErrorStateMatcher} from '@angular/material/core';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +18,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   formLogin: FormGroup;
   formLoginError: string = "";
   private subscription = new Subscription();
-  
+
   constructor(private formBuilder: FormBuilder,
     private httpClient: HttpClient,
     private router: Router
