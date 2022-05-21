@@ -21,6 +21,7 @@ export class NavmenuComponent implements OnInit {
 
   usersButtonClick(event: any) {
     console.log("Users button click.")
+    this.router.navigate(['/users']);
   }
 
   aboutButtonClick(event: any) {
