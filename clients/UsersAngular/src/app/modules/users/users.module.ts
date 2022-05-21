@@ -6,6 +6,13 @@ import { UsersViewComponent } from './users-view/users-view.component';
 import { UsersEditComponent } from './users-edit/users-edit.component';
 import { UsersNewComponent } from './users-new/users-new.component';
 import { UsersComponent } from './users.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
+import { Userservice } from 'src/app/shared/services/userservice';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -17,7 +24,13 @@ import { UsersComponent } from './users.component';
   ],
   imports: [
     CommonModule,
-    UsersRoutingModule
+    UsersRoutingModule,
+    MatTableModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    FormsModule,
+    SharedModule,
   ]
 })
 export class UsersModule { }

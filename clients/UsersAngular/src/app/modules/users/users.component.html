@@ -1,1 +1,35 @@
-<p>users works!</p>
+<div class="container">
+    <mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="select">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()" (change)="selectHandler(row)"
+                    [checked]="selection.isSelected(row)"> </mat-checkbox>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="username">
+			<mat-header-cell *matHeaderCellDef [ngClass]="'mat-column-username'"> UserName </mat-header-cell>
+			<mat-cell *matCellDef="let user" [ngClass]="'mat-column-username'"> {{user.userName}} </mat-cell>
+		</ng-container>
+
+        <ng-container matColumnDef="name">
+			<mat-header-cell *matHeaderCellDef [ngClass]="'mat-column-name'"> Name </mat-header-cell>
+			<mat-cell *matCellDef="let user" [ngClass]="'mat-column-name'"> {{user.firstName}} {{user.lastName}} </mat-cell>
+		</ng-container>
+
+        <ng-container matColumnDef="email">
+			<mat-header-cell *matHeaderCellDef [ngClass]="'mat-column-email'"> Email </mat-header-cell>
+			<mat-cell *matCellDef="let user" [ngClass]="'mat-column-email'"> {{user.email}} </mat-cell>
+		</ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"> </mat-row>
+
+    </mat-table>
+	<pre>
+        <h3>Selected :</h3>
+        {{selection.selected | json}}
+      </pre>    
+</div>

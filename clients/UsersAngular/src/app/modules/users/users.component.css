@@ -1,0 +1,53 @@
+.mat-table {
+    margin-top: 16px;
+    width: calc(100vw * 0.8);
+    background-color: transparent;
+}
+
+table {
+    width: 100%;
+}
+
+.mat-column-select {
+    word-wrap: break-word;
+    white-space: unset;
+    flex: 0 0 18%;
+    width: 18%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+    word-break: break-word;
+}
+
+.mat-column-username {
+    word-wrap: break-word;
+    white-space: unset;
+    flex: 0 0 23%;
+    width: 23%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+    word-break: break-word;
+}
+
+.mat-column-name {
+    word-wrap: break-word;
+    white-space: unset;
+    flex: 0 0 40%;
+    width: 40%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+    word-break: break-word;
+}
+
+.mat-column-email {
+    word-wrap: break-word;
+    white-space: unset;
+    flex: 0 0 30%;
+    width: 30%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+    word-break: break-word;
+}
