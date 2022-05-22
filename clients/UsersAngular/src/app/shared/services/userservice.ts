@@ -1,33 +1,35 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { observeNotification } from 'rxjs/internal/Notification';
+import { Observable } from 'rxjs/internal/Observable';
 import { UserResponse } from '../models/userresponse';
+import { JWTService } from './jwtservice';
 
 @Injectable()
-export class Userservice {
+export class UserService {
 
-    users: UserResponse[] = [];
+    protected basePath = 'http://localhost:21440';
 
-    constructor(private httpClient: HttpClient) {
+    constructor(protected httpClient: HttpClient,
+        protected jwtService: JWTService) {
     }
 
-    public GetAll(): UserResponse[] {
-        const auth_token = sessionStorage.getItem('token');
+    public GetAll(): Observable<Array<UserResponse>> {
 
-        const httpHeaders = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + auth_token
-        });
-        this.httpClient
-            .get<UserResponse[]>('http://localhost:21440/api/User', { headers: httpHeaders })
-            .subscribe({
-                next: (res: any) => {
-                    this.users = res;
-                },
-                error: (err) => {
-                    console.log('Error al recuperar los usuarios', err);
-                }
-            });
+        const httpHeaders = this.jwtService.GetHttpHeaderWithTokenFromSessionStorage();
 
-        return this.users;
+        const url = `${this.basePath}/api/User`;
+
+        return this.httpClient.get<Array<UserResponse>>(url, { headers: httpHeaders, });
     }
+
+    public Get(id: string): Observable<UserResponse> {
+
+        const httpHeaders = this.jwtService.GetHttpHeaderWithTokenFromSessionStorage();
+
+        const url = `${this.basePath}/api/User/${encodeURIComponent(String(id))}`;
+
+        return this.httpClient.get<UserResponse>(url, { headers: httpHeaders, });
+    }
+
 }
