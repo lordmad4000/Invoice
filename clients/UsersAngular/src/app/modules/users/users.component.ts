@@ -1,5 +1,6 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserResponse } from 'src/app/shared/models/userresponse';
 import { UserService } from 'src/app/shared/services/userservice';
 
@@ -21,7 +22,7 @@ export class UsersComponent implements OnInit {
   dataSource: UserResponse[] = [];
   selection = new SelectionModel<UserResponse>(true, []);
 
-  constructor(private userservice: UserService) {
+  constructor(private userservice: UserService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -47,4 +48,13 @@ export class UsersComponent implements OnInit {
   onChange(typeValue: number) {
     this.selection.clear();
   }
+
+  editUserButtonClick($event: any) {
+    console.log("Edit button click.")
+    if (this.selection.hasValue()) {
+      const id = this.selection.selected[0].id;
+      this.router.navigate(['/users/edit', `${id}`]);
+    }
+  }
+
 }
