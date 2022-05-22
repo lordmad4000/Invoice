@@ -1,8 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
 import { UserResponse } from 'src/app/shared/models/userresponse';
-import { Userservice } from 'src/app/shared/services/userservice';
+import { UserService } from 'src/app/shared/services/userservice';
 
 @Component({
   selector: 'app-users',
@@ -16,29 +15,28 @@ export class UsersComponent implements OnInit {
     "select",
     "username",
     "name",
-    // "firstname",
-    // "lastname",
     "email"
   ];
 
   dataSource: UserResponse[] = [];
-  //dataSource = new MatTableDataSource<UserResponse>(ELEMENT_DATA);
   selection = new SelectionModel<UserResponse>(true, []);
 
-  constructor(private userservice: Userservice) {
-    // this.dataSource = [
-    //   { id: "1", userName: "pepe", firstName: "Pepe", lastName: "García", email: "pepe@gmail.com" },
-    //   { id: "2", userName: "felix", firstName: "Felix", lastName: "López", email: "felix@gmail.com" },
-    //   { id: "3", userName: "antonio", firstName: "Antonio", lastName: "Puertas", email: "antonio@gmail.com" },
-    //   { id: "4", userName: "julian", firstName: "Julian", lastName: "Herrero", email: "julian@gmail.com" },
-    //   { id: "5", userName: "ramiro", firstName: "Ramiro", lastName: "Sánchez", email: "ramiro@gmail.com" },
-    //   { id: "6", userName: "sebastian", firstName: "Sebastian", lastName: "El Cano", email: "sebastian@gmail.com" },
-    // ];
+  constructor(private userservice: UserService) {
   }
 
   ngOnInit(): void {
 
-    this.dataSource = this.userservice.GetAll();
+    this.userservice.GetAll().subscribe({
+      next: (res: any) => {
+        const data = res;
+        if (data) {
+          this.dataSource = data;
+        }
+      },
+      error: (err) => {
+        console.log('Error al recuperar los usuarios', err);
+      }
+    });
 
   }
 
@@ -50,17 +48,3 @@ export class UsersComponent implements OnInit {
     this.selection.clear();
   }
 }
-
-const ELEMENT_DATA: UserResponse[] = [
-  { id: "1", userName: "pepe", firstName: "Pepe", lastName: "García", email: "pepe@gmail.com" },
-  { id: "2", userName: "felix", firstName: "Felix", lastName: "López", email: "felix@gmail.com" },
-  { id: "3", userName: "antonio", firstName: "Antonio", lastName: "Puertas", email: "antonio@gmail.com" },
-  { id: "4", userName: "julian", firstName: "Julian", lastName: "Herrero", email: "julian@gmail.com" },
-  { id: "5", userName: "ramiro", firstName: "Ramiro", lastName: "Sánchez", email: "ramiro@gmail.com" },
-  { id: "6", userName: "sebastian", firstName: "Sebastian", lastName: "El Cano", email: "sebastian@gmail.com" },
-  { id: "7", userName: "felix", firstName: "Felix", lastName: "López", email: "felix@gmail.com" },
-  { id: "8", userName: "antonio", firstName: "Antonio", lastName: "Puertas", email: "antonio@gmail.com" },
-  { id: "9", userName: "julian", firstName: "Julian", lastName: "Herrero", email: "julian@gmail.com" },
-  { id: "10", userName: "ramiro", firstName: "Ramiro", lastName: "Sánchez", email: "ramiro@gmail.com" },
-  { id: "11", userName: "sebastian", firstName: "Sebastian", lastName: "El Cano", email: "sebastian@gmail.com" },
-];
