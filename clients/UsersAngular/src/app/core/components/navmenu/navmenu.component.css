@@ -21,17 +21,19 @@ mat-icon {
 .content {
     border-radius: 10px;
     margin: 16px;
-    margin-left: auto;
+    margin-left: 32px;
+    margin-right: 32px;
 
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    height: calc(100vh * 0.85);
 
     font-size: 1rem;
     color: lightgray;
 }
 
 .mat-sidenav-container {
-    height: calc(100vh - 65px);
+    height: calc(100vh * 0.9);
     flex: 1;
 }

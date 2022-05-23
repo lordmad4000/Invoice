@@ -1,6 +1,10 @@
 .mat-table {
-    margin-top: 16px;
+    vertical-align: top;
+    margin-top: 0px;    
+    overflow: auto;
     width: calc(100vw * 0.8);
+    height: calc(100vh * 0.8);
+    /* height: 47vh; */
     background-color: transparent;
 }
 
