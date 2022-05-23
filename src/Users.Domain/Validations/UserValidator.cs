@@ -7,14 +7,8 @@ namespace Users.Domain.Validations
     {
         public UserValidator()
         {
-            ValidateId();
             ValidateUserName();
             ValidatePassword();
-        }
-
-        public void ValidateId()
-        {
-            RuleFor(c => c.Id).NotEmpty();
         }
 
         public void ValidateUserName()
