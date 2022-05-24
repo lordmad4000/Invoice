@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: 'users', component: UsersComponent, canActivate: [AuthGuard]},
   { path: 'users/edit/:id', component: UsersEditComponent , canActivate: [AuthGuard] },
   { path: 'users/new', component: UsersNewComponent , canActivate: [AuthGuard] },
-  { path: 'users/view', component: UsersViewComponent , canActivate: [AuthGuard] },
+  { path: 'users/view/:id', component: UsersViewComponent , canActivate: [AuthGuard] },
   { path: '**', component: PageNotFoundComponent },
 ];
 

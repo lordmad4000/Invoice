@@ -1,1 +1,38 @@
-<p>users-view works!</p>
+<form class="user-form" [formGroup]="formUser">
+    <mat-toolbar>
+        <mat-toolbar-row>
+            <button mat-button matTooltip="Edit" (click)="editButtonClick($event)">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-button matTooltip="Delete" (click)="deleteButtonClick($event)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <div class="div-fields">
+        <mat-form-field class="id-field" appearance="fill" mat-form-fieldAutoSize>
+            <mat-label>Id</mat-label>
+            <input type="text" matInput formControlName="id" matTextareaAutosize>
+        </mat-form-field>
+        <mat-divider></mat-divider>
+        <mat-form-field class="username-field" appearance="fill" mat-form-fieldAutoSize>
+            <mat-label>UserName</mat-label>
+            <input type="text" matInput formControlName="userName" matTextareaAutosize>
+        </mat-form-field>
+        <mat-divider></mat-divider>
+        <mat-form-field class="firstname-field" appearance="fill" mat-form-fieldAutoSize>
+            <mat-label>FirstName</mat-label>
+            <input type="text" matInput formControlName="firstName" matTextareaAutosize>
+        </mat-form-field>
+        <mat-form-field class="lastname-field" appearance="fill" mat-form-fieldAutoSize>
+            <mat-label>LastName</mat-label>
+            <input type="text" matInput formControlName="lastName" matTextareaAutosize>
+        </mat-form-field>
+        <mat-divider></mat-divider>
+        <mat-form-field class="email-field" appearance="fill">
+            <mat-label>Email</mat-label>
+            <input type="text" matInput formControlName="email">
+        </mat-form-field>
+        <mat-divider></mat-divider>
+    </div>
+</form>

@@ -1,15 +1,73 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { UserService } from 'src/app/shared/services/userservice';
 
 @Component({
   selector: 'app-users-view',
   templateUrl: './users-view.component.html',
   styleUrls: ['./users-view.component.css']
 })
-export class UsersViewComponent implements OnInit {
+export class UsersViewComponent implements OnInit, OnDestroy {
 
-  constructor() { }
+  formUser: FormGroup;
+  formLoginError: string = "";
+  private subscription: Subscription | undefined;
+  private id: string = "";
+
+  constructor(
+    private route: ActivatedRoute,
+    private userService: UserService,
+    private formBuilder: FormBuilder,
+    private router: Router) {
+
+    this.formUser = formBuilder.group({
+      id: [{ value: '', disabled: true }],
+      userName: [{ value: '', disabled: true }],
+      firstName: [{ value: '', disabled: true }],
+      lastName: [{ value: '', disabled: true }],
+      email: [{ value: '', disabled: true }],
+    });
+  }
 
   ngOnInit(): void {
+    this.subscription = this.route.params.subscribe((params: Params): void => {
+      this.id = params['id'];
+      console.log(this.id);
+      this.getUser(this.id);
+    });
   }
+
+  private getUser(id: string) {
+    this.userService.Get(id).subscribe({
+      next: (res: any) => {
+        const data = res;
+        if (data) {
+          this.formUser.patchValue(data);
+        }
+      },
+      error: (err) => {
+        console.log('Error al recuperar el usuario', err);
+      }
+    })
+  }
+
+  editButtonClick(event: any) {
+    console.log("Edit button.");
+    this.router.navigate(['/users/edit', `${ this.id } `]);
+  }
+
+  deleteButtonClick(event: any) {
+    console.log("Delete button.");
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+
+  }
+
 
 }

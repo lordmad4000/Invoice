@@ -1,5 +1,6 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { UserResponse } from 'src/app/shared/models/userresponse';
 import { UserService } from 'src/app/shared/services/userservice';
@@ -13,48 +14,68 @@ import { UserService } from 'src/app/shared/services/userservice';
 export class UsersComponent implements OnInit {
 
   displayedColumns: string[] = [
-    "select",
     "username",
     "name",
     "email"
   ];
 
-  dataSource: UserResponse[] = [];
-  selection = new SelectionModel<UserResponse>(true, []);
+  start: number = 0;
+  limit: number = 50;
+  end: number = this.limit + this.start;
+  selectedRowIndex: number = 0;
+
+  users: UserResponse[] = [];
+  dataSource = new MatTableDataSource<UserResponse>();
 
   constructor(private userservice: UserService, private router: Router) {
   }
 
   ngOnInit(): void {
+    this.loadUsersData();
+  }
 
+  loadUsersData() {
     this.userservice.GetAll().subscribe({
       next: (res: any) => {
         const data = res;
         if (data) {
-          this.dataSource = data;
+          this.users = data;
+          this.dataSource = new MatTableDataSource(this.getTableData(this.start, this.end));
+          this.updateIndex();
         }
       },
       error: (err) => {
         console.log('Error al recuperar los usuarios', err);
       }
     });
-
   }
 
-  selectHandler(row: UserResponse) {
-    this.selection.toggle(row);
+  getRecord(row: UserResponse) {
+    console.log(row);
+    this.router.navigate(['/users/view', `${row.id}`]);
   }
 
-  onChange(typeValue: number) {
-    this.selection.clear();
-  }
+  onTableScroll(event: any) {
+    const tableViewHeight = event.target.offsetHeight;
+    const tableScrollHeight = event.target.scrollHeight;
+    const scrollLocation = event.target.scrollTop;
 
-  editUserButtonClick($event: any) {
-    console.log("Edit button click.")
-    if (this.selection.hasValue()) {
-      const id = this.selection.selected[0].id;
-      this.router.navigate(['/users/edit', `${id}`]);
+    const buffer = 200;
+    const limit = tableScrollHeight - tableViewHeight - buffer;
+    if (scrollLocation > limit) {
+      let data = this.getTableData(this.start, this.end);
+      this.dataSource.data = this.dataSource.data.concat(data);
+      this.updateIndex();
     }
+  }
+
+  getTableData(start: number, end: number) {
+    return this.users.slice(start, end);
+  }
+
+  updateIndex() {
+    this.start = this.end;
+    this.end = this.limit + this.start;
   }
 
 }
