@@ -26,7 +26,8 @@ namespace Users.API
 
             services.AddAutoMapperSetup();
 
-            services.AddControllers();
+            services.AddControllers()
+                    .AddNewtonsoftJson();
 
             services.AddSwagger();
 

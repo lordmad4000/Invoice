@@ -52,6 +52,7 @@ namespace Users.API.Extensions
         {
             services.AddScoped<INotificationService, NotificationHTMLService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IValidatorService, ValidatorService>();
             services.AddScoped<IPasswordEncryption, PasswordEncryptService>();
 
             return services;
