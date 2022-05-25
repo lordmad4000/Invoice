@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Users.API.Models.Request;
@@ -10,6 +11,7 @@ using Users.API.Models.Response;
 using Users.Application.Interfaces;
 using Users.Application.Models;
 using Users.CrossCutting.Configuration;
+using Users.Domain.Exceptions;
 
 namespace Users.API.Controllers
 {
@@ -35,7 +37,7 @@ namespace Users.API.Controllers
             {
                 var users = await _userService.GetUsers();
 
-                return (Ok(_mapper.Map<List<UserResponse>> (users)));
+                return (Ok(_mapper.Map<List<UserResponse>>(users)));
             }
             catch (Exception ex)
             {
@@ -50,7 +52,7 @@ namespace Users.API.Controllers
             {
                 var userDto = await _userService.GetById(id);
 
-                return (Ok(_mapper.Map<UserResponse> (userDto)));
+                return (Ok(_mapper.Map<UserResponse>(userDto)));
             }
             catch (Exception ex)
             {
@@ -59,13 +61,14 @@ namespace Users.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> PutUser([FromBody] UserDto userDto)
+        public async Task<IActionResult> PutUser([FromBody] UserUpdateRequest userUpdateRequest)
         {
             try
             {
+                var userDto = _mapper.Map<UserDto>(userUpdateRequest);
                 await _userService.PutUser(userDto);
 
-                return (Ok(_mapper.Map<UserResponse> (userDto)));
+                return (Ok(_mapper.Map<UserResponse>(userDto)));
             }
             catch (Exception ex)
             {
@@ -81,7 +84,7 @@ namespace Users.API.Controllers
                 userDto = await _userService.PostUser(userDto);
                 var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/{userDto.Id}";
 
-                return (Created(url, _mapper.Map<UserResponse> (userDto)));
+                return (Created(url, _mapper.Map<UserResponse>(userDto)));
             }
             catch (Exception ex)
             {
@@ -144,8 +147,41 @@ namespace Users.API.Controllers
             }
         }
 
-        // TODO
-        // [HttpPatch]
+        [HttpPatch("PathUserById/{id}")]
+        public async Task<IActionResult> PatchUserById([FromBody] JsonPatchDocument<UserDto> patchDoc, Guid id)
+        {
+            try
+            {
+                if (patchDoc == null)
+                    return BadRequest("No field to update provided.");
+
+                // ONLY ALLOWED REPLACE OPERATIONS
+                patchDoc.Operations.RemoveAll(c => c.op != "replace");
+
+                if (patchDoc.Operations.Count == 0)
+                    return BadRequest("No field to update provided.");
+
+                var userDto = await _userService.GetById(id, false);
+
+                if (userDto == null)
+                    return NotFound();
+
+                patchDoc.ApplyTo(userDto, ModelState);
+
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                return Ok(await _userService.PatchUser(userDto));
+            }
+            catch (EntityValidationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
     }
 }
