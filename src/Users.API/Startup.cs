@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Users.API.Extensions;
+using Users.API.Middlewares;
 
 namespace Users.API
 {
@@ -59,7 +60,9 @@ namespace Users.API
             app.UseCors(x => x.AllowAnyMethod()
                               .AllowAnyHeader()
                               .SetIsOriginAllowed(origin => true)
-                              .AllowCredentials());                            
+                              .AllowCredentials());              
+
+            app.UseMiddleware<RequestDiagnosticsMiddleware>();              
 
             app.UseAuthentication();
 
