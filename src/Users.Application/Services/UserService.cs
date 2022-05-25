@@ -22,18 +22,21 @@ namespace Users.Application.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly INotificationService _notificationService;
         private readonly IPasswordEncryption _passwordEncryptionService;
+        private readonly IValidatorService _validatorService;
         private readonly IMapper _mapper;
 
-        public UserService(IUserRepository userRepository, 
-                           IUnitOfWork unitOfWork, 
-                           INotificationService notificationService, 
-                           IPasswordEncryption passwordEncryptionService, 
+        public UserService(IUserRepository userRepository,                        
+                           IUnitOfWork unitOfWork,
+                           INotificationService notificationService,
+                           IPasswordEncryption passwordEncryptionService,
+                           IValidatorService validatorService,
                            IMapper mapper)
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
             _notificationService = notificationService;
             _passwordEncryptionService = passwordEncryptionService;
+            _validatorService = validatorService;
             _mapper = mapper;
         }
 
@@ -42,24 +45,29 @@ namespace Users.Application.Services
             var usersDto = new List<UserDto>();
             var users = await _userRepository.ListAsync(c => c.Id != Guid.Empty);
             foreach (var user in users)
-                usersDto.Add(_mapper.Map<UserDto> (user));
+                usersDto.Add(_mapper.Map<UserDto>(user));
 
             return usersDto;
         }
 
-        public async Task<UserDto> GetById(Guid id)
+        public async Task<UserDto> GetById(Guid id, bool tracking = true)
         {
-            var user = await _userRepository.GetAsync(c => c.Id == id);
-            return _mapper.Map<UserDto> (user);
+            var user = await _userRepository.GetAsync(c => c.Id == id, tracking);
+            return _mapper.Map<UserDto>(user);
         }
 
         public async Task PutUser(UserDto userDto)
         {
-            ValidateModel(_mapper.Map<User> (userDto));
-
             var user = await _userRepository.GetAsync(c => c.Id == userDto.Id, false);
+
             if (user != null)
             {
+                userDto.Password = user.Password;
+                user = _mapper.Map<User>(userDto);
+
+                var updateUserValidator = new UpdateUserValidator();
+                _validatorService.ValidateModel(updateUserValidator.Validate(user));
+
                 user.Update(userDto.UserName, userDto.FirstName, userDto.LastName);
                 await _userRepository.UpdateAsync(user);
                 await _unitOfWork.SaveChangesAsync();
@@ -68,9 +76,10 @@ namespace Users.Application.Services
 
         public async Task<UserDto> PostUser(UserDto userDto)
         {
-            var user = _mapper.Map<User> (userDto);
+            var user = _mapper.Map<User>(userDto);
 
-            ValidateModel(user);
+            var registerUserValidator = new RegisterUserValidator();
+            _validatorService.ValidateModel(registerUserValidator.Validate(user));
 
             var password = GenerateUserPassword(user);
             user = new User(user.UserName, password, user.FirstName, user.LastName, user.EmailAddress);
@@ -79,7 +88,7 @@ namespace Users.Application.Services
             await _unitOfWork.SaveChangesAsync();
             await _notificationService.SendAsync(userDto, user.ActivationCode);
 
-            return _mapper.Map<UserDto> (user);
+            return _mapper.Map<UserDto>(user);
         }
 
         public async Task<bool> DeleteUser(Guid id)
@@ -111,7 +120,7 @@ namespace Users.Application.Services
             if (user == null || IsCorrectPassword(user, password) == false)
                 return null;
 
-            return _mapper.Map<UserDto> (user);
+            return _mapper.Map<UserDto>(user);
         }
 
         public string GetToken(string userId, string userEmail, string secretKey)
@@ -134,6 +143,24 @@ namespace Users.Application.Services
             return tokenHandler.WriteToken(token);
         }
 
+        public async Task<UserDto> PatchUser(UserDto userDto)
+        {
+            if (userDto != null)
+            {
+                var user = _mapper.Map<User>(userDto);
+
+                var updateUserValidator = new UpdateUserValidator();
+                var validator = updateUserValidator.Validate(user);
+                _validatorService.ValidateModel(validator);
+                
+                user.Update(userDto.UserName, userDto.FirstName, userDto.LastName);
+                await _userRepository.UpdateAsync(user);
+                await _unitOfWork.SaveChangesAsync();
+            }
+
+            return userDto;
+        }
+
         private string GenerateUserPassword(User user)
         {
             var salt = _passwordEncryptionService.GenerateSalt(16);
@@ -150,21 +177,5 @@ namespace Users.Application.Services
             return hash.Equals(splitSaltHashPassword[1]);
         }
 
-        private void ValidateModel(User user)
-        {
-            var userValidator = new UserValidator();
-            var validator = userValidator.Validate(user);
-
-            if (!validator.IsValid)
-            {
-                var errors = new StringBuilder();
-
-                foreach (var error in validator.Errors)
-                    errors.AppendLine(error.ErrorMessage);
-
-                throw new EntityValidationException(errors.ToString());
-            }
-        }
-        
     }
 }
