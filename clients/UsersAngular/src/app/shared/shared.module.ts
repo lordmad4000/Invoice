@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { SharedRoutingModule } from './shared-routing.module';
 import { UserService } from './services/userservice';
 import { JWTService } from './services/jwtservice';
+import { ErrorService } from './services/errorservice';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { JWTService } from './services/jwtservice';
   ],
   providers:[
     UserService,
-    JWTService
+    JWTService,
+    ErrorService
   ]
 })
 export class SharedModule { }
