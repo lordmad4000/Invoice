@@ -5,6 +5,8 @@ namespace Users.Domain.Validations
         public UpdateUserValidator()
         {
             ValidateUserName();
+            ValidateFirstName();
+            ValidateLastName();
         }
 
     }
