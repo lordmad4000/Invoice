@@ -14,10 +14,8 @@ namespace Users.Domain.Entities
         {
             Id = Guid.NewGuid();
             ActivationCode = NewActivationCode();
-            Password = password;
-            EmailAddress = emailAddress;
             Active = false;
-            Update(userName, firstName, lastName);
+            Update(userName, firstName, lastName, password, emailAddress);
         }
 
         public void Activate()
@@ -25,11 +23,13 @@ namespace Users.Domain.Entities
             Active = true;
         }
 
-        public void Update(string userName, string firstName, string lastName)
+        public void Update(string userName, string firstName, string lastName, string password, EmailAddress emailAddress)
         {
             UserName = userName;
             FirstName = firstName;
             LastName = lastName;
+            Password = password;
+            EmailAddress = emailAddress;
         }
 
         private string NewActivationCode()

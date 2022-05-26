@@ -12,6 +12,7 @@ using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Users.Application.Models;
 using AutoMapper;
+using Users.Domain.ValueObjects;
 
 namespace Users.Application.Services
 {
@@ -40,6 +41,12 @@ namespace Users.Application.Services
             _mapper = mapper;
         }
 
+        public async Task<UserDto> GetUserById(Guid id, bool tracking = true)
+        {
+            var user = await _userRepository.GetAsync(c => c.Id == id, tracking);
+            return _mapper.Map<UserDto>(user);
+        }
+
         public async Task<IEnumerable<UserDto>> GetUsers()
         {
             var usersDto = new List<UserDto>();
@@ -50,31 +57,7 @@ namespace Users.Application.Services
             return usersDto;
         }
 
-        public async Task<UserDto> GetById(Guid id, bool tracking = true)
-        {
-            var user = await _userRepository.GetAsync(c => c.Id == id, tracking);
-            return _mapper.Map<UserDto>(user);
-        }
-
-        public async Task PutUser(UserDto userDto)
-        {
-            var user = await _userRepository.GetAsync(c => c.Id == userDto.Id, false);
-
-            if (user != null)
-            {
-                userDto.Password = user.Password;
-                user = _mapper.Map<User>(userDto);
-
-                var updateUserValidator = new UpdateUserValidator();
-                _validatorService.ValidateModel(updateUserValidator.Validate(user));
-
-                user.Update(userDto.UserName, userDto.FirstName, userDto.LastName);
-                await _userRepository.UpdateAsync(user);
-                await _unitOfWork.SaveChangesAsync();
-            }
-        }
-
-        public async Task<UserDto> PostUser(UserDto userDto)
+        public async Task<UserDto> RegisterUser(UserDto userDto)
         {
             var user = _mapper.Map<User>(userDto);
 
@@ -89,6 +72,42 @@ namespace Users.Application.Services
             await _notificationService.SendAsync(userDto, user.ActivationCode);
 
             return _mapper.Map<UserDto>(user);
+        }
+
+        public async Task UpdateUser(UserDto userDto)
+        {
+            var user = await _userRepository.GetAsync(c => c.Id == userDto.Id, false);
+
+            if (user != null)
+            {
+                userDto.Password = user.Password;
+                user = _mapper.Map<User>(userDto);
+
+                var updateUserValidator = new UpdateUserValidator();
+                _validatorService.ValidateModel(updateUserValidator.Validate(user));
+
+                user.Update(userDto.UserName, userDto.FirstName, userDto.LastName, userDto.Password, new EmailAddress(userDto.Email));
+                await _userRepository.UpdateAsync(user);
+                await _unitOfWork.SaveChangesAsync();
+            }
+        }
+
+        public async Task<UserDto> PatchUser(UserDto userDto)
+        {
+            if (userDto != null)
+            {
+                var user = _mapper.Map<User>(userDto);
+
+                var updateUserValidator = new UpdateUserValidator();
+                var validator = updateUserValidator.Validate(user);
+                _validatorService.ValidateModel(validator);
+                
+                user.Update(userDto.UserName, userDto.FirstName, userDto.LastName, userDto.Password, new EmailAddress(userDto.Email));
+                await _userRepository.UpdateAsync(user);
+                await _unitOfWork.SaveChangesAsync();
+            }
+
+            return userDto;
         }
 
         public async Task<bool> DeleteUser(Guid id)
@@ -141,24 +160,6 @@ namespace Users.Application.Services
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             return tokenHandler.WriteToken(token);
-        }
-
-        public async Task<UserDto> PatchUser(UserDto userDto)
-        {
-            if (userDto != null)
-            {
-                var user = _mapper.Map<User>(userDto);
-
-                var updateUserValidator = new UpdateUserValidator();
-                var validator = updateUserValidator.Validate(user);
-                _validatorService.ValidateModel(validator);
-                
-                user.Update(userDto.UserName, userDto.FirstName, userDto.LastName);
-                await _userRepository.UpdateAsync(user);
-                await _unitOfWork.SaveChangesAsync();
-            }
-
-            return userDto;
         }
 
         private string GenerateUserPassword(User user)

@@ -30,6 +30,21 @@ namespace Users.API.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUser(Guid id)
+        {
+            try
+            {
+                var userDto = await _userService.GetUserById(id);
+
+                return (Ok(_mapper.Map<UserResponse>(userDto)));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
@@ -45,14 +60,15 @@ namespace Users.API.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetUser(Guid id)
+        [HttpPost]
+        public async Task<IActionResult> PostUser([FromBody] UserDto userDto)
         {
             try
             {
-                var userDto = await _userService.GetById(id);
+                userDto = await _userService.RegisterUser(userDto);
+                var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/{userDto.Id}";
 
-                return (Ok(_mapper.Map<UserResponse>(userDto)));
+                return (Created(url, _mapper.Map<UserResponse>(userDto)));
             }
             catch (Exception ex)
             {
@@ -66,7 +82,7 @@ namespace Users.API.Controllers
             try
             {
                 var userDto = _mapper.Map<UserDto>(userUpdateRequest);
-                await _userService.PutUser(userDto);
+                await _userService.UpdateUser(userDto);
 
                 return (Ok(_mapper.Map<UserResponse>(userDto)));
             }
@@ -76,15 +92,37 @@ namespace Users.API.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> PostUser([FromBody] UserDto userDto)
+        [HttpPatch("PathUserById/{id}")]
+        public async Task<IActionResult> PatchUserById([FromBody] JsonPatchDocument<UserDto> patchDoc, Guid id)
         {
             try
             {
-                userDto = await _userService.PostUser(userDto);
-                var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/{userDto.Id}";
+                if (patchDoc == null)
+                    return BadRequest("No field to update provided.");
 
-                return (Created(url, _mapper.Map<UserResponse>(userDto)));
+                // ONLY ALLOWED REPLACE OPERATIONS
+                patchDoc.Operations.RemoveAll(c => c.op != "replace");
+
+                if (patchDoc.Operations.Count == 0)
+                    return BadRequest("No field to update provided.");
+
+                var userDto = await _userService.GetUserById(id, false);
+
+                if (userDto == null)
+                    return NotFound();
+
+                patchDoc.ApplyTo(userDto, ModelState);
+
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                userDto = await _userService.PatchUser(userDto);
+
+                return Ok(_mapper.Map<UserResponse>(userDto));
+            }
+            catch (EntityValidationException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
@@ -140,42 +178,6 @@ namespace Users.API.Controllers
                 };
 
                 return (await Task.FromResult(Ok(userLoginResponse)));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpPatch("PathUserById/{id}")]
-        public async Task<IActionResult> PatchUserById([FromBody] JsonPatchDocument<UserDto> patchDoc, Guid id)
-        {
-            try
-            {
-                if (patchDoc == null)
-                    return BadRequest("No field to update provided.");
-
-                // ONLY ALLOWED REPLACE OPERATIONS
-                patchDoc.Operations.RemoveAll(c => c.op != "replace");
-
-                if (patchDoc.Operations.Count == 0)
-                    return BadRequest("No field to update provided.");
-
-                var userDto = await _userService.GetById(id, false);
-
-                if (userDto == null)
-                    return NotFound();
-
-                patchDoc.ApplyTo(userDto, ModelState);
-
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
-                return Ok(await _userService.PatchUser(userDto));
-            }
-            catch (EntityValidationException ex)
-            {
-                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
