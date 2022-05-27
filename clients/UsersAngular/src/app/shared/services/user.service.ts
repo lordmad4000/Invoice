@@ -2,9 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { JsonDocument } from '../models/jsondocument';
-import { UserDto } from '../models/userdto';
 import { UserResponse } from '../models/userresponse';
-import { JWTService } from './jwtservice';
+import { JWTService } from './jwt.service';
 
 @Injectable()
 export class UserService {

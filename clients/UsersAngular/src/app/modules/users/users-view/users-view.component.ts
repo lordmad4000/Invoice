@@ -1,8 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { UserService } from 'src/app/shared/services/userservice';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-users-view',
@@ -47,7 +48,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
           this.formUser.patchValue(data);
         }
       },
-      error: (err) => {
+      error: (err : HttpErrorResponse) => {
         console.log('Error al recuperar el usuario', err);
       }
     })

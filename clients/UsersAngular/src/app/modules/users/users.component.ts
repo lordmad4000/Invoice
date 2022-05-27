@@ -1,9 +1,9 @@
-import { SelectionModel } from '@angular/cdk/collections';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { UserResponse } from 'src/app/shared/models/userresponse';
-import { UserService } from 'src/app/shared/services/userservice';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-users',
@@ -44,7 +44,7 @@ export class UsersComponent implements OnInit {
           this.updateIndex();
         }
       },
-      error: (err) => {
+      error: (err : HttpErrorResponse) => {
         console.log('Error al recuperar los usuarios', err);
       }
     });

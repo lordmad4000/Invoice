@@ -5,8 +5,8 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { JsonDocument } from 'src/app/shared/models/jsondocument';
 import { UserDto } from 'src/app/shared/models/userdto';
-import { ErrorService } from 'src/app/shared/services/errorservice';
-import { UserService } from 'src/app/shared/services/userservice';
+import { ErrorService } from 'src/app/shared/services/error.service';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-users-edit',
@@ -54,7 +54,7 @@ export class UsersEditComponent implements OnInit, OnDestroy {
           this.formUser.patchValue(data);
         }
       },
-      error: (err) => {
+      error: (err : HttpErrorResponse) => {
         console.log('Error al recuperar el usuario', err);
       }
     })
