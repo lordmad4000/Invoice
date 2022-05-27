@@ -1,0 +1,12 @@
+<div class="popup">
+    <h1 mat-dialog-title class="title">{{ data.title }}</h1>
+    <div mat-dialog-content class="message">
+        <p>{{ data.message }}</p>
+    </div>
+    <div mat-dialog-actions class="actions d-flex justify-content-end">
+        <button class="button custom-button mat-raised-button" *ngFor="let action of data.actions" mat-button
+            (click)="closeModal(action.value)">
+            {{ action.title }}
+        </button>
+    </div>
+</div>
