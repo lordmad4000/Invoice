@@ -5,7 +5,7 @@ import { SharedRoutingModule } from './shared-routing.module';
 import { UserService } from './services/user.service';
 import { JWTService } from './services/jwt.service';
 import { ErrorService } from './services/error.service';
-import { MatDialogClose, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogClose, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -18,7 +18,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { PopupComponent } from './components/popup/popup.component';
-import { MaterialModule } from './material-module';
 
 @NgModule({
   declarations: [  
