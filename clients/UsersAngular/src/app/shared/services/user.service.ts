@@ -52,4 +52,13 @@ export class UserService {
         return this.httpClient.patch<UserResponse>(url, jsonDocument, { headers: httpHeaders } );
     }    
 
+    public Delete(id : string): Observable<boolean> {
+     
+        const httpHeaders = this.jwtService.GetHttpHeaderWithTokenFromSessionStorage();
+
+        const url = `${this.basePath}/api/User/${encodeURIComponent(String(id))}`;
+
+        return this.httpClient.delete<boolean>(url, { headers: httpHeaders } );
+    }    
+
 }
