@@ -37,11 +37,7 @@ namespace Users.Infra.Repositories
         {
             var entity = await _dbSet.FindAsync(id);
             if (entity != null)
-            {
-                _dbSet.Remove(entity);
-                return await Task.FromResult(true);
-            }
-            _memoryCacheService.Remove(_cacheKey);
+                return await DeleteAsync(entity);
 
             return await Task.FromResult(false);
         }
