@@ -10,6 +10,15 @@
     color: rgba(0, 0, 0, 0.676);
 }
 
+.flex-expand {
+    flex: 1 1 auto;
+}
+
+.mat-toolbar-row {
+    justify-content: flex-end;
+    background-color: #ecf0f3;
+}
+
 .div-fields {
     margin-top: 40px;
     margin-left: 40px;
@@ -32,7 +41,7 @@ mat-divider {
     padding: 2px;
 }
 
-.mat-button {
+.button-save {
     margin-left: 40px;
     margin-top: 20px;
     justify-self: right;

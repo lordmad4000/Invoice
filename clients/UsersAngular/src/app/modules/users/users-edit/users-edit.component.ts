@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -22,6 +23,7 @@ export class UsersEditComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private location: Location,
     private userService: UserService,
     private formBuilder: FormBuilder,
     private errorService: ErrorService,
@@ -85,6 +87,11 @@ export class UsersEditComponent implements OnInit, OnDestroy {
       }
     });
 
+  }
+
+  backButtonClick(event: any) {
+    console.log("Back button.");
+    this.location.back();
   }
 
   ngOnDestroy(): void {
