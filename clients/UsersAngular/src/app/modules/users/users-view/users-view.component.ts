@@ -1,4 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
+import { Location } from  '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -21,6 +22,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private location: Location,
     private userService: UserService,
     private formBuilder: FormBuilder,
     private popupService: PopupService,
@@ -56,6 +58,11 @@ export class UsersViewComponent implements OnInit, OnDestroy {
           console.log('Error al recuperar el usuario', err);
         }
       })
+  }
+
+  backButtonClick(event: any) {
+    console.log("Back button.");
+    this.location.back();
   }
 
   editButtonClick(event: any) {

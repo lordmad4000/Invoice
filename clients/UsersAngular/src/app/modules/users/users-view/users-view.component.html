@@ -1,6 +1,10 @@
 <form class="user-form" [formGroup]="formUser">
     <mat-toolbar>
         <mat-toolbar-row>
+            <button mat-button matTooltip="Back" (click)="backButtonClick($event)">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <span class="flex-expand"></span>
             <button mat-button matTooltip="Edit" (click)="editButtonClick($event)">
                 <mat-icon>edit</mat-icon>
             </button>
