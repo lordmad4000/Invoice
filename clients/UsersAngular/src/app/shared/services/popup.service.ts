@@ -26,10 +26,10 @@ export class PopupService {
     }
 
     public createConfirmPopup(msg: string): MatDialogRef<any> {
-        const popConfirm = new PopupProperties("POPUP.CONFIRMACION", msg, "325px", "auto");
+        const popConfirm = new PopupProperties("REMOVE", msg, "400px", "auto");
 
-        const buttonNo = new PopupButton("POPUP.NO", GlobalConstants.popupCancelValue);
-        const buttonYes = new PopupButton("POPUP.SI", GlobalConstants.popupConfirmValue);
+        const buttonNo = new PopupButton("NO", GlobalConstants.popupNoValue);
+        const buttonYes = new PopupButton("SI", GlobalConstants.popupYesValue);
         popConfirm.actions = [];
 
         popConfirm.actions.push(buttonNo);
@@ -40,9 +40,10 @@ export class PopupService {
 
     public openPopupAceptar(titulo: string, msg: string, width: string, height: string) {
         const popupSettings = new PopupProperties(titulo, msg, width, height);
-        const buttonAceptar = new PopupButton("ACEPTAR", GlobalConstants.popupConfirmValue);
 
+        const buttonAceptar = new PopupButton("ACEPTAR", GlobalConstants.popupConfirmValue);
         popupSettings.actions = [];
+        
         popupSettings.actions.push(buttonAceptar);
 
         return this.openCustomDialog(popupSettings);
