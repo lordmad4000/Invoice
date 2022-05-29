@@ -34,7 +34,7 @@ namespace Users.API.Extensions
         {
             services.AddMemoryCache();
 
-            services.AddTransient<ICacheService, MemoryCacheService>();
+            services.AddSingleton<ICacheService, MemoryCacheService>();
 
             return services;
         }
