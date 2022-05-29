@@ -3,11 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Threading.Tasks;
 using Users.CrossCutting.Interfaces;
 using Users.Domain.Base;
 using Users.Domain.Interfaces;
 using Users.Infra.Data;
+using Users.Infra.Exceptions;
 
 namespace Users.Infra.Repositories
 {
@@ -16,19 +18,20 @@ namespace Users.Infra.Repositories
         private readonly EFContext _context;
         private readonly DbSet<T> _dbSet;
         private readonly string _cacheKey = $"{typeof(T)}";
-        private readonly IMemoryCacheService _memoryCacheService;
+        private readonly ICacheService _cacheService;
 
-        public RepositoryBase(EFContext context, IMemoryCacheService memoryCacheService = null)
+        public RepositoryBase(EFContext context, ICacheService cacheService = null)
         {
             _context = context;
             _dbSet = context.Set<T>();
-            _memoryCacheService = memoryCacheService;
+            _cacheService = cacheService;
         }
 
         public async Task<T> AddAsync(T entity)
         {
             await _dbSet.AddAsync(entity);
-            _memoryCacheService.Remove(_cacheKey);
+
+            TryRemoveCache(_cacheKey);
 
             return entity;
         }
@@ -36,6 +39,7 @@ namespace Users.Infra.Repositories
         public async Task<bool> DeleteAsync(Guid id)
         {
             var entity = await _dbSet.FindAsync(id);
+
             if (entity != null)
                 return await DeleteAsync(entity);
 
@@ -45,43 +49,128 @@ namespace Users.Infra.Repositories
         public async Task<bool> DeleteAsync(T entity)
         {
             _dbSet.Remove(entity);
-            _memoryCacheService.Remove(_cacheKey);
+
+            TryRemoveCache(_cacheKey);
 
             return await Task.FromResult(true);
         }
 
-        public async Task<T> GetAsync(Expression<Func<T, bool>> expression, bool tracking = true)
+        public async Task<T> GetAsync(Expression<Func<T, bool>> expression, bool tracking, string expressionCacheKey = "")
         {
-            if (tracking)
-                return await _dbSet.FirstOrDefaultAsync(expression);
+            try
+            {
+                T result;
 
-            return await _dbSet.AsNoTracking()
-                               .FirstOrDefaultAsync(expression);
+                var cacheKey = String.IsNullOrEmpty(expressionCacheKey) ?
+                               "" :
+                               $"{_cacheKey}{expressionCacheKey}";
+
+                if (!TryGetCache(cacheKey, out result))
+                {
+                    if (tracking)
+                        result = await _dbSet.FirstOrDefaultAsync(expression);
+
+                    else
+                        result = await _dbSet.AsNoTracking()
+                                             .FirstOrDefaultAsync(expression);
+
+                    if (!String.IsNullOrEmpty(cacheKey))
+                        TrySetCache(cacheKey, result);
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new DataBaseException(ex.Message);
+            }
         }
 
         public async Task<List<T>> ListAsync(Expression<Func<T, bool>> expression)
         {
-            var result = new List<T>();
-            if (_memoryCacheService != null)
+            try
             {
-                if (!_memoryCacheService.TryGet(_cacheKey, out result))
+                List<T> result;
+
+                if (!TryGetCache(_cacheKey, out result))
                 {
                     result = await _dbSet.Where(expression).ToListAsync();
-                    _memoryCacheService.Set(_cacheKey, result);
-                }
-            }
-            else
-                result = await _dbSet.Where(expression).ToListAsync();
 
-            return result;
+                    TrySetCache(_cacheKey, result);
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new DataBaseException(ex.Message);
+            }
+
         }
 
         public async Task<T> UpdateAsync(T entity)
         {
             _dbSet.Update(entity);
-            _memoryCacheService.Remove(_cacheKey);
-            
+
+            TryRemoveCache(_cacheKey);
+
             return await Task.FromResult(entity);
+        }
+
+        public bool TryGetCache<Ty>(string cacheKey, out Ty value)
+        {
+            value = default(Ty);
+            try
+            {
+                if (_cacheService != null)
+                {
+                    if (_cacheService.TryGet(cacheKey, out value))
+                        return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return false;
+        }
+
+        public bool TryRemoveCache(string cacheKey)
+        {
+            try
+            {
+                if (_cacheService != null)
+                {
+                    _cacheService.Remove($"{cacheKey}*");
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return false;
+        }
+
+        public bool TrySetCache<Ty>(string cacheKey, Ty value)
+        {
+            try
+            {
+                if (_cacheService != null)
+                {
+                    _cacheService.Set(cacheKey, value);
+
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return false;
         }
 
     }
