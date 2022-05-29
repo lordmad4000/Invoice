@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Users.Domain.Interfaces;
+using Users.Infra.Exceptions;
 
 namespace Users.Infra.Data
 {
@@ -13,9 +14,16 @@ namespace Users.Infra.Data
             _dbContext = dbContext;
         }
 
-        public Task<int> SaveChangesAsync()
+        public async Task<int> SaveChangesAsync()
         {
-            return _dbContext.SaveChangesAsync();
+            try
+            {
+                return await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new DataBaseException(ex.Message);
+            }
         }
 
         public void Dispose()
