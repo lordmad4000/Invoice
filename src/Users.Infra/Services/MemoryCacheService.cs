@@ -6,7 +6,7 @@ using Users.CrossCutting.Interfaces;
 
 namespace Users.Infra.Services
 {
-    public class MemoryCacheService : IMemoryCacheService
+    public class MemoryCacheService : ICacheService
     {
         private readonly IMemoryCache _memoryCache;
         private readonly CacheConfig _cacheConfig;
@@ -30,8 +30,11 @@ namespace Users.Infra.Services
         public bool TryGet<T>(string cacheKey, out T value)
         {
             _memoryCache.TryGetValue(cacheKey, out value);
-            if (value == null) return false;
-            else return true;
+            
+            if (value == null) 
+                return false;
+
+            return true;
         }
 
         public T Set<T>(string cacheKey, T value)

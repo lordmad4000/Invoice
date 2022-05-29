@@ -7,7 +7,7 @@ namespace Users.Infra.Repositories
 {
     public class UserRepository : RepositoryBase<User>, IUserRepository
     {
-        public UserRepository(EFContext dbContext, IMemoryCacheService memoryCacheService) : base(dbContext, memoryCacheService)
+        public UserRepository(EFContext dbContext, ICacheService cacheService) : base(dbContext, cacheService)
         {
         }
     }
