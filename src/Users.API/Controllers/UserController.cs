@@ -6,12 +6,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Users.API.Configuration;
 using Users.API.Models.Request;
 using Users.API.Models.Response;
 using Users.Application.Interfaces;
 using Users.Application.Models;
-using Users.CrossCutting.Configuration;
 using Users.Domain.Exceptions;
+using Users.Infra.Exceptions;
 
 namespace Users.API.Controllers
 {
@@ -69,6 +70,10 @@ namespace Users.API.Controllers
                 var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/{userDto.Id}";
 
                 return (Created(url, _mapper.Map<UserResponse>(userDto)));
+            }
+            catch (DataBaseException ex)
+            {
+                return StatusCode(500, ex.Message);
             }
             catch (Exception ex)
             {
