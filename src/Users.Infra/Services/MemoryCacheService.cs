@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using Users.CrossCutting.Configuration;
@@ -11,7 +13,8 @@ namespace Users.Infra.Services
         private readonly IMemoryCache _memoryCache;
         private readonly CacheConfig _cacheConfig;
         private MemoryCacheEntryOptions _cacheOptions;
-        
+        private List<string> CachedKeys { get; set; }
+
         public MemoryCacheService(IMemoryCache memoryCache, IOptions<CacheConfig> cacheConfig)
         {
             _memoryCache = memoryCache;
@@ -25,13 +28,14 @@ namespace Users.Infra.Services
                     SlidingExpiration = TimeSpan.FromMinutes(_cacheConfig.SlidingExpirationInMinutes)
                 };
             }
+            CachedKeys = new List<string>();
         }
 
         public bool TryGet<T>(string cacheKey, out T value)
         {
             _memoryCache.TryGetValue(cacheKey, out value);
-            
-            if (value == null) 
+
+            if (value == null)
                 return false;
 
             return true;
@@ -39,12 +43,24 @@ namespace Users.Infra.Services
 
         public T Set<T>(string cacheKey, T value)
         {
+            CachedKeys.Add(cacheKey);
             return _memoryCache.Set(cacheKey, value, _cacheOptions);
         }
 
         public void Remove(string cacheKey)
         {
-            _memoryCache.Remove(cacheKey);
+            if (cacheKey.Contains("*"))
+            {
+                cacheKey = cacheKey.Replace("*","");
+                var cachedKeys = CachedKeys.Where(c => c.Contains(cacheKey)).ToList();
+                foreach (var cachedKey in cachedKeys)
+                {
+                    CachedKeys.Remove(cachedKey);
+                    _memoryCache.Remove(cachedKey);        
+                }
+            }
+            else
+                _memoryCache.Remove(cacheKey);
         }
 
     }
