@@ -43,7 +43,7 @@ namespace Users.Application.Services
 
         public async Task<UserDto> GetUserById(Guid id, bool tracking = true)
         {
-            var user = await _userRepository.GetAsync(c => c.Id == id, tracking);
+            var user = await _userRepository.GetAsync(c => c.Id == id, tracking, $"Id=={id}");
             return _mapper.Map<UserDto>(user);
         }
 
@@ -120,7 +120,7 @@ namespace Users.Application.Services
         }
 
         public async Task<bool> ActivateUser(string activationCode)
-        {
+        {            
             var user = await _userRepository.GetAsync(c => c.ActivationCode == activationCode && c.Active == false, false);
             if (user == null)
                 return false;
@@ -134,7 +134,7 @@ namespace Users.Application.Services
 
         public async Task<UserDto> Login(string username, string password)
         {
-            var user = await _userRepository.GetAsync(c => c.UserName == username && c.Active == true);
+            var user = await _userRepository.GetAsync(c => c.UserName == username && c.Active == true, false);
 
             if (user == null || IsCorrectPassword(user, password) == false)
                 return null;
