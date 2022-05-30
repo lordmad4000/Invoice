@@ -40,6 +40,10 @@ namespace Users.API.Controllers
 
                 return (Ok(_mapper.Map<UserResponse>(userDto)));
             }
+            catch (DataBaseException ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
@@ -54,6 +58,10 @@ namespace Users.API.Controllers
                 var users = await _userService.GetUsers();
 
                 return (Ok(_mapper.Map<List<UserResponse>>(users)));
+            }
+            catch (DataBaseException ex)
+            {
+                return StatusCode(500, ex.Message);
             }
             catch (Exception ex)
             {
@@ -70,6 +78,10 @@ namespace Users.API.Controllers
                 var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/{userDto.Id}";
 
                 return (Created(url, _mapper.Map<UserResponse>(userDto)));
+            }
+            catch (EntityValidationException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch (DataBaseException ex)
             {
@@ -91,14 +103,22 @@ namespace Users.API.Controllers
 
                 return (Ok(_mapper.Map<UserResponse>(userDto)));
             }
+            catch (EntityValidationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (DataBaseException ex)
+            {
+                return StatusCode(500, ex.Message);
+            }            
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
 
-        [HttpPatch("PathUserById/{id}")]
-        public async Task<IActionResult> PatchUserById([FromBody] JsonPatchDocument<UserDto> patchDoc, Guid id)
+        [HttpPatch("PathReplaceUser/{id}")]
+        public async Task<IActionResult> PatchReplaceUser([FromBody] JsonPatchDocument<UserDto> patchDoc, Guid id)
         {
             try
             {
@@ -129,6 +149,10 @@ namespace Users.API.Controllers
             {
                 return BadRequest(ex.Message);
             }
+            catch (DataBaseException ex)
+            {
+                return StatusCode(500, ex.Message);
+            }            
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
@@ -143,6 +167,10 @@ namespace Users.API.Controllers
                 var result = await _userService.DeleteUser(id);
                 return (Ok(result));
             }
+            catch (DataBaseException ex)
+            {
+                return StatusCode(500, ex.Message);
+            }            
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
@@ -160,6 +188,10 @@ namespace Users.API.Controllers
 
                 return (Ok(result));
             }
+            catch (DataBaseException ex)
+            {
+                return StatusCode(500, ex.Message);
+            }            
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
@@ -184,6 +216,10 @@ namespace Users.API.Controllers
 
                 return (await Task.FromResult(Ok(userLoginResponse)));
             }
+            catch (DataBaseException ex)
+            {
+                return StatusCode(500, ex.Message);
+            }            
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
