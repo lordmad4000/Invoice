@@ -57,15 +57,13 @@ namespace Users.Infra.Repositories
 
         public async Task<T> GetAsync(Expression<Func<T, bool>> expression, bool tracking, string expressionCacheKey = "")
         {
-            try
+            T result;
+
+            var cacheKey = String.IsNullOrEmpty(expressionCacheKey) ? "" : $"{_cacheKey}{expressionCacheKey}";
+
+            if (!TryGetCache(cacheKey, out result))
             {
-                T result;
-
-                var cacheKey = String.IsNullOrEmpty(expressionCacheKey) ?
-                               "" :
-                               $"{_cacheKey}{expressionCacheKey}";
-
-                if (!TryGetCache(cacheKey, out result))
+                try
                 {
                     if (tracking)
                         result = await _dbSet.FirstOrDefaultAsync(expression);
@@ -73,39 +71,38 @@ namespace Users.Infra.Repositories
                     else
                         result = await _dbSet.AsNoTracking()
                                              .FirstOrDefaultAsync(expression);
-
-                    if (!String.IsNullOrEmpty(cacheKey))
-                        TrySetCache(cacheKey, result);
+                }
+                catch (Exception ex)
+                {
+                    throw new DataBaseException(ex.InnerException.Message);
                 }
 
-                return result;
+                if (!String.IsNullOrEmpty(cacheKey))
+                    TrySetCache(cacheKey, result);
             }
-            catch (Exception ex)
-            {
-                throw new DataBaseException(ex.Message);
-            }
+
+            return result;
         }
 
         public async Task<List<T>> ListAsync(Expression<Func<T, bool>> expression)
         {
-            try
-            {
-                List<T> result;
+            List<T> result;
 
-                if (!TryGetCache(_cacheKey, out result))
+            if (!TryGetCache(_cacheKey, out result))
+            {
+                try
                 {
                     result = await _dbSet.Where(expression).ToListAsync();
-
-                    TrySetCache(_cacheKey, result);
+                }
+                catch (Exception ex)
+                {
+                    throw new DataBaseException(ex.InnerException.Message);
                 }
 
-                return result;
-            }
-            catch (Exception ex)
-            {
-                throw new DataBaseException(ex.Message);
+                TrySetCache(_cacheKey, result);
             }
 
+            return result;
         }
 
         public async Task<T> UpdateAsync(T entity)

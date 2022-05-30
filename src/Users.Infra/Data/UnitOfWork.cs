@@ -22,7 +22,7 @@ namespace Users.Infra.Data
             }
             catch (Exception ex)
             {
-                throw new DataBaseException(ex.Message);
+                throw new DataBaseException(ex.InnerException.Message);
             }
         }
 
