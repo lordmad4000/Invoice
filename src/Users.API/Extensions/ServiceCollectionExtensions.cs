@@ -55,6 +55,8 @@ namespace Users.API.Extensions
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IValidatorService, ValidatorService>();
             services.AddScoped<IPasswordEncryption, PasswordEncryptService>();
+            services.AddScoped<IPasswordService, UserPasswordService>();
+            services.AddScoped<ITokenService, JWTokenService>();
 
             return services;
         }
