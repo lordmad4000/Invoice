@@ -22,12 +22,17 @@ namespace Users.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly ITokenService _tokenService;
         private readonly JWTConfig _jwtConfig;
         private readonly IMapper _mapper;
-        public UserController(IUserService userService, IOptions<JWTConfig> jwtConfig, IMapper mapper)
+        public UserController(IUserService userService, 
+                              ITokenService tokenService,
+                              IOptions<JWTConfig> jwtConfig, 
+                              IMapper mapper)
         {
             _userService = userService;
-            _jwtConfig = jwtConfig.Value;
+            _tokenService = tokenService;
+            _jwtConfig = jwtConfig.Value;        
             _mapper = mapper;
         }
 
@@ -211,7 +216,7 @@ namespace Users.API.Controllers
                 var userLoginResponse = new UserLoginResponse
                 {
                     Id = userDto.Id,
-                    Token = _userService.GetToken(userDto.Password, userDto.Email, _jwtConfig.SecretKey)
+                    Token = _tokenService.GenerateToken(userDto.Password, userDto.Email, _jwtConfig.SecretKey)
                 };
 
                 return (await Task.FromResult(Ok(userLoginResponse)));
