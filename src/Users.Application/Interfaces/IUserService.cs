@@ -15,6 +15,5 @@ namespace Users.Application.Interfaces
         Task<bool> DeleteUser(Guid id);
         Task<bool> ActivateUser(string activationCode);
         Task<UserDto> Login(string username, string password);
-        string GetToken(string userId, string userEmail, string secretKey);
     }
 }
