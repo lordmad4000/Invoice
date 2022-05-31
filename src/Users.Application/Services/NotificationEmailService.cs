@@ -11,9 +11,6 @@ namespace Users.Application.Services
 {
     public class NotificationEmailService : INotificationService
     {
-        private string fromEmail = "joseantonio.qcompusoft@gmail.com";
-        private string fromHost = "smtp.gmail.com";
-        private string fromPassword = "12345678";
         private IConfiguration _configuration;
 
         public NotificationEmailService(IConfiguration configuration)
