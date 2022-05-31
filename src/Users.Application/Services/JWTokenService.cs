@@ -8,7 +8,7 @@ using Users.Application.Interfaces;
 namespace Users.Application.Services
 {
 
-    public class JWTTokenService : ITokenService
+    public class JWTokenService : ITokenService
     {
         public string GenerateToken(string userId, string userEmail, string secretKey)
         {
