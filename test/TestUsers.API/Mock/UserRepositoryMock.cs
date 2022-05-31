@@ -62,6 +62,11 @@ namespace TestUsers.API.Mock
             return await Task.FromResult(result.Value);
         }
 
+        public Task<User> GetAsync(Expression<Func<User, bool>> expression, bool tracking, string expressionCacheKey = "")
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<List<User>> ListAsync(Expression<Func<User, bool>> expression)
         {
             var results = _userData.Where(kvp => expression.Compile()(kvp.Value));
@@ -69,6 +74,23 @@ namespace TestUsers.API.Mock
             var users = results.Select(c => c.Value).ToList();
 
             return await Task.FromResult(users);
+        }
+
+        public bool TryGetCache<Ty>(string cacheKey, out Ty value)
+        {
+            value = default(Ty);
+            return false;
+        }
+
+        public bool TryRemoveCache(string cacheKey)
+        {
+            return false;
+        }
+
+        public bool TrySetCache<Ty>(string cacheKey, Ty value)
+        {
+            value = default(Ty);
+            return false;
         }
 
         public async Task<User> UpdateAsync(User entity)
