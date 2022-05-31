@@ -5,11 +5,6 @@ using Users.Application.Interfaces;
 using Users.Domain.Entities;
 using Users.Domain.Interfaces;
 using Users.Domain.Validations;
-using Users.Domain.Exceptions;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
-using System.IdentityModel.Tokens.Jwt;
 using Users.Application.Models;
 using AutoMapper;
 using Users.Domain.ValueObjects;
@@ -22,22 +17,22 @@ namespace Users.Application.Services
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly INotificationService _notificationService;
-        private readonly IPasswordEncryption _passwordEncryptionService;
         private readonly IValidatorService _validatorService;
+        private readonly IPasswordService _passwordService;
         private readonly IMapper _mapper;
 
         public UserService(IUserRepository userRepository,                        
                            IUnitOfWork unitOfWork,
                            INotificationService notificationService,
-                           IPasswordEncryption passwordEncryptionService,
                            IValidatorService validatorService,
+                           IPasswordService passwordService,
                            IMapper mapper)
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
             _notificationService = notificationService;
-            _passwordEncryptionService = passwordEncryptionService;
             _validatorService = validatorService;
+            _passwordService = passwordService;
             _mapper = mapper;
         }
 
@@ -64,7 +59,7 @@ namespace Users.Application.Services
             var registerUserValidator = new RegisterUserValidator();
             _validatorService.ValidateModel(registerUserValidator.Validate(user));
 
-            var password = GenerateUserPassword(user);
+            var password = _passwordService.GeneratePassword(user.UserName, user.Password, 16);
             user = new User(user.UserName, password, user.FirstName, user.LastName, user.EmailAddress);
 
             user = await _userRepository.AddAsync(user);
@@ -136,46 +131,10 @@ namespace Users.Application.Services
         {
             var user = await _userRepository.GetAsync(c => c.UserName == username && c.Active == true, false);
 
-            if (user == null || IsCorrectPassword(user, password) == false)
+            if (user == null || _passwordService.IsCorrectPassword(user.UserName, user.Password, password) == false)
                 return null;
 
             return _mapper.Map<UserDto>(user);
-        }
-
-        public string GetToken(string userId, string userEmail, string secretKey)
-        {
-            var key = Encoding.ASCII.GetBytes(secretKey);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.NameIdentifier, userId),
-                    new Claim(ClaimTypes.Email, userEmail),
-                }),
-                Expires = DateTime.UtcNow.AddMinutes(30),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-
-            return tokenHandler.WriteToken(token);
-        }
-
-        private string GenerateUserPassword(User user)
-        {
-            var salt = _passwordEncryptionService.GenerateSalt(16);
-            var hash = _passwordEncryptionService.GenerateHash($"{user.UserName}{user.Password}", salt);
-
-            return $"{salt},{hash}";
-        }
-
-        private bool IsCorrectPassword(User user, string password)
-        {
-            var splitSaltHashPassword = user.Password.Split(",");
-            var hash = _passwordEncryptionService.GenerateHash($"{user.UserName}{password}", splitSaltHashPassword[0]);
-
-            return hash.Equals(splitSaltHashPassword[1]);
         }
 
     }
