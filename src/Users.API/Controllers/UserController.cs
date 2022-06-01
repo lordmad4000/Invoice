@@ -25,14 +25,14 @@ namespace Users.API.Controllers
         private readonly ITokenService _tokenService;
         private readonly JWTConfig _jwtConfig;
         private readonly IMapper _mapper;
-        public UserController(IUserService userService, 
+        public UserController(IUserService userService,
                               ITokenService tokenService,
-                              IOptions<JWTConfig> jwtConfig, 
+                              IOptions<JWTConfig> jwtConfig,
                               IMapper mapper)
         {
             _userService = userService;
             _tokenService = tokenService;
-            _jwtConfig = jwtConfig.Value;        
+            _jwtConfig = jwtConfig.Value;
             _mapper = mapper;
         }
 
@@ -51,7 +51,7 @@ namespace Users.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
         }
 
@@ -70,31 +70,7 @@ namespace Users.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> PostUser([FromBody] UserDto userDto)
-        {
-            try
-            {
-                userDto = await _userService.RegisterUser(userDto);
-                var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/{userDto.Id}";
-
-                return (Created(url, _mapper.Map<UserResponse>(userDto)));
-            }
-            catch (EntityValidationException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (DataBaseException ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
         }
 
@@ -115,10 +91,10 @@ namespace Users.API.Controllers
             catch (DataBaseException ex)
             {
                 return StatusCode(500, ex.Message);
-            }            
+            }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
         }
 
@@ -157,10 +133,10 @@ namespace Users.API.Controllers
             catch (DataBaseException ex)
             {
                 return StatusCode(500, ex.Message);
-            }            
+            }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
         }
 
@@ -175,10 +151,39 @@ namespace Users.API.Controllers
             catch (DataBaseException ex)
             {
                 return StatusCode(500, ex.Message);
-            }            
+            }
             catch (Exception ex)
             {
+                return BadRequest(ex.InnerException.Message);
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> PostUser([FromBody] UserRegisterRequest userRegisterRequest)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var userDto = _mapper.Map<UserDto>(userRegisterRequest);
+                userDto = await _userService.RegisterUser(userDto);
+                var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/{userDto.Id}";
+
+                return (Created(url, _mapper.Map<UserResponse>(userDto)));
+            }
+            catch (EntityValidationException ex)
+            {
                 return BadRequest(ex.Message);
+            }
+            catch (DataBaseException ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.InnerException.Message);
             }
         }
 
@@ -196,10 +201,10 @@ namespace Users.API.Controllers
             catch (DataBaseException ex)
             {
                 return StatusCode(500, ex.Message);
-            }            
+            }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
         }
 
@@ -224,10 +229,10 @@ namespace Users.API.Controllers
             catch (DataBaseException ex)
             {
                 return StatusCode(500, ex.Message);
-            }            
+            }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
         }
 
