@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { JsonDocument } from '../models/jsondocument';
+import { UserDto } from '../models/userdto';
 import { UserResponse } from '../models/userresponse';
 import { JWTService } from './jwt.service';
 
@@ -32,6 +33,17 @@ export class UserService {
         return this.httpClient.get<UserResponse>(url, { headers: httpHeaders, });
     }
 
+    public Post(user: UserDto): Observable<UserResponse> {
+
+      const httpOptions = {
+          headers : this.jwtService.GetHttpHeaderWithTokenFromSessionStorage()
+      };
+
+      const url = `${this.basePath}/api/User`;
+
+      return this.httpClient.post<UserResponse>(url, user , httpOptions);
+    }
+
     public Update(user: UserResponse): Observable<UserResponse> {
 
         const httpOptions = {
@@ -44,21 +56,21 @@ export class UserService {
     }
 
     public Patch(jsonDocument: JsonDocument[], id : string): Observable<UserResponse> {
-     
+
         const httpHeaders = this.jwtService.GetHttpHeaderWithTokenFromSessionStorage();
 
         const url = `${this.basePath}/api/User/PathUserById/${id}`;
 
         return this.httpClient.patch<UserResponse>(url, jsonDocument, { headers: httpHeaders } );
-    }    
+    }
 
     public Delete(id : string): Observable<boolean> {
-     
+
         const httpHeaders = this.jwtService.GetHttpHeaderWithTokenFromSessionStorage();
 
         const url = `${this.basePath}/api/User/${encodeURIComponent(String(id))}`;
 
         return this.httpClient.delete<boolean>(url, { headers: httpHeaders } );
-    }    
+    }
 
 }
