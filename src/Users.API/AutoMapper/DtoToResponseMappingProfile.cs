@@ -11,6 +11,7 @@ namespace Users.API.AutoMapper
         {
             CreateMap<UserDto, UserResponse>();
             CreateMap<UserUpdateRequest, UserDto>();
+            CreateMap<UserRegisterRequest, UserDto>();
         }
     }
 
