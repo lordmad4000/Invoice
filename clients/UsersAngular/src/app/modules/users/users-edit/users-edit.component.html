@@ -34,6 +34,6 @@
         <mat-divider></mat-divider>
     </div>
     <div>
-        <button class="button-save" mat-button matTooltip="Save" (click)="saveButtonClick($event)">Save</button>
+        <button mat-raised-button class="button-save" color="primary" mat-button matTooltip="Save changes" (click)="saveButtonClick($event)" [disabled]="formUser.invalid">Save</button>
     </div>
 </form>
