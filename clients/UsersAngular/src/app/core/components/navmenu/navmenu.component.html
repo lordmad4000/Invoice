@@ -3,7 +3,7 @@
     <button mat-icon-button>
       <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
     </button>
-    <h1>UsersAngular</h1>
+    <h1>UsersAngularApp</h1>
   </mat-toolbar-row>
 </mat-toolbar>
 <mat-sidenav-container class="mat-sidenav-container" autosize>
@@ -16,14 +16,10 @@
       <mat-icon>person</mat-icon>
       <span>Users</span>
     </button>
+    <mat-divider></mat-divider>
     <button mat-button (click)="aboutButtonClick($event)">
       <mat-icon>info</mat-icon>
       <span>About</span>
-    </button>
-    <mat-divider></mat-divider>
-    <button mat-button (click)="helpButtonClick($event)">
-      <mat-icon>help</mat-icon>
-      <span>Help</span>
     </button>
   </mat-sidenav>
   <mat-sidenav-content>
