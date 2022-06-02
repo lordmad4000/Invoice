@@ -4,7 +4,7 @@
         <p>{{ data.message }}</p>
     </div>
     <div mat-dialog-actions class="popup-actions">
-        <button class="popup-button" *ngFor="let action of data.actions" mat-button
+        <button mat-raised-button class="popup-button" color="primary" class="popup-button" *ngFor="let action of data.actions"
             (click)="closeModal(action.value)">
             {{ action.title }}
         </button>

@@ -20,12 +20,23 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { PopupComponent } from './components/popup/popup.component';
 
 @NgModule({
-  declarations: [  
+  declarations: [
     PopupComponent
   ],
   imports: [
     CommonModule,
-    SharedRoutingModule
+    SharedRoutingModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatTableModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    MatDividerModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatToolbarModule,
   ],
   exports: [
     PopupComponent,
@@ -34,22 +45,10 @@ import { PopupComponent } from './components/popup/popup.component';
     UserService,
     JWTService,
     ErrorService,
-    MatDialogModule,
-    MatButtonModule,    
-    MatTableModule,
-    MatCheckboxModule,
-    MatFormFieldModule,
-    MatSelectModule,
     FormsModule,
     SharedModule,
     ReactiveFormsModule,
-    MatInputModule,
-    MatDividerModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatToolbarModule,
     MatDialogClose,
-    MatDialogModule,
   ]
 })
 export class SharedModule { }
