@@ -1,6 +1,6 @@
 <br>
 <form class="login-form" [formGroup]="formLogin" (ngSubmit)="Login()">
-    <h1>SIGN IN</h1>
+    <h1>Sign In</h1>
     <mat-form-field appearance="fill" mat-form-fieldAutoSize>
         <mat-label>Usuario</mat-label>
         <input type="text" matInput formControlName="username" matTextareaAutosize required>
@@ -14,6 +14,6 @@
     </mat-error>
     <br>
     <div>
-        <button mat-raised-button color="primary" type="submit"> Iniciar Sesión</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="formLogin.invalid"> Iniciar Sesión</button>
     </div>
 </form>
