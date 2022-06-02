@@ -18,6 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { UsersGridComponent } from './users-grid/users-grid.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     UsersViewComponent,
     UsersEditComponent,
     UsersNewComponent,
-    UsersComponent
+    UsersComponent,
+    UsersGridComponent
   ],
   imports: [
     CommonModule,
