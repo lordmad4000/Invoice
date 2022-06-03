@@ -9,10 +9,10 @@ COPY ["src/Users.CrossCutting/Users.CrossCutting.csproj","Users.CrossCutting/"]
 COPY ["src/Users.Application/Users.Application.csproj","Users.Application/"]
 COPY ["src/Users.Domain/Users.Domain.csproj","Users.Domain/"]
 COPY ["src/Users.API/Users.API.csproj", "Users.API/"]
+COPY src/. .
 
 RUN dotnet restore "Users.API/Users.API.csproj"
 
-COPY src/. .
 
 RUN dotnet build "Users.API/Users.API.csproj" -c Debug -o /app
 
