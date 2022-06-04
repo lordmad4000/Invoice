@@ -18,6 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -31,7 +32,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     BrowserAnimationsModule,
     BrowserModule,
     CommonModule,
-    CoreRoutingModule,    
+    CoreRoutingModule,
     FormsModule,
     HttpClientModule,
     MatButtonModule,
@@ -41,6 +42,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     MatInputModule,
     MatSidenavModule,
     MatToolbarModule,
+    MatTooltipModule,
     ReactiveFormsModule,
   ],
   exports: [
