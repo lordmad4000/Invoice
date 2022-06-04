@@ -10,34 +10,30 @@ import { UserLoginResponse } from '../../models/userloginresponse';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
-
 export class LoginComponent implements OnInit, OnDestroy {
-
   formLogin: FormGroup;
-  formLoginError: string = "";
+  formLoginError: string = '';
   private subscription: Subscription | undefined;
 
   constructor(
     private formBuilder: FormBuilder,
     private httpClient: HttpClient,
-    private router: Router) {
-
+    private router: Router
+  ) {
     this.formLogin = formBuilder.group({
       username: ['', Validators.required],
-      password: ['', Validators.required]
-      
+      password: ['', Validators.required],
     });
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   Login() {
     const usuarioLogin: Login = {
       username: this.formLogin.value.username,
-      password: this.formLogin.value.password
+      password: this.formLogin.value.password,
     };
 
     const url = `${environment.baseHttpUrl}/User/Login`;
@@ -51,16 +47,20 @@ export class LoginComponent implements OnInit, OnDestroy {
           if (token !== undefined) {
             sessionStorage.setItem('token', token);
             this.router.navigate(['/home']);
-          }
-          else {
+          } else {
             this.router.navigate(['/pagenotfound']);
           }
         },
         error: (err) => {
           console.log('Error en el login', err);
-          this.formLoginError = "Incorrect username or password."
-        }
+          this.formLoginError = 'Incorrect username or password.';
+        },
       });
+  }
+
+  newAccountButtonClick(event: any) {
+    console.log('New account button.');
+    this.router.navigate(['/users/new']);
   }
 
   ngOnDestroy(): void {
@@ -68,5 +68,4 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.subscription.unsubscribe();
     }
   }
-
 }
