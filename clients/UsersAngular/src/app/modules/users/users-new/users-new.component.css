@@ -1,6 +1,6 @@
 .user-form {
   text-align: left;
-  width: calc(100vw * 0.75);
+  width: calc(100vw * 0.70);
   height: calc(100vh * 0.70);
   margin-top: 16px;
   padding: 1rem;
@@ -48,18 +48,5 @@ mat-divider {
 .button-save {
   margin-left: 40px;
   margin-top: 20px;
-  justify-self: right;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  border: none;
-  font-size: 0.875rem;
-  color: #ffffff;
-  font-weight: bold;
-  background-color: rgb(11, 187, 236);
-  width: 100px;
-  display: block;
-  padding: 0.875rem 1rem;
-  border-radius: 1.5rem;
-  box-shadow: 3px 3px 8px #b1b1b1, -3px -3px 8px #ffffff;
   cursor: pointer;
 }
