@@ -58,8 +58,10 @@ namespace Users.API
 
             app.UseRouting();
 
-            app.UseCors(x => x.AllowAnyMethod()
+            app.UseCors(x => x.WithOrigins("http://localhost:4200",
+                                           "http://localhost:4201")
                               .AllowAnyHeader()
+                              .AllowAnyMethod()
                               .SetIsOriginAllowed(origin => true)
                               .AllowCredentials());              
 
