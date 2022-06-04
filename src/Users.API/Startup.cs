@@ -56,11 +56,12 @@ namespace Users.API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Users Core API v1"));
             }
 
+            app.UseRouting();
+
             app.UseCors(x => x.AllowAnyMethod()
                               .AllowAnyHeader()
                               .SetIsOriginAllowed(origin => true) // allow any origin
                               .AllowCredentials()); // allow credentials     
-            app.UseRouting();
 
             //app.UseRouting();
 
