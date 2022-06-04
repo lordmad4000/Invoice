@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
+import { UserLoginResponse } from 'src/app/core/models/userloginresponse';
 import { JsonDocument } from '../models/jsondocument';
 import { UserDto } from '../models/userdto';
 import { UserResponse } from '../models/userresponse';
@@ -71,6 +72,15 @@ export class UserService {
         const url = `${this.basePath}/api/User/${encodeURIComponent(String(id))}`;
 
         return this.httpClient.delete<boolean>(url, { headers: httpHeaders } );
+    }
+
+    public Login(username:string, password:string) : Observable<UserLoginResponse> {
+
+      const url = `${this.basePath}/api/User/Login?username=${username}&password=${password}`;
+
+      //curl -X GET "http://localhost:21440/api/User/Login?username=lordmad&password=12345678" -H "accept: */*"
+
+      return this.httpClient.get<UserLoginResponse>(url);
     }
 
 }

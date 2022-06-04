@@ -1,10 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { Login } from '../../models/login';
+import { UserService } from 'src/app/shared/services/user.service';
 import { UserLoginResponse } from '../../models/userloginresponse';
 
 @Component({
@@ -19,7 +18,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(
     private formBuilder: FormBuilder,
-    private httpClient: HttpClient,
+    private userService : UserService,
     private router: Router
   ) {
     this.formLogin = formBuilder.group({
@@ -31,18 +30,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit(): void {}
 
   Login() {
-    const usuarioLogin: Login = {
-      username: this.formLogin.value.username,
-      password: this.formLogin.value.password,
-    };
 
-    const url = `${environment.baseHttpUrl}/User/Login`;
-
-    this.subscription = this.httpClient
-      .post<UserLoginResponse>(url, usuarioLogin, { observe: 'response' })
+    this.userService
+      .Login(this.formLogin.value.username, this.formLogin.value.password)
       .subscribe({
-        next: (res) => {
-          let token = res.body?.token;
+        next: (res: UserLoginResponse) => {
+          let token = res.token;
           console.log('token', token);
           if (token !== undefined) {
             sessionStorage.setItem('token', token);
@@ -51,7 +44,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.router.navigate(['/pagenotfound']);
           }
         },
-        error: (err) => {
+        error: (err: HttpErrorResponse) => {
           console.log('Error en el login', err);
           this.formLoginError = 'Incorrect username or password.';
         },
