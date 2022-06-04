@@ -61,7 +61,6 @@ namespace Users.API
             app.UseCors(x => x.WithOrigins("http://localhost:4201", "http://localhost:4200")
                               .AllowAnyHeader()
                               .AllowAnyMethod()
-                              .AllowAnyOrigin()
                               .SetIsOriginAllowed(origin => true)
                               .AllowCredentials());
 
