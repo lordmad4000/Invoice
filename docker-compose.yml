@@ -1,39 +1,35 @@
 version: "3"
 services:
-  db:
+  database:
     image: mysql:8.0
-    container_name: userswebapi
-    hostname: userswebapi
+    container_name: invoice_db
+    hostname: invoice_db
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     ports:
-      - 1600:3306
+      - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: RdlqT2BZUKyos832
-    networks:
-      - users-network
   api:
-    image: dockerusersapi
+    container_name: invoice_api
+    hostname: invoice_api
     build:
       context: .
-      dockerfile: src/Users.API/Dockerfile
+      dockerfile: Dockerfile
+    depends_on:
+      - database
+    ports:
+      - "5000:80"
+      - "5001:443"
+    restart: always
     environment:
-      ASPNETCORE_ENVIRONMENT: "Development"
+      DBHOST: database
+      ASPNETCORE_ENVIRONMENT: "Release"
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
-      ConnectionStrings__DefaultConnection: "server=userswebapi;Database=users;uid=root;Password=RdlqT2BZUKyos832;persistsecurityinfo=True;"
-    ports:
-      - "21440:80"
-      - "44540:443"
-    networks:
-      - users-network
-  angular:    
-    build: 
-      context: .
-      dockerfile: clients/UsersAngular/Dockerfile
-    ports:
-      - 4201:80
-    networks:
-      - users-network
-networks:
-  users-network:
-    driver: bridge
+      ConnectionStrings__DefaultConnection: "server=invoice_db;Database=users;uid=root;Password=RdlqT2BZUKyos832;persistsecurityinfo=True;"
+      JWTConfig_SecretKey: "asdwda1d8a4sd8w4das8d*w8d*asd@#"
+      CacheConfig_AbsoluteExpirationInHours: 1
+      CacheConfig_SlidingExpirationInMinutes: 30
+      EmailConfig_FromEmail: "example@example.com"
+      EmailConfig_FromHost: "smtp.example.com"
+      EmailConfig_FromPassword: "12345678"

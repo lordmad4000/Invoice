@@ -1,0 +1,57 @@
+.container {
+    text-align: left;
+    width: calc(100vw * 0.75);
+    height: calc(100vh * 0.70);
+    margin-top: 16px;
+    padding: 1rem;
+}
+
+.flex-expand {
+    flex: 1 1 auto;
+}
+
+.mat-toolbar-row {
+    background-color: #FAFAFA;
+}
+
+.mat-table {
+    vertical-align: top;
+    margin-top: 40px;
+    margin-left: 40px;
+    overflow: auto;
+    background-color: transparent;
+}
+
+table {
+    width: 100%;
+}
+
+.mat-column-select {
+    word-wrap: break-word;
+    white-space: unset;
+    flex: 0 0 18%;
+    width: 18%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.mat-column-email {
+    word-wrap: break-word;
+    white-space: unset;
+    flex: 0 0 30%;
+    width: 30%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.mat-column-name {
+    word-wrap: break-word;
+    white-space: unset;
+    flex: 0 0 40%;
+    width: 40%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+}

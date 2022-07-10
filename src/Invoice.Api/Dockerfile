@@ -1,0 +1,25 @@
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
+WORKDIR /src
+COPY ["src/Invoice.Api/Invoice.Api.csproj", "src/Invoice.Api/"]
+COPY ["src/Invoice.Application/Invoice.Application.csproj", "src/Invoice.Application/"]
+COPY ["src/Invoice.Domain/Invoice.Domain.csproj", "src/Invoice.Domain/"]
+COPY ["src/Invoice.Infra/Invoice.Infra.csproj", "src/Invoice.Infra/"]
+RUN dotnet restore "src/Invoice.Api/Invoice.Api.csproj"
+COPY . .
+WORKDIR "/src/src/Invoice.Api"
+RUN dotnet build "Invoice.Api.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "Invoice.Api.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "Invoice.Api.dll"]

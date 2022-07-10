@@ -1,0 +1,25 @@
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* .mat-raised-button {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  border: none;
+  font-size: 0.875rem;
+  color: #ffffff;
+  font-weight: bold;
+  background-color:rgb(0, 200, 255);
+  width: 100%;
+  display: block;
+  padding: 0.875rem 1rem;
+  border-radius: 3.5rem;
+  box-shadow: 3px 3px 8px #b1b1b1, -3px -3px 8px #ffffff;
+  cursor: pointer;
+}
+
+.mat-raised-button:disabled {
+  color: #f70a0a;
+  background-color:rgb(190, 190, 190);
+  box-shadow: 3px 3px 8px #b1b1b1, -3px -3px 8px #ffffff;
+  cursor: not-allowed;
+} */

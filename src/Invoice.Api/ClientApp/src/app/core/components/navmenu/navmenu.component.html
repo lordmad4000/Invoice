@@ -1,0 +1,34 @@
+<mat-toolbar>
+    <mat-toolbar-row>
+        <button mat-icon-button>
+            <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+        </button>
+        <h1>UsersAngularApp</h1>
+        <span class="flex-expand"></span>
+        <button mat-button matTooltip="Login" (click)="loginButtonClick($event)">
+            <mat-icon>account_circle</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+<mat-sidenav-container class="mat-sidenav-container" autosize>
+  <mat-sidenav #sidenav class="mat-elevation-z8" opened="true" mode="side">
+    <button mat-button (click)="homeButtonClick($event)">
+      <mat-icon>home</mat-icon>
+      <span>Home</span>
+    </button>
+    <button mat-button (click)="usersButtonClick($event)">
+      <mat-icon>person</mat-icon>
+      <span>Users</span>
+    </button>
+    <mat-divider></mat-divider>
+    <button mat-button (click)="aboutButtonClick($event)">
+      <mat-icon>info</mat-icon>
+      <span>About</span>
+    </button>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="content mat-elevation-z8">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

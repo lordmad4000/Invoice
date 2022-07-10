@@ -1,0 +1,29 @@
+<div class="container">
+    <mat-toolbar>
+        <mat-toolbar-row>
+            <button mat-button matTooltip="Back" (click)="backButtonClick($event)">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <span class="flex-expand"></span>
+            <button mat-button matTooltip="Add" (click)="addButtonClick($event)">
+                <mat-icon>add_circle</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-table [dataSource]="dataSource" (scroll)="onTableScroll($event)">
+        <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef [ngClass]="'mat-column-email'"> Email </mat-header-cell>
+            <mat-cell *matCellDef="let user" [ngClass]="'mat-column-email'"> {{user.email}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="firstname">
+            <mat-header-cell *matHeaderCellDef [ngClass]="'mat-column-firstname'"> FirstName </mat-header-cell>
+            <mat-cell *matCellDef="let user" [ngClass]="'mat-column-firstname'"> {{user.firstName}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="lastname">
+            <mat-header-cell *matHeaderCellDef [ngClass]="'mat-column-lastname'"> LastName </mat-header-cell>
+            <mat-cell *matCellDef="let user" [ngClass]="'mat-column-lastname'"> {{user.lastName}} </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getRecord(row)"></mat-row>
+    </mat-table>
+</div>

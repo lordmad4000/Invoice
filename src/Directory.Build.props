@@ -3,7 +3,7 @@
     <SourceRoot>$(MSBuildThisFileDirectory)</SourceRoot>
   </PropertyGroup>
   <PropertyGroup>
-    <Product>Users</Product>
+    <Product>Invoice</Product>
     <PackageVersion Condition="'$(PackageVersion)' == ''">1.1.16</PackageVersion>
     <PublishRepositoryUrl>false</PublishRepositoryUrl>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -11,9 +11,9 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <LangVersion>8.0</LangVersion>
     <NoWarn>1591</NoWarn>
-    <PackageTags>Users</PackageTags>
+    <PackageTags>Invoice</PackageTags>
     <Description>
-      Users
+      Invoice
     </Description>
   </PropertyGroup>
   <PropertyGroup>

@@ -1,0 +1,44 @@
+.user-form {
+    text-align: left;
+    width: calc(100vw * 0.75);
+    height: calc(100vh * 0.70);
+    margin-top: 16px;
+    padding: 1rem;
+}
+
+.flex-expand {
+    flex: 1 1 auto;
+}
+
+.mat-toolbar-row {
+    justify-content: flex-end;
+    background-color: #FAFAFA;
+}
+
+.div-fields {
+    margin-top: 40px;
+    margin-left: 40px;
+}
+
+mat-label {
+    color: blue;
+}
+
+mat-form-field.firstname-field {
+    padding-right: 1rem;
+}
+
+.user-form input {
+    width: fit-content;
+    color: green;
+}
+
+mat-divider {
+    padding: 2px;
+}
+
+.button-save {
+    margin-left: 40px;
+    margin-top: 20px;
+    cursor: pointer;
+}

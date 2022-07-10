@@ -1,0 +1,1 @@
+{"ast":null,"code":"export class UserDto {\n  constructor() {\n    this.id = '';\n    this.userName = '';\n    this.password = '';\n    this.firstName = '';\n    this.lastName = '';\n    this.email = '';\n  }\n\n}","map":null,"metadata":{},"sourceType":"module"}
