@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Invoice.Domain.Interfaces
+namespace Invoice.Application.Common.Interfaces.Persistance
 {
     public interface IUnitOfWork: IDisposable
     {

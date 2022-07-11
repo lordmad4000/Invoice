@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Invoice.Domain.Base;
 
-namespace Invoice.Domain.Interfaces
+namespace Invoice.Application.Common.Interfaces.Persistance
 {
     public interface IAsyncRepository<T> where T : BaseEntity
     {

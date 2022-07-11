@@ -1,6 +1,6 @@
 ﻿using Invoice.Domain.Entities;
 
-namespace Invoice.Domain.Interfaces
+namespace Invoice.Application.Common.Interfaces.Persistance
 {
     public interface IUserRepository : IAsyncRepository<User>
     {
