@@ -11,7 +11,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Invoice.Domain\Invoice.Domain.csproj" />
+    <ProjectReference Include="..\Invoice.Application\Invoice.Application.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Migrations\" />
