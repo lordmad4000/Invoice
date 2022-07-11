@@ -1,5 +1,6 @@
 ﻿using Invoice.Api.AutoMapper;
 using Invoice.Api.Configuration;
+using Invoice.Application.Common.Interfaces.Persistance;
 using Invoice.Application.Interfaces;
 using Invoice.Application.Services;
 using Invoice.Domain.Interfaces;
@@ -22,14 +23,6 @@ namespace Invoice.Api.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddRepositories(this IServiceCollection services)
-        {
-            services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));
-            services.AddScoped<IUserRepository, UserRepository>();
-
-            return services;
-        }
-
         public static IServiceCollection AddCache(this IServiceCollection services)
         {
             services.AddMemoryCache();
@@ -47,18 +40,6 @@ namespace Invoice.Api.Extensions
         public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
         {
             return services.AddDbContext<EFContext>(options => options.UseMySql(configuration.GetConnectionString("DefaultConnection")));
-        }
-
-        public static IServiceCollection AddBusinessServices(this IServiceCollection services)
-        {
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<ILoginService, LoginService>();
-            services.AddScoped<IValidatorService, ValidatorService>();
-            services.AddScoped<IPasswordEncryption, PasswordEncryptService>();
-            services.AddScoped<IPasswordService, UserPasswordService>();
-            services.AddScoped<ITokenService, JWTokenService>();
-
-            return services;
         }
 
         public static IServiceCollection AddConfiguration(this IServiceCollection services, IConfiguration configuration)
