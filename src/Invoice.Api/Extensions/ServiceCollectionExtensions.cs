@@ -18,25 +18,6 @@ namespace Invoice.Api.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddCache(this IServiceCollection services)
-        {
-            services.AddMemoryCache();
-
-            services.AddSingleton<ICacheService, MemoryCacheService>();
-
-            return services;
-        }
-
-        public static IServiceCollection AddUnitOfWork(this IServiceCollection services)
-        {
-            return services.AddScoped<IUnitOfWork, UnitOfWork>();
-        }
-
-        public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
-        {
-            return services.AddDbContext<EFContext>(options => options.UseMySql(configuration.GetConnectionString("DefaultConnection")));
-        }
-
         public static IServiceCollection AddConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<CacheConfig>(configuration.GetSection("CacheConfig"));
