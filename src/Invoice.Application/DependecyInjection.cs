@@ -1,7 +1,5 @@
 using Invoice.Application.Interfaces;
 using Invoice.Application.Services;
-using Invoice.Domain.Interfaces;
-using Invoice.Domain.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Invoice.Application
@@ -13,7 +11,6 @@ namespace Invoice.Application
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IValidatorService, ValidatorService>();
-            services.AddScoped<IPasswordEncryption, PasswordEncryptService>();
             services.AddScoped<IPasswordService, UserPasswordService>();
             services.AddScoped<ITokenService, JWTokenService>();
 

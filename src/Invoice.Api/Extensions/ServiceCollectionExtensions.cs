@@ -1,14 +1,9 @@
 ﻿using Invoice.Api.AutoMapper;
 using Invoice.Api.Configuration;
 using Invoice.Application.Common.Interfaces.Persistance;
-using Invoice.Application.Interfaces;
-using Invoice.Application.Services;
-using Invoice.Domain.Interfaces;
-using Invoice.Domain.Services;
 using Invoice.Infra.Configuration;
 using Invoice.Infra.Data;
 using Invoice.Infra.Interfaces;
-using Invoice.Infra.Repositories;
 using Invoice.Infra.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;

@@ -1,5 +1,7 @@
 using Invoice.Application.Common.Interfaces.Persistance;
+using Invoice.Domain.Interfaces;
 using Invoice.Infra.Repositories;
+using Invoice.Infra.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Invoice.Infra
@@ -10,6 +12,7 @@ namespace Invoice.Infra
         {
             services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IPasswordEncryption, PasswordEncryptService>();
 
             return services;            
         }        

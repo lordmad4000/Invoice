@@ -3,9 +3,8 @@ using System.Security.Cryptography;
 using System.Text;
 using Invoice.Domain.Interfaces;
 
-namespace Invoice.Domain.Services
+namespace Invoice.Infra.Services
 {
-
     public class PasswordEncryptService : IPasswordEncryption
     {
         public string GenerateSalt(int length)
