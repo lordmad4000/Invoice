@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Invoice.Domain.Interfaces;
+using Invoice.Application.Common.Interfaces.Persistance;
 using Invoice.Infra.Exceptions;
 
 namespace Invoice.Infra.Data

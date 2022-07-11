@@ -3,13 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 using System.Threading.Tasks;
 using Invoice.Infra.Interfaces;
 using Invoice.Domain.Base;
-using Invoice.Domain.Interfaces;
 using Invoice.Infra.Data;
 using Invoice.Infra.Exceptions;
+using Invoice.Application.Common.Interfaces.Persistance;
 
 namespace Invoice.Infra.Repositories
 {
