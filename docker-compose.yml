@@ -26,7 +26,7 @@ services:
       DBHOST: database
       ASPNETCORE_ENVIRONMENT: "Release"
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
-      ConnectionStrings__DefaultConnection: "server=invoice_db;Database=users;uid=root;Password=RdlqT2BZUKyos832;persistsecurityinfo=True;"
+      ConnectionStrings__DefaultConnection: "server=invoice_db;Database=invoice;uid=root;Password=RdlqT2BZUKyos832;persistsecurityinfo=True;"
       JWTConfig_SecretKey: "asdwda1d8a4sd8w4das8d*w8d*asd@#"
       CacheConfig_AbsoluteExpirationInHours: 1
       CacheConfig_SlidingExpirationInMinutes: 30
