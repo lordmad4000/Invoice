@@ -4,9 +4,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { GlobalConstants } from 'src/app/shared/const/global-constants';
-import { PopupService } from 'src/app/shared/services/popup.service';
+import { GlobalConstants } from 'src/app/const/global-constants';
 import { UserService } from 'src/app/shared/services/user.service';
+import { PopupService } from 'src/app/core/services/popup.service';
 
 @Component({
   selector: 'app-users-view',

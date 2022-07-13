@@ -21,6 +21,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthenticationService } from './services/authentication.service';
 import { MatCardModule } from '@angular/material';
+import { PopupComponent } from './components/popup/popup.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { MatCardModule } from '@angular/material';
     NavmenuComponent,
     LoginComponent,
     PageNotFoundComponent,
+    PopupComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -51,6 +53,7 @@ import { MatCardModule } from '@angular/material';
     NavmenuComponent,
     LoginComponent,
     PageNotFoundComponent,
+    PopupComponent
   ],
   providers: [
     NavmenuComponent,

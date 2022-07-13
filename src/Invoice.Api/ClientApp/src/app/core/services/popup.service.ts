@@ -1,8 +1,8 @@
 import { Injectable, NgZone } from "@angular/core";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { GlobalConstants } from "src/app/const/global-constants";
 
 import { PopupComponent } from "../components/popup/popup.component";
-import { GlobalConstants } from "../const/global-constants";
 import { PopupButton } from "../models/popup-button";
 import { PopupProperties } from "../models/popup-properties";
 
@@ -29,11 +29,11 @@ export class PopupService {
         const popConfirm = new PopupProperties("REMOVE", msg, "400px", "auto");
 
         const buttonNo = new PopupButton("NO", GlobalConstants.popupNoValue);
-        const buttonYes = new PopupButton("SI", GlobalConstants.popupYesValue);
+        const buttonYes = new PopupButton("YES", GlobalConstants.popupYesValue);
         popConfirm.actions = [];
 
-        popConfirm.actions.push(buttonNo);
         popConfirm.actions.push(buttonYes);
+        popConfirm.actions.push(buttonNo);
 
         return this.openCustomDialog(popConfirm);
     }
@@ -41,7 +41,7 @@ export class PopupService {
     public openPopupAceptar(titulo: string, msg: string, width: string, height: string) {
         const popupSettings = new PopupProperties(titulo, msg, width, height);
 
-        const buttonAceptar = new PopupButton("ACEPTAR", GlobalConstants.popupConfirmValue);
+        const buttonAceptar = new PopupButton("OK", GlobalConstants.popupConfirmValue);
         popupSettings.actions = [];
 
         popupSettings.actions.push(buttonAceptar);

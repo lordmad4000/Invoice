@@ -77,7 +77,6 @@ export class UsersNewComponent implements OnInit, OnDestroy {
     if (this.checkPassword() === false)
       return;
 
-    this.user.userName = this.formUser.get("userName").value;
     this.user.password = this.formUser.get("password").value;
     this.user.firstName = this.formUser.get("firstName").value;
     this.user.lastName = this.formUser.get("lastName").value;

@@ -18,12 +18,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { PopupComponent } from './components/popup/popup.component';
 
 @NgModule({
-  declarations: [
-    PopupComponent
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     SharedRoutingModule,

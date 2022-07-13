@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve" ,
     "build": "ng build",
+    "buildp": "ng build --prod",
     "build:ssr": "ng run Invoice.Api:server:dev",
     "test": "ng test",
     "lint": "ng lint",

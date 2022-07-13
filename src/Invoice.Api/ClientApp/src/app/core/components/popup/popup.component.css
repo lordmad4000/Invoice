@@ -15,3 +15,7 @@
     align-items: center;
     height: 100%;
 }
+
+.popup-button { 
+    margin-right: 1rem;
+}

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PopupService } from 'src/app/shared/services/popup.service';
+import { PopupService } from '../../services/popup.service';
 
 @Component({
   selector: 'app-navmenu',
@@ -11,7 +11,7 @@ export class NavmenuComponent implements OnInit {
 
   title = 'UsersAngular';
   constructor(private router: Router, 
-    // private popupService: PopupService
+    private popupService: PopupService
     ) { }
 
   ngOnInit(): void {
@@ -34,7 +34,7 @@ export class NavmenuComponent implements OnInit {
 
   aboutButtonClick(event: any) {
     console.log("About button click.")
-    //this.popupService.openPopupAceptar("About UsersAngularApp", "Version: 0.1a", "400px", "");
+    this.popupService.openPopupAceptar("About UsersAngularApp", "Version: 0.1a", "400px", "");
   }
 
 }
