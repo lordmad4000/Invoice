@@ -85,6 +85,7 @@ export class UsersNewComponent implements OnInit, OnDestroy {
     this.userService.Post(this.user).subscribe({
       next: (res: any) => {
         const data = res;
+        this.location.back();
       },
       error: (err: HttpErrorResponse) => {
         var errors = this.errorService.GetErrorsFromHttp(err);
