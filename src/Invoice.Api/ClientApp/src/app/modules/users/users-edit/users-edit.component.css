@@ -24,6 +24,10 @@ mat-label {
     color: blue;
 }
 
+mat-form-field.password-field {
+    padding-right: 1rem;
+}
+
 mat-form-field.firstname-field {
     padding-right: 1rem;
 }
