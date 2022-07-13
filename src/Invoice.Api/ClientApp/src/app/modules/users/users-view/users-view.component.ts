@@ -76,7 +76,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
       .afterClosed()
       .subscribe(result => {
         if (result == GlobalConstants.popupYesValue) {
-          this.removeItem();          
+          this.removeItem();
         }
       });
 
@@ -89,7 +89,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
           const data = res;
           if (data) {            
             this.popupService.openPopupAceptar("REMOVE", "Item removed.", "300px", "");
-            this.router.navigate(['/users']);
+            this.router.navigate(['/users/grid']);
           }
           else{
             this.popupService.openPopupAceptar("REMOVE", "Item not removed.", "300px", "");
