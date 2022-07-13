@@ -150,7 +150,6 @@ namespace Invoice.Api.Controllers
             }
         }
 
-        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] UserRegisterRequest userRegisterRequest)
         {
@@ -178,34 +177,6 @@ namespace Invoice.Api.Controllers
                 return BadRequest(ex.InnerException.Message);
             }
         }
-
-        //[AllowAnonymous]
-        //[HttpPost("Login")]
-        //public async Task<IActionResult> Login([FromBody] UserLoginRequest userLoginRequest)
-        //{
-        //    try
-        //    {
-        //        var userDto = await _userService.Login(userLoginRequest.Username, userLoginRequest.Password);
-        //        if (userDto == null)
-        //            return BadRequest("Invalid Username or Password.");
-
-        //        var userLoginResponse = new UserLoginResponse
-        //        {
-        //            Id = userDto.Id,
-        //            Token = _tokenService.GenerateToken(userDto.Password, userDto.Email, _jwtConfig.SecretKey)
-        //        };
-
-        //        return (await Task.FromResult(Ok(userLoginResponse)));
-        //    }
-        //    catch (DataBaseException ex)
-        //    {
-        //        return StatusCode(500, ex.Message);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.InnerException.Message);
-        //    }
-        //}
 
     }
 }
