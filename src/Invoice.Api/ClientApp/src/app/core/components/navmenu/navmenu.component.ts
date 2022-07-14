@@ -9,7 +9,7 @@ import { PopupService } from '../../services/popup.service';
 })
 export class NavmenuComponent implements OnInit {
 
-  title = 'UsersAngular';
+  title = 'InvoiceApp';
   constructor(private router: Router, 
     private popupService: PopupService
     ) { }
@@ -34,7 +34,7 @@ export class NavmenuComponent implements OnInit {
 
   aboutButtonClick(event: any) {
     console.log("About button click.")
-    this.popupService.openPopupAceptar("About UsersAngularApp", "Version: 0.1a", "400px", "");
+    this.popupService.openPopupAceptar("About InvoiceApp", "Version: 0.1a", "400px", "");
   }
 
 }
