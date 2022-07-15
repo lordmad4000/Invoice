@@ -1,1 +1,0 @@
-{"ast":null,"code":"export class PopupProperties {\n  constructor(title, message, width, height) {\n    this.title = title;\n    this.message = message;\n    this.actions = [];\n    this.width = width;\n    this.height = height;\n  }\n\n}","map":null,"metadata":{},"sourceType":"module"}

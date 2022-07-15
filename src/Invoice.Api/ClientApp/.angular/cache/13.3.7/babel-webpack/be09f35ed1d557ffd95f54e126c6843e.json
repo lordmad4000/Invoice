@@ -1,1 +1,0 @@
-{"ast":null,"code":"export class PopupButton {\n  constructor(title, value) {\n    this.title = title;\n    this.value = value;\n  }\n\n}","map":null,"metadata":{},"sourceType":"module"}
