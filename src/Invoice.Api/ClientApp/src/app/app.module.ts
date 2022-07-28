@@ -10,6 +10,7 @@ import { CoreModule } from './core/core.module';
 import { HomeModule } from './modules/home/home.module';
 import { UsersModule } from './modules/users/users.module';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { PopupComponent } from './core/components/popup/popup.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
     UsersModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[ PopupComponent ]
 })
 export class AppModule { }
