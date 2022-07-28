@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System;
 using System.Text;
 
 namespace Invoice.Api.Extensions
@@ -53,7 +54,8 @@ namespace Invoice.Api.Extensions
                      ValidateIssuerSigningKey = true,
                      IssuerSigningKey = new SymmetricSecurityKey(key),
                      ValidateIssuer = false,
-                     ValidateAudience = false
+                     ValidateAudience = false,
+                     ClockSkew = TimeSpan.Zero
                  };
              });
 
