@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { SharedRoutingModule } from './shared-routing.module';
 import { UserService } from './services/user.service';
-import { JWTService } from './services/jwt.service';
+import { JWTService } from '../core/services/jwt.service';
 import { ErrorService } from './services/error.service';
 import { LoadFileService } from './services/loadfile.service';
 import { MatDialogClose, MatDialogModule } from '@angular/material/dialog';
@@ -39,8 +39,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   exports: [
   ],
   providers: [
-    UserService,
-    JWTService,
+    UserService,    
     ErrorService,
     LoadFileService,
     FormsModule,
