@@ -17,13 +17,13 @@ namespace Invoice.Infra.Migrations
                 .HasAnnotation("ProductVersion", "3.1.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Invoice.Domain.Entities.TipoDocumentoId", b =>
+            modelBuilder.Entity("Invoice.Domain.Entities.IdDocumentType", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("Nombre")
+                    b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
@@ -31,7 +31,7 @@ namespace Invoice.Infra.Migrations
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.ToTable("TipoDocumentoId");
+                    b.ToTable("IdDocumentType");
                 });
 
             modelBuilder.Entity("Invoice.Domain.Entities.User", b =>

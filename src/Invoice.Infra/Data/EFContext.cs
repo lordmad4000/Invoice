@@ -11,12 +11,12 @@ namespace Invoice.Infra.Data
         }
 
         public DbSet<User> User { get; set; }
-        public DbSet<TipoDocumentoId> TipoDocumentoId { get; set; }
+        public DbSet<IdDocumentType> IdDocumentType { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {            
             modelBuilder.ApplyConfiguration(new UserMap());
-            modelBuilder.ApplyConfiguration(new TipoDocumentoIdMap());
+            modelBuilder.ApplyConfiguration(new IdDocumentTypeMap());
             base.OnModelCreating(modelBuilder);
         }
     }
