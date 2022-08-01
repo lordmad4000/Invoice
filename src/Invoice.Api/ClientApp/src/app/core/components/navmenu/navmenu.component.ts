@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { JWTService } from '../../services/jwt.service';
 import { PopupService } from '../../services/popup.service';
 
 @Component({
@@ -11,7 +12,8 @@ export class NavmenuComponent implements OnInit {
 
   title = 'InvoiceApp';
   constructor(private router: Router, 
-    private popupService: PopupService
+    private popupService: PopupService,
+    private jwtService: JWTService,
     ) { }
 
   ngOnInit(): void {
@@ -34,7 +36,8 @@ export class NavmenuComponent implements OnInit {
 
   aboutButtonClick(event: any) {
     console.log("About button click.")
-    this.popupService.openPopupAceptar("About InvoiceApp", "Version: 0.1a", "400px", "");
+    const tokenExpiricyTime = this.jwtService.GetTokenExpiricyTime();
+    this.popupService.openPopupAceptar("About InvoiceApp", "Version: 0.1a | Expiration token: " + tokenExpiricyTime + " sec", "400px", "");
   }
 
 }
