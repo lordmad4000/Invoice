@@ -14,7 +14,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
@@ -22,6 +22,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthenticationService } from './services/authentication.service';
 import { MatCardModule } from '@angular/material';
 import { PopupComponent } from './components/popup/popup.component';
+import { JWTService } from './services/jwt.service';
+import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,9 @@ import { PopupComponent } from './components/popup/popup.component';
   providers: [
     NavmenuComponent,
     AuthGuard,
-    AuthenticationService
+    AuthenticationService,
+    JWTService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true }
   ],
   // entryComponents: [PopupComponent],
 })
