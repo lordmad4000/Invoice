@@ -1,5 +1,6 @@
 using AutoMapper;
 using Invoice.Application.Models;
+using Invoice.Application.Services.Configuration.Common;
 using Invoice.Domain.Entities;
 using Invoice.Domain.ValueObjects;
 
@@ -13,6 +14,9 @@ namespace Invoice.Api.AutoMapper
                                                  x => x.MapFrom(src => src.EmailAddress.ToString()));
             CreateMap<UserDto, User>().ForMember(c => c.EmailAddress, 
                                                  x => x.MapFrom(src => new EmailAddress(src.Email)));
+
+            CreateMap<IdDocumentTypeResult, IdDocumentType>();
+            CreateMap<IdDocumentType, IdDocumentTypeResult>();
         }
     }
 
