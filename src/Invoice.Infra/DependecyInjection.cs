@@ -16,6 +16,7 @@ namespace Invoice.Infra
         {
             services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IIdDocumentTypeRepository, IdDocumentTypeRepository>();
             services.AddScoped<IPasswordEncryption, PasswordEncryptService>();
 
             return services;            
