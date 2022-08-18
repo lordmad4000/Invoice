@@ -12,13 +12,10 @@ namespace Invoice.Application
         {
             services.AddMediatR(typeof(DependencyInjection).Assembly);
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IValidatorService, ValidatorService>();
             services.AddScoped<IPasswordService, UserPasswordService>();
             services.AddScoped<ITokenService, JWTokenService>();
-
             services.AddScoped<IIdDocumentTypeCommandService, IdDocumentTypeCommandService>();
-
 
             return services;            
         }        
