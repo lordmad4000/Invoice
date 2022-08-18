@@ -4,11 +4,11 @@
         <img mat-card-image class="login-img" src="/assets/images/userlogin.png" alt="login">
     </div>
     <mat-form-field appearance="fill" mat-form-fieldAutoSize>
-        <mat-label>Usuario</mat-label>
-        <input type="text" matInput formControlName="username" matTextareaAutosize required>
+        <mat-label>Email</mat-label>
+        <input type="text" matInput formControlName="email" matTextareaAutosize required>
     </mat-form-field>
     <mat-form-field appearance="fill">
-        <mat-label>Contraseña</mat-label>
+        <mat-label>Password</mat-label>
         <input type="password" matInput formControlName="password" required>
     </mat-form-field>
     <mat-error *ngIf="formLoginError.length > 0">

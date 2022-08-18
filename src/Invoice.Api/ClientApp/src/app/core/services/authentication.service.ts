@@ -13,13 +13,13 @@ export class AuthenticationService {
             this.baseUrl = baseUrl;
     }
 
-    public Login(username:string, password:string) : Observable<UserLoginResponse> {
+    public Login(email:string, password:string) : Observable<UserLoginResponse> {
 
       const httpHeaders = new HttpHeaders({
         'Content-Type': 'application/json'
       });
 
-      const url = `${this.baseUrl}api/Authentication/Login?username=${username}&password=${password}`;
+      const url = `${this.baseUrl}api/Authentication/Login?email=${email}&password=${password}`;
 
       return this.httpClient.get<UserLoginResponse>(url, { headers: httpHeaders } );
     }

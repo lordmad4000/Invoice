@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.formLogin = new FormGroup({
       version: new FormControl( { value: '1.0.0', disabled: true }, Validators.required),
-      username: new FormControl( '', Validators.required),
+      email: new FormControl( '', Validators.required),
       password: new FormControl( '', Validators.required),
     })
 
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   Login() {    
     this.authenticationService
-      .Login(this.formLogin.value.username, this.formLogin.value.password)
+      .Login(this.formLogin.value.email, this.formLogin.value.password)
       .subscribe({
         next: (res: UserLoginResponse) => {
           let token = res.token;
