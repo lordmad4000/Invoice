@@ -34,5 +34,6 @@
     <FluentValidationAspNetCore>8.6.1</FluentValidationAspNetCore>
     <PomeloEntityFrameworkCoreMySql>3.1.2</PomeloEntityFrameworkCoreMySql>
     <MediatR>10.0.1</MediatR>
+    <MediatRExtensionsMicrosoftDependencyInjection>10.0.1</MediatRExtensionsMicrosoftDependencyInjection>
   </PropertyGroup>
 </Project>
