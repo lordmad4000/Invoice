@@ -33,5 +33,6 @@
     <SystemIdentityModelTokensJwt>6.17.0</SystemIdentityModelTokensJwt>
     <FluentValidationAspNetCore>8.6.1</FluentValidationAspNetCore>
     <PomeloEntityFrameworkCoreMySql>3.1.2</PomeloEntityFrameworkCoreMySql>
+    <MediatR>10.0.1</MediatR>
   </PropertyGroup>
 </Project>

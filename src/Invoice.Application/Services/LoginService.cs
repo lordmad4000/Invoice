@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using Invoice.Application.Interfaces;
-using Invoice.Application.Models;
 using AutoMapper;
 using Invoice.Application.Common.Interfaces.Persistance;
+using Invoice.Application.Common.Dto;
 
 namespace Invoice.Application.Services
 {

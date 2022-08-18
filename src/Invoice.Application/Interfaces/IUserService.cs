@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Invoice.Application.Models;
+using Invoice.Application.Common.Dto;
 
 namespace Invoice.Application.Interfaces
 {

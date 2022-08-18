@@ -1,5 +1,5 @@
 using AutoMapper;
-using Invoice.Application.Models;
+using Invoice.Application.Common.Dto;
 using Invoice.Application.Services.Configuration.Common;
 using Invoice.Domain.Entities;
 using Invoice.Domain.ValueObjects;

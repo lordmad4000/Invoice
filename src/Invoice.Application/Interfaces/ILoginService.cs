@@ -1,4 +1,4 @@
-﻿using Invoice.Application.Models;
+﻿using Invoice.Application.Common.Dto;
 using System.Threading.Tasks;
 
 namespace Invoice.Application.Interfaces

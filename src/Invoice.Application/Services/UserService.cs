@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 using Invoice.Application.Interfaces;
 using Invoice.Domain.Entities;
 using Invoice.Domain.Validations;
-using Invoice.Application.Models;
 using AutoMapper;
 using Invoice.Domain.ValueObjects;
 using Invoice.Domain.Exceptions;
 using Invoice.Application.Common.Interfaces.Persistance;
+using Invoice.Application.Common.Dto;
 
 namespace Invoice.Application.Services
 {

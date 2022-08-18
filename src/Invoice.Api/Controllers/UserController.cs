@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 using Invoice.Api.Models.Request;
 using Invoice.Api.Models.Response;
 using Invoice.Application.Interfaces;
-using Invoice.Application.Models;
 using Invoice.Domain.Exceptions;
 using Invoice.Infra.Exceptions;
+using Invoice.Application.Common.Dto;
 
 namespace Invoice.Api.Controllers
 {

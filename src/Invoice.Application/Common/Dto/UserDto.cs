@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Invoice.Application.Models
+namespace Invoice.Application.Common.Dto
 {
     public class UserDto
     {
