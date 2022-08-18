@@ -1,8 +1,8 @@
 using System;
 
-namespace Invoice.Application.Services.Configuration.Common
+namespace Invoice.Application.Common.Dto
 {
-    public partial class IdDocumentTypeResult
+    public partial class IdDocumentTypeDto
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

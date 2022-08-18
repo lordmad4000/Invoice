@@ -5,7 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Invoice.Domain.Exceptions;
 using Invoice.Infra.Exceptions;
-using Invoice.Application.Services.Configuration.Commands;
+using MediatR;
+using Invoice.Application.CQRS.Configuration.Commands.Register;
 
 namespace Invoice.Api.Controllers
 {
@@ -14,13 +15,13 @@ namespace Invoice.Api.Controllers
     [Route("api/[controller]")]
     public class ConfigurationController : ControllerBase
     {
-        private readonly IIdDocumentTypeCommandService _idDocumentTypeCommandService;
+        private readonly IMediator _mediator;
         private readonly IMapper _mapper;
 
-        public ConfigurationController(IIdDocumentTypeCommandService idDocumentTypeCommandService,
+        public ConfigurationController(IMediator mediator,
                                        IMapper mapper)
         {
-            _idDocumentTypeCommandService = idDocumentTypeCommandService;
+            _mediator = mediator;
             _mapper = mapper;
         }
 
@@ -32,10 +33,11 @@ namespace Invoice.Api.Controllers
                 if (string.IsNullOrEmpty(name))
                     return BadRequest("Name is required");
 
-                var idDocumentTypeResult = await _idDocumentTypeCommandService.Register(name);
-                var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/{idDocumentTypeResult.Id}";
+                var idDocumentTypeDto = await _mediator.Send(new IdDocumentTypeRegisterCommand(name));
 
-                return (Created(url, idDocumentTypeResult));
+                var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/{idDocumentTypeDto.Id}";
+
+                return (Created(url, idDocumentTypeDto));
             }
             catch (EntityValidationException ex)
             {

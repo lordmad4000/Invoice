@@ -72,7 +72,10 @@ namespace Invoice.Api.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                var authenticationRegisterCommand = new AuthenticationRegisterCommand(userRegisterRequest.Email, userRegisterRequest.Password, userRegisterRequest.FirstName, userRegisterRequest.LastName);
+                var authenticationRegisterCommand = new AuthenticationRegisterCommand(userRegisterRequest.Email, 
+                                                                                      userRegisterRequest.Password, 
+                                                                                      userRegisterRequest.FirstName, 
+                                                                                      userRegisterRequest.LastName);
                 var userDto = await _mediator.Send(authenticationRegisterCommand);
                 var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/{userDto.Id}";
                 

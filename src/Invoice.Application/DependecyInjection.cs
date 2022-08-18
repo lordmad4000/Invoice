@@ -1,6 +1,5 @@
 using Invoice.Application.Interfaces;
 using Invoice.Application.Services;
-using Invoice.Application.Services.Configuration.Commands;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,7 +14,6 @@ namespace Invoice.Application
             services.AddScoped<IValidatorService, ValidatorService>();
             services.AddScoped<IPasswordService, UserPasswordService>();
             services.AddScoped<ITokenService, JWTokenService>();
-            services.AddScoped<IIdDocumentTypeCommandService, IdDocumentTypeCommandService>();
 
             return services;            
         }        
