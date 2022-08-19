@@ -93,7 +93,7 @@ namespace Invoice.Api.Extensions
         public static IServiceCollection AddAutoMapperSetup(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(DtoToResponseMappingProfile), 
-                                   typeof(RequestToCommandMappingProfile), 
+                                   typeof(RequestToCommandMappingProfile),
                                    typeof(EntityDtoMappingProfile));
             AutoMapperConfig.RegisterMappings();
 

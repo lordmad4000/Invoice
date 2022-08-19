@@ -10,10 +10,10 @@ using Invoice.Domain.ValueObjects;
 using Invoice.Domain.Validations;
 using Invoice.Application.Common.Dto;
 
-namespace Invoice.Application.CQRS.Authentication.Commands.Register
+namespace Invoice.Application.CQRS.Users.Commands.Register
 {
 
-    public class AuthenticationRegisterHandler : IRequestHandler<AuthenticationRegisterCommand, UserDto>
+    public class UserRegisterHandler : IRequestHandler<UserRegisterCommand, UserDto>
     {
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -21,7 +21,7 @@ namespace Invoice.Application.CQRS.Authentication.Commands.Register
         private readonly IPasswordService _passwordService;
         private readonly IMapper _mapper;
 
-        public AuthenticationRegisterHandler(IUserRepository userRepository,                        
+        public UserRegisterHandler(IUserRepository userRepository,                        
                                              IUnitOfWork unitOfWork,
                                              IValidatorService validatorService,
                                              IPasswordService passwordService,
@@ -34,7 +34,7 @@ namespace Invoice.Application.CQRS.Authentication.Commands.Register
             _mapper = mapper;
         }
 
-        public async Task<UserDto> Handle(AuthenticationRegisterCommand request, CancellationToken cancellationToken)
+        public async Task<UserDto> Handle(UserRegisterCommand request, CancellationToken cancellationToken)
         {            
             if (await _userRepository.GetAsync(c => c.EmailAddress.Address == request.Email, false) != null)
                 throw new EntityValidationException("Email address already exists.");
@@ -48,14 +48,14 @@ namespace Invoice.Application.CQRS.Authentication.Commands.Register
             return _mapper.Map<UserDto>(user);
         }
 
-        private void Validate(AuthenticationRegisterCommand request)
+        private void Validate(UserRegisterCommand request)
         {
             var user = new User(new EmailAddress(request.Email),
                                 request.Password, 
                                 request.FirstName, 
                                 request.LastName);
             _validatorService.ValidateModel(new RegisterUserValidator().Validate(user));                                
-        }
+        }        
 
     }
 }

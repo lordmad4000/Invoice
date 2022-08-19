@@ -11,6 +11,9 @@ using Invoice.Application.Interfaces;
 using Invoice.Domain.Exceptions;
 using Invoice.Infra.Exceptions;
 using Invoice.Application.Common.Dto;
+using MediatR;
+using Invoice.Application.CQRS.Authentication.Commands.Register;
+using Invoice.Application.CQRS.Users.Commands.Register;
 
 namespace Invoice.Api.Controllers
 {
@@ -19,11 +22,14 @@ namespace Invoice.Api.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
+        private readonly IMediator _mediator;
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
-        public UserController(IUserService userService,
+        public UserController(IMediator mediator,
+                              IUserService userService,
                               IMapper mapper)
         {
+            _mediator = mediator;
             _userService = userService;
             _mapper = mapper;
         }
@@ -71,9 +77,14 @@ namespace Invoice.Api.Controllers
         {
             try
             {
-                var userDto = _mapper.Map<UserDto>(userUpdateRequest);
-                await _userService.Update(userDto);
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
 
+                // var userDto1 =  _mapper.Map<UserDto> (userUpdateRequest);
+                // await _userService.Update(userDto1);
+
+                var userUpdateCommand =  _mapper.Map<UserUpdateCommand>(userUpdateRequest);
+                var userDto = await _mediator.Send(userUpdateCommand);
                 return (Ok(_mapper.Map<UserResponse>(userDto)));
             }
             catch (EntityValidationException ex)
