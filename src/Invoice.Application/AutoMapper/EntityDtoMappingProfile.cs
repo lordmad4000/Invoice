@@ -3,7 +3,7 @@ using Invoice.Application.Common.Dto;
 using Invoice.Domain.Entities;
 using Invoice.Domain.ValueObjects;
 
-namespace Invoice.Api.AutoMapper
+namespace Invoice.Application.AutoMapper
 {
     public class EntityDtoMappingProfile : Profile
     {

@@ -1,4 +1,5 @@
 using AutoMapper;
+using Invoice.Application.AutoMapper;
 
 namespace Invoice.Api.AutoMapper
 {
@@ -11,6 +12,7 @@ namespace Invoice.Api.AutoMapper
                 cfg.AllowNullCollections = true;
                 cfg.AllowNullDestinationValues = true;
                 cfg.AddProfile(new DtoToResponseMappingProfile());
+                cfg.AddProfile(new RequestToCommandMappingProfile());
                 cfg.AddProfile(new EntityDtoMappingProfile());
             });
         }

@@ -1,13 +1,9 @@
 ﻿using Invoice.Api.AutoMapper;
 using Invoice.Api.Configuration;
-using Invoice.Application.Common.Interfaces.Persistance;
+using Invoice.Application.AutoMapper;
 using Invoice.Infra.Configuration;
-using Invoice.Infra.Data;
-using Invoice.Infra.Interfaces;
-using Invoice.Infra.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -96,7 +92,9 @@ namespace Invoice.Api.Extensions
 
         public static IServiceCollection AddAutoMapperSetup(this IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(DtoToResponseMappingProfile), typeof(EntityDtoMappingProfile));
+            services.AddAutoMapper(typeof(DtoToResponseMappingProfile), 
+                                   typeof(RequestToCommandMappingProfile), 
+                                   typeof(EntityDtoMappingProfile));
             AutoMapperConfig.RegisterMappings();
 
             return services;
