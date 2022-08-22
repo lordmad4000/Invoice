@@ -12,22 +12,22 @@ using Invoice.Domain.Exceptions;
 using Invoice.Infra.Exceptions;
 using Invoice.Application.Common.Dto;
 using MediatR;
-using Invoice.Application.CQRS.Authentication.Commands.Register;
-using Invoice.Application.CQRS.Users.Commands.Register;
+using Invoice.Application.CQRS.Users.Queries;
+using Invoice.Application.CQRS.Users.Commands;
 
 namespace Invoice.Api.Controllers
 {
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class UserController : ControllerBase
+    public class UsersController : ApiController
     {
         private readonly IMediator _mediator;
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
-        public UserController(IMediator mediator,
-                              IUserService userService,
-                              IMapper mapper)
+        public UsersController(IMediator mediator,
+                               IUserService userService,
+                               IMapper mapper)
         {
             _mediator = mediator;
             _userService = userService;
@@ -39,7 +39,10 @@ namespace Invoice.Api.Controllers
         {
             try
             {
-                var userDto = await _userService.GetById(id);                
+                var query =  new GetUserByIdQuery(id);
+                var userDto = await _mediator.Send(query);
+                if (userDto == null)
+                    return NotFound(new { errorMessage = $"User with id {id} was not found" });
 
                 return (Ok(_mapper.Map<UserResponse>(userDto)));
             }
@@ -58,9 +61,10 @@ namespace Invoice.Api.Controllers
         {
             try
             {
-                var Invoice = await _userService.GetAll();
+                var query =  new  GetUsersQuery();
+                var usersDto = await _mediator.Send(query);
 
-                return (Ok(_mapper.Map<List<UserResponse>>(Invoice)));
+                return (Ok(_mapper.Map<List<UserResponse>>(usersDto)));
             }
             catch (DataBaseException ex)
             {
@@ -72,19 +76,16 @@ namespace Invoice.Api.Controllers
             }
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Put([FromBody] UserUpdateRequest userUpdateRequest)
+        [HttpPut("Update")]
+        public async Task<IActionResult> Update([FromBody] UserUpdateRequest userUpdateRequest)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
-
-                // var userDto1 =  _mapper.Map<UserDto> (userUpdateRequest);
-                // await _userService.Update(userDto1);
-
                 var userUpdateCommand =  _mapper.Map<UserUpdateCommand>(userUpdateRequest);
                 var userDto = await _mediator.Send(userUpdateCommand);
+
                 return (Ok(_mapper.Map<UserResponse>(userDto)));
             }
             catch (EntityValidationException ex)
@@ -101,54 +102,14 @@ namespace Invoice.Api.Controllers
             }
         }
 
-        [HttpPatch("PathReplaceUser/{id}")]
-        public async Task<IActionResult> PatchReplace([FromBody] JsonPatchDocument<UserDto> patchDoc, Guid id)
+        [HttpDelete("Delete/{id}")]
+        public async Task<IActionResult> Delete(Guid id)
         {
             try
             {
-                if (patchDoc == null)
-                    return BadRequest("No field to update provided.");
+                var userRemoveCommand =  new UserRemoveCommand(id);
+                bool result = await _mediator.Send(userRemoveCommand) == null ? false : true;
 
-                // ONLY ALLOWED REPLACE OPERATIONS
-                patchDoc.Operations.RemoveAll(c => c.op != "replace");
-
-                if (patchDoc.Operations.Count == 0)
-                    return BadRequest("No field to update provided.");
-
-                var userDto = await _userService.GetById(id, false);
-
-                if (userDto == null)
-                    return NotFound();
-
-                patchDoc.ApplyTo(userDto, ModelState);
-
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
-                userDto = await _userService.PatchUpdate(userDto);
-
-                return Ok(_mapper.Map<UserResponse>(userDto));
-            }
-            catch (EntityValidationException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (DataBaseException ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(Guid id)
-        {
-            try
-            {
-                var result = await _userService.Delete(id);
                 return (Ok(result));
             }
             catch (DataBaseException ex)
@@ -161,18 +122,17 @@ namespace Invoice.Api.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] UserRegisterRequest userRegisterRequest)
+        [HttpPost("Register")]
+        public async Task<IActionResult> Register([FromBody] UserRegisterRequest userRegisterRequest)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
-
-                var userDto = _mapper.Map<UserDto>(userRegisterRequest);
-                userDto = await _userService.Register(userDto);
+                var userRegisterCommand = _mapper.Map<UserRegisterCommand> (userRegisterRequest);
+                var userDto = await _mediator.Send(userRegisterCommand);
                 var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/{userDto.Id}";
-
+                
                 return (Created(url, _mapper.Map<UserResponse>(userDto)));
             }
             catch (EntityValidationException ex)
@@ -188,6 +148,49 @@ namespace Invoice.Api.Controllers
                 return BadRequest(ex.InnerException.Message);
             }
         }
+
+        // [HttpPatch("PathReplaceUser/{id}")]
+        // public async Task<IActionResult> PatchReplace([FromBody] JsonPatchDocument<UserDto> patchDoc, Guid id)
+        // {
+        //     try
+        //     {
+        //         if (patchDoc == null)
+        //             return BadRequest("No field to update provided.");
+
+        //         // ONLY ALLOWED REPLACE OPERATIONS
+        //         patchDoc.Operations.RemoveAll(c => c.op != "replace");
+
+        //         if (patchDoc.Operations.Count == 0)
+        //             return BadRequest("No field to update provided.");
+
+        //         var userDto = await _userService.GetById(id, false);
+
+        //         if (userDto == null)
+        //             return NotFound();
+
+        //         patchDoc.ApplyTo(userDto, ModelState);
+
+        //         if (!ModelState.IsValid)
+        //             return BadRequest(ModelState);
+
+        //         userDto = await _userService.PatchUpdate(userDto);
+
+        //         return Ok(_mapper.Map<UserResponse>(userDto));
+        //     }
+        //     catch (EntityValidationException ex)
+        //     {
+        //         return BadRequest(ex.Message);
+        //     }
+        //     catch (DataBaseException ex)
+        //     {
+        //         return StatusCode(500, ex.Message);
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         return BadRequest(ex.InnerException.Message);
+        //     }
+        // }
+
 
     }
 }

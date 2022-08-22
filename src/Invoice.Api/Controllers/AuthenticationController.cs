@@ -18,7 +18,7 @@ namespace Invoice.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AuthenticationController : ControllerBase
+    public class AuthenticationController : ApiController
     {
         private readonly IMediator _mediator;
         private readonly ITokenService _tokenService;
