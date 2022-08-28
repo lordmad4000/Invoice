@@ -18,7 +18,7 @@ namespace Invoice.Infra.Tests.UnitTests
             string salt = passwordEncryptService.GenerateSalt(length);
 
             // Assert
-            Assert.Equal(salt.Length, expected);
+            Assert.Equal(expected, salt.Length);
         }
 
         [Theory]
@@ -34,7 +34,7 @@ namespace Invoice.Infra.Tests.UnitTests
             string hash = passwordEncryptService.GenerateHash(pass, salt);
 
             // Assert
-            Assert.Equal(hash, expected);
+            Assert.Equal(expected, hash);
         }
     }
 }
