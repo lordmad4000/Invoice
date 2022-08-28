@@ -25,7 +25,7 @@ namespace Invoice.Application.Tests.UnitTests
             var encryptedPassword = userPasswordService.GeneratePassword(userName, password, saltLength);
 
             //Assert
-            Assert.Equal(encryptedPassword.Length, 53);
+            Assert.Equal(53 , encryptedPassword.Length);
         }        
 
         [Fact]
@@ -45,7 +45,7 @@ namespace Invoice.Application.Tests.UnitTests
             var isCorrectPassword = userPasswordService.IsCorrectPassword(userName, saltHashPassword, password);
 
             //Assert
-            Assert.Equal(isCorrectPassword, true);
+            Assert.True(isCorrectPassword);
         }                
     }
 }

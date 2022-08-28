@@ -149,48 +149,48 @@ namespace Invoice.Api.Controllers
             }
         }
 
-        // [HttpPatch("PathReplaceUser/{id}")]
-        // public async Task<IActionResult> PatchReplace([FromBody] JsonPatchDocument<UserDto> patchDoc, Guid id)
-        // {
-        //     try
-        //     {
-        //         if (patchDoc == null)
-        //             return BadRequest("No field to update provided.");
+        [HttpPatch("PathReplaceUser/{id}")]
+        public async Task<IActionResult> PatchReplace([FromBody] JsonPatchDocument<UserDto> patchDoc, Guid id)
+        {
+            try
+            {
+                if (patchDoc == null)
+                    return BadRequest("No field to update provided.");
 
-        //         // ONLY ALLOWED REPLACE OPERATIONS
-        //         patchDoc.Operations.RemoveAll(c => c.op != "replace");
+                // ONLY ALLOWED REPLACE OPERATIONS
+                patchDoc.Operations.RemoveAll(c => c.op != "replace");
 
-        //         if (patchDoc.Operations.Count == 0)
-        //             return BadRequest("No field to update provided.");
+                if (patchDoc.Operations.Count == 0)
+                    return BadRequest("No field to update provided.");
 
-        //         var userDto = await _userService.GetById(id, false);
+                var userDto = await _userService.GetById(id, false);
 
-        //         if (userDto == null)
-        //             return NotFound();
+                if (userDto == null)
+                    return NotFound();
 
-        //         patchDoc.ApplyTo(userDto, ModelState);
+                patchDoc.ApplyTo(userDto, ModelState);
 
-        //         if (!ModelState.IsValid)
-        //             return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
 
-        //         userDto = await _userService.PatchUpdate(userDto);
+                var userUpdateCommand =  _mapper.Map<UserUpdateCommand>(userDto);
+                userDto = await _mediator.Send(userUpdateCommand);
 
-        //         return Ok(_mapper.Map<UserResponse>(userDto));
-        //     }
-        //     catch (EntityValidationException ex)
-        //     {
-        //         return BadRequest(ex.Message);
-        //     }
-        //     catch (DataBaseException ex)
-        //     {
-        //         return StatusCode(500, ex.Message);
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         return BadRequest(ex.InnerException.Message);
-        //     }
-        // }
-
+                return (Ok(_mapper.Map<UserResponse>(userDto)));
+            }
+            catch (EntityValidationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (DataBaseException ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.InnerException.Message);
+            }
+        }
 
     }
 }
