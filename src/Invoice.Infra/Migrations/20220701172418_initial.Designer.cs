@@ -25,6 +25,9 @@ namespace Invoice.Infra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("FirstName")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 

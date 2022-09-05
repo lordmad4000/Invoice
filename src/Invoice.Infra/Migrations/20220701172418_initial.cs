@@ -15,7 +15,8 @@ namespace Invoice.Infra.Migrations
                     EmailAddress = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
                     FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true)
+                    LastName = table.Column<string>(nullable: true),
+                    CreationDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -33,18 +34,22 @@ namespace Invoice.Infra.Migrations
                 table: "User",
                 column: "EmailAddress",
                 unique: true);
+            
+            string creationDate = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss");
 
-            migrationBuilder.Sql(@"INSERT INTO invoice.User 
+            migrationBuilder.Sql(@$"INSERT INTO invoice.User 
                                   (Id, 
                                    EmailAddress, 
                                    Password, 
                                    FirstName, 
-                                   LastName)
+                                   LastName,
+                                   CreationDate)
                                   VALUES('88a9df1d-ca1a-43d8-857b-782e057b6985', 
                                          'admin@gmail.com', 
                                          'ddz4RPMmrctg9HEUd7xx2w==,kincfsSHNqMOF9SroDS+koqPrd4=', 
                                          'Admin', 
-                                         'Admin');");
+                                         'Admin',
+                                         '{creationDate}');");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

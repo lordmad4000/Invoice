@@ -24,6 +24,13 @@ namespace Invoice.Infra.Migrations
                 table: "IdDocumentType",
                 column: "Id",
                 unique: true);
+
+            migrationBuilder.Sql(@"INSERT INTO invoice.IdDocumentType (Id, Name)
+                                   VALUES('25cdf776-e147-4898-92b7-a3280cbe9a34','NIE'),
+                                         ('2dda9061-4e0a-4c8a-bc10-cd998bb9946f', 'CIF'),
+                                         ('8b751cfd-fefc-4a6c-8733-9e4fdb68decd', 'NIF'),
+                                         ('ae2e1245-885b-477f-a79d-cb273e7c2bc1', 'DNI')");
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

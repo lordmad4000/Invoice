@@ -11,11 +11,6 @@ namespace Invoice.Infra.Mappings
             builder.HasIndex(c => c.Id)
                    .IsUnique();
 
-            //builder.OwnsOne(c => c.EmailAddress)
-            //       .Property(c => c.Address)
-            //       .HasColumnName("EmailAddress")
-            //       .IsRequired();
-
             builder.OwnsOne(c => c.EmailAddress, navbuilder =>
             {
                 navbuilder.HasIndex(o => o.Address)

@@ -13,6 +13,7 @@ namespace Invoice.Domain.Entities
         public User(EmailAddress emailAddress, string password, string firstName, string lastName)
         {
             Id = Guid.NewGuid();
+            CreationDate = DateTime.UtcNow;
             Update(emailAddress, password, firstName, lastName);
         }
 
