@@ -34,8 +34,8 @@ namespace Invoice.Api.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid id)
+        [HttpGet("GetById{id}")]
+        public async Task<IActionResult> GetById(Guid id)
         {
             try
             {
@@ -56,7 +56,7 @@ namespace Invoice.Api.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
             try
@@ -149,8 +149,8 @@ namespace Invoice.Api.Controllers
             }
         }
 
-        [HttpPatch("PathReplaceUser/{id}")]
-        public async Task<IActionResult> PatchReplace([FromBody] JsonPatchDocument<UserDto> patchDoc, Guid id)
+        [HttpPatch("PatchReplaceById/{id}")]
+        public async Task<IActionResult> PatchReplaceById([FromBody] JsonPatchDocument<UserDto> patchDoc, Guid id)
         {
             try
             {

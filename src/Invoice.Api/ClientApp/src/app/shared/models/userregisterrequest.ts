@@ -1,5 +1,4 @@
-export class UserResponse {
-    id: string = '';
+export class UserRegisterRequest {    
     email: string = '';
     password: string = '';
     firstName: string = '';

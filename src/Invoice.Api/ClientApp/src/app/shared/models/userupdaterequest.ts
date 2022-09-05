@@ -1,4 +1,4 @@
-export class UserResponse {
+export class UserUpdateRequest {
     id: string = '';
     email: string = '';
     password: string = '';

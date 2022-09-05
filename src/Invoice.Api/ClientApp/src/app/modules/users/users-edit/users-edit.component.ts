@@ -1,12 +1,11 @@
 import { Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { JsonDocument } from 'src/app/shared/models/jsondocument';
-import { UserDto } from 'src/app/shared/models/userdto';
+import { UserUpdateRequest } from 'src/app/shared/models/userupdaterequest';
 import { ErrorService } from 'src/app/shared/services/error.service';
 import { UserService } from 'src/app/shared/services/user.service';
 
@@ -17,7 +16,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 })
 export class UsersEditComponent implements OnInit, OnDestroy {
 
-  private user: UserDto = new UserDto();
+  private user: UserUpdateRequest;
   public formUser: FormGroup;
   private formLoginError: string = '';
   public passwordError: boolean = false;
@@ -34,7 +33,7 @@ export class UsersEditComponent implements OnInit, OnDestroy {
 
     this.formUser = formBuilder.group({
       id: [{ value: '', disabled: true }],
-      email: [{ value: '', disabled: true }],
+      email: [{ value: '', disabled: false }],
       password: [{ value: '', disabled: false }],
       confirmPassword: [{ value: '', disabled: false }],
       firstName: [{ value: '', disabled: false }],
@@ -54,10 +53,15 @@ export class UsersEditComponent implements OnInit, OnDestroy {
       this.snackBar.open(message,'', { duration: 1 * 1000 });
   }
 
-  checkPassword(){
-    if (this.formUser.get('password').value !== this.formUser.get('confirmPassword').value) {
+  checkPassword() : boolean {
+    const password = this.formUser.get('password').value;
+    const confirmPassword = this.formUser.get('confirmPassword').value;
+    if (!password || !confirmPassword || password !== confirmPassword) {
       this.openSnackBar('Password not match');
+      return false;
     }
+
+    return true;
   }
 
   private getUser(id: string) {
@@ -77,34 +81,61 @@ export class UsersEditComponent implements OnInit, OnDestroy {
 
   saveButtonClick(event: any) {
     console.log('Save button.');
+    if (this.checkPassword() === false)
+      return;
 
-    const jsonDocument: JsonDocument[] = [];
-
-    if (this.user.firstName != this.formUser.get('password').value) {
-      jsonDocument.push({ value: this.formUser.get('password').value, path: '/password/', op: 'replace', from: '' });
-    }
-
-    if (this.user.firstName != this.formUser.get('firstName').value) {
-      jsonDocument.push({ value: this.formUser.get('firstName').value, path: '/firstname/', op: 'replace', from: '' });
-    }
-
-    if (this.user.lastName != this.formUser.get('lastName').value) {
-      jsonDocument.push({ value: this.formUser.get('lastName').value, path: '/lastname/', op: 'replace', from: '' });
-    }
-
-    this.userService.Patch(jsonDocument, this.formUser.get('id').value).subscribe({
+    this.user.id = this.formUser.get("id").value;
+    this.user.email = this.formUser.get("email").value;
+    this.user.password = this.formUser.get("password").value;
+    this.user.firstName = this.formUser.get("firstName").value;
+    this.user.lastName = this.formUser.get("lastName").value;
+    this.userService.Update(this.user).subscribe({
       next: (res: any) => {
         const data = res;
+        this.router.navigate(['/users/view', `${res.id}`]);
       },
       error: (err: HttpErrorResponse) => {
         var errors = this.errorService.GetErrorsFromHttp(err);
-        errors.forEach(clientError => {
-          console.log(clientError);
-        });
+        if (errors.length > 0) {
+          errors.forEach(clientError => {
+            console.log(clientError);
+            this.openSnackBar(clientError);
+          });
+        }
       }
     });
+  }  
 
-  }
+  // saveButtonClick(event: any) {
+  //   console.log('Save button.');
+
+  //   const jsonDocument: JsonDocument[] = [];
+
+  //   if (this.user.firstName != this.formUser.get('password').value) {
+  //     jsonDocument.push({ value: this.formUser.get('password').value, path: '/password/', op: 'replace', from: '' });
+  //   }
+
+  //   if (this.user.firstName != this.formUser.get('firstName').value) {
+  //     jsonDocument.push({ value: this.formUser.get('firstName').value, path: '/firstname/', op: 'replace', from: '' });
+  //   }
+
+  //   if (this.user.lastName != this.formUser.get('lastName').value) {
+  //     jsonDocument.push({ value: this.formUser.get('lastName').value, path: '/lastname/', op: 'replace', from: '' });
+  //   }
+
+  //   this.userService.Patch(jsonDocument, this.formUser.get('id').value).subscribe({
+  //     next: (res: any) => {
+  //       const data = res;
+  //     },
+  //     error: (err: HttpErrorResponse) => {
+  //       var errors = this.errorService.GetErrorsFromHttp(err);
+  //       errors.forEach(clientError => {
+  //         console.log(clientError);
+  //       });
+  //     }
+  //   });
+
+  // }
 
   backButtonClick(event: any) {
     console.log('Back button.');

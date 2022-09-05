@@ -12,8 +12,8 @@ export class ErrorService {
             errors.push(httpErrorResponse.error);
         }
         else {
-            const errors: Array<string> = httpErrorResponse.error.errors[Object.keys(httpErrorResponse.error.errors)[0]];
-            errors.forEach(clientError => {
+            const tempErrors: Array<string> = httpErrorResponse.error.errors[Object.keys(httpErrorResponse.error.errors)[0]];
+            tempErrors.forEach(clientError => {
                 errors.push(clientError);
             });
         }

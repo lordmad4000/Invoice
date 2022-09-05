@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { UserDto } from 'src/app/shared/models/userdto';
+import { UserRegisterRequest } from 'src/app/shared/models/userregisterrequest';
 import { ErrorService } from 'src/app/shared/services/error.service';
 import { UserService } from 'src/app/shared/services/user.service';
 
@@ -17,7 +17,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 
 export class UsersNewComponent implements OnInit, OnDestroy {
 
-  private user: UserDto = new UserDto();
+  private user: UserRegisterRequest = new UserRegisterRequest();
   formUser: FormGroup;
   formLoginError: string = "";
   private subscription: Subscription | undefined;
@@ -48,7 +48,9 @@ export class UsersNewComponent implements OnInit, OnDestroy {
   }
 
   checkPassword() : boolean{
-    if (this.formUser.get('password').value !== this.formUser.get('confirmPassword').value) {
+    const password = this.formUser.get('password').value;
+    const confirmPassword = this.formUser.get('confirmPassword').value;
+    if (!password || !confirmPassword || password !== confirmPassword) {
       this.openSnackBar('Password not match');
       return false;
     }
@@ -89,9 +91,12 @@ export class UsersNewComponent implements OnInit, OnDestroy {
       },
       error: (err: HttpErrorResponse) => {
         var errors = this.errorService.GetErrorsFromHttp(err);
-        errors.forEach(clientError => {
-          console.log(clientError);
-        });
+        if (errors.length > 0) {
+          errors.forEach(clientError => {
+            console.log(clientError);
+            this.openSnackBar(clientError);
+          });
+        }
       }
     });
 
