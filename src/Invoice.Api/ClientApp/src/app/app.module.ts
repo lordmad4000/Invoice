@@ -9,13 +9,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/core.module';
 import { HomeModule } from './modules/home/home.module';
 import { UsersModule } from './modules/users/users.module';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { PopupComponent } from './core/components/popup/popup.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FetchDataComponent
   ],
   imports: [
     BrowserModule,

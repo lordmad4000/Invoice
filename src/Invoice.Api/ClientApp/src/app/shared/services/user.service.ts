@@ -1,11 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
-import { UserLoginResponse } from 'src/app/core/models/userloginresponse';
 import { JsonDocument } from '../models/jsondocument';
-import { UserDto } from '../models/userdto';
 import { UserResponse } from '../models/userresponse';
-import { JWTService } from '../../core/services/jwt.service';
 import { UserUpdateRequest } from '../models/userupdaterequest';
 import { UserRegisterRequest } from '../models/userregisterrequest';
 
