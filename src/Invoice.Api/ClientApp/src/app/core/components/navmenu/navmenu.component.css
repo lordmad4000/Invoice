@@ -28,10 +28,10 @@ mat-icon {
     margin-left: 32px;
     margin-right: 32px;
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: flex-start;
     width: 95%;
-    height: 90%;
+    /* height: 90%; */
     /*width: calc(100vw * 0.88);*/
     height: calc(100vh * 0.86);
     font-size: 1rem;

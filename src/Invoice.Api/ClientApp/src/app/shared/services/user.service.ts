@@ -23,6 +23,14 @@ export class UserService {
         return this.httpClient.get<Array<UserResponse>>(url);
     }
 
+    public GetLast(count: number): Observable<UserResponse> {
+
+        const url = `${this.baseUrl}api/Users/GetLast${encodeURIComponent(String(count))}`;
+
+        return this.httpClient.get<UserResponse>(url);
+    }
+
+
     public Get(id: string): Observable<UserResponse> {
 
         const url = `${this.baseUrl}api/Users/GetById${encodeURIComponent(String(id))}`;

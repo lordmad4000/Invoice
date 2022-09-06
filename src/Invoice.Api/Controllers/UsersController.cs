@@ -14,6 +14,7 @@ using Invoice.Application.Common.Dto;
 using MediatR;
 using Invoice.Application.CQRS.Users.Queries;
 using Invoice.Application.CQRS.Users.Commands;
+using System.Linq;
 
 namespace Invoice.Api.Controllers
 {
@@ -55,6 +56,31 @@ namespace Invoice.Api.Controllers
                 return BadRequest(ex.InnerException.Message);
             }
         }
+
+        [HttpGet("GetLast{count}")]
+        public async Task<IActionResult> GetLast(int count)
+        {
+            try
+            {
+                var query =  new  GetUsersQuery();
+                var usersDto = await _mediator.Send(query);
+
+                usersDto = usersDto.OrderBy(x => x.FirstName)
+                                   .Take(3)
+                                   .ToList();
+
+                return (Ok(_mapper.Map<List<UserResponse>>(usersDto)));
+            }
+            catch (DataBaseException ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.InnerException.Message);
+            }
+        }
+
 
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
