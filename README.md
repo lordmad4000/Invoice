@@ -1,4 +1,4 @@
-# Invoice
+# Invoice (WIP)
 
 A basic Invoice App sample in Angular.
 
