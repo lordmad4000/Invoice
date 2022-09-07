@@ -1,8 +1,4 @@
-.container {
-    text-align: left;
-    width: calc(100vw * 0.75);
-    height: calc(100vh * 0.70);
-    margin-top: 16px;
+.users-grid-container {
     padding: 1rem;
 }
 
@@ -16,6 +12,7 @@
 
 .mat-table {
     vertical-align: top;
+    text-align: left;
     margin-top: 40px;
     margin-left: 40px;
     overflow: auto;
@@ -23,7 +20,8 @@
 }
 
 table {
-    width: 100%;
+    width: 98%;
+    height: 98%;
 }
 
 .mat-column-select {
