@@ -27,18 +27,11 @@ mat-icon {
     margin: 16px;
     margin-left: 32px;
     margin-right: 32px;
-    display: flex;
-    /* justify-content: center; */
-    align-items: flex-start;
+    /* display: flex;
+    justify-content: center;
+    align-items: stretch; */
     width: 95%;
-    /* height: 90%; */
-    /*width: calc(100vw * 0.88);*/
-    height: calc(100vh * 0.86);
+    height: calc(100vh * 0.90);
     font-size: 1rem;
     color: lightgray;
-}
-
-.mat-sidenav-container {
-    height: calc(100vh * 0.9);
-    flex: 1;
 }
