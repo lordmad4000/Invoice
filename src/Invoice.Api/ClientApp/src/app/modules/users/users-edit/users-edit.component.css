@@ -1,8 +1,4 @@
-.user-form {
-    text-align: left;
-    width: calc(100vw * 0.75);
-    height: calc(100vh * 0.70);
-    margin-top: 16px;
+.users-edit-container {
     padding: 1rem;
 }
 
@@ -13,6 +9,13 @@
 .mat-toolbar-row {
     justify-content: flex-end;
     background-color: #FAFAFA;
+}
+
+.user-form {
+    vertical-align: top;
+    text-align: left;
+    width: 98%;
+    height: 98%;
 }
 
 .div-fields {
@@ -37,12 +40,15 @@ mat-form-field.firstname-field {
     color: green;
 }
 
-mat-divider {
-    padding: 2px;
-}
-
 .button-save {
     margin-left: 40px;
     margin-top: 20px;
     cursor: pointer;
+}
+
+mat-divider {    
+    width: 100%;
+    padding: 2px;
+    color: transparent;
+    border: 1px;
 }
