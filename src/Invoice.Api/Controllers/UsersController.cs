@@ -62,12 +62,8 @@ namespace Invoice.Api.Controllers
         {
             try
             {
-                var query =  new  GetUsersQuery();
+                var query =  new GetLastUsersQuery(count);
                 var usersDto = await _mediator.Send(query);
-
-                usersDto = usersDto.OrderBy(x => x.FirstName)
-                                   .Take(3)
-                                   .ToList();
 
                 return (Ok(_mapper.Map<List<UserResponse>>(usersDto)));
             }
