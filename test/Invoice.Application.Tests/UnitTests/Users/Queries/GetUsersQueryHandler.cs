@@ -18,7 +18,6 @@ namespace Invoice.Application.Tests.UnitTests.Users.Queries
     public class GetUsersQueryHandlerTests
     {
         private readonly IMapper _mapper;
-        private List<User> Users;
         public GetUsersQueryHandlerTests()
         {
             var mapperConfig = new MapperConfiguration(cfg => 
@@ -26,7 +25,6 @@ namespace Invoice.Application.Tests.UnitTests.Users.Queries
                 cfg.AddProfile(new EntityDtoMappingProfile());
             });
             _mapper = mapperConfig.CreateMapper();
-            Users = GetUsers();
         }
 
         [Fact]
