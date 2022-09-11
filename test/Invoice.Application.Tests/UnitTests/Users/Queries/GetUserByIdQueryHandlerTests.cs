@@ -28,24 +28,35 @@ namespace Invoice.Application.Tests.UnitTests.Users.Queries
         }
 
         [Fact]
-        public async Task GetUsersList_Should_Be_3()
+        public async Task GetUserById_Should_Be_Found()
         {
             // Arrange
             var user = GetUser();
-            var userDtoExpected = GetUserDto();
             var mockUserRepository = new Mock<IUserRepository>();
             mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), true, $"Id=={user.Id}")).ReturnsAsync(user);
             var getUsersQueryHandler = new GetUserByIdQueryHandler(mockUserRepository.Object, _mapper);
 
             //Act
-            UserDto userDtoActual = await getUsersQueryHandler.Handle(new GetUserByIdQuery(user.Id), new CancellationToken());
+            UserDto userDto = await getUsersQueryHandler.Handle(new GetUserByIdQuery(user.Id), new CancellationToken());
 
             //Assert
-            Assert.Equal(userDtoExpected.Id, userDtoActual.Id);
-            Assert.Equal(userDtoExpected.Email, userDtoActual.Email);
-            Assert.Equal(userDtoExpected.Password, userDtoActual.Password);
-            Assert.Equal(userDtoExpected.FirstName, userDtoActual.FirstName);
-            Assert.Equal(userDtoExpected.LastName, userDtoActual.LastName);
+            Assert.NotNull(userDto);
+        }
+
+        [Fact]
+        public async Task GetUserById_Should_Not_Be_Found()
+        {
+            // Arrange
+            var user = GetUser();
+            var mockUserRepository = new Mock<IUserRepository>();
+            mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), true, $"Id=={user.Id}")).ReturnsAsync(default(User));
+            var getUsersQueryHandler = new GetUserByIdQueryHandler(mockUserRepository.Object, _mapper);
+
+            //Act
+            UserDto userDto = await getUsersQueryHandler.Handle(new GetUserByIdQuery(user.Id), new CancellationToken());
+
+            //Assert
+            Assert.Null(userDto);
         }
 
         private User GetUser()
