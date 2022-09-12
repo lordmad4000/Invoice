@@ -1,0 +1,27 @@
+<div class="home-container">
+    <div class="users-box" cdkDragBoundary=".boundary" cdkDrag>
+        <div class="users-handle" cdkDragHandle>
+            <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+                <path d="M0 0h24v24H0z" fill="none"></path>
+            </svg>
+        </div>
+        <mat-label class="title">LAST CREATED USERS</mat-label>
+        <mat-table class="container" [dataSource]="dataSource">
+            <ng-container matColumnDef="email">
+                <mat-header-cell *matHeaderCellDef [ngClass]="'mat-column-email'"> Email </mat-header-cell>
+                <mat-cell *matCellDef="let user" [ngClass]="'mat-column-email'"> {{user.email}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="firstname">
+                <mat-header-cell *matHeaderCellDef [ngClass]="'mat-column-firstname'"> FirstName </mat-header-cell>
+                <mat-cell *matCellDef="let user" [ngClass]="'mat-column-firstname'"> {{user.firstName}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="lastname">
+                <mat-header-cell *matHeaderCellDef [ngClass]="'mat-column-lastname'"> LastName </mat-header-cell>
+                <mat-cell *matCellDef="let user" [ngClass]="'mat-column-lastname'"> {{user.lastName}} </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getRecord(row)"></mat-row>
+        </mat-table>    
+    </div>  
+</div>

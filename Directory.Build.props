@@ -1,0 +1,44 @@
+<Project>
+  <PropertyGroup>
+    <SourceRoot>$(MSBuildThisFileDirectory)</SourceRoot>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Product>Invoice</Product>
+    <PackageVersion Condition="'$(PackageVersion)' == ''">1.1.16</PackageVersion>
+    <PublishRepositoryUrl>false</PublishRepositoryUrl>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <LangVersion>8.0</LangVersion>
+    <NoWarn>1591</NoWarn>
+    <PackageTags>Invoice</PackageTags>
+    <Description>
+      Invoice
+    </Description>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DebugType>portable</DebugType>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+  </PropertyGroup>
+  <!-- NuGet dependencies shared across projects -->
+  <PropertyGroup>
+    <AutoMapper>11.0.0</AutoMapper>
+    <AutoMapperExtensionsMicrosoftDependencyInjection>11.0.0</AutoMapperExtensionsMicrosoftDependencyInjection>
+    <MicrosoftAspNetCoreAuthenticationJwtBearer>3.1.1</MicrosoftAspNetCoreAuthenticationJwtBearer>
+    <MicrosoftAspNetCoreJsonPatch>3.1.1</MicrosoftAspNetCoreJsonPatch>
+    <MicrosoftAspNetCoreMvcNewtonsoftJson>3.1.1</MicrosoftAspNetCoreMvcNewtonsoftJson>
+    <MicrosoftEntityFrameworkCore>3.1.1</MicrosoftEntityFrameworkCore>
+    <MicrosoftEntityFrameworkCoreTools>3.1.1</MicrosoftEntityFrameworkCoreTools>    
+    <SwashbuckleAspNetCore>5.0.0</SwashbuckleAspNetCore>
+    <SystemIdentityModelTokensJwt>6.17.0</SystemIdentityModelTokensJwt>
+    <FluentValidationAspNetCore>8.6.1</FluentValidationAspNetCore>
+    <PomeloEntityFrameworkCoreMySql>3.1.2</PomeloEntityFrameworkCoreMySql>
+    <MediatR>10.0.1</MediatR>
+    <MediatRExtensionsMicrosoftDependencyInjection>10.0.1</MediatRExtensionsMicrosoftDependencyInjection>
+    <MicrosoftNETTestSdk>16.5.0</MicrosoftNETTestSdk>
+    <Moq>4.18.2</Moq>
+    <xunit>2.4.0</xunit>
+    <xunitrunnervisualstudio>2.4.0</xunitrunnervisualstudio>
+    <coverletcollector>1.2.0</coverletcollector>
+  </PropertyGroup>
+</Project>

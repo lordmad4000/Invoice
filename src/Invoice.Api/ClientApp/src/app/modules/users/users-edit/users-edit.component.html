@@ -1,0 +1,45 @@
+<div class="users-edit-container">
+    <form class="user-form" [formGroup]="formUser">
+        <mat-toolbar>
+            <mat-toolbar-row>
+                <button mat-button matTooltip="Back" (click)="backButtonClick($event)">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <span class="flex-expand"></span>
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <div class="div-fields">
+            <mat-form-field class="id-field" appearance="fill" mat-form-fieldAutoSize matTooltip="Non editable">
+                <mat-label>Id</mat-label>
+                <input type="text" matInput formControlName="id" matTextareaAutosize>
+            </mat-form-field>
+            <mat-divider></mat-divider>
+            <mat-form-field class="email-field" appearance="fill" mat-form-fieldAutoSize matTooltip="Non editable">
+                <mat-label>Email</mat-label>
+                <input type="text" matInput formControlName="email" matTextareaAutosize>
+            </mat-form-field>
+            <mat-divider></mat-divider>
+            <mat-form-field class="password-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>Password</mat-label>
+                <input type="password" matInput formControlName="password" matTextareaAutosize>
+            </mat-form-field>
+            <mat-form-field class="confirmpassword-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>Repeat Password</mat-label>
+                <input type="password" matInput formControlName="confirmPassword" matTextareaAutosize (change)="checkPassword()">
+            </mat-form-field>
+            <mat-divider></mat-divider>
+            <mat-form-field class="firstname-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>FirstName</mat-label>
+                <input type="text" matInput formControlName="firstName" matTextareaAutosize>
+            </mat-form-field>
+            <mat-form-field class="lastname-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>LastName</mat-label>
+                <input type="text" matInput formControlName="lastName" matTextareaAutosize>
+            </mat-form-field>
+            <mat-divider></mat-divider>
+        </div>
+        <div>
+            <button mat-raised-button class="button-save" color="primary" mat-button matTooltip="Save changes" (click)="saveButtonClick($event)" [disabled]="formUser.invalid">Save</button>
+        </div>
+    </form>
+</div>

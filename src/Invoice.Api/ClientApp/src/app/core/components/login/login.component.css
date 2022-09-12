@@ -1,0 +1,39 @@
+.login-container {
+  display: flex;
+}
+
+.login-form {  
+  text-align: center;
+  min-width: 300px;
+  max-width: 60%;
+  padding-top: 1rem;
+  margin: auto;
+  color: rgba(0, 0, 0, 0.676);
+}
+
+.login-img {  
+  max-width: 200px;
+  width: 50%;
+}
+
+.login-form input {
+  color: green;
+}
+
+.login-form button {
+  width: 70%;
+  height: 3rem;
+}
+
+.login-form button:disabled {
+  width: 70%;
+  height: 3rem;
+}
+
+.login-foot {
+  padding-top: 1rem;
+}
+
+.button-new-account {
+  margin-top: 1rem;
+}
