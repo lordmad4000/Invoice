@@ -36,7 +36,8 @@ namespace Invoice.Application.CQRS.Users.Commands
         public async Task<UserDto> Handle(UserRemoveCommand request, CancellationToken cancellationToken)
         {
             var user = await Validate(request);
-            await _userRepository.DeleteAsync(user.Id);
+            if (!await _userRepository.DeleteAsync(user.Id))
+                return null;                
             await _unitOfWork.SaveChangesAsync();
 
             return _mapper.Map<UserDto>(user);
