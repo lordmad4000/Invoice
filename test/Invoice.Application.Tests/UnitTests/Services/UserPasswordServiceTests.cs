@@ -7,6 +7,12 @@ namespace Invoice.Application.Tests.UnitTests.Services
 {
     public class UserPasswordServiceTests
     {
+        private readonly Mock<IPasswordEncryption> _mockPasswordEncryption;
+        public UserPasswordServiceTests()
+        {
+            _mockPasswordEncryption = new Mock<IPasswordEncryption>();
+        }
+
         [Fact]
         public void GeneratePassword_Length_Should_Be_53()
         {
@@ -16,10 +22,9 @@ namespace Invoice.Application.Tests.UnitTests.Services
             int saltLength = 16;
             string salt = "4JbuCHQU7SEY7jHj+5m0gw==";
             string hash = "ZPVpoPFC4LWmNGj0UGjY7nER7RU=";
-            var mockPasswordEncryption = new Mock<IPasswordEncryption>();
-            mockPasswordEncryption.Setup(x => x.GenerateSalt(It.IsAny<int>())).Returns(salt);
-            mockPasswordEncryption.Setup(x => x.GenerateHash($"{userName}{password}", salt)).Returns(hash);
-            var userPasswordService = new UserPasswordService(mockPasswordEncryption.Object);
+            _mockPasswordEncryption.Setup(x => x.GenerateSalt(It.IsAny<int>())).Returns(salt);
+            _mockPasswordEncryption.Setup(x => x.GenerateHash(It.IsAny<string>(), It.IsAny<string>())).Returns(hash);
+            var userPasswordService = new UserPasswordService(_mockPasswordEncryption.Object);
 
             //Act
             var encryptedPassword = userPasswordService.GeneratePassword(userName, password, saltLength);
@@ -37,9 +42,8 @@ namespace Invoice.Application.Tests.UnitTests.Services
             string hash = "ZPVpoPFC4LWmNGj0UGjY7nER7RU=";
             string saltHashPassword = $"{salt},{hash}";
             string password = "12345678";
-            var mockPasswordEncryption = new Mock<IPasswordEncryption>();
-            mockPasswordEncryption.Setup(x => x.GenerateHash($"{userName}{password}", salt)).Returns(hash);
-            var userPasswordService = new UserPasswordService(mockPasswordEncryption.Object);
+            _mockPasswordEncryption.Setup(x => x.GenerateHash(It.IsAny<string>(), It.IsAny<string>())).Returns(hash);
+            var userPasswordService = new UserPasswordService(_mockPasswordEncryption.Object);
 
             //Act
             var isCorrectPassword = userPasswordService.IsCorrectPassword(userName, saltHashPassword, password);

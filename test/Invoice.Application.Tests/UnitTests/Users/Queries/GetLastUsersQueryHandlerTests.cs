@@ -1,22 +1,23 @@
 using AutoMapper;
-using Invoice.Application.Common.Interfaces.Persistance;
 using Invoice.Application.AutoMapper;
-using Moq;
-using Xunit;
 using Invoice.Application.CQRS.Users.Queries;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+using Invoice.Application.Common.Dto;
+using Invoice.Application.Common.Interfaces.Persistance;
 using Invoice.Domain.Entities;
 using Invoice.Domain.ValueObjects;
-using Invoice.Application.Common.Dto;
+using Moq;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Threading;
+using Xunit;
 
 namespace Invoice.Application.Tests.UnitTests.Users.Queries
 {
     public class GetLastUsersQueryHandlerTests
     {
         private readonly IMapper _mapper;
+        private readonly Mock<IUserRepository> _mockUserRepository;
         public GetLastUsersQueryHandlerTests()
         {
             var mapperConfig = new MapperConfiguration(cfg => 
@@ -24,6 +25,7 @@ namespace Invoice.Application.Tests.UnitTests.Users.Queries
                 cfg.AddProfile(new EntityDtoMappingProfile());
             });
             _mapper = mapperConfig.CreateMapper();
+            _mockUserRepository = new Mock<IUserRepository>();
         }
 
         [Fact]
@@ -32,11 +34,10 @@ namespace Invoice.Application.Tests.UnitTests.Users.Queries
             // Arrange
             var users = await GetUsers();
             int count = 3;
-            var mockUserRepository = new Mock<IUserRepository>();
-            mockUserRepository.Setup(x => x.GetLastUsers(It.IsAny<int>())).ReturnsAsync(users.OrderByDescending(x => x.CreationDate)
-                                                                                             .Take(3)
-                                                                                             .ToList());
-            var getLastUsersQueryHandler = new GetLastUsersQueryHandler(mockUserRepository.Object, _mapper);
+            _mockUserRepository.Setup(x => x.GetLastUsers(It.IsAny<int>())).ReturnsAsync(users.OrderByDescending(x => x.CreationDate)
+                                                                                              .Take(3)
+                                                                                              .ToList());
+            var getLastUsersQueryHandler = new GetLastUsersQueryHandler(_mockUserRepository.Object, _mapper);
 
             //Act
             List<UserDto> usersDto = await getLastUsersQueryHandler.Handle(new GetLastUsersQuery(count), new CancellationToken());

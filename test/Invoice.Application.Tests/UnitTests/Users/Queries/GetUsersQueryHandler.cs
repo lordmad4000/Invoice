@@ -1,23 +1,24 @@
 using AutoMapper;
-using Invoice.Application.Common.Interfaces.Persistance;
 using Invoice.Application.AutoMapper;
-using Moq;
-using Xunit;
 using Invoice.Application.CQRS.Users.Queries;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+using Invoice.Application.Common.Dto;
+using Invoice.Application.Common.Interfaces.Persistance;
 using Invoice.Domain.Entities;
 using Invoice.Domain.ValueObjects;
+using Moq;
+using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
+using System.Threading;
 using System;
-using Invoice.Application.Common.Dto;
+using Xunit;
 
 namespace Invoice.Application.Tests.UnitTests.Users.Queries
 {
     public class GetUsersQueryHandlerTests
     {
         private readonly IMapper _mapper;
+        private readonly Mock<IUserRepository> _mockUserRepository;
         public GetUsersQueryHandlerTests()
         {
             var mapperConfig = new MapperConfiguration(cfg => 
@@ -25,6 +26,7 @@ namespace Invoice.Application.Tests.UnitTests.Users.Queries
                 cfg.AddProfile(new EntityDtoMappingProfile());
             });
             _mapper = mapperConfig.CreateMapper();
+            _mockUserRepository = new Mock<IUserRepository>();
         }
 
         [Fact]
@@ -32,9 +34,8 @@ namespace Invoice.Application.Tests.UnitTests.Users.Queries
         {
             // Arrange
             var users = GetUsers();
-            var mockUserRepository = new Mock<IUserRepository>();
-            mockUserRepository.Setup(x => x.ListAsync(It.IsAny<Expression<Func<User, bool>>>())).ReturnsAsync(users);
-            var getUsersQueryHandler = new GetUsersQueryHandler(mockUserRepository.Object, _mapper);
+            _mockUserRepository.Setup(x => x.ListAsync(It.IsAny<Expression<Func<User, bool>>>())).ReturnsAsync(users);
+            var getUsersQueryHandler = new GetUsersQueryHandler(_mockUserRepository.Object, _mapper);
 
             //Act
             List<UserDto> usersDto = await getUsersQueryHandler.Handle(new GetUsersQuery(), new CancellationToken());

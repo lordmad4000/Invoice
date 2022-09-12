@@ -22,10 +22,10 @@ namespace Invoice.Application.CQRS.Users.Commands
         private readonly IMapper _mapper;
 
         public UserRegisterHandler(IUserRepository userRepository,                        
-                                             IUnitOfWork unitOfWork,
-                                             IValidatorService validatorService,
-                                             IPasswordService passwordService,
-                                             IMapper mapper)
+                                   IUnitOfWork unitOfWork,
+                                   IValidatorService validatorService,
+                                   IPasswordService passwordService,
+                                   IMapper mapper)
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
@@ -47,13 +47,14 @@ namespace Invoice.Application.CQRS.Users.Commands
 
         private async Task Validate(UserRegisterCommand request)
         {
-            if (await _userRepository.GetAsync(c => c.EmailAddress.Address == request.Email, false) != null)
+            var user = await _userRepository.GetAsync(c => c.EmailAddress.Address == request.Email, false);
+            if (user != null)
                 throw new EntityValidationException("Email address already exists.");
 
-            var user = new User(new EmailAddress(request.Email),
-                                request.Password, 
-                                request.FirstName, 
-                                request.LastName);
+            user = new User(new EmailAddress(request.Email),
+                            request.Password, 
+                            request.FirstName, 
+                            request.LastName);
             _validatorService.ValidateModel(new RegisterUserValidator().Validate(user));
         }        
 

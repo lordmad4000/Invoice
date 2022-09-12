@@ -1,23 +1,22 @@
 using AutoMapper;
-using Invoice.Application.Common.Interfaces.Persistance;
 using Invoice.Application.AutoMapper;
-using Moq;
-using Xunit;
 using Invoice.Application.CQRS.Users.Queries;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using Invoice.Domain.Entities;
-using Invoice.Domain.ValueObjects;
-using System.Linq.Expressions;
-using System;
 using Invoice.Application.Common.Dto;
+using Invoice.Application.Common.Interfaces.Persistance;
+using Invoice.Domain.Entities;
+using Moq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using System.Threading;
+using System;
+using Xunit;
 
 namespace Invoice.Application.Tests.UnitTests.Users.Queries
 {
     public class GetUserByIdQueryHandlerTests
     {
         private readonly IMapper _mapper;
+        private readonly Mock<IUserRepository> _mockUserRepository;
         public GetUserByIdQueryHandlerTests()
         {
             var mapperConfig = new MapperConfiguration(cfg => 
@@ -25,6 +24,7 @@ namespace Invoice.Application.Tests.UnitTests.Users.Queries
                 cfg.AddProfile(new EntityDtoMappingProfile());
             });
             _mapper = mapperConfig.CreateMapper();
+            _mockUserRepository = new Mock<IUserRepository>();
         }
 
         [Fact]
@@ -32,9 +32,8 @@ namespace Invoice.Application.Tests.UnitTests.Users.Queries
         {
             // Arrange
             var user = GetUser();
-            var mockUserRepository = new Mock<IUserRepository>();
-            mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), true, $"Id=={user.Id}")).ReturnsAsync(user);
-            var getUsersQueryHandler = new GetUserByIdQueryHandler(mockUserRepository.Object, _mapper);
+            _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<bool>(), It.IsAny<string>())).ReturnsAsync(user);
+            var getUsersQueryHandler = new GetUserByIdQueryHandler(_mockUserRepository.Object, _mapper);
 
             //Act
             UserDto userDto = await getUsersQueryHandler.Handle(new GetUserByIdQuery(user.Id), new CancellationToken());
@@ -48,9 +47,8 @@ namespace Invoice.Application.Tests.UnitTests.Users.Queries
         {
             // Arrange
             var user = GetUser();
-            var mockUserRepository = new Mock<IUserRepository>();
-            mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), true, $"Id=={user.Id}")).ReturnsAsync(default(User));
-            var getUsersQueryHandler = new GetUserByIdQueryHandler(mockUserRepository.Object, _mapper);
+            _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<bool>(), It.IsAny<string>())).ReturnsAsync(default(User));
+            var getUsersQueryHandler = new GetUserByIdQueryHandler(_mockUserRepository.Object, _mapper);
 
             //Act
             UserDto userDto = await getUsersQueryHandler.Handle(new GetUserByIdQuery(user.Id), new CancellationToken());
