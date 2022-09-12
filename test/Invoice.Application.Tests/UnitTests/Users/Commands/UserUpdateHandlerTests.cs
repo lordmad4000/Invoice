@@ -15,14 +15,14 @@ using Xunit;
 
 namespace Invoice.Application.Tests.UnitTests.Users.Queries
 {
-    public class UserRemoveHandlerTests
+    public class UserUpdateHandlerTests
     {
         private readonly IMapper _mapper;
         private readonly Mock<IUserRepository> _mockUserRepository;
         private readonly Mock<IUnitOfWork> _mockUnitOfWork;
         private readonly Mock<IValidatorService> _mockValidatorService;
         private readonly Mock<IPasswordService> _mockPasswordService;
-        public UserRemoveHandlerTests()
+        public UserUpdateHandlerTests()
         {
             var mapperConfig = new MapperConfiguration(cfg => 
             {
@@ -36,21 +36,23 @@ namespace Invoice.Application.Tests.UnitTests.Users.Queries
         }
 
         [Fact]
-        public async Task UserRemoveCommand_Should_Not_Be_Null()
+        public async Task UserUpdateCommand_Should_Not_Be_Null()
         {
             // Arrange
             var user = GetUser();
-            var userRemoveCommand = GetUserRemoveCommand();
+            var userUpdateCommand = GetUserUpdateCommand();
             _mockUserRepository.Setup(x => x.DeleteAsync(It.IsAny<Guid>())).ReturnsAsync(true);
             _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<bool>(), It.IsAny<string>())).ReturnsAsync(user);
-            var userRemoveHandler = new UserRemoveHandler(_mockUserRepository.Object, 
+            _mockPasswordService.Setup(x => x.GeneratePassword(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())).Returns("12345678");
+            _mockUnitOfWork.Setup(x => x.SaveChangesAsync()).ReturnsAsync(1);
+            var userUpdateHandler = new UserUpdateHandler(_mockUserRepository.Object, 
                                                           _mockUnitOfWork.Object, 
                                                           _mockValidatorService.Object, 
                                                           _mockPasswordService.Object,
                                                           _mapper);
 
             //Act
-            UserDto userDto = await userRemoveHandler.Handle(userRemoveCommand, new CancellationToken());
+            UserDto userDto = await userUpdateHandler.Handle(userUpdateCommand, new CancellationToken());
 
             //Assert
             Assert.NotNull(userDto);
@@ -61,17 +63,19 @@ namespace Invoice.Application.Tests.UnitTests.Users.Queries
         {
             // Arrange
             var user = GetUser();
-            var userRemoveCommand = GetUserRemoveCommand();
-            _mockUserRepository.Setup(x => x.DeleteAsync(It.IsAny<Guid>())).ReturnsAsync(false);
+            var userUpdateCommand = GetUserUpdateCommand();
+            _mockUserRepository.Setup(x => x.UpdateAsync(It.IsAny<User>())).ReturnsAsync(user);
             _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<bool>(), It.IsAny<string>())).ReturnsAsync(user);
-            var userRemoveHandler = new UserRemoveHandler(_mockUserRepository.Object, 
+            _mockPasswordService.Setup(x => x.GeneratePassword(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())).Returns("12345678");
+            _mockUnitOfWork.Setup(x => x.SaveChangesAsync()).ReturnsAsync(0);
+            var userUpdateHandler = new UserUpdateHandler(_mockUserRepository.Object, 
                                                           _mockUnitOfWork.Object, 
                                                           _mockValidatorService.Object, 
                                                           _mockPasswordService.Object,
                                                           _mapper);
 
             //Act
-            UserDto userDto = await userRemoveHandler.Handle(userRemoveCommand, new CancellationToken());
+            UserDto userDto = await userUpdateHandler.Handle(userUpdateCommand, new CancellationToken());
 
             //Assert
             Assert.Null(userDto);
@@ -82,9 +86,9 @@ namespace Invoice.Application.Tests.UnitTests.Users.Queries
             return new User(new EmailAddress("jose@gmail.com"), "12345678", "jose", "antonio");
         }
 
-        private UserRemoveCommand GetUserRemoveCommand()
+        private UserUpdateCommand GetUserUpdateCommand()
         {
-            return new UserRemoveCommand(new Guid("a0769b81-2e5d-4e75-9cfd-e92c38fd70ca"));
+            return new UserUpdateCommand(new Guid("a0769b81-2e5d-4e75-9cfd-e92c38fd70ca"), "jose@gmail.com", "12345678", "jose", "antonio");            
         }
 
     }

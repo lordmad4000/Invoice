@@ -40,7 +40,8 @@ namespace Invoice.Application.CQRS.Users.Commands
             var encryptedPassword = _passwordService.GeneratePassword(request.Email, request.Password, 16);
             user.Update(user.EmailAddress, encryptedPassword, user.FirstName, user.LastName);
             await _userRepository.UpdateAsync(user);
-            await _unitOfWork.SaveChangesAsync();
+            if (await _unitOfWork.SaveChangesAsync() == 0)
+                return null;
 
             return _mapper.Map<UserDto>(user);
         }
