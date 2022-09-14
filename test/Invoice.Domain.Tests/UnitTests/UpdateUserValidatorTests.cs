@@ -38,7 +38,7 @@ namespace Invoice.Domain.Tests.UnitTests
 
             //Assert
             Assert.False(result.IsValid);
-            Assert.True(result.Errors.Any(x => x.ErrorCode == "LengthValidator"));
+            Assert.Contains(result.Errors, x => x.ErrorCode == "LengthValidator");
         }
 
         [Fact]
@@ -52,7 +52,7 @@ namespace Invoice.Domain.Tests.UnitTests
 
             //Assert
             Assert.False(result.IsValid);
-            Assert.True(result.Errors.Any(x => x.ErrorCode == "NotEmptyValidator"));
+            Assert.Contains(result.Errors, x => x.ErrorCode == "NotEmptyValidator");
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace Invoice.Domain.Tests.UnitTests
 
             //Assert
             Assert.False(result.IsValid);
-            Assert.True(result.Errors.Any(x => x.ErrorCode == "NotNullValidator"));
+            Assert.Contains(result.Errors, x => x.ErrorCode == "NotNullValidator");
         }        
 
         [Fact]
@@ -80,7 +80,7 @@ namespace Invoice.Domain.Tests.UnitTests
 
             //Assert
             Assert.False(result.IsValid);
-            Assert.True(result.Errors.Any(x => x.ErrorCode == "LengthValidator"));
+            Assert.Contains(result.Errors, x => x.ErrorCode == "LengthValidator");
         }
 
         [Fact]
@@ -94,7 +94,7 @@ namespace Invoice.Domain.Tests.UnitTests
 
             //Assert
             Assert.False(result.IsValid);
-            Assert.True(result.Errors.Any(x => x.ErrorCode == "NotEmptyValidator"));
+            Assert.Contains(result.Errors, x => x.ErrorCode == "NotEmptyValidator");
         }
 
         [Fact]
@@ -108,7 +108,7 @@ namespace Invoice.Domain.Tests.UnitTests
 
             //Assert
             Assert.False(result.IsValid);
-            Assert.True(result.Errors.Any(x => x.ErrorCode == "NotNullValidator"));
+            Assert.Contains(result.Errors, x => x.ErrorCode == "NotNullValidator");
         }        
 
         [Fact]
@@ -122,7 +122,7 @@ namespace Invoice.Domain.Tests.UnitTests
 
             //Assert
             Assert.False(result.IsValid);
-            Assert.True(result.Errors.Any(x => x.ErrorCode == "LengthValidator"));
+            Assert.Contains(result.Errors, x => x.ErrorCode == "LengthValidator");
         }
 
     }
