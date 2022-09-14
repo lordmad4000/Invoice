@@ -1,6 +1,6 @@
 using AutoMapper;
 using Invoice.Api.Models.Request;
-using Invoice.Application.CQRS.Authentication.Commands.Register;
+using Invoice.Application.CQRS.Authentication.Commands;
 using Invoice.Application.CQRS.Users.Commands;
 
 namespace Invoice.Api.AutoMapper

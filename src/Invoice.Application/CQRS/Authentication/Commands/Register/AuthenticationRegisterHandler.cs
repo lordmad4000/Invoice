@@ -10,7 +10,7 @@ using Invoice.Domain.ValueObjects;
 using Invoice.Domain.Validations;
 using Invoice.Application.Common.Dto;
 
-namespace Invoice.Application.CQRS.Authentication.Commands.Register
+namespace Invoice.Application.CQRS.Authentication.Commands
 {
 
     public class AuthenticationRegisterHandler : IRequestHandler<AuthenticationRegisterCommand, UserDto>

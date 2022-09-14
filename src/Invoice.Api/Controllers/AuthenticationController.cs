@@ -10,9 +10,9 @@ using Invoice.Application.Interfaces;
 using Invoice.Infra.Exceptions;
 using MediatR;
 using Invoice.Api.Models.Request;
-using Invoice.Application.CQRS.Authentication.Commands.Register;
+using Invoice.Application.CQRS.Authentication.Commands;
 using Invoice.Domain.Exceptions;
-using Invoice.Application.CQRS.Authentication.Queries.Login;
+using Invoice.Application.CQRS.Authentication.Queries;
 
 namespace Invoice.Api.Controllers
 {
