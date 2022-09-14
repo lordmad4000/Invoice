@@ -11,7 +11,7 @@ using System.Threading;
 using System;
 using Xunit;
 
-namespace Invoice.Application.Tests.UnitTests.Users.Queries
+namespace Invoice.Application.Tests.UnitTests
 {
     public class GetUserByIdQueryHandlerTests
     {
