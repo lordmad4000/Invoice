@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using Xunit;
 
-namespace Invoice.Application.Tests.UnitTests.Users.Queries
+namespace Invoice.Application.Tests.UnitTests
 {
     public class GetLastUsersQueryHandlerTests
     {

@@ -13,9 +13,9 @@ namespace Invoice.Domain.Validations
 
         public void ValidateEmail()
         {
-            RuleFor(c => c.LastName).NotEmpty()
-                                    .NotNull()
-                                    .Length(1, 40);
+            RuleFor(c => c.EmailAddress.Address).NotEmpty()
+                                                .NotNull()
+                                                .Length(1, 40);
         }
 
         public void ValidatePassword()

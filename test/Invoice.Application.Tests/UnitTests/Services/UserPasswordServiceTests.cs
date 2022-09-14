@@ -3,7 +3,7 @@ using Invoice.Domain.Interfaces;
 using Moq;
 using Xunit;
 
-namespace Invoice.Application.Tests.UnitTests.Services
+namespace Invoice.Application.Tests.UnitTests
 {
     public class UserPasswordServiceTests
     {

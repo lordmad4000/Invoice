@@ -1,6 +1,6 @@
 using AutoMapper;
 using Invoice.Application.AutoMapper;
-using Invoice.Application.CQRS.Users.Commands;
+using Invoice.Application.CQRS.Authentication.Commands;
 using Invoice.Application.Common.Dto;
 using Invoice.Application.Common.Interfaces.Persistance;
 using Invoice.Application.Interfaces;
@@ -16,14 +16,14 @@ using Xunit;
 
 namespace Invoice.Application.Tests.UnitTests
 {
-    public class UserRegisterHandlerTests
+    public class AuthenticationRegisterHandlerTests
     {
         private readonly IMapper _mapper;
         private readonly Mock<IUserRepository> _mockUserRepository;
         private readonly Mock<IUnitOfWork> _mockUnitOfWork;
         private readonly Mock<IValidatorService> _mockValidatorService;
         private readonly Mock<IPasswordService> _mockPasswordService;
-        public UserRegisterHandlerTests()
+        public AuthenticationRegisterHandlerTests()
         {
             var mapperConfig = new MapperConfiguration(cfg => 
             {
@@ -37,42 +37,42 @@ namespace Invoice.Application.Tests.UnitTests
         }
 
         [Fact]
-        public async Task UserRegisterCommand_Should_Not_Be_Null()
+        public async Task AuthenticationRegisterCommand_Should_Not_Be_Null()
         {
             // Arrange
             var user = GetUser();
-            var userRegisterCommand = GetUserRegisterCommand();
+            var authenticationRegisterCommand = GetAuthenticationRegisterCommand();
             _mockUserRepository.Setup(x => x.AddAsync(It.IsAny<User>())).ReturnsAsync(user);
             _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<bool>(), It.IsAny<string>())).ReturnsAsync(default(User));
             _mockPasswordService.Setup(x => x.GeneratePassword(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())).Returns("12345678");
-            var userRegisterHandler = new UserRegisterHandler(_mockUserRepository.Object, 
-                                                              _mockUnitOfWork.Object, 
-                                                              _mockValidatorService.Object, 
-                                                              _mockPasswordService.Object,
-                                                              _mapper);
+            var authenticationRegisterHandler = new AuthenticationRegisterHandler(_mockUserRepository.Object, 
+                                                                                  _mockUnitOfWork.Object, 
+                                                                                  _mockValidatorService.Object, 
+                                                                                  _mockPasswordService.Object,
+                                                                                  _mapper);
 
             //Act
-            UserDto userDto = await userRegisterHandler.Handle(userRegisterCommand, new CancellationToken());
+            UserDto userDto = await authenticationRegisterHandler.Handle(authenticationRegisterCommand, new CancellationToken());
 
             //Assert
             Assert.NotNull(userDto);
         }
 
         [Fact]
-        public async Task UserRegisterCommand_Should_Throw_An_EntityValidationException()
+        public async Task AuthenticationRegisterCommand_Should_Throw_An_EntityValidationException()
         {
             // Arrange
             var user = GetUser();
-            var userRegisterCommand = GetUserRegisterCommand();
+            var authenticationRegisterCommand = GetAuthenticationRegisterCommand();
             _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<bool>(), It.IsAny<string>())).ReturnsAsync(user);
-            var userRegisterHandler = new UserRegisterHandler(_mockUserRepository.Object, 
-                                                              _mockUnitOfWork.Object, 
-                                                              _mockValidatorService.Object, 
-                                                              _mockPasswordService.Object,
-                                                              _mapper);
+            var AuthenticationRegisterHandler = new AuthenticationRegisterHandler(_mockUserRepository.Object, 
+                                                                                  _mockUnitOfWork.Object, 
+                                                                                  _mockValidatorService.Object, 
+                                                                                  _mockPasswordService.Object,
+                                                                                  _mapper);
 
             //Act & Assert
-            await Assert.ThrowsAsync<EntityValidationException>(async () => await userRegisterHandler.Handle(userRegisterCommand, new CancellationToken()));
+            await Assert.ThrowsAsync<EntityValidationException>(async () => await AuthenticationRegisterHandler.Handle(authenticationRegisterCommand, new CancellationToken()));
         }
 
         private User GetUser()
@@ -80,9 +80,9 @@ namespace Invoice.Application.Tests.UnitTests
             return new User(new EmailAddress("jose@gmail.com"), "12345678", "jose", "antonio");
         }
 
-        private UserRegisterCommand GetUserRegisterCommand()
+        private AuthenticationRegisterCommand GetAuthenticationRegisterCommand()
         {
-            return new UserRegisterCommand("jose@gmail.com", "12345678", "jose", "antonio");
+            return new AuthenticationRegisterCommand("jose@gmail.com", "12345678", "jose", "antonio");
         }
 
     }

@@ -1,7 +1,7 @@
 using Invoice.Application.Common.Dto;
 using MediatR;
 
-namespace Invoice.Application.CQRS.Authentication.Commands.Register
+namespace Invoice.Application.CQRS.Authentication.Commands
 {
     public class AuthenticationRegisterCommand : IRequest<UserDto>
     {

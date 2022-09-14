@@ -6,7 +6,7 @@ using Invoice.Application.Common.Interfaces.Persistance;
 using Invoice.Application.Interfaces;
 using MediatR;
 
-namespace Invoice.Application.CQRS.Authentication.Queries.Login
+namespace Invoice.Application.CQRS.Authentication.Queries
 {
     public class LoginQueryHandler : IRequestHandler<LoginQuery, UserDto>
     {
