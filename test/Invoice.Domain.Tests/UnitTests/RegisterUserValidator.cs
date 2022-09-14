@@ -1,9 +1,7 @@
-using System;
-using System.Linq;
 using Invoice.Domain.Entities;
 using Invoice.Domain.Validations;
 using Invoice.Domain.ValueObjects;
-using Moq;
+using System.Linq;
 using Xunit;
 
 namespace Invoice.Domain.Tests.UnitTests
@@ -17,6 +15,19 @@ namespace Invoice.Domain.Tests.UnitTests
         }
 
         [Fact]
+        public void Should_Be_Valid()
+        {   
+            //Arrange
+            var user = new User(new EmailAddress("jose@gmail.com"), "123456", "jose", "antonio");
+
+            //Act
+            var result = _validator.Validate(user);
+
+            //Assert
+            Assert.True(result.IsValid);
+        }        
+
+        [Fact]
         public void Password_Should_Be_Empty()
         {
             // Arrange
@@ -26,8 +37,23 @@ namespace Invoice.Domain.Tests.UnitTests
             var result = _validator.Validate(user);
 
             //Assert
+            Assert.False(result.IsValid);
             Assert.True(result.Errors.Any(x => x.ErrorCode == "NotEmptyValidator"));
         }
+
+        [Fact]
+        public void Password_Should_Be_Null()
+        {
+            // Arrange
+            var user = new User(new EmailAddress("jose@gmail.com"), null, "jose", "antonio");
+            
+            //Act
+            var result = _validator.Validate(user);
+
+            //Assert
+            Assert.False(result.IsValid);
+            Assert.True(result.Errors.Any(x => x.ErrorCode == "NotNullValidator"));
+        }        
 
         [Fact]
         public void Password_Length_Should_Be_Less_Than_6()
@@ -39,6 +65,7 @@ namespace Invoice.Domain.Tests.UnitTests
             var result = _validator.Validate(user);
 
             //Assert
+            Assert.False(result.IsValid);
             Assert.True(result.Errors.Any(x => x.ErrorCode == "LengthValidator"));
         }
 
@@ -52,6 +79,7 @@ namespace Invoice.Domain.Tests.UnitTests
             var result = _validator.Validate(user);
 
             //Assert
+            Assert.False(result.IsValid);
             Assert.True(result.Errors.Any(x => x.ErrorCode == "LengthValidator"));
         }
 
@@ -65,6 +93,7 @@ namespace Invoice.Domain.Tests.UnitTests
             var result = _validator.Validate(user);
 
             //Assert
+            Assert.False(result.IsValid);
             Assert.True(result.Errors.Any(x => x.ErrorCode == "LengthValidator"));
         }
 
