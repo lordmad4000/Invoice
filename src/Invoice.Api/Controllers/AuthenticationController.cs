@@ -13,6 +13,7 @@ using Invoice.Api.Models.Request;
 using Invoice.Application.CQRS.Authentication.Commands;
 using Invoice.Domain.Exceptions;
 using Invoice.Application.CQRS.Authentication.Queries;
+using Invoice.Infra.Interfaces;
 
 namespace Invoice.Api.Controllers
 {
@@ -24,16 +25,19 @@ namespace Invoice.Api.Controllers
         private readonly ITokenService _tokenService;
         private readonly JWTConfig _jwtConfig;
         private readonly IMapper _mapper;
+        private readonly ICustomLogger _logger;
 
         public AuthenticationController(IMediator mediator,
                                         ITokenService tokenService,
                                         IOptions<JWTConfig> jwtConfig,
-                                        IMapper mapper)
+                                        IMapper mapper,
+                                        ICustomLogger logger)
         {
             _mediator = mediator;
             _tokenService = tokenService;
             _jwtConfig = jwtConfig.Value;
             _mapper = mapper;
+            _logger = logger;
         }
 
         [AllowAnonymous]
@@ -42,9 +46,13 @@ namespace Invoice.Api.Controllers
         {
             try
             {
+                _logger.Debug($"Login with {email} and {password}");
                 var userDto = await _mediator.Send(new LoginQuery(email, password));
                 if (userDto == null)
+                {
+                    _logger.Error("Login error: Invalid Username or Password.");
                     return BadRequest("Invalid Username or Password.");
+                }
 
                 var userLoginResponse = new UserLoginResponse
                 {
@@ -52,6 +60,7 @@ namespace Invoice.Api.Controllers
                     Token = _tokenService.GenerateToken(userDto.Password, userDto.Email, _jwtConfig.SecretKey)
                 };
 
+                _logger.Debug($"Successfully logged in with token {userLoginResponse.Token}");
                 return (await Task.FromResult(Ok(userLoginResponse)));
             }
             catch (DataBaseException ex)
