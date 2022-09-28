@@ -47,7 +47,7 @@ namespace Invoice.Api
 
             services.AddUnitOfWork();
             
-            services.AddInfrastructure();
+            services.AddInfrastructure(Configuration);
 
             services.AddApplication();
 
