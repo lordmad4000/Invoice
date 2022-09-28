@@ -12,12 +12,13 @@ namespace Invoice.Infra
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IIdDocumentTypeRepository, IdDocumentTypeRepository>();
             services.AddScoped<IPasswordEncryption, PasswordEncryptService>();
+            services.AddSingleton<ICustomLogger>(s => new LoggerSeriLog(configuration));
 
             return services;            
         }        
