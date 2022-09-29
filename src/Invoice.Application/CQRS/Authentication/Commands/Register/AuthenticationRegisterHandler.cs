@@ -20,18 +20,21 @@ namespace Invoice.Application.CQRS.Authentication.Commands
         private readonly IValidatorService _validatorService;
         private readonly IPasswordService _passwordService;
         private readonly IMapper _mapper;
+        private readonly ICustomLogger _logger;
 
         public AuthenticationRegisterHandler(IUserRepository userRepository,                        
                                              IUnitOfWork unitOfWork,
                                              IValidatorService validatorService,
                                              IPasswordService passwordService,
-                                             IMapper mapper)
+                                             IMapper mapper,
+                                             ICustomLogger logger)
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
             _validatorService = validatorService;
             _passwordService = passwordService;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<UserDto> Handle(AuthenticationRegisterCommand request, CancellationToken cancellationToken)
@@ -41,6 +44,8 @@ namespace Invoice.Application.CQRS.Authentication.Commands
             var user = new User(new EmailAddress(request.Email), encryptedPassword, request.FirstName, request.LastName);
             user = await _userRepository.AddAsync(user);
             await _unitOfWork.SaveChangesAsync();
+            _logger.Information($"User {user.EmailAddress.Address} added to database.");
+            _logger.Debug($"Added User with data: {user.Id}, {user.EmailAddress.Address}, {user.Password}, {user.FirstName}, {user.LastName}");
 
             return _mapper.Map<UserDto>(user);
         }

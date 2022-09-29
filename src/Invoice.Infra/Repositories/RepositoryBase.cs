@@ -1,14 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Invoice.Infra.Interfaces;
+﻿using Invoice.Application.Common.Interfaces.Persistance;
 using Invoice.Domain.Base;
 using Invoice.Infra.Data;
 using Invoice.Infra.Exceptions;
-using Invoice.Application.Common.Interfaces.Persistance;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Linq;
+using System.Threading.Tasks;
+using System;
 
 namespace Invoice.Infra.Repositories
 {

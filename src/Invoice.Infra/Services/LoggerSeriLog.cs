@@ -1,8 +1,8 @@
-using System;
-using Invoice.Infra.Interfaces;
+using Invoice.Application.Common.Interfaces.Persistance;
 using Microsoft.Extensions.Configuration;
-using Serilog;
 using Serilog.Core;
+using Serilog;
+using System;
 
 namespace Invoice.Infra.Services
 {

@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Invoice.Application.Common.Interfaces.Persistance;
+using Invoice.Infra.Configuration;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
-using Invoice.Infra.Configuration;
-using Invoice.Infra.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
+using System;
 
 namespace Invoice.Infra.Services
 {

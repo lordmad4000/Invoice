@@ -1,4 +1,4 @@
-﻿namespace Invoice.Infra.Interfaces
+﻿namespace Invoice.Application.Common.Interfaces.Persistance
 {
     public interface ICacheService
     {

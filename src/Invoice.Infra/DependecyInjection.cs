@@ -2,7 +2,6 @@ using Invoice.Application.Common.Interfaces.Persistance;
 using Invoice.Domain.Interfaces;
 using Invoice.Infra.Configuration;
 using Invoice.Infra.Data;
-using Invoice.Infra.Interfaces;
 using Invoice.Infra.Repositories;
 using Invoice.Infra.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
