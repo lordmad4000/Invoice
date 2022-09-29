@@ -1,19 +1,16 @@
-﻿using System;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
+using Invoice.Api.Models.Request;
+using Invoice.Api.Models.Response;
+using Invoice.Application.CQRS.Authentication.Commands;
+using Invoice.Application.CQRS.Authentication.Queries;
+using Invoice.Domain.Exceptions;
+using Invoice.Infra.Exceptions;
+using Invoice.Infra.Interfaces;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Invoice.Api.Configuration;
-using Invoice.Api.Models.Response;
-using Invoice.Application.Interfaces;
-using Invoice.Infra.Exceptions;
-using MediatR;
-using Invoice.Api.Models.Request;
-using Invoice.Application.CQRS.Authentication.Commands;
-using Invoice.Domain.Exceptions;
-using Invoice.Application.CQRS.Authentication.Queries;
-using Invoice.Infra.Interfaces;
+using System.Threading.Tasks;
+using System;
 
 namespace Invoice.Api.Controllers
 {
@@ -23,19 +20,16 @@ namespace Invoice.Api.Controllers
     {
         private readonly IMediator _mediator;
         private readonly ITokenService _tokenService;
-        private readonly JWTConfig _jwtConfig;
         private readonly IMapper _mapper;
         private readonly ICustomLogger _logger;
 
         public AuthenticationController(IMediator mediator,
                                         ITokenService tokenService,
-                                        IOptions<JWTConfig> jwtConfig,
                                         IMapper mapper,
                                         ICustomLogger logger)
         {
             _mediator = mediator;
             _tokenService = tokenService;
-            _jwtConfig = jwtConfig.Value;
             _mapper = mapper;
             _logger = logger;
         }
@@ -57,7 +51,7 @@ namespace Invoice.Api.Controllers
                 var userLoginResponse = new UserLoginResponse
                 {
                     Id = userDto.Id,
-                    Token = _tokenService.GenerateToken(userDto.Password, userDto.Email, _jwtConfig.SecretKey)
+                    Token = _tokenService.GenerateToken(userDto.Password, userDto.Email)
                 };
 
                 _logger.Debug($"Successfully logged in with token {userLoginResponse.Token}");

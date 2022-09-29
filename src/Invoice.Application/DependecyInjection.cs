@@ -13,7 +13,6 @@ namespace Invoice.Application
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IValidatorService, ValidatorService>();
             services.AddScoped<IPasswordService, UserPasswordService>();
-            services.AddScoped<ITokenService, JWTokenService>();
 
             return services;            
         }        
