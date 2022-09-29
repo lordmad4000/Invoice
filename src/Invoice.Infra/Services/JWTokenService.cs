@@ -1,18 +1,27 @@
-using System;
-using System.Text;
+using Invoice.Infra.Configuration;
+using Invoice.Infra.Interfaces;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
-using Invoice.Application.Interfaces;
+using System.Security.Claims;
+using System.Text;
+using System;
 
-namespace Invoice.Application.Services
+namespace Invoice.Infra.Services
 {
 
     public class JWTokenService : ITokenService
     {
-        public string GenerateToken(string userId, string userEmail, string secretKey)
+        private readonly JWTConfig _jwtConfig;
+
+        public JWTokenService(IOptions<JWTConfig> jwtConfig)
         {
-            var key = Encoding.ASCII.GetBytes(secretKey);
+            _jwtConfig = jwtConfig.Value;
+        }
+
+        public string GenerateToken(string userId, string userEmail)
+        {
+            var key = Encoding.ASCII.GetBytes(_jwtConfig.SecretKey);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
@@ -23,7 +32,6 @@ namespace Invoice.Application.Services
                 Expires = DateTime.UtcNow.AddMinutes(30),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
-
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
