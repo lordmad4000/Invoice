@@ -3,14 +3,17 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.18" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="$(MicrosoftEntityFrameworkCore)" />    
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="$(PomeloEntityFrameworkCoreMySql)" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="$(MicrosoftEntityFrameworkCoreTools)">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Serilog.AspNetCore" Version="6.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="$(MicrosoftAspNetCoreAuthenticationJwtBearer)" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="$(MicrosoftEntityFrameworkCore)" />    
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="$(PomeloEntityFrameworkCoreMySql)" />
+    <PackageReference Include="Serilog.AspNetCore" Version="$(SerilogAspNetCore)" />
+    <PackageReference Include="Serilog.Enrichers.Environment" Version="$(SerilogEnrichersEnvironment)" />
+    <PackageReference Include="Serilog.Enrichers.Process" Version="$(SerilogEnrichersProcess)" />
+    <PackageReference Include="Serilog.Enrichers.Thread" Version="$(SerilogEnrichersThread)" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Invoice.Application\Invoice.Application.csproj" />

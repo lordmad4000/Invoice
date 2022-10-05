@@ -24,21 +24,28 @@
   <PropertyGroup>
     <AutoMapper>11.0.0</AutoMapper>
     <AutoMapperExtensionsMicrosoftDependencyInjection>11.0.0</AutoMapperExtensionsMicrosoftDependencyInjection>
-    <MicrosoftAspNetCoreAuthenticationJwtBearer>3.1.1</MicrosoftAspNetCoreAuthenticationJwtBearer>
-    <MicrosoftAspNetCoreJsonPatch>3.1.1</MicrosoftAspNetCoreJsonPatch>
-    <MicrosoftAspNetCoreMvcNewtonsoftJson>3.1.1</MicrosoftAspNetCoreMvcNewtonsoftJson>
-    <MicrosoftEntityFrameworkCore>3.1.1</MicrosoftEntityFrameworkCore>
-    <MicrosoftEntityFrameworkCoreTools>3.1.1</MicrosoftEntityFrameworkCoreTools>    
-    <SwashbuckleAspNetCore>5.0.0</SwashbuckleAspNetCore>
-    <SystemIdentityModelTokensJwt>6.17.0</SystemIdentityModelTokensJwt>
     <FluentValidationAspNetCore>8.6.1</FluentValidationAspNetCore>
-    <PomeloEntityFrameworkCoreMySql>3.1.2</PomeloEntityFrameworkCoreMySql>
     <MediatR>10.0.1</MediatR>
     <MediatRExtensionsMicrosoftDependencyInjection>10.0.1</MediatRExtensionsMicrosoftDependencyInjection>
+    <MicrosoftAspNetCoreAuthenticationJwtBearer>3.1.1</MicrosoftAspNetCoreAuthenticationJwtBearer>
+    <MicrosoftAspNetCoreCors>2.2.0</MicrosoftAspNetCoreCors>
+    <MicrosoftAspNetCoreJsonPatch>3.1.1</MicrosoftAspNetCoreJsonPatch>
+    <MicrosoftAspNetCoreMvcNewtonsoftJson>3.1.1</MicrosoftAspNetCoreMvcNewtonsoftJson>
+    <MicrosoftAspNetCoreSpaServicesExtensions>3.1.26</MicrosoftAspNetCoreSpaServicesExtensions>
+    <MicrosoftEntityFrameworkCore>3.1.1</MicrosoftEntityFrameworkCore>
+    <MicrosoftEntityFrameworkCoreTools>3.1.1</MicrosoftEntityFrameworkCoreTools>    
     <MicrosoftNETTestSdk>16.5.0</MicrosoftNETTestSdk>
+    <MicrosoftVisualStudioAzureContainersToolsTargets>1.14.0</MicrosoftVisualStudioAzureContainersToolsTargets>
     <Moq>4.18.2</Moq>
+    <PomeloEntityFrameworkCoreMySql>3.1.2</PomeloEntityFrameworkCoreMySql>
+    <SerilogAspNetCore>6.0.1</SerilogAspNetCore>
+    <SerilogEnrichersEnvironment>2.2.0</SerilogEnrichersEnvironment>
+    <SerilogEnrichersProcess>2.0.2</SerilogEnrichersProcess>
+    <SerilogEnrichersThread>3.1.0</SerilogEnrichersThread>
+    <SwashbuckleAspNetCore>5.0.0</SwashbuckleAspNetCore>
+    <SystemIdentityModelTokensJwt>6.17.0</SystemIdentityModelTokensJwt>
+    <coverletcollector>1.2.0</coverletcollector>
     <xunit>2.4.0</xunit>
     <xunitrunnervisualstudio>2.4.0</xunitrunnervisualstudio>
-    <coverletcollector>1.2.0</coverletcollector>
   </PropertyGroup>
 </Project>
