@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 using System.Threading;
 using System;
 using Xunit;
-using Invoice.Infra.Services;
 
 namespace Invoice.Application.Tests.UnitTests
 {
@@ -25,6 +24,7 @@ namespace Invoice.Application.Tests.UnitTests
         private readonly Mock<IValidatorService> _mockValidatorService;
         private readonly Mock<IPasswordService> _mockPasswordService;
         private readonly Mock<ICustomLogger> _mockLogger;
+        
         public AuthenticationRegisterHandlerTests()
         {
             var mapperConfig = new MapperConfiguration(cfg => 

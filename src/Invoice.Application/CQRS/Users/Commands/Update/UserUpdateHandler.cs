@@ -3,6 +3,7 @@ using Invoice.Application.Common.Dto;
 using Invoice.Application.Common.Interfaces.Persistance;
 using Invoice.Application.Interfaces;
 using Invoice.Domain.Entities;
+using Invoice.Domain.Exceptions;
 using Invoice.Domain.Validations;
 using Invoice.Domain.ValueObjects;
 using MediatR;
@@ -20,18 +21,21 @@ namespace Invoice.Application.CQRS.Users.Commands
         private readonly IValidatorService _validatorService;
         private readonly IPasswordService _passwordService;
         private readonly IMapper _mapper;
+        private readonly ICustomLogger _logger;
 
-        public UserUpdateHandler(IUserRepository userRepository,                        
+        public UserUpdateHandler(IUserRepository userRepository,
                                  IUnitOfWork unitOfWork,
                                  IValidatorService validatorService,
                                  IPasswordService passwordService,
-                                 IMapper mapper)
+                                 IMapper mapper,
+                                 ICustomLogger logger)
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
             _validatorService = validatorService;
             _passwordService = passwordService;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<UserDto> Handle(UserUpdateCommand request, CancellationToken cancellationToken)
@@ -41,7 +45,9 @@ namespace Invoice.Application.CQRS.Users.Commands
             user.Update(user.EmailAddress, encryptedPassword, user.FirstName, user.LastName);
             await _userRepository.UpdateAsync(user);
             if (await _unitOfWork.SaveChangesAsync() == 0)
-                return null;
+                throw new Exception("User could not be updated succesfully.");
+
+            _logger.Debug(@$"User Update with data: {user.ToString()}");
 
             return _mapper.Map<UserDto>(user);
         }
@@ -50,7 +56,8 @@ namespace Invoice.Application.CQRS.Users.Commands
         {
             var user = await _userRepository.GetAsync(c => c.Id == request.Id, false);
             if (user == null)
-                throw new Exception("User doesn't exists.");
+                throw new NotFoundException("User not found.");
+
             user.Update(new EmailAddress(request.Email), request.Password, request.FirstName, request.LastName);
             _validatorService.ValidateModel(new UpdateUserValidator().Validate(user));
 
