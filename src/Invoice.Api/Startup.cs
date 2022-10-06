@@ -73,6 +73,7 @@ namespace Invoice.Api
             app.UseRouting();
             app.UseMiddleware<RequestDiagnosticsMiddleware>();
             app.UseCors("CorsPolicy");
+            app.UseMiddleware<ErrorHandlerMiddleware>();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
