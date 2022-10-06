@@ -18,6 +18,8 @@ namespace Invoice.Application.Tests.UnitTests
     {
         private readonly IMapper _mapper;
         private readonly Mock<IUserRepository> _mockUserRepository;
+        private readonly Mock<ICustomLogger> _mockLogger;
+
         public GetLastUsersQueryHandlerTests()
         {
             var mapperConfig = new MapperConfiguration(cfg => 
@@ -26,6 +28,7 @@ namespace Invoice.Application.Tests.UnitTests
             });
             _mapper = mapperConfig.CreateMapper();
             _mockUserRepository = new Mock<IUserRepository>();
+            _mockLogger = new Mock<ICustomLogger>();
         }
 
         [Fact]
@@ -37,7 +40,7 @@ namespace Invoice.Application.Tests.UnitTests
             _mockUserRepository.Setup(x => x.GetLastUsers(It.IsAny<int>())).ReturnsAsync(users.OrderByDescending(x => x.CreationDate)
                                                                                               .Take(3)
                                                                                               .ToList());
-            var getLastUsersQueryHandler = new GetLastUsersQueryHandler(_mockUserRepository.Object, _mapper);
+            var getLastUsersQueryHandler = new GetLastUsersQueryHandler(_mockUserRepository.Object, _mapper, _mockLogger.Object);
 
             //Act
             List<UserDto> usersDto = await getLastUsersQueryHandler.Handle(new GetLastUsersQuery(count), new CancellationToken());
