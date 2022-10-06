@@ -12,3 +12,5 @@ A basic Invoice API example in .NET using the following:
     - AutoMapper.
     - MemoryCache.
     - CQRS.
+    - Mediator.
+    - Serilog.
