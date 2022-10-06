@@ -44,13 +44,7 @@ namespace Invoice.Application.CQRS.Authentication.Commands
             var user = new User(new EmailAddress(request.Email), encryptedPassword, request.FirstName, request.LastName);
             user = await _userRepository.AddAsync(user);
             await _unitOfWork.SaveChangesAsync();
-            _logger.Debug(@$"Authentication Register with data: 
-                             Id {user.Id}, 
-                             Email {user.EmailAddress.Address}, 
-                             Password {request.Password}, 
-                             EncryptedPassword {user.Password}, 
-                             FirstName {user.FirstName}, 
-                             LastName {user.LastName}");
+            _logger.Debug(@$"Authentication Register with data: {user.ToString()}");
 
             return _mapper.Map<UserDto>(user);
         }

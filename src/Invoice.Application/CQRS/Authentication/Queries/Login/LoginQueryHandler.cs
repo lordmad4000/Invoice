@@ -33,6 +33,8 @@ namespace Invoice.Application.CQRS.Authentication.Queries
             if (user == null || _passwordService.IsCorrectPassword(user.EmailAddress.ToString(), user.Password, request.Password) == false)
                 throw new System.Exception("Login error: Invalid Username or Password.");
 
+            _logger.Debug($"Login with {request.Email} and {request.Password}");
+
             return _mapper.Map<UserDto>(user);
         }        
 

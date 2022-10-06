@@ -30,7 +30,7 @@ namespace Invoice.Api.Middlewares
             {
                 var response = context.Response;
                 response.ContentType = "application/json";
-                _logger.Debug($"{error.GetType().Name} {error?.Message}");
+                _logger.Error($"{error.GetType().Name} {error?.Message}");
 
                 switch (error)
                 {

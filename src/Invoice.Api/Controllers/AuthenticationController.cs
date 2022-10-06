@@ -37,7 +37,6 @@ namespace Invoice.Api.Controllers
         [HttpGet("Login")]
         public async Task<IActionResult> Login(string email, [DataType(DataType.Password)] string password)
         {
-            _logger.Debug($"Login with {email} and {password}");
             var userDto = await _mediator.Send(new LoginQuery(email, password));
             var userLoginResponse = new UserLoginResponse
             {

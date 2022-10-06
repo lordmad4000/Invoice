@@ -24,7 +24,7 @@ namespace Invoice.Application.Tests.UnitTests
         private readonly Mock<IUnitOfWork> _mockUnitOfWork;
         private readonly Mock<IValidatorService> _mockValidatorService;
         private readonly Mock<IPasswordService> _mockPasswordService;
-        private readonly Mock<ICustomLogger> _logger;
+        private readonly Mock<ICustomLogger> _mockLogger;
         public AuthenticationRegisterHandlerTests()
         {
             var mapperConfig = new MapperConfiguration(cfg => 
@@ -36,7 +36,7 @@ namespace Invoice.Application.Tests.UnitTests
             _mockUnitOfWork = new Mock<IUnitOfWork>();
             _mockValidatorService = new Mock<IValidatorService>();
             _mockPasswordService = new Mock<IPasswordService>();
-            _logger = new Mock<ICustomLogger>();
+            _mockLogger = new Mock<ICustomLogger>();
         }
 
         [Fact]
@@ -53,7 +53,7 @@ namespace Invoice.Application.Tests.UnitTests
                                                                                   _mockValidatorService.Object, 
                                                                                   _mockPasswordService.Object,
                                                                                   _mapper,
-                                                                                  _logger.Object);
+                                                                                  _mockLogger.Object);
 
             //Act
             UserDto userDto = await authenticationRegisterHandler.Handle(authenticationRegisterCommand, new CancellationToken());
@@ -74,7 +74,7 @@ namespace Invoice.Application.Tests.UnitTests
                                                                                   _mockValidatorService.Object, 
                                                                                   _mockPasswordService.Object,
                                                                                   _mapper,
-                                                                                  _logger.Object);
+                                                                                  _mockLogger.Object);
 
             //Act & Assert
             await Assert.ThrowsAsync<EntityValidationException>(async () => await AuthenticationRegisterHandler.Handle(authenticationRegisterCommand, new CancellationToken()));

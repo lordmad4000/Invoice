@@ -19,6 +19,7 @@ namespace Invoice.Application.Tests.UnitTests
         private readonly IMapper _mapper;
         private readonly Mock<IUserRepository> _mockUserRepository;
         private readonly Mock<IPasswordService> _mockPasswordService;
+        private readonly Mock<ICustomLogger> _mockLogger;
         public LoginQueryHandlerTests()
         {
             var mapperConfig = new MapperConfiguration(cfg => 
@@ -28,6 +29,7 @@ namespace Invoice.Application.Tests.UnitTests
             _mapper = mapperConfig.CreateMapper();
             _mockUserRepository = new Mock<IUserRepository>();
             _mockPasswordService = new Mock<IPasswordService>();
+            _mockLogger = new Mock<ICustomLogger>();
         }
 
         [Fact]
@@ -37,7 +39,10 @@ namespace Invoice.Application.Tests.UnitTests
             var user = GetUser();
             _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<bool>(), It.IsAny<string>())).ReturnsAsync(user);
             _mockPasswordService.Setup(x => x.IsCorrectPassword(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(true);
-            var getUsersQueryHandler = new LoginQueryHandler(_mockUserRepository.Object, _mockPasswordService.Object, _mapper);
+            var getUsersQueryHandler = new LoginQueryHandler(_mockUserRepository.Object, 
+                                                             _mockPasswordService.Object, 
+                                                             _mapper, 
+                                                             _mockLogger.Object);
 
             //Act
             UserDto userDto = await getUsersQueryHandler.Handle(new LoginQuery(user.EmailAddress.ToString(), user.Password), new CancellationToken());
@@ -53,7 +58,10 @@ namespace Invoice.Application.Tests.UnitTests
             var user = GetUser();
             _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<bool>(), It.IsAny<string>())).ReturnsAsync(default(User));
             _mockPasswordService.Setup(x => x.IsCorrectPassword(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(true);
-            var getUsersQueryHandler = new LoginQueryHandler(_mockUserRepository.Object, _mockPasswordService.Object, _mapper);
+            var getUsersQueryHandler = new LoginQueryHandler(_mockUserRepository.Object, 
+                                                             _mockPasswordService.Object, 
+                                                             _mapper, 
+                                                             _mockLogger.Object);
 
             //Act
             UserDto userDto = await getUsersQueryHandler.Handle(new LoginQuery(user.EmailAddress.ToString(), user.Password), new CancellationToken());
@@ -69,7 +77,10 @@ namespace Invoice.Application.Tests.UnitTests
             var user = GetUser();
             _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<bool>(), It.IsAny<string>())).ReturnsAsync(user);
             _mockPasswordService.Setup(x => x.IsCorrectPassword(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(false);
-            var getUsersQueryHandler = new LoginQueryHandler(_mockUserRepository.Object, _mockPasswordService.Object, _mapper);
+            var getUsersQueryHandler = new LoginQueryHandler(_mockUserRepository.Object, 
+                                                             _mockPasswordService.Object, 
+                                                             _mapper, 
+                                                             _mockLogger.Object);
 
             //Act
             UserDto userDto = await getUsersQueryHandler.Handle(new LoginQuery(user.EmailAddress.ToString(), user.Password), new CancellationToken());

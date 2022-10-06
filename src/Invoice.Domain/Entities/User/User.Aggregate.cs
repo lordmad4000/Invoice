@@ -25,5 +25,15 @@ namespace Invoice.Domain.Entities
             LastName = lastName;
         }
 
+        public override string ToString()
+        {
+            return @$"Id {Id}, 
+                      Email {EmailAddress.Address}, 
+                      Password {Password}, 
+                      EncryptedPassword {Password}, 
+                      FirstName {FirstName}, 
+                      LastName {LastName}";
+        }
+
     }
 }
