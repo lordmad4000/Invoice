@@ -39,9 +39,6 @@ namespace Invoice.Api.Controllers
         {
             _logger.Debug($"Login with {email} and {password}");
             var userDto = await _mediator.Send(new LoginQuery(email, password));
-            if (userDto == null)
-                throw new Exception("Login error: Invalid Username or Password.");
-
             var userLoginResponse = new UserLoginResponse
             {
                 Id = userDto.Id,
