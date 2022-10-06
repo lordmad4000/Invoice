@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Invoice.Application.CQRS.Configuration.Commands.Register;
+using Invoice.Application.Common.Interfaces.Persistance;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,12 +16,15 @@ namespace Invoice.Api.Controllers
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
+        private readonly ICustomLogger _logger;
 
         public ConfigurationController(IMediator mediator,
-                                       IMapper mapper)
+                                       IMapper mapper,
+                                       ICustomLogger logger)
         {
             _mediator = mediator;
             _mapper = mapper;
+            _logger = logger;
         }
 
         [HttpPost("IdDocumentTypeRegister")]

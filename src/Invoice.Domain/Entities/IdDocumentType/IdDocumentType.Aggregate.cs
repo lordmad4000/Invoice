@@ -20,5 +20,11 @@ namespace Invoice.Domain.Entities
             Name = name;
         }
 
+        public override string ToString()
+        {
+            return @$"Id {Id}, 
+                      Name {Name}";
+        }
+
     }
 }
