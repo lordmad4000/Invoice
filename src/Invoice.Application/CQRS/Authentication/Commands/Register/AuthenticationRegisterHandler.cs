@@ -1,14 +1,14 @@
-using System.Threading.Tasks;
+using AutoMapper;
+using Invoice.Application.Common.Dto;
+using Invoice.Application.Common.Interfaces.Persistance;
 using Invoice.Application.Interfaces;
 using Invoice.Domain.Entities;
 using Invoice.Domain.Exceptions;
-using Invoice.Application.Common.Interfaces.Persistance;
-using AutoMapper;
-using MediatR;
-using System.Threading;
-using Invoice.Domain.ValueObjects;
 using Invoice.Domain.Validations;
-using Invoice.Application.Common.Dto;
+using Invoice.Domain.ValueObjects;
+using MediatR;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Invoice.Application.CQRS.Authentication.Commands
 {
@@ -44,8 +44,13 @@ namespace Invoice.Application.CQRS.Authentication.Commands
             var user = new User(new EmailAddress(request.Email), encryptedPassword, request.FirstName, request.LastName);
             user = await _userRepository.AddAsync(user);
             await _unitOfWork.SaveChangesAsync();
-            _logger.Information($"User {user.EmailAddress.Address} added to database.");
-            _logger.Debug($"Added User with data: {user.Id}, {user.EmailAddress.Address}, {user.Password}, {user.FirstName}, {user.LastName}");
+            _logger.Debug(@$"Authentication Register with data: 
+                             Id {user.Id}, 
+                             Email {user.EmailAddress.Address}, 
+                             Password {request.Password}, 
+                             EncryptedPassword {user.Password}, 
+                             FirstName {user.FirstName}, 
+                             LastName {user.LastName}");
 
             return _mapper.Map<UserDto>(user);
         }
