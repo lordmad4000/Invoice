@@ -1,10 +1,11 @@
-using System;
+using Invoice.Application.Common.Interfaces.Persistance;
+using Invoice.Domain.Exceptions;
+using Invoice.Infra.Exceptions;
+using Microsoft.AspNetCore.Http;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Invoice.Application.Common.Interfaces.Persistance;
-using Invoice.Infra.Exceptions;
-using Microsoft.AspNetCore.Http;
+using System;
 
 namespace Invoice.Api.Middlewares
 {
@@ -36,6 +37,11 @@ namespace Invoice.Api.Middlewares
                     case DataBaseException ex:
                     {
                         response.StatusCode = 500;
+                        break;
+                    }
+                    case NotFoundException ex:
+                    {
+                        response.StatusCode = (int)HttpStatusCode.NotFound;
                         break;
                     }
                     default:
