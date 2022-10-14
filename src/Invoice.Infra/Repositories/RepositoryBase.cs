@@ -17,7 +17,6 @@ namespace Invoice.Infra.Repositories
         private readonly DbSet<T> _dbSet;
         private readonly string _cacheKey = $"{typeof(T)}";
         private readonly ICacheService _cacheService;
-
         public RepositoryBase(EFContext context, ICacheService cacheService = null)
         {
             _context = context;
@@ -125,7 +124,7 @@ namespace Invoice.Infra.Repositories
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                throw new CacheException(ex.InnerException.Message);
             }
 
             return false;
@@ -143,7 +142,7 @@ namespace Invoice.Infra.Repositories
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                throw new CacheException(ex.InnerException.Message);
             }
 
             return false;
@@ -162,7 +161,7 @@ namespace Invoice.Infra.Repositories
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                throw new CacheException(ex.InnerException.Message);
             }
 
             return false;
