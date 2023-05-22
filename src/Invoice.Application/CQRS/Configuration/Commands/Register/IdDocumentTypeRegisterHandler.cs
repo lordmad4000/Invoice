@@ -1,12 +1,12 @@
-using System.Threading.Tasks;
+using AutoMapper;
+using Invoice.Application.Common.Dto;
+using Invoice.Application.Common.Interfaces.Persistance;
 using Invoice.Application.Interfaces;
 using Invoice.Domain.Entities;
 using Invoice.Domain.Exceptions;
-using Invoice.Application.Common.Interfaces.Persistance;
-using AutoMapper;
 using MediatR;
+using System.Threading.Tasks;
 using System.Threading;
-using Invoice.Application.Common.Dto;
 
 namespace Invoice.Application.CQRS.Configuration.Commands.Register
 {
@@ -16,16 +16,19 @@ namespace Invoice.Application.CQRS.Configuration.Commands.Register
         private readonly IUnitOfWork _unitOfWork;
         private readonly IValidatorService _validatorService;
         private readonly IMapper _mapper;
+        private readonly ICustomLogger _logger;
 
         public IdDocumentTypeRegisterHandler(IIdDocumentTypeRepository idDocumentTypeRepository,                        
                                              IUnitOfWork unitOfWork,
                                              IValidatorService validatorService,
-                                             IMapper mapper)
+                                             IMapper mapper,
+                                             ICustomLogger logger)
         {
             _idDocumentTypeRepository = idDocumentTypeRepository;
             _unitOfWork = unitOfWork;
             _validatorService = validatorService;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<IdDocumentTypeDto> Handle(IdDocumentTypeRegisterCommand request, CancellationToken cancellationToken)
@@ -37,6 +40,7 @@ namespace Invoice.Application.CQRS.Configuration.Commands.Register
             var idDocumentType = new IdDocumentType(request.Name);
             idDocumentType = await _idDocumentTypeRepository.AddAsync(idDocumentType);
             await _unitOfWork.SaveChangesAsync();
+            _logger.Debug($"IdDocumentType Register with data: {idDocumentType.ToString()}");
 
             return  _mapper.Map<IdDocumentTypeDto>(idDocumentType);
         }

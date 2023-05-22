@@ -19,6 +19,8 @@ namespace Invoice.Application.Tests.UnitTests
     {
         private readonly IMapper _mapper;
         private readonly Mock<IUserRepository> _mockUserRepository;
+        private readonly Mock<ICustomLogger> _mockLogger;
+
         public GetUsersQueryHandlerTests()
         {
             var mapperConfig = new MapperConfiguration(cfg => 
@@ -27,6 +29,7 @@ namespace Invoice.Application.Tests.UnitTests
             });
             _mapper = mapperConfig.CreateMapper();
             _mockUserRepository = new Mock<IUserRepository>();
+            _mockLogger = new Mock<ICustomLogger>();
         }
 
         [Fact]
@@ -35,7 +38,7 @@ namespace Invoice.Application.Tests.UnitTests
             // Arrange
             var users = GetUsers();
             _mockUserRepository.Setup(x => x.ListAsync(It.IsAny<Expression<Func<User, bool>>>())).ReturnsAsync(users);
-            var getUsersQueryHandler = new GetUsersQueryHandler(_mockUserRepository.Object, _mapper);
+            var getUsersQueryHandler = new GetUsersQueryHandler(_mockUserRepository.Object, _mapper, _mockLogger.Object);
 
             //Act
             List<UserDto> usersDto = await getUsersQueryHandler.Handle(new GetUsersQuery(), new CancellationToken());

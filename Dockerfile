@@ -1,15 +1,16 @@
-FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
+
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
-RUN apt update
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+RUN apt update && apt install -y procps
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
 RUN apt install -y build-essential nodejs
 
 WORKDIR /src/Invoice.Api/ClientApp
-RUN npm install -g npm@8.12.2
+RUN npm install -g npm@8.19.3
 RUN npm install zone.js
 
 WORKDIR /src

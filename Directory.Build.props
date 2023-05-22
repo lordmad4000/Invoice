@@ -4,12 +4,12 @@
   </PropertyGroup>
   <PropertyGroup>
     <Product>Invoice</Product>
-    <PackageVersion Condition="'$(PackageVersion)' == ''">1.1.16</PackageVersion>
+    <PackageVersion Condition="'$(PackageVersion)' == ''">1.0.0</PackageVersion>
     <PublishRepositoryUrl>false</PublishRepositoryUrl>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>11.0</LangVersion>
     <NoWarn>1591</NoWarn>
     <PackageTags>Invoice</PackageTags>
     <Description>
@@ -22,23 +22,31 @@
   </PropertyGroup>
   <!-- NuGet dependencies shared across projects -->
   <PropertyGroup>
-    <AutoMapper>11.0.0</AutoMapper>
-    <AutoMapperExtensionsMicrosoftDependencyInjection>11.0.0</AutoMapperExtensionsMicrosoftDependencyInjection>
-    <MicrosoftAspNetCoreAuthenticationJwtBearer>3.1.1</MicrosoftAspNetCoreAuthenticationJwtBearer>
-    <MicrosoftAspNetCoreJsonPatch>3.1.1</MicrosoftAspNetCoreJsonPatch>
+    <AutoMapper>12.0.1</AutoMapper>
+    <AutoMapperExtensionsMicrosoftDependencyInjection>12.0.1</AutoMapperExtensionsMicrosoftDependencyInjection>
+    <FluentValidationAspNetCore>11.3.0</FluentValidationAspNetCore>
+    <MediatR>12.0.1</MediatR>
+    <MediatRExtensionsMicrosoftDependencyInjection>11.0.0</MediatRExtensionsMicrosoftDependencyInjection>
+    <MicrosoftAspNetCoreAuthenticationJwtBearer>7.0.5</MicrosoftAspNetCoreAuthenticationJwtBearer>
+    <!-- <MicrosoftAspNetCoreCors>2.2.0</MicrosoftAspNetCoreCors> -->
+    <MicrosoftAspNetCoreJsonPatch>7.0.5</MicrosoftAspNetCoreJsonPatch>
     <MicrosoftAspNetCoreMvcNewtonsoftJson>3.1.1</MicrosoftAspNetCoreMvcNewtonsoftJson>
-    <MicrosoftEntityFrameworkCore>3.1.1</MicrosoftEntityFrameworkCore>
-    <MicrosoftEntityFrameworkCoreTools>3.1.1</MicrosoftEntityFrameworkCoreTools>    
-    <SwashbuckleAspNetCore>5.0.0</SwashbuckleAspNetCore>
-    <SystemIdentityModelTokensJwt>6.17.0</SystemIdentityModelTokensJwt>
-    <FluentValidationAspNetCore>8.6.1</FluentValidationAspNetCore>
-    <PomeloEntityFrameworkCoreMySql>3.1.2</PomeloEntityFrameworkCoreMySql>
-    <MediatR>10.0.1</MediatR>
-    <MediatRExtensionsMicrosoftDependencyInjection>10.0.1</MediatRExtensionsMicrosoftDependencyInjection>
+    <MicrosoftAspNetCoreSpaProxy>7.0.2</MicrosoftAspNetCoreSpaProxy>
+    <!-- <MicrosoftAspNetCoreSpaServicesExtensions>3.1.26</MicrosoftAspNetCoreSpaServicesExtensions> -->
+    <MicrosoftEntityFrameworkCore>7.0.5</MicrosoftEntityFrameworkCore>
+    <MicrosoftEntityFrameworkCoreTools>7.0.5</MicrosoftEntityFrameworkCoreTools>    
     <MicrosoftNETTestSdk>16.5.0</MicrosoftNETTestSdk>
+    <MicrosoftVisualStudioAzureContainersToolsTargets>1.14.0</MicrosoftVisualStudioAzureContainersToolsTargets>
     <Moq>4.18.2</Moq>
+    <PomeloEntityFrameworkCoreMySql>7.0.0</PomeloEntityFrameworkCoreMySql>
+    <SerilogAspNetCore>7.0.0</SerilogAspNetCore>
+    <SerilogEnrichersEnvironment>2.2.0</SerilogEnrichersEnvironment>
+    <SerilogEnrichersProcess>2.0.2</SerilogEnrichersProcess>
+    <SerilogEnrichersThread>3.1.0</SerilogEnrichersThread>
+    <SwashbuckleAspNetCore>6.5.0</SwashbuckleAspNetCore>
+    <SystemIdentityModelTokensJwt>6.30.1</SystemIdentityModelTokensJwt>
+    <coverletcollector>6.0.0</coverletcollector>
     <xunit>2.4.0</xunit>
     <xunitrunnervisualstudio>2.4.0</xunitrunnervisualstudio>
-    <coverletcollector>1.2.0</coverletcollector>
   </PropertyGroup>
 </Project>

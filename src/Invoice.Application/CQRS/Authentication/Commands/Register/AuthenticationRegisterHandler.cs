@@ -1,14 +1,14 @@
-using System.Threading.Tasks;
+using AutoMapper;
+using Invoice.Application.Common.Dto;
+using Invoice.Application.Common.Interfaces.Persistance;
 using Invoice.Application.Interfaces;
 using Invoice.Domain.Entities;
 using Invoice.Domain.Exceptions;
-using Invoice.Application.Common.Interfaces.Persistance;
-using AutoMapper;
-using MediatR;
-using System.Threading;
-using Invoice.Domain.ValueObjects;
 using Invoice.Domain.Validations;
-using Invoice.Application.Common.Dto;
+using Invoice.Domain.ValueObjects;
+using MediatR;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Invoice.Application.CQRS.Authentication.Commands
 {
@@ -20,18 +20,21 @@ namespace Invoice.Application.CQRS.Authentication.Commands
         private readonly IValidatorService _validatorService;
         private readonly IPasswordService _passwordService;
         private readonly IMapper _mapper;
+        private readonly ICustomLogger _logger;
 
         public AuthenticationRegisterHandler(IUserRepository userRepository,                        
                                              IUnitOfWork unitOfWork,
                                              IValidatorService validatorService,
                                              IPasswordService passwordService,
-                                             IMapper mapper)
+                                             IMapper mapper,
+                                             ICustomLogger logger)
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
             _validatorService = validatorService;
             _passwordService = passwordService;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<UserDto> Handle(AuthenticationRegisterCommand request, CancellationToken cancellationToken)
@@ -41,6 +44,7 @@ namespace Invoice.Application.CQRS.Authentication.Commands
             var user = new User(new EmailAddress(request.Email), encryptedPassword, request.FirstName, request.LastName);
             user = await _userRepository.AddAsync(user);
             await _unitOfWork.SaveChangesAsync();
+            _logger.Debug(@$"Authentication Register with data: {user.ToString()}");
 
             return _mapper.Map<UserDto>(user);
         }

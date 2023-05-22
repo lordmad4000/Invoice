@@ -3,12 +3,11 @@ using Invoice.Api.Models.Request;
 using Invoice.Api.Models.Response;
 using Invoice.Application.CQRS.Authentication.Commands;
 using Invoice.Application.CQRS.Authentication.Queries;
-using Invoice.Domain.Exceptions;
-using Invoice.Infra.Exceptions;
-using Invoice.Infra.Interfaces;
+using Invoice.Application.Common.Interfaces.Persistance;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using System;
 
@@ -36,68 +35,33 @@ namespace Invoice.Api.Controllers
 
         [AllowAnonymous]
         [HttpGet("Login")]
-        public async Task<IActionResult> Login(string email, string password)
+        public async Task<IActionResult> Login(string email, [DataType(DataType.Password)] string password)
         {
-            try
+            var userDto = await _mediator.Send(new LoginQuery(email, password));
+            var userLoginResponse = new UserLoginResponse
             {
-                _logger.Debug($"Login with {email} and {password}");
-                var userDto = await _mediator.Send(new LoginQuery(email, password));
-                if (userDto == null)
-                {
-                    _logger.Error("Login error: Invalid Username or Password.");
-                    return BadRequest("Invalid Username or Password.");
-                }
+                Id = userDto.Id,
+                Token = _tokenService.GenerateToken(userDto.Password, userDto.Email)
+            };
+            _logger.Debug($"Successfully logged in with token {userLoginResponse.Token}");
 
-                var userLoginResponse = new UserLoginResponse
-                {
-                    Id = userDto.Id,
-                    Token = _tokenService.GenerateToken(userDto.Password, userDto.Email)
-                };
-
-                _logger.Debug($"Successfully logged in with token {userLoginResponse.Token}");
-                return (await Task.FromResult(Ok(userLoginResponse)));
-            }
-            catch (DataBaseException ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
+            return (await Task.FromResult(Ok(userLoginResponse)));
         }
 
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] UserRegisterRequest userRegisterRequest)
         {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                throw new Exception(ModelState.ToString());
 
-                var authenticationRegisterCommand = new AuthenticationRegisterCommand(userRegisterRequest.Email, 
-                                                                                      userRegisterRequest.Password, 
-                                                                                      userRegisterRequest.FirstName, 
-                                                                                      userRegisterRequest.LastName);
-                var userDto = await _mediator.Send(authenticationRegisterCommand);
-                var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/{userDto.Id}";
-                
-                return (Created(url, _mapper.Map<UserResponse>(userDto)));
-            }
-            catch (EntityValidationException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (DataBaseException ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
+            var authenticationRegisterCommand = new AuthenticationRegisterCommand(userRegisterRequest.Email,
+                                                                                  userRegisterRequest.Password,
+                                                                                  userRegisterRequest.FirstName,
+                                                                                  userRegisterRequest.LastName);
+            var userDto = await _mediator.Send(authenticationRegisterCommand);
+            var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/{userDto.Id}";
+
+            return (Created(url, _mapper.Map<UserResponse>(userDto)));
         }
-
-
     }
 }

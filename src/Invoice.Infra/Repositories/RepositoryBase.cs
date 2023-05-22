@@ -1,14 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Invoice.Infra.Interfaces;
+﻿using Invoice.Application.Common.Interfaces.Persistance;
 using Invoice.Domain.Base;
 using Invoice.Infra.Data;
 using Invoice.Infra.Exceptions;
-using Invoice.Application.Common.Interfaces.Persistance;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Linq;
+using System.Threading.Tasks;
+using System;
 
 namespace Invoice.Infra.Repositories
 {
@@ -18,7 +17,6 @@ namespace Invoice.Infra.Repositories
         private readonly DbSet<T> _dbSet;
         private readonly string _cacheKey = $"{typeof(T)}";
         private readonly ICacheService _cacheService;
-
         public RepositoryBase(EFContext context, ICacheService cacheService = null)
         {
             _context = context;
@@ -126,7 +124,7 @@ namespace Invoice.Infra.Repositories
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                throw new CacheException(ex.InnerException.Message);
             }
 
             return false;
@@ -144,7 +142,7 @@ namespace Invoice.Infra.Repositories
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                throw new CacheException(ex.InnerException.Message);
             }
 
             return false;
@@ -163,7 +161,7 @@ namespace Invoice.Infra.Repositories
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                throw new CacheException(ex.InnerException.Message);
             }
 
             return false;

@@ -22,6 +22,8 @@ namespace Invoice.Application.Tests.UnitTests
         private readonly Mock<IUnitOfWork> _mockUnitOfWork;
         private readonly Mock<IValidatorService> _mockValidatorService;
         private readonly Mock<IPasswordService> _mockPasswordService;
+        private readonly Mock<ICustomLogger> _mockLogger;
+
         public UserRemoveHandlerTests()
         {
             var mapperConfig = new MapperConfiguration(cfg => 
@@ -32,7 +34,8 @@ namespace Invoice.Application.Tests.UnitTests
             _mockUserRepository = new Mock<IUserRepository>();
             _mockUnitOfWork = new Mock<IUnitOfWork>();
             _mockValidatorService = new Mock<IValidatorService>();
-            _mockPasswordService = new Mock<IPasswordService>();            
+            _mockPasswordService = new Mock<IPasswordService>();  
+            _mockLogger = new Mock<ICustomLogger>();          
         }
 
         [Fact]
@@ -47,7 +50,8 @@ namespace Invoice.Application.Tests.UnitTests
                                                           _mockUnitOfWork.Object, 
                                                           _mockValidatorService.Object, 
                                                           _mockPasswordService.Object,
-                                                          _mapper);
+                                                          _mapper,
+                                                          _mockLogger.Object);
 
             //Act
             UserDto userDto = await userRemoveHandler.Handle(userRemoveCommand, new CancellationToken());
@@ -68,13 +72,12 @@ namespace Invoice.Application.Tests.UnitTests
                                                           _mockUnitOfWork.Object, 
                                                           _mockValidatorService.Object, 
                                                           _mockPasswordService.Object,
-                                                          _mapper);
+                                                          _mapper,
+                                                          _mockLogger.Object);
 
-            //Act
-            UserDto userDto = await userRemoveHandler.Handle(userRemoveCommand, new CancellationToken());
-
-            //Assert
-            Assert.Null(userDto);
+            //Act & Assert
+            await Assert.ThrowsAsync<System.Exception>(() => 
+            userRemoveHandler.Handle(userRemoveCommand, new CancellationToken()));
         }
 
         private User GetUser()

@@ -2,7 +2,6 @@ using Invoice.Application.Common.Interfaces.Persistance;
 using Invoice.Domain.Interfaces;
 using Invoice.Infra.Configuration;
 using Invoice.Infra.Data;
-using Invoice.Infra.Interfaces;
 using Invoice.Infra.Repositories;
 using Invoice.Infra.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -37,7 +36,8 @@ namespace Invoice.Infra
 
         public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
         {
-            return services.AddDbContext<EFContext>(options => options.UseMySql(configuration.GetConnectionString("DefaultConnection")));
+            string connectionString = configuration.GetConnectionString("DefaultConnection");
+            return services.AddDbContext<EFContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
         }        
 
         public static IServiceCollection AddCache(this IServiceCollection services, IConfiguration configuration)
@@ -51,8 +51,8 @@ namespace Invoice.Infra
 
         public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<JWTConfig>(configuration.GetSection("JWTConfig"));
-            var jwtConfig = configuration.GetSection("JWTConfig").Get<JWTConfig>();
+            services.Configure<JWTConfig>(configuration.GetSection(JWTConfig.JWT));
+            var jwtConfig = configuration.GetSection(JWTConfig.JWT).Get<JWTConfig>();
             var key = Encoding.ASCII.GetBytes(jwtConfig.SecretKey);
             services.AddAuthorization(auth =>
             {

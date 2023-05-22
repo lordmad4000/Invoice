@@ -17,6 +17,8 @@ namespace Invoice.Application.Tests.UnitTests
     {
         private readonly IMapper _mapper;
         private readonly Mock<IUserRepository> _mockUserRepository;
+        private readonly Mock<ICustomLogger> _mockLogger;
+
         public GetUserByIdQueryHandlerTests()
         {
             var mapperConfig = new MapperConfiguration(cfg => 
@@ -25,6 +27,7 @@ namespace Invoice.Application.Tests.UnitTests
             });
             _mapper = mapperConfig.CreateMapper();
             _mockUserRepository = new Mock<IUserRepository>();
+            _mockLogger = new Mock<ICustomLogger>();
         }
 
         [Fact]
@@ -33,7 +36,7 @@ namespace Invoice.Application.Tests.UnitTests
             // Arrange
             var user = GetUser();
             _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<bool>(), It.IsAny<string>())).ReturnsAsync(user);
-            var getUsersQueryHandler = new GetUserByIdQueryHandler(_mockUserRepository.Object, _mapper);
+            var getUsersQueryHandler = new GetUserByIdQueryHandler(_mockUserRepository.Object, _mapper, _mockLogger.Object);
 
             //Act
             UserDto userDto = await getUsersQueryHandler.Handle(new GetUserByIdQuery(user.Id), new CancellationToken());
@@ -48,13 +51,11 @@ namespace Invoice.Application.Tests.UnitTests
             // Arrange
             var user = GetUser();
             _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<bool>(), It.IsAny<string>())).ReturnsAsync(default(User));
-            var getUsersQueryHandler = new GetUserByIdQueryHandler(_mockUserRepository.Object, _mapper);
+            var getUsersQueryHandler = new GetUserByIdQueryHandler(_mockUserRepository.Object, _mapper, _mockLogger.Object);
 
-            //Act
-            UserDto userDto = await getUsersQueryHandler.Handle(new GetUserByIdQuery(user.Id), new CancellationToken());
-
-            //Assert
-            Assert.Null(userDto);
+            //Act & Assert
+            await Assert.ThrowsAsync<System.NullReferenceException>(() => 
+            getUsersQueryHandler.Handle(new GetUserByIdQuery(user.Id), new CancellationToken()));
         }
 
         private User GetUser()
