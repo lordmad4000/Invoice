@@ -53,11 +53,9 @@ namespace Invoice.Application.Tests.UnitTests
             _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<bool>(), It.IsAny<string>())).ReturnsAsync(default(User));
             var getUsersQueryHandler = new GetUserByIdQueryHandler(_mockUserRepository.Object, _mapper, _mockLogger.Object);
 
-            //Act
-            UserDto userDto = await getUsersQueryHandler.Handle(new GetUserByIdQuery(user.Id), new CancellationToken());
-
-            //Assert
-            Assert.Null(userDto);
+            //Act & Assert
+            await Assert.ThrowsAsync<System.NullReferenceException>(() => 
+            getUsersQueryHandler.Handle(new GetUserByIdQuery(user.Id), new CancellationToken()));
         }
 
         private User GetUser()

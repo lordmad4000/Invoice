@@ -8,8 +8,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { MatFormFieldModule, MatNativeDateModule, MatTableModule } from '@angular/material';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTableModule } from '@angular/material/table';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [

@@ -16,7 +16,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 })
 export class UsersEditComponent implements OnInit, OnDestroy {
 
-  private user: UserUpdateRequest;
+  private user: UserUpdateRequest = new UserUpdateRequest();
   public formUser: FormGroup;
   private formLoginError: string = '';
   public passwordError: boolean = false;
@@ -54,8 +54,8 @@ export class UsersEditComponent implements OnInit, OnDestroy {
   }
 
   checkPassword() : boolean {
-    const password = this.formUser.get('password').value;
-    const confirmPassword = this.formUser.get('confirmPassword').value;
+    const password = this.formUser.get('password')!.value;
+    const confirmPassword = this.formUser.get('confirmPassword')!.value;
     if (!password || !confirmPassword || password !== confirmPassword) {
       this.openSnackBar('Password not match');
       return false;
@@ -84,11 +84,11 @@ export class UsersEditComponent implements OnInit, OnDestroy {
     if (this.checkPassword() === false)
       return;
 
-    this.user.id = this.formUser.get("id").value;
-    this.user.email = this.formUser.get("email").value;
-    this.user.password = this.formUser.get("password").value;
-    this.user.firstName = this.formUser.get("firstName").value;
-    this.user.lastName = this.formUser.get("lastName").value;
+    this.user.id = this.formUser.get("id")!.value;
+    this.user.email = this.formUser.get("email")!.value;
+    this.user.password = this.formUser.get("password")!.value;
+    this.user.firstName = this.formUser.get("firstName")!.value;
+    this.user.lastName = this.formUser.get("lastName")!.value;
     this.userService.Update(this.user).subscribe({
       next: (res: any) => {
         const data = res;
@@ -105,37 +105,6 @@ export class UsersEditComponent implements OnInit, OnDestroy {
       }
     });
   }  
-
-  // saveButtonClick(event: any) {
-  //   console.log('Save button.');
-
-  //   const jsonDocument: JsonDocument[] = [];
-
-  //   if (this.user.firstName != this.formUser.get('password').value) {
-  //     jsonDocument.push({ value: this.formUser.get('password').value, path: '/password/', op: 'replace', from: '' });
-  //   }
-
-  //   if (this.user.firstName != this.formUser.get('firstName').value) {
-  //     jsonDocument.push({ value: this.formUser.get('firstName').value, path: '/firstname/', op: 'replace', from: '' });
-  //   }
-
-  //   if (this.user.lastName != this.formUser.get('lastName').value) {
-  //     jsonDocument.push({ value: this.formUser.get('lastName').value, path: '/lastname/', op: 'replace', from: '' });
-  //   }
-
-  //   this.userService.Patch(jsonDocument, this.formUser.get('id').value).subscribe({
-  //     next: (res: any) => {
-  //       const data = res;
-  //     },
-  //     error: (err: HttpErrorResponse) => {
-  //       var errors = this.errorService.GetErrorsFromHttp(err);
-  //       errors.forEach(clientError => {
-  //         console.log(clientError);
-  //       });
-  //     }
-  //   });
-
-  // }
 
   backButtonClick(event: any) {
     console.log('Back button.');
