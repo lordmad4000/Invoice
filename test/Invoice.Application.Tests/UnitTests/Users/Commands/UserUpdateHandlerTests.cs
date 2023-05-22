@@ -79,11 +79,9 @@ namespace Invoice.Application.Tests.UnitTests
                                                           _mapper,
                                                           _mockLogger.Object);
 
-            //Act
-            UserDto userDto = await userUpdateHandler.Handle(userUpdateCommand, new CancellationToken());
-
-            //Assert
-            Assert.Null(userDto);
+            //Act & Assert
+            await Assert.ThrowsAsync<System.Exception>(() => 
+            userUpdateHandler.Handle(userUpdateCommand, new CancellationToken()));
         }
 
         private User GetUser()

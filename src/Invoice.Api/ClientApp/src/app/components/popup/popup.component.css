@@ -1,0 +1,21 @@
+.popup-title {
+    font-size: 1.8rem;
+    text-align: left;
+}
+
+.popup-message {
+    margin: 0;
+    padding: 10px;
+    font-size: 1.2rem;
+}
+
+.popup-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.popup-button { 
+    margin-right: 1rem;
+}

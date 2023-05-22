@@ -1,34 +1,49 @@
-import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CoreModule } from './core/core.module';
-import { HomeModule } from './modules/home/home.module';
-import { UsersModule } from './modules/users/users.module';
-import { PopupComponent } from './core/components/popup/popup.component';
+import { AppRoutingModule } from './app-routing.module';
+import { NavmenuComponent, PopupComponent } from './components';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { LoginComponent } from './components/login/login.component';
+import { UsersModule } from './modules/users';
+import { AuthenticationInterceptor } from './shared/interceptors/authentication.interceptor';
+import { HomeModule } from './modules/home';
+import { AuthenticationService, ErrorService, JWTService, LoadFileService, PopupService } from './shared/services';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent,    
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     AppRoutingModule,
-    ReactiveFormsModule,
     HttpClientModule,
-    BrowserAnimationsModule,
     FormsModule,
-    ReactiveFormsModule,
-    CoreModule,
+    BrowserAnimationsModule,
+    BrowserModule,
+    MatDialogModule,
+    CommonModule,
+    MatButtonModule,
+    UsersModule,
     HomeModule,
-    UsersModule
+    NavmenuComponent,
+    PopupComponent,
+    LoginComponent,
   ],
-  providers: [],
-  bootstrap: [AppComponent],
-  entryComponents:[ PopupComponent ]
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
+    PopupService,
+    JWTService,
+    AuthenticationService,
+    LoadFileService,
+    ErrorService
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

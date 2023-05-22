@@ -2,11 +2,11 @@ import { Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserRegisterRequest } from 'src/app/shared/models/userregisterrequest';
-import { ErrorService } from 'src/app/shared/services/error.service';
+import { ErrorService } from 'src/app/shared/services';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
@@ -48,8 +48,8 @@ export class UsersNewComponent implements OnInit, OnDestroy {
   }
 
   checkPassword() : boolean{
-    const password = this.formUser.get('password').value;
-    const confirmPassword = this.formUser.get('confirmPassword').value;
+    const password = this.formUser.get('password')!.value;
+    const confirmPassword = this.formUser.get('confirmPassword')!.value;
     if (!password || !confirmPassword || password !== confirmPassword) {
       this.openSnackBar('Password not match');
       return false;
@@ -79,10 +79,10 @@ export class UsersNewComponent implements OnInit, OnDestroy {
     if (this.checkPassword() === false)
       return;
 
-    this.user.password = this.formUser.get("password").value;
-    this.user.firstName = this.formUser.get("firstName").value;
-    this.user.lastName = this.formUser.get("lastName").value;
-    this.user.email = this.formUser.get("email").value;
+    this.user.password = this.formUser.get("password")!.value;
+    this.user.firstName = this.formUser.get("firstName")!.value;
+    this.user.lastName = this.formUser.get("lastName")!.value;
+    this.user.email = this.formUser.get("email")!.value;
 
     this.userService.Post(this.user).subscribe({
       next: (res: any) => {

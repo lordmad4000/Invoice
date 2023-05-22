@@ -63,11 +63,9 @@ namespace Invoice.Application.Tests.UnitTests
                                                              _mapper, 
                                                              _mockLogger.Object);
 
-            //Act
-            UserDto userDto = await getUsersQueryHandler.Handle(new LoginQuery(user.EmailAddress.ToString(), user.Password), new CancellationToken());
-
-            //Assert
-            Assert.Null(userDto);
+            //Act & Assert
+            await Assert.ThrowsAsync<System.Exception>(() => 
+            getUsersQueryHandler.Handle(new LoginQuery(user.EmailAddress.ToString(), user.Password), new CancellationToken()));
         }
 
         [Fact]
@@ -82,11 +80,9 @@ namespace Invoice.Application.Tests.UnitTests
                                                              _mapper, 
                                                              _mockLogger.Object);
 
-            //Act
-            UserDto userDto = await getUsersQueryHandler.Handle(new LoginQuery(user.EmailAddress.ToString(), user.Password), new CancellationToken());
-
-            //Assert
-            Assert.Null(userDto);
+            //Act & Assert
+            await Assert.ThrowsAsync<System.Exception>(() => 
+            getUsersQueryHandler.Handle(new LoginQuery(user.EmailAddress.ToString(), user.Password), new CancellationToken()));
         }
 
         private User GetUser()

@@ -1,9 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { UserService } from '../../shared/services/user.service';
 import { UserResponse } from 'src/app/shared/models/userresponse';
-import { UserService } from 'src/app/shared/services/user.service';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
