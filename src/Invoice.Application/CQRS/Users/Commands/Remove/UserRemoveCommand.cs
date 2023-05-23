@@ -1,13 +1,7 @@
-using Invoice.Application.CQRS.Users.Common;
+using Invoice.Application.Common.Dto;
+using MediatR;
 using System;
 
-namespace Invoice.Application.CQRS.Users.Commands
-{
-    public class UserRemoveCommand : UserRequest
-    {
-        public UserRemoveCommand(Guid id)
-        {
-            Id = id;
-        }
-    }
-}
+namespace Invoice.Application.CQRS.Users.Commands;
+
+public record UserRemoveCommand(Guid Id) : IRequest<UserDto>;
