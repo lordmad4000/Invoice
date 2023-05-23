@@ -1,17 +1,12 @@
-using Invoice.Application.CQRS.Users.Common;
+using Invoice.Application.Common.Dto;
+using MediatR;
 using System;
 
-namespace Invoice.Application.CQRS.Users.Commands
-{
-    public class UserUpdateCommand : UserRequest
-    {
-        public UserUpdateCommand(Guid id, string email, string password, string firstName, string lastName)
-        {
-            Id = id;
-            Email = email;
-            Password = password;
-            FirstName = firstName;
-            LastName = lastName;
-        }
-    }
-}
+namespace Invoice.Application.CQRS.Users.Commands;
+
+public record UserUpdateCommand(
+    Guid Id,
+    string Email,
+    string Password,
+    string FirstName,
+    string LastName) : IRequest<UserDto>;
