@@ -1,15 +1,10 @@
-using Invoice.Application.CQRS.Users.Common;
+using Invoice.Application.Common.Dto;
+using MediatR;
 
-namespace Invoice.Application.CQRS.Users.Commands
-{
-    public class UserRegisterCommand : UserRequest
-    {
-        public UserRegisterCommand(string email, string password, string firstName, string lastName)
-        {
-            Email = email;
-            Password = password;
-            FirstName = firstName;
-            LastName = lastName;
-        }
-    }
-}
+namespace Invoice.Application.CQRS.Users.Commands;
+
+public record UserRegisterCommand(
+    string Email,
+    string Password,
+    string FirstName,
+    string LastName) : IRequest<UserDto>;

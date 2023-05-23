@@ -1,13 +1,7 @@
-using Invoice.Application.CQRS.Users.Common;
+using Invoice.Application.Common.Dto;
+using MediatR;
 using System;
 
-namespace Invoice.Application.CQRS.Users.Queries
-{
-    public class GetUserByIdQuery : UserRequest
-    {
-        public GetUserByIdQuery(Guid id)
-        {
-            Id = id;
-        }
-    }
-}
+namespace Invoice.Application.CQRS.Users.Queries;
+
+public record GetUserByIdQuery(Guid Id) : IRequest<UserDto>;
