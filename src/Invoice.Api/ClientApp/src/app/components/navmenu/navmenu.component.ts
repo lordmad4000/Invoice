@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,7 +8,6 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { CommonModule } from '@angular/common';
 import { JWTService, PopupService } from 'src/app/shared/services';
 
 @Component({
@@ -28,7 +27,7 @@ import { JWTService, PopupService } from 'src/app/shared/services';
   styleUrls: ['./navmenu.component.css']
 })
 
-export class NavmenuComponent implements OnInit {
+export class NavmenuComponent {
 
   title = 'InvoiceApp';
   constructor(private router: Router, 
@@ -36,33 +35,26 @@ export class NavmenuComponent implements OnInit {
     private jwtService: JWTService,
     ) { }
 
-  ngOnInit(): void {
-    }
-
-  sidenavToggle(event: any) {
-    event.toggle();
-  }    
-
   toggleSidenavClick(sideNav: MatSidenav) {
     sideNav.toggle();
   }    
 
-  loginButtonClick(event: any) {
+  loginButtonClick() {
     console.log("Login button click.")
     this.router.navigate(['/login']);
   }
 
-  homeButtonClick(event: any) {
+  homeButtonClick() {
     console.log("Home button click.")
     this.router.navigate(['/home']);
   }
 
-  usersButtonClick(event: any) {
+  usersButtonClick() {
     console.log("Users button click.")
     this.router.navigate(['/users/grid']);
   }
 
-  aboutButtonClick(event: any) {
+  aboutButtonClick() {
     console.log("About button click.")
     const tokenExpiricyTime = this.jwtService.GetTokenExpiricyTime();    
     this.popupService.openPopupAceptar("About InvoiceApp", "Version: 0.1a | Expiration token: " + tokenExpiricyTime + " sec", "400px", "");

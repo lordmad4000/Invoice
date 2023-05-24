@@ -1,11 +1,12 @@
 import { Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserRegisterRequest } from 'src/app/shared/models/userregisterrequest';
+import { UserResponse } from 'src/app/shared/models/userresponse';
 import { ErrorService } from 'src/app/shared/services';
 import { UserService } from 'src/app/shared/services/user.service';
 
@@ -15,11 +16,11 @@ import { UserService } from 'src/app/shared/services/user.service';
   styleUrls: ['./users-new.component.css']
 })
 
-export class UsersNewComponent implements OnInit, OnDestroy {
+export class UsersNewComponent implements OnDestroy {
 
   private user: UserRegisterRequest = new UserRegisterRequest();
   formUser: FormGroup;
-  formLoginError: string = "";
+  formLoginError = "";
   private subscription: Subscription | undefined;
 
   constructor(
@@ -40,16 +41,13 @@ export class UsersNewComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit(): void {
-  }
-
   openSnackBar(message: string) {
     this.snackBar.open(message, '', { duration: 1 * 1000 });
   }
 
   checkPassword() : boolean{
-    const password = this.formUser.get('password')!.value;
-    const confirmPassword = this.formUser.get('confirmPassword')!.value;
+    const password = this.formUser.get('password')?.value;
+    const confirmPassword = this.formUser.get('confirmPassword')?.value;
     if (!password || !confirmPassword || password !== confirmPassword) {
       this.openSnackBar('Password not match');
       return false;
@@ -60,11 +58,10 @@ export class UsersNewComponent implements OnInit, OnDestroy {
 
   private getUser(id: string) {
     this.userService.Get(id).subscribe({
-      next: (res: any) => {
-        const data = res;
-        if (data) {
-          this.user = data;
-          this.formUser.patchValue(data);
+      next: (res: UserResponse) => {
+        if (res) {
+          this.user = res;
+          this.formUser.patchValue(res);
         }
       },
       error: (err : HttpErrorResponse) => {
@@ -74,23 +71,24 @@ export class UsersNewComponent implements OnInit, OnDestroy {
   }
 
 
-  saveButtonClick(event: any) {
+  saveButtonClick() {
     console.log("Save button.");
     if (this.checkPassword() === false)
       return;
 
-    this.user.password = this.formUser.get("password")!.value;
-    this.user.firstName = this.formUser.get("firstName")!.value;
-    this.user.lastName = this.formUser.get("lastName")!.value;
-    this.user.email = this.formUser.get("email")!.value;
+    this.user.password = this.formUser.get("password")?.value;
+    this.user.firstName = this.formUser.get("firstName")?.value;
+    this.user.lastName = this.formUser.get("lastName")?.value;
+    this.user.email = this.formUser.get("email")?.value;
 
     this.userService.Post(this.user).subscribe({
-      next: (res: any) => {
-        const data = res;
-        this.location.back();
+      next: (res: UserResponse) => {
+        if (res) {
+          this.location.back();
+        }
       },
       error: (err: HttpErrorResponse) => {
-        var errors = this.errorService.GetErrorsFromHttp(err);
+        const errors = this.errorService.GetErrorsFromHttp(err);
         if (errors.length > 0) {
           errors.forEach(clientError => {
             console.log(clientError);
@@ -102,7 +100,7 @@ export class UsersNewComponent implements OnInit, OnDestroy {
 
   }
 
-  backButtonClick(event: any) {
+  backButtonClick() {
     console.log("Back button.");
     this.location.back();
   }

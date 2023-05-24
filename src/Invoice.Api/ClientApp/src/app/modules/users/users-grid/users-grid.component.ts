@@ -19,10 +19,10 @@ export class UsersGridComponent implements OnInit {
     "lastname"
   ];
 
-  start: number = 0;
-  limit: number = 50;
+  start = 0;
+  limit = 10;
   end: number = this.limit + this.start;
-  selectedRowIndex: number = 0;
+  selectedRowIndex = 0;
 
   users: UserResponse[] = [];
   dataSource = new MatTableDataSource<UserResponse>();
@@ -38,10 +38,9 @@ export class UsersGridComponent implements OnInit {
 
   loadUsersData() {
     this.userservice.GetAll().subscribe({
-      next: (res: any) => {
-        const data = res;
-        if (data) {
-          this.users = data;
+      next: (res: Array<UserResponse>) => {
+        if (res) {
+          this.users = res;
           this.dataSource = new MatTableDataSource(this.getTableData(this.start, this.end));
           this.updateIndex();
         }
@@ -57,6 +56,8 @@ export class UsersGridComponent implements OnInit {
     this.router.navigate(['/users/view', `${row.id}`]);
   }
 
+  // TODO FIX MAT TABLE SCROLL
+  
   onTableScroll(event: any) {
     const tableViewHeight = event.target.offsetHeight;
     const tableScrollHeight = event.target.scrollHeight;
@@ -65,7 +66,7 @@ export class UsersGridComponent implements OnInit {
     const buffer = 200;
     const limit = tableScrollHeight - tableViewHeight - buffer;
     if (scrollLocation > limit) {
-      let data = this.getTableData(this.start, this.end);
+      const data = this.getTableData(this.start, this.end);
       this.dataSource.data = this.dataSource.data.concat(data);
       this.updateIndex();
     }
@@ -80,12 +81,12 @@ export class UsersGridComponent implements OnInit {
     this.end = this.limit + this.start;
   }
 
-    addButtonClick(event: any) {
+    addButtonClick() {
         console.log('Add button.');
         this.router.navigate(['/users/new']);
     }
 
-    backButtonClick(event: any) {
+    backButtonClick() {
         console.log('Back button.');
         this.location.back();
     }
