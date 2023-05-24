@@ -10,7 +10,7 @@ import { JsonDocument } from '../models/jsondocument';
 @Injectable()
 export class UserService {
 
-    private baseUrl: string = `${environment.API_BASE_URL}/api/Users`;
+    private baseUrl = `${environment.API_BASE_URL}/api/Users`;
 
     constructor(protected httpClient: HttpClient) {
     }
@@ -22,13 +22,12 @@ export class UserService {
         return this.httpClient.get<Array<UserResponse>>(url);
     }
 
-    public GetLast(count: number): Observable<UserResponse> {
+    public GetLast(count: number): Observable<Array<UserResponse>> {
 
         const url = `${this.baseUrl}/GetLast${encodeURIComponent(String(count))}`;
 
-        return this.httpClient.get<UserResponse>(url);
+        return this.httpClient.get<Array<UserResponse>>(url);
     }
-
 
     public Get(id: string): Observable<UserResponse> {
 

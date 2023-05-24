@@ -18,8 +18,8 @@ export class UsersEditComponent implements OnInit, OnDestroy {
 
   private user: UserUpdateRequest = new UserUpdateRequest();
   public formUser: FormGroup;
-  private formLoginError: string = '';
-  public passwordError: boolean = false;
+  private formLoginError = '';
+  public passwordError = false;
   private subscription: Subscription | undefined;
 
   constructor(
@@ -95,7 +95,7 @@ export class UsersEditComponent implements OnInit, OnDestroy {
         this.router.navigate(['/users/view', `${res.id}`]);
       },
       error: (err: HttpErrorResponse) => {
-        var errors = this.errorService.GetErrorsFromHttp(err);
+        const errors = this.errorService.GetErrorsFromHttp(err);
         if (errors.length > 0) {
           errors.forEach(clientError => {
             console.log(clientError);

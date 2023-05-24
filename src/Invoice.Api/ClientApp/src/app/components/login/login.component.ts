@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -24,9 +24,9 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnDestroy {
   formLogin: FormGroup;
-  formLoginError: string = '';
+  formLoginError = '';
   private subscription: Subscription | undefined;
 
   constructor(
@@ -43,15 +43,12 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnInit(): void {    
-  }
-
   Login() {    
     this.authenticationService
       .Login(this.formLogin.value.email, this.formLogin.value.password)
       .subscribe({
         next: (res: UserLoginResponse) => {
-          let token = res.token;
+          const token = res.token;
           console.log('token', token);
           if (token !== undefined) {
             sessionStorage.setItem('token', token);

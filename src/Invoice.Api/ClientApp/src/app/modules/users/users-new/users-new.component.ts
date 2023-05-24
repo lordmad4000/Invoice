@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,11 +15,11 @@ import { UserService } from 'src/app/shared/services/user.service';
   styleUrls: ['./users-new.component.css']
 })
 
-export class UsersNewComponent implements OnInit, OnDestroy {
+export class UsersNewComponent implements OnDestroy {
 
   private user: UserRegisterRequest = new UserRegisterRequest();
   formUser: FormGroup;
-  formLoginError: string = "";
+  formLoginError = "";
   private subscription: Subscription | undefined;
 
   constructor(
@@ -38,9 +38,6 @@ export class UsersNewComponent implements OnInit, OnDestroy {
       firstName: [{ value: '', disabled: false }, Validators.required],
       lastName: [{ value: '', disabled: false }, Validators.required],
     });
-  }
-
-  ngOnInit(): void {
   }
 
   openSnackBar(message: string) {
@@ -90,7 +87,7 @@ export class UsersNewComponent implements OnInit, OnDestroy {
         this.location.back();
       },
       error: (err: HttpErrorResponse) => {
-        var errors = this.errorService.GetErrorsFromHttp(err);
+        const errors = this.errorService.GetErrorsFromHttp(err);
         if (errors.length > 0) {
           errors.forEach(clientError => {
             console.log(clientError);

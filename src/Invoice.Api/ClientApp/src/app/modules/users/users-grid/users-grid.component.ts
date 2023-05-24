@@ -19,10 +19,10 @@ export class UsersGridComponent implements OnInit {
     "lastname"
   ];
 
-  start: number = 0;
-  limit: number = 50;
+  start = 0;
+  limit = 50;
   end: number = this.limit + this.start;
-  selectedRowIndex: number = 0;
+  selectedRowIndex = 0;
 
   users: UserResponse[] = [];
   dataSource = new MatTableDataSource<UserResponse>();
@@ -65,7 +65,7 @@ export class UsersGridComponent implements OnInit {
     const buffer = 200;
     const limit = tableScrollHeight - tableViewHeight - buffer;
     if (scrollLocation > limit) {
-      let data = this.getTableData(this.start, this.end);
+      const data = this.getTableData(this.start, this.end);
       this.dataSource.data = this.dataSource.data.concat(data);
       this.updateIndex();
     }

@@ -15,9 +15,9 @@ import { GlobalConstants } from 'src/app/shared/const/global-constants';
 export class UsersViewComponent implements OnInit, OnDestroy {
 
   formUser: FormGroup;
-  formLoginError: string = "";
+  formLoginError = "";
   private subscription: Subscription | undefined;
-  private id: string = "";
+  private id = "";
 
   constructor(
     private route: ActivatedRoute,

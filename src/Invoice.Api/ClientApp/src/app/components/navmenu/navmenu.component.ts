@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -28,16 +28,13 @@ import { JWTService, PopupService } from 'src/app/shared/services';
   styleUrls: ['./navmenu.component.css']
 })
 
-export class NavmenuComponent implements OnInit {
+export class NavmenuComponent {
 
   title = 'InvoiceApp';
   constructor(private router: Router, 
     private popupService: PopupService,
     private jwtService: JWTService,
     ) { }
-
-  ngOnInit(): void {
-    }
 
   sidenavToggle(event: any) {
     event.toggle();
