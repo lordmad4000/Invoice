@@ -6,6 +6,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PopupService, UserService } from 'src/app/shared';
 import { GlobalConstants } from 'src/app/shared/const/global-constants';
+import { UserResponse } from 'src/app/shared/models/userresponse';
 
 @Component({
   selector: 'app-users-view',
@@ -46,10 +47,9 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   private getUser(id: string) {
     this.userService.Get(id)
       .subscribe({
-        next: (res: any) => {
-          const data = res;
-          if (data) {
-            this.formUser.patchValue(data);
+        next: (res: UserResponse) => {
+          if (res) {
+            this.formUser.patchValue(res);
           }
         },
         error: (err: HttpErrorResponse) => {
@@ -58,17 +58,17 @@ export class UsersViewComponent implements OnInit, OnDestroy {
       })
   }
 
-  backButtonClick(event: any) {
+  backButtonClick() {
     console.log("Back button.");
     this.location.back();
   }
 
-  editButtonClick(event: any) {
+  editButtonClick() {
     console.log("Edit button.");
     this.router.navigate(['/users/edit', `${this.id} `]);
   }
 
-  deleteButtonClick(event: any) {
+  deleteButtonClick() {
     console.log("Delete button.");
       this.popupService
       .createConfirmPopup("Do you want to remove the item?")
@@ -84,9 +84,8 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   removeItem() {
     this.userService.Delete(this.id)
       .subscribe({
-        next: (res: any) => {          
-          const data = res;
-          if (data) {            
+        next: (res: boolean) => {          
+          if (res) {            
             this.popupService.openPopupAceptar("REMOVE", "Item removed.", "300px", "");
             this.router.navigate(['/users/grid']);
           }

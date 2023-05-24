@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserRegisterRequest } from 'src/app/shared/models/userregisterrequest';
+import { UserResponse } from 'src/app/shared/models/userresponse';
 import { ErrorService } from 'src/app/shared/services';
 import { UserService } from 'src/app/shared/services/user.service';
 
@@ -45,8 +46,8 @@ export class UsersNewComponent implements OnDestroy {
   }
 
   checkPassword() : boolean{
-    const password = this.formUser.get('password')!.value;
-    const confirmPassword = this.formUser.get('confirmPassword')!.value;
+    const password = this.formUser.get('password')?.value;
+    const confirmPassword = this.formUser.get('confirmPassword')?.value;
     if (!password || !confirmPassword || password !== confirmPassword) {
       this.openSnackBar('Password not match');
       return false;
@@ -57,11 +58,10 @@ export class UsersNewComponent implements OnDestroy {
 
   private getUser(id: string) {
     this.userService.Get(id).subscribe({
-      next: (res: any) => {
-        const data = res;
-        if (data) {
-          this.user = data;
-          this.formUser.patchValue(data);
+      next: (res: UserResponse) => {
+        if (res) {
+          this.user = res;
+          this.formUser.patchValue(res);
         }
       },
       error: (err : HttpErrorResponse) => {
@@ -71,20 +71,21 @@ export class UsersNewComponent implements OnDestroy {
   }
 
 
-  saveButtonClick(event: any) {
+  saveButtonClick() {
     console.log("Save button.");
     if (this.checkPassword() === false)
       return;
 
-    this.user.password = this.formUser.get("password")!.value;
-    this.user.firstName = this.formUser.get("firstName")!.value;
-    this.user.lastName = this.formUser.get("lastName")!.value;
-    this.user.email = this.formUser.get("email")!.value;
+    this.user.password = this.formUser.get("password")?.value;
+    this.user.firstName = this.formUser.get("firstName")?.value;
+    this.user.lastName = this.formUser.get("lastName")?.value;
+    this.user.email = this.formUser.get("email")?.value;
 
     this.userService.Post(this.user).subscribe({
-      next: (res: any) => {
-        const data = res;
-        this.location.back();
+      next: (res: UserResponse) => {
+        if (res) {
+          this.location.back();
+        }
       },
       error: (err: HttpErrorResponse) => {
         const errors = this.errorService.GetErrorsFromHttp(err);
@@ -99,7 +100,7 @@ export class UsersNewComponent implements OnDestroy {
 
   }
 
-  backButtonClick(event: any) {
+  backButtonClick() {
     console.log("Back button.");
     this.location.back();
   }

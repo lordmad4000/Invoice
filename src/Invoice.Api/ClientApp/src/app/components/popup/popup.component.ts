@@ -22,7 +22,7 @@ export class PopupComponent {
     this.dialogRef.disableClose = true;
   }
   
-  closeModal(actionValue: any) {
+  closeModal(actionValue: string) {
     this.dialogRef.close(actionValue);
   }
 

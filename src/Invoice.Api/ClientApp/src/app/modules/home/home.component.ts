@@ -37,10 +37,9 @@ export class HomeComponent implements OnInit {
   
     loadUsersData() {
       this.userservice.GetLast(3).subscribe({
-        next: (res: any) => {
-          const data = res;
-          if (data) {
-            this.users = data;
+        next: (res: Array<UserResponse>) => {
+          if (res) {
+            this.users = res;
             this.dataSource = new MatTableDataSource(this.getTableData(this.start, this.end));
             this.updateIndex();
           }
