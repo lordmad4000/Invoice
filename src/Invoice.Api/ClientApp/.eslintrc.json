@@ -1,0 +1,80 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "projects/**/*"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates"
+      ],
+      "rules": {
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "app",
+            "style": "camelCase"
+          }
+        ],
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "app",
+            "style": "kebab-case"
+          }
+        ],
+        "lines-around-comment":[
+          "error",
+          {
+            "beforeBlockComment": true,
+            "afterBlockComment": true,
+            "beforeLineComment": true,
+            "afterLineComment": true,
+            "allowBlockStart": true,
+            "allowBlockEnd": true,
+            "allowObjectStart": true,
+            "allowObjectEnd": true,
+            "allowArrayStart": true,
+            "allowArrayEnd": true,
+            "allowClassStart": true,
+            "allowClassEnd": true
+          }
+        ],
+        "max-len": [ 
+          "error",
+          {
+            "code": 80,
+            "tabWidth": 4,
+            "ignoreComments": true,
+            "ignoreTrailingComments": true,
+            "ignoreUrls": true,
+            "ignoreStrings": true,
+            "ignoreTemplateLiterals": true,
+            "ignoreRegExpLiterals": true
+          }
+        ],
+        "arrow-body-style": [
+          "error", 
+          "as-needed"
+        ]
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ],
+      "rules": {}
+    }
+  ]
+}
