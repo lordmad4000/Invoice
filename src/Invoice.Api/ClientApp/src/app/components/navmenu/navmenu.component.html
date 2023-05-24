@@ -6,7 +6,7 @@
     <span class="flex-expand"></span>
     <h1>InvoiceApp</h1>
     <span class="flex-expand"></span>
-    <button mat-button matTooltip="Login" (click)="loginButtonClick($event)">
+    <button mat-button matTooltip="Login" (click)="loginButtonClick()">
       <mat-icon>account_circle</mat-icon>
     </button>
   </mat-toolbar-row>
@@ -14,20 +14,20 @@
 <mat-sidenav-container class="mat-sidenav-container" autosize>
   <mat-sidenav #sidenav class="mat-elevation-z8" opened="true" mode="side">
     <mat-list-item>
-      <button mat-button (click)="homeButtonClick($event)">
+      <button mat-button (click)="homeButtonClick()">
         <mat-icon>home</mat-icon>
         <span>Home</span>
       </button>
     </mat-list-item>
     <mat-list-item>
-      <button mat-button (click)="usersButtonClick($event)">
+      <button mat-button (click)="usersButtonClick()">
         <mat-icon>person</mat-icon>
         <span>Users</span>
       </button>
     </mat-list-item>
     <mat-divider class="navmenu-about"></mat-divider>
     <mat-list-item>
-      <button mat-button (click)="aboutButtonClick($event)">
+      <button mat-button (click)="aboutButtonClick()">
         <mat-icon>info</mat-icon>
         <span>About</span>
       </button>

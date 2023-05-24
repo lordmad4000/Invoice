@@ -1,16 +1,16 @@
 <div class="users-grid-container">
     <mat-toolbar>
         <mat-toolbar-row>
-            <button mat-button matTooltip="Back" (click)="backButtonClick($event)">
+            <button mat-button matTooltip="Back" (click)="backButtonClick()">
                 <mat-icon>arrow_back</mat-icon>
             </button>
             <span class="flex-expand"></span>
-            <button mat-button matTooltip="Add" (click)="addButtonClick($event)">
+            <button mat-button matTooltip="Add" (click)="addButtonClick()">
                 <mat-icon>add_circle</mat-icon>
             </button>
         </mat-toolbar-row>
     </mat-toolbar>
-    <mat-table [dataSource]="dataSource" (scroll)="onTableScroll($event)">
+    <mat-table [dataSource]="dataSource" (scroll)="onTableScroll()">
         <ng-container matColumnDef="email">
             <mat-header-cell *matHeaderCellDef [ngClass]="'mat-column-email'"> Email </mat-header-cell>
             <mat-cell *matCellDef="let user" [ngClass]="'mat-column-email'"> {{user.email}} </mat-cell>

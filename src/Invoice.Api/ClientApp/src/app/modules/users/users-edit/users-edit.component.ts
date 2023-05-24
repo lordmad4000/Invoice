@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { UserResponse } from 'src/app/shared/models/userresponse';
 import { UserUpdateRequest } from 'src/app/shared/models/userupdaterequest';
 import { ErrorService } from 'src/app/shared/services/error.service';
 import { UserService } from 'src/app/shared/services/user.service';
@@ -18,8 +19,8 @@ export class UsersEditComponent implements OnInit, OnDestroy {
 
   private user: UserUpdateRequest = new UserUpdateRequest();
   public formUser: FormGroup;
-  private formLoginError: string = '';
-  public passwordError: boolean = false;
+  private formLoginError = '';
+  public passwordError = false;
   private subscription: Subscription | undefined;
 
   constructor(
@@ -50,12 +51,12 @@ export class UsersEditComponent implements OnInit, OnDestroy {
   }
 
   openSnackBar(message: string) {
-      this.snackBar.open(message,'', { duration: 1 * 1000 });
+    this.snackBar.open(message, '', { duration: 1 * 1000 });
   }
 
-  checkPassword() : boolean {
-    const password = this.formUser.get('password')!.value;
-    const confirmPassword = this.formUser.get('confirmPassword')!.value;
+  checkPassword(): boolean {
+    const password = this.formUser.get('password')?.value;
+    const confirmPassword = this.formUser.get('confirmPassword')?.value;
     if (!password || !confirmPassword || password !== confirmPassword) {
       this.openSnackBar('Password not match');
       return false;
@@ -66,36 +67,36 @@ export class UsersEditComponent implements OnInit, OnDestroy {
 
   private getUser(id: string) {
     this.userService.Get(id).subscribe({
-      next: (res: any) => {
-        const data = res;
-        if (data) {
-          this.user = data;
-          this.formUser.patchValue(data);
+      next: (res: UserResponse) => {
+        if (res) {
+          this.user = res;
+          this.formUser.patchValue(res);
         }
       },
-      error: (err : HttpErrorResponse) => {
+      error: (err: HttpErrorResponse) => {
         console.log('Error al recuperar el usuario', err);
       }
     })
   }
 
-  saveButtonClick(event: any) {
+  saveButtonClick() {
     console.log('Save button.');
     if (this.checkPassword() === false)
       return;
 
-    this.user.id = this.formUser.get("id")!.value;
-    this.user.email = this.formUser.get("email")!.value;
-    this.user.password = this.formUser.get("password")!.value;
-    this.user.firstName = this.formUser.get("firstName")!.value;
-    this.user.lastName = this.formUser.get("lastName")!.value;
+    this.user.id = this.formUser.get("id")?.value;
+    this.user.email = this.formUser.get("email")?.value;
+    this.user.password = this.formUser.get("password")?.value;
+    this.user.firstName = this.formUser.get("firstName")?.value;
+    this.user.lastName = this.formUser.get("lastName")?.value;
     this.userService.Update(this.user).subscribe({
-      next: (res: any) => {
-        const data = res;
-        this.router.navigate(['/users/view', `${res.id}`]);
+      next: (res: UserResponse) => {
+        if (res) {
+          this.router.navigate(['/users/view', `${res.id}`]);
+        }
       },
       error: (err: HttpErrorResponse) => {
-        var errors = this.errorService.GetErrorsFromHttp(err);
+        const errors = this.errorService.GetErrorsFromHttp(err);
         if (errors.length > 0) {
           errors.forEach(clientError => {
             console.log(clientError);
@@ -104,9 +105,9 @@ export class UsersEditComponent implements OnInit, OnDestroy {
         }
       }
     });
-  }  
+  }
 
-  backButtonClick(event: any) {
+  backButtonClick() {
     console.log('Back button.');
     this.location.back();
   }

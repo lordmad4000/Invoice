@@ -4,9 +4,6 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class JWTService {
 
-    constructor() {
-    }
-
     public GetHttpHeaderWithTokenFromSessionStorage(): HttpHeaders {
         const auth_token = this.GetTokenFromSessionStorage();
 
