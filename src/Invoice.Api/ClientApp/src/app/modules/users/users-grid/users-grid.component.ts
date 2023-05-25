@@ -19,20 +19,25 @@ export class UsersGridComponent implements OnInit {
     "lastname"
   ];
 
-  private start : number = 0;
-  private limit : number = 14;
-  private end: number = this.limit + this.start;
-  private max: number = 0;
+  private start: number;
+  private limit: number;
+  private end: number;
+  private max: number;
   private users: UserResponse[] = [];
   protected dataSource = new MatTableDataSource<UserResponse>();
 
-    constructor(private userservice: UserService,
-                private router: Router,
-                private location: Location) {
+  constructor(private userservice: UserService,
+    private router: Router,
+    private location: Location) {
+
+    this.start = 0;  
+    this.limit = 14;
+    this.end = this.limit + this.start;
+    this.max = 0;
   }
 
   ngOnInit(): void {
-    this.loadUsersData();  
+    this.loadUsersData();
   }
 
   loadUsersData() {
@@ -44,7 +49,7 @@ export class UsersGridComponent implements OnInit {
           this.dataSource = new MatTableDataSource(this.getTableData(this.start, this.end));
         }
       },
-      error: (err : HttpErrorResponse) => {
+      error: (err: HttpErrorResponse) => {
         console.log('Error al recuperar los usuarios', err);
       }
     });
@@ -62,31 +67,31 @@ export class UsersGridComponent implements OnInit {
   updateIndex(position: number) {
     this.start = this.start + position;
     this.end = this.start + this.limit;
-    if (this.start < 0){
+    if (this.start < 0) {
       this.start = 0;
     }
-    if (this.end > this.max){
+    if (this.end > this.max) {
       this.end = this.max;
     }
     const data = this.getTableData(this.start, this.end);
     this.dataSource.data = data;
   }
 
-    addButtonClick() {
-        console.log('Add button.');
-        this.router.navigate(['/users/new']);
-    }
+  addButtonClick() {
+    console.log('Add button.');
+    this.router.navigate(['/users/new']);
+  }
 
-    backButtonClick() {
-        console.log('Back button.');
-        this.location.back();
-    }
+  backButtonClick() {
+    console.log('Back button.');
+    this.location.back();
+  }
 
-    previousButtonClick() {
-      this.updateIndex(-this.limit);
-      }
+  previousButtonClick() {
+    this.updateIndex(-this.limit);
+  }
 
-    nextButtonClick() {
-      this.updateIndex(this.limit);
-    }
+  nextButtonClick() {
+    this.updateIndex(this.limit);
+  }
 }
