@@ -24,7 +24,7 @@ table {
     height: 98%;
 }
 
-.mat-column-select {
+/* .mat-column-select {
     word-wrap: break-word;
     white-space: unset;
     flex: 0 0 18%;
@@ -32,9 +32,19 @@ table {
     overflow-wrap: break-word;
     word-wrap: break-word;
     word-break: break-word;
-}
+} */
 
 .mat-column-email {
+    word-wrap: break-word;
+    white-space: unset;
+    flex: 0 0 38%;
+    width: 38%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.mat-column-firstname {
     word-wrap: break-word;
     white-space: unset;
     flex: 0 0 30%;
@@ -44,11 +54,11 @@ table {
     word-break: break-word;
 }
 
-.mat-column-name {
+.mat-column-lastname {
     word-wrap: break-word;
     white-space: unset;
-    flex: 0 0 40%;
-    width: 40%;
+    flex: 0 0 30%;
+    width: 30%;
     overflow-wrap: break-word;
     word-wrap: break-word;
     word-break: break-word;
