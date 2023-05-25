@@ -10,7 +10,7 @@
             </button>
         </mat-toolbar-row>
     </mat-toolbar>
-    <mat-table [dataSource]="dataSource" (scroll)="onTableScroll()">
+    <mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="email">
             <mat-header-cell *matHeaderCellDef [ngClass]="'mat-column-email'"> Email </mat-header-cell>
             <mat-cell *matCellDef="let user" [ngClass]="'mat-column-email'"> {{user.email}} </mat-cell>
@@ -26,4 +26,15 @@
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getRecord(row)"></mat-row>
     </mat-table>
+    <mat-toolbar>
+        <mat-toolbar-row>
+            <span class="flex-expand"></span>
+            <button mat-button matTooltip="Previous" (click)="previousButtonClick()">
+                <mat-icon>arrow_left</mat-icon>
+            </button>
+            <button mat-button matTooltip="Next" (click)="nextButtonClick()">
+                <mat-icon>arrow_right</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
 </div>

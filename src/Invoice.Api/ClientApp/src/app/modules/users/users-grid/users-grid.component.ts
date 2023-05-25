@@ -13,19 +13,18 @@ import { UserService } from 'src/app/shared/services/user.service';
 })
 export class UsersGridComponent implements OnInit {
 
-  displayedColumns: string[] = [
+  protected displayedColumns: string[] = [
     "email",
     "firstname",
     "lastname"
   ];
 
-  start = 0;
-  limit = 10;
-  end: number = this.limit + this.start;
-  selectedRowIndex = 0;
-
-  users: UserResponse[] = [];
-  dataSource = new MatTableDataSource<UserResponse>();
+  private start : number = 0;
+  private limit : number = 14;
+  private end: number = this.limit + this.start;
+  private max: number = 0;
+  private users: UserResponse[] = [];
+  protected dataSource = new MatTableDataSource<UserResponse>();
 
     constructor(private userservice: UserService,
                 private router: Router,
@@ -33,7 +32,7 @@ export class UsersGridComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadUsersData();
+    this.loadUsersData();  
   }
 
   loadUsersData() {
@@ -41,8 +40,8 @@ export class UsersGridComponent implements OnInit {
       next: (res: Array<UserResponse>) => {
         if (res) {
           this.users = res;
+          this.max = this.users.length;
           this.dataSource = new MatTableDataSource(this.getTableData(this.start, this.end));
-          this.updateIndex();
         }
       },
       error: (err : HttpErrorResponse) => {
@@ -56,29 +55,21 @@ export class UsersGridComponent implements OnInit {
     this.router.navigate(['/users/view', `${row.id}`]);
   }
 
-  // TODO FIX MAT TABLE SCROLL
-  
-  onTableScroll(event: any) {
-    const tableViewHeight = event.target.offsetHeight;
-    const tableScrollHeight = event.target.scrollHeight;
-    const scrollLocation = event.target.scrollTop;
-
-    const buffer = 200;
-    const limit = tableScrollHeight - tableViewHeight - buffer;
-    if (scrollLocation > limit) {
-      const data = this.getTableData(this.start, this.end);
-      this.dataSource.data = this.dataSource.data.concat(data);
-      this.updateIndex();
-    }
-  }
-
   getTableData(start: number, end: number) {
     return this.users.slice(start, end);
   }
 
-  updateIndex() {
-    this.start = this.end;
-    this.end = this.limit + this.start;
+  updateIndex(position: number) {
+    this.start = this.start + position;
+    this.end = this.start + this.limit;
+    if (this.start < 0){
+      this.start = 0;
+    }
+    if (this.end > this.max){
+      this.end = this.max;
+    }
+    const data = this.getTableData(this.start, this.end);
+    this.dataSource.data = data;
   }
 
     addButtonClick() {
@@ -89,5 +80,13 @@ export class UsersGridComponent implements OnInit {
     backButtonClick() {
         console.log('Back button.');
         this.location.back();
+    }
+
+    previousButtonClick() {
+      this.updateIndex(-this.limit);
+      }
+
+    nextButtonClick() {
+      this.updateIndex(this.limit);
     }
 }
