@@ -40,6 +40,81 @@ export class UsersGridComponent implements OnInit {
     this.loadUsersData();
   }
 
+  sortData(event: any) {
+    if (event.active === 'email') {
+      this.sortByEmail(event.direction);
+    }
+    if (event.active === 'firstname') {
+      this.sortByFirstName(event.direction);
+    }
+    if (event.active === 'lastname') {
+      this.sortByLastName(event.direction);
+    }
+  }
+
+  sortByEmail(direction: string) {
+    switch (direction) {
+      case 'asc': {
+        this.dataSource = new MatTableDataSource(
+          this.getTableData(this.start, this.end)
+            .sort((a, b) => (a.email < b.email ? -1 : 1)));
+        break;
+      }
+      case 'desc': {
+        this.dataSource = new MatTableDataSource(
+          this.getTableData(this.start, this.end)
+            .sort((a, b) => (a.email > b.email ? -1 : 1)));
+        break;
+      }
+      default: {
+        this.dataSource = new MatTableDataSource(this.getTableData(this.start, this.end));
+        break;
+      }
+    }
+  }
+
+  sortByFirstName(direction: string) {
+    switch (direction) {
+      case 'asc': {
+        this.dataSource = new MatTableDataSource(
+          this.getTableData(this.start, this.end)
+            .sort((a, b) => (a.firstName < b.firstName ? -1 : 1)));
+        break;
+      }
+      case 'desc': {
+        this.dataSource = new MatTableDataSource(
+          this.getTableData(this.start, this.end)
+            .sort((a, b) => (a.firstName > b.firstName ? -1 : 1)));
+        break;
+      }
+      default: {
+        this.dataSource = new MatTableDataSource(this.getTableData(this.start, this.end));
+        break;
+      }
+    }
+  }
+
+  sortByLastName(direction: string) {
+    switch (direction) {
+      case 'asc': {
+        this.dataSource = new MatTableDataSource(
+          this.getTableData(this.start, this.end)
+            .sort((a, b) => (a.lastName < b.lastName ? -1 : 1)));
+        break;
+      }
+      case 'desc': {
+        this.dataSource = new MatTableDataSource(
+          this.getTableData(this.start, this.end)
+            .sort((a, b) => (a.lastName > b.lastName ? -1 : 1)));
+        break;
+      }
+      default: {
+        this.dataSource = new MatTableDataSource(this.getTableData(this.start, this.end));
+        break;
+      }
+    }
+  }
+
   loadUsersData() {
     this.userservice.GetAll().subscribe({
       next: (res: Array<UserResponse>) => {

@@ -15,6 +15,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { UsersGridComponent } from './users-grid/users-grid.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatSortModule} from '@angular/material/sort';
 import { UserService } from '../../shared/services/user.service';
 import { UsersNewComponent } from './users-new';
 import { UsersEditComponent } from './users-edit';
@@ -44,6 +45,7 @@ import { UsersViewComponent } from './users-view';
     MatTooltipModule,
     MatToolbarModule,
     MatSnackBarModule,
+    MatSortModule,
   ],
   providers: [ 
     UserService
