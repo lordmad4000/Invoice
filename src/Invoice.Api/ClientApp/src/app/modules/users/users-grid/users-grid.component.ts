@@ -30,14 +30,89 @@ export class UsersGridComponent implements OnInit {
     private router: Router,
     private location: Location) {
 
-    this.start = 0;  
-    this.limit = 14;
+    this.start = 0;
+    this.limit = 10;
     this.end = this.limit + this.start;
     this.max = 0;
   }
 
   ngOnInit(): void {
     this.loadUsersData();
+  }
+
+  sortData(event: any) {
+    if (event.active === 'email') {
+      this.sortByEmail(event.direction);
+    }
+    if (event.active === 'firstname') {
+      this.sortByFirstName(event.direction);
+    }
+    if (event.active === 'lastname') {
+      this.sortByLastName(event.direction);
+    }
+  }
+
+  sortByEmail(direction: string) {
+    switch (direction) {
+      case 'asc': {
+        this.dataSource = new MatTableDataSource(
+          this.getTableData(this.start, this.end)
+            .sort((a, b) => (a.email < b.email ? -1 : 1)));
+        break;
+      }
+      case 'desc': {
+        this.dataSource = new MatTableDataSource(
+          this.getTableData(this.start, this.end)
+            .sort((a, b) => (a.email > b.email ? -1 : 1)));
+        break;
+      }
+      default: {
+        this.dataSource = new MatTableDataSource(this.getTableData(this.start, this.end));
+        break;
+      }
+    }
+  }
+
+  sortByFirstName(direction: string) {
+    switch (direction) {
+      case 'asc': {
+        this.dataSource = new MatTableDataSource(
+          this.getTableData(this.start, this.end)
+            .sort((a, b) => (a.firstName < b.firstName ? -1 : 1)));
+        break;
+      }
+      case 'desc': {
+        this.dataSource = new MatTableDataSource(
+          this.getTableData(this.start, this.end)
+            .sort((a, b) => (a.firstName > b.firstName ? -1 : 1)));
+        break;
+      }
+      default: {
+        this.dataSource = new MatTableDataSource(this.getTableData(this.start, this.end));
+        break;
+      }
+    }
+  }
+
+  sortByLastName(direction: string) {
+    switch (direction) {
+      case 'asc': {
+        this.dataSource = new MatTableDataSource(
+          this.getTableData(this.start, this.end)
+            .sort((a, b) => (a.lastName < b.lastName ? -1 : 1)));
+        break;
+      }
+      case 'desc': {
+        this.dataSource = new MatTableDataSource(
+          this.getTableData(this.start, this.end)
+            .sort((a, b) => (a.lastName > b.lastName ? -1 : 1)));
+        break;
+      }
+      default: {
+        this.dataSource = new MatTableDataSource(this.getTableData(this.start, this.end));
+        break;
+      }
+    }
   }
 
   loadUsersData() {
@@ -60,19 +135,34 @@ export class UsersGridComponent implements OnInit {
     this.router.navigate(['/users/view', `${row.id}`]);
   }
 
-  getTableData(start: number, end: number) {
+  getTableData(start: number, end: number): UserResponse[] {
     return this.users.slice(start, end);
   }
 
-  updateIndex(position: number) {
-    this.start = this.start + position;
+  previousPage() {
+    this.start = this.start - this.limit;
     this.end = this.start + this.limit;
     if (this.start < 0) {
       this.start = 0;
+      this.end = this.start + this.limit;
     }
+    this.updateIndex();
+  }
+
+  nextPage() {
+    this.start = this.start + this.limit;
+    this.end = this.start + this.limit;
     if (this.end > this.max) {
+      this.start = this.max - this.limit;
       this.end = this.max;
     }
+    if (this.start < 0) {
+      this.start = 0;
+    }
+    this.updateIndex();
+  }
+
+  updateIndex() {
     const data = this.getTableData(this.start, this.end);
     this.dataSource.data = data;
   }
@@ -88,10 +178,10 @@ export class UsersGridComponent implements OnInit {
   }
 
   previousButtonClick() {
-    this.updateIndex(-this.limit);
+    this.previousPage();
   }
 
   nextButtonClick() {
-    this.updateIndex(this.limit);
+    this.nextPage();
   }
 }
