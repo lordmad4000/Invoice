@@ -30,8 +30,8 @@ export class UsersGridComponent implements OnInit {
     private router: Router,
     private location: Location) {
 
-    this.start = 0;  
-    this.limit = 14;
+    this.start = 0;
+    this.limit = 10;
     this.end = this.limit + this.start;
     this.max = 0;
   }
@@ -60,19 +60,34 @@ export class UsersGridComponent implements OnInit {
     this.router.navigate(['/users/view', `${row.id}`]);
   }
 
-  getTableData(start: number, end: number) {
+  getTableData(start: number, end: number): UserResponse[] {
     return this.users.slice(start, end);
   }
 
-  updateIndex(position: number) {
-    this.start = this.start + position;
+  previousPage() {
+    this.start = this.start - this.limit;
     this.end = this.start + this.limit;
     if (this.start < 0) {
       this.start = 0;
+      this.end = this.start + this.limit;
     }
+    this.updateIndex();
+  }
+
+  nextPage() {
+    this.start = this.start + this.limit;
+    this.end = this.start + this.limit;
     if (this.end > this.max) {
+      this.start = this.max - this.limit;
       this.end = this.max;
     }
+    if (this.start < 0) {
+      this.start = 0;
+    }
+    this.updateIndex();
+  }
+
+  updateIndex() {
     const data = this.getTableData(this.start, this.end);
     this.dataSource.data = data;
   }
@@ -88,10 +103,10 @@ export class UsersGridComponent implements OnInit {
   }
 
   previousButtonClick() {
-    this.updateIndex(-this.limit);
+    this.previousPage();
   }
 
   nextButtonClick() {
-    this.updateIndex(this.limit);
+    this.nextPage();
   }
 }
