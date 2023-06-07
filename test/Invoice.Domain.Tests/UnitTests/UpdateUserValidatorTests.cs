@@ -1,7 +1,6 @@
-using Invoice.Domain.Entities;
+using Invoice.Domain.Users;
 using Invoice.Domain.Validations;
 using Invoice.Domain.ValueObjects;
-using System.Linq;
 using Xunit;
 
 namespace Invoice.Domain.Tests.UnitTests

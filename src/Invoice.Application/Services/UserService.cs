@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Invoice.Application.Interfaces;
-using Invoice.Domain.Entities;
 using Invoice.Domain.Validations;
 using AutoMapper;
 using Invoice.Domain.ValueObjects;
 using Invoice.Domain.Exceptions;
 using Invoice.Application.Common.Interfaces.Persistance;
 using Invoice.Application.Common.Dto;
+using Invoice.Domain.Users;
 
 namespace Invoice.Application.Services
 {

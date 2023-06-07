@@ -1,5 +1,5 @@
 using FluentValidation;
-using Invoice.Domain.Entities;
+using Invoice.Domain.Users;
 
 namespace Invoice.Domain.Validations
 {

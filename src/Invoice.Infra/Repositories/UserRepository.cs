@@ -1,5 +1,5 @@
 ﻿using Invoice.Application.Common.Interfaces.Persistance;
-using Invoice.Domain.Entities;
+using Invoice.Domain.Users;
 using Invoice.Infra.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;

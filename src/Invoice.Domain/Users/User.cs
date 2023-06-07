@@ -2,7 +2,7 @@ using System;
 using Invoice.Domain.Base;
 using Invoice.Domain.ValueObjects;
 
-namespace Invoice.Domain.Entities
+namespace Invoice.Domain.Users
 {
     public partial class User : BaseEntity
     {

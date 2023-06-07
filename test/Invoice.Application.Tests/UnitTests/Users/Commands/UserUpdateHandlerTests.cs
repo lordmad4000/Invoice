@@ -4,7 +4,6 @@ using Invoice.Application.CQRS.Users.Commands;
 using Invoice.Application.Common.Dto;
 using Invoice.Application.Common.Interfaces.Persistance;
 using Invoice.Application.Interfaces;
-using Invoice.Domain.Entities;
 using Invoice.Domain.ValueObjects;
 using Moq;
 using System.Linq.Expressions;
@@ -12,6 +11,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System;
 using Xunit;
+using Invoice.Domain.Users;
 
 namespace Invoice.Application.Tests.UnitTests
 {

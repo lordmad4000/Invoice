@@ -2,13 +2,13 @@ using AutoMapper;
 using Invoice.Application.Common.Dto;
 using Invoice.Application.Common.Interfaces.Persistance;
 using Invoice.Application.Interfaces;
-using Invoice.Domain.Entities;
 using Invoice.Domain.Exceptions;
 using Invoice.Domain.Validations;
 using Invoice.Domain.ValueObjects;
 using MediatR;
 using System.Threading.Tasks;
 using System.Threading;
+using Invoice.Domain.Users;
 
 namespace Invoice.Application.CQRS.Users.Commands
 {

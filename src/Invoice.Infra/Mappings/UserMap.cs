@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Invoice.Domain.Entities;
+using Invoice.Domain.Users;
 
 namespace Invoice.Infra.Mappings
 {

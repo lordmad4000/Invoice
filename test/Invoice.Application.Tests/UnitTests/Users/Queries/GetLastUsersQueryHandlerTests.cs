@@ -3,7 +3,6 @@ using Invoice.Application.AutoMapper;
 using Invoice.Application.CQRS.Users.Queries;
 using Invoice.Application.Common.Dto;
 using Invoice.Application.Common.Interfaces.Persistance;
-using Invoice.Domain.Entities;
 using Invoice.Domain.ValueObjects;
 using Moq;
 using System.Collections.Generic;
@@ -11,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
 using Xunit;
+using Invoice.Domain.Users;
 
 namespace Invoice.Application.Tests.UnitTests
 {
