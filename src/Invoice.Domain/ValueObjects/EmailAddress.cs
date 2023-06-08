@@ -1,36 +1,41 @@
-using System;
+using Invoice.Domain.Exceptions;
 using System.Collections.Generic;
 using System.Net.Mail;
-using Invoice.Domain.Exceptions;
+using System;
 
 namespace Invoice.Domain.ValueObjects
 {
     public class EmailAddress : ValueObject
     {
+        public string Address { get; private set; } = string.Empty;
+
         private EmailAddress()
         {
         }
-        
+
         public EmailAddress(string address)
         {
-
-            Validate(address);
-
             Address = address;
+            Validate();
         }
 
+        public static EmailAddress Create(string address)
+        {
+            var emailAddress = new EmailAddress(address);
+            emailAddress.Validate();
 
-        public string Address { get; private set; }
+            return emailAddress;
+        }
 
-        private void Validate(string address)
+        private void Validate()
         {
             try
             {
-                var mailAddress = new MailAddress(address);                
+                var mailAddress = new MailAddress(this.Address);
             }
             catch (FormatException)
             {
-                throw new NotValidEmailAddressException(String.Format($"{address} is not valid email address."));
+                throw new NotValidEmailAddressException(String.Format($"{this.Address} is not valid email address."));
             }
         }
 
