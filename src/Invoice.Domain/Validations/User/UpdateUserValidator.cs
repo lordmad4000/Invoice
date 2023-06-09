@@ -4,9 +4,10 @@ namespace Invoice.Domain.Validations
     {
         public UpdateUserValidator()
         {
-            ValidateEmail();
             ValidateFirstName();
             ValidateLastName();
+            ValidateEmail();
+            ValidatePassword();
         }
 
     }
