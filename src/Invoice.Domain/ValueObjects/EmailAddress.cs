@@ -27,17 +27,8 @@ namespace Invoice.Domain.ValueObjects
             return emailAddress;
         }
 
-        private void Validate()
-        {
-            try
-            {
-                var mailAddress = new MailAddress(this.Address);
-            }
-            catch (FormatException)
-            {
-                throw new NotValidEmailAddressException(String.Format($"{this.Address} is not valid email address."));
-            }
-        }
+        private void Validate() =>
+            new MailAddress(Address);
 
         protected override IEnumerable<object> GetAtomicValues()
         {
