@@ -21,8 +21,7 @@ namespace Invoice.Domain.Validations
         public void ValidatePassword()
         {
             RuleFor(c => c.Password).NotEmpty()
-                                    .NotNull()
-                                    .Length(6, 10);
+                                    .NotNull();
         }
 
         public void ValidateFirstName()
@@ -38,7 +37,6 @@ namespace Invoice.Domain.Validations
                                     .NotNull()
                                     .Length(1, 20);
         }
-
 
     }
 }
