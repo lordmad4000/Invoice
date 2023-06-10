@@ -1,8 +1,8 @@
-namespace Invoice.Domain.Validations
+namespace Invoice.Domain.Users.Validations
 {
-    public class RegisterUserValidator : UserValidator
+    public class CreateUserValidator : UserValidator
     {
-        public RegisterUserValidator()
+        public CreateUserValidator()
         {
             ValidateFirstName();
             ValidateLastName();

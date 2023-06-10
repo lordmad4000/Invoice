@@ -1,7 +1,7 @@
 using FluentValidation;
 using Invoice.Domain.Users;
 
-namespace Invoice.Domain.Validations
+namespace Invoice.Domain.Users.Validations
 {
     public class UserValidator : AbstractValidator<User>
     {

@@ -1,4 +1,4 @@
-namespace Invoice.Domain.Validations
+namespace Invoice.Domain.Users.Validations
 {
     public class UpdateUserValidator : UserValidator
     {

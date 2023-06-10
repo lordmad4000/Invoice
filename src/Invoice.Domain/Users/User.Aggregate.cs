@@ -3,7 +3,7 @@ using System.Linq;
 using FluentValidation.Results;
 using Invoice.Domain.Base;
 using Invoice.Domain.Exceptions;
-using Invoice.Domain.Validations;
+using Invoice.Domain.Users.Validations;
 using Invoice.Domain.ValueObjects;
 
 namespace Invoice.Domain.Users
@@ -33,7 +33,7 @@ namespace Invoice.Domain.Users
             FirstName = firstName;
             LastName = lastName;
 
-            ValidationResult validator = new RegisterUserValidator().Validate(this);
+            ValidationResult validator = new CreateUserValidator().Validate(this);
             if (!validator.IsValid)
                 throw new EntityValidationException(
                     string.Join(", ", validator.Errors.Select(x => x.ErrorMessage).ToArray()));

@@ -1,7 +1,6 @@
 using Invoice.Domain.Exceptions;
 using System.Collections.Generic;
 using System.Net.Mail;
-using System;
 
 namespace Invoice.Domain.ValueObjects
 {
@@ -27,8 +26,11 @@ namespace Invoice.Domain.ValueObjects
             return emailAddress;
         }
 
-        private void Validate() =>
-            new MailAddress(Address);
+        private void Validate()
+        {
+            if (!MailAddress.TryCreate(Address, out _))
+                throw new NotValidEmailAddressException($"'{Address}' is not a valid Email Address.");
+        }
 
         protected override IEnumerable<object> GetAtomicValues()
         {

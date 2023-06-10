@@ -27,8 +27,8 @@ namespace Invoice.Domain.ValueObjects
 
         private void Validate()
         {
-            if (!Validate(this.Phone))
-                throw new NotValidPhoneNumberException(String.Format($"{this.Phone} is not valid phone number."));
+            if (!Validate(Phone))
+                throw new NotValidPhoneNumberException(String.Format($"{Phone} is not valid phone number."));
         }
 
         private bool Validate(string phoneNumber)
@@ -36,7 +36,7 @@ namespace Invoice.Domain.ValueObjects
             string patternPhoneCountry = @"^(?<plus>[\+])(?<country>[1-9][0-9]{0,2})(?<area>0?[1-9]\d{0,2})(?<number>[0-9][\d]{7})$";
             string patternPhone = @"^(?<area>0?[1-9]\d{0,2})(?<number>[0-9][\d]{7})$";
             
-            if (!String.IsNullOrEmpty(phoneNumber))
+            if (!string.IsNullOrEmpty(phoneNumber))
             {
                 if (phoneNumber.Length > 9)
                 {
