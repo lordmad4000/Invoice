@@ -3,12 +3,12 @@ using Invoice.Application.Common.Dto;
 using Invoice.Application.Common.Interfaces.Persistance;
 using Invoice.Application.Interfaces;
 using Invoice.Domain.Exceptions;
-using Invoice.Domain.Validations;
 using MediatR;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
 using Invoice.Domain.Users;
+using Invoice.Domain.Users.Validations;
 
 namespace Invoice.Application.CQRS.Users.Commands
 {
