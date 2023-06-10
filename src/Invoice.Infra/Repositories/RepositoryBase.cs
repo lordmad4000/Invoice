@@ -11,15 +11,13 @@ using System;
 
 namespace Invoice.Infra.Repositories
 {
-    public class RepositoryBase<T> : IAsyncRepository<T> where T : BaseEntity
+    public class RepositoryBase<T> : IAsyncRepository<T> where T : AggregateRoot
     {
-        private readonly EFContext _context;
         private readonly DbSet<T> _dbSet;
         private readonly string _cacheKey = $"{typeof(T)}";
         private readonly ICacheService _cacheService;
         public RepositoryBase(EFContext context, ICacheService cacheService = null)
         {
-            _context = context;
             _dbSet = context.Set<T>();
             _cacheService = cacheService;
         }
@@ -54,11 +52,9 @@ namespace Invoice.Infra.Repositories
 
         public async Task<T> GetAsync(Expression<Func<T, bool>> expression, bool tracking, string expressionCacheKey = "")
         {
-            T result;
+            var cacheKey = string.IsNullOrEmpty(expressionCacheKey) ? "" : $"{_cacheKey}{expressionCacheKey}";
 
-            var cacheKey = String.IsNullOrEmpty(expressionCacheKey) ? "" : $"{_cacheKey}{expressionCacheKey}";
-
-            if (!TryGetCache(cacheKey, out result))
+            if (!TryGetCache(cacheKey, out T result))
             {
                 try
                 {
@@ -83,23 +79,21 @@ namespace Invoice.Infra.Repositories
 
         public async Task<List<T>> ListAsync(Expression<Func<T, bool>> expression)
         {
-            List<T> result;
-
-            if (!TryGetCache(_cacheKey, out result))
+            if (!TryGetCache(_cacheKey, out List<T> results))
             {
                 try
                 {
-                    result = await _dbSet.Where(expression).ToListAsync();
+                    results = await _dbSet.Where(expression).ToListAsync();
                 }
                 catch (Exception ex)
                 {
                     throw new DataBaseException(ex.InnerException.Message);
                 }
 
-                TrySetCache(_cacheKey, result);
+                TrySetCache(_cacheKey, results);
             }
 
-            return result;
+            return results;
         }
 
         public async Task<T> UpdateAsync(T entity)
@@ -113,7 +107,7 @@ namespace Invoice.Infra.Repositories
 
         public bool TryGetCache<Ty>(string cacheKey, out Ty value)
         {
-            value = default(Ty);
+            value = default;
             try
             {
                 if (_cacheService != null)

@@ -34,15 +34,17 @@ namespace Invoice.Application.CQRS.Configuration.Commands.Register
         public async Task<IdDocumentTypeDto> Handle(IdDocumentTypeRegisterCommand request, CancellationToken cancellationToken)
         {
             // TODO VALIDATION
-            if (await _idDocumentTypeRepository.GetAsync(c => c.Name.ToLower() == request.Name.ToLower(), false) != null)
-                throw new EntityValidationException("Name already exists.");
+            //if (await _idDocumentTypeRepository.GetAsync(c => c.Name.ToLower() == request.Name.ToLower(), false) != null)
+            //    throw new EntityValidationException("Name already exists.");
 
             var idDocumentType = new IdDocumentType(request.Name);
-            idDocumentType = await _idDocumentTypeRepository.AddAsync(idDocumentType);
-            await _unitOfWork.SaveChangesAsync();
+            //idDocumentType = await _idDocumentTypeRepository.AddAsync(idDocumentType);
+            //await _unitOfWork.SaveChangesAsync();
             _logger.Debug($"IdDocumentType Register with data: {idDocumentType.ToString()}");
 
-            return  _mapper.Map<IdDocumentTypeDto>(idDocumentType);
+            await Task.Delay(10);
+
+            return _mapper.Map<IdDocumentTypeDto>(idDocumentType);
         }
 
     }
