@@ -4,7 +4,7 @@ using Invoice.Domain.ValueObjects;
 
 namespace Invoice.Domain.Users
 {
-    public partial class User : BaseEntity
+    public partial class User
     {
         public EmailAddress EmailAddress { get; private set; } = new EmailAddress("defaultuser@user.com");
         public string Password { get; private set; } = string.Empty;
