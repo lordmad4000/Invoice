@@ -10,7 +10,6 @@ namespace Invoice.Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IValidatorService, ValidatorService>();
             services.AddScoped<IPasswordService, UserPasswordService>();
 
