@@ -21,7 +21,6 @@ namespace Invoice.Application.Tests.UnitTests
         private readonly IMapper _mapper;
         private readonly Mock<IUserRepository> _mockUserRepository;
         private readonly Mock<IUnitOfWork> _mockUnitOfWork;
-        private readonly Mock<IValidatorService> _mockValidatorService;
         private readonly Mock<IPasswordService> _mockPasswordService;
         private readonly Mock<ICustomLogger> _mockLogger;
         
@@ -34,7 +33,6 @@ namespace Invoice.Application.Tests.UnitTests
             _mapper = mapperConfig.CreateMapper();
             _mockUserRepository = new Mock<IUserRepository>();
             _mockUnitOfWork = new Mock<IUnitOfWork>();
-            _mockValidatorService = new Mock<IValidatorService>();
             _mockPasswordService = new Mock<IPasswordService>();
             _mockLogger = new Mock<ICustomLogger>();
         }
@@ -50,7 +48,6 @@ namespace Invoice.Application.Tests.UnitTests
             _mockPasswordService.Setup(x => x.GeneratePassword(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())).Returns("12345678");
             var authenticationRegisterHandler = new AuthenticationRegisterHandler(_mockUserRepository.Object, 
                                                                                   _mockUnitOfWork.Object, 
-                                                                                  _mockValidatorService.Object, 
                                                                                   _mockPasswordService.Object,
                                                                                   _mapper,
                                                                                   _mockLogger.Object);
@@ -71,7 +68,6 @@ namespace Invoice.Application.Tests.UnitTests
             _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<bool>(), It.IsAny<string>())).ReturnsAsync(user);
             var AuthenticationRegisterHandler = new AuthenticationRegisterHandler(_mockUserRepository.Object, 
                                                                                   _mockUnitOfWork.Object, 
-                                                                                  _mockValidatorService.Object, 
                                                                                   _mockPasswordService.Object,
                                                                                   _mapper,
                                                                                   _mockLogger.Object);
@@ -82,7 +78,7 @@ namespace Invoice.Application.Tests.UnitTests
 
         private User GetUser()
         {
-            return new User(new EmailAddress("jose@gmail.com"), "12345678", "jose", "antonio");
+            return User.Create("jose@gmail.com", "12345678", "jose", "antonio");
         }
 
         private AuthenticationRegisterCommand GetAuthenticationRegisterCommand()

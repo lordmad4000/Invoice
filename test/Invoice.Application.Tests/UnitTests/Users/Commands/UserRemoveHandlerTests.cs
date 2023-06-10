@@ -82,7 +82,7 @@ namespace Invoice.Application.Tests.UnitTests
 
         private User GetUser()
         {
-            return new User(new EmailAddress("jose@gmail.com"), "12345678", "jose", "antonio");
+            return User.Create("jose@gmail.com", "12345678", "jose", "antonio");
         }
 
         private UserRemoveCommand GetUserRemoveCommand()

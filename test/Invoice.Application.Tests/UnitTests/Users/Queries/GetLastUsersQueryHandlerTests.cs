@@ -52,15 +52,15 @@ namespace Invoice.Application.Tests.UnitTests
         private async Task<List<User>> GetUsers()
         {
             var users = new List<User>();
-            users.Add(new User(new EmailAddress("jose@gmail.com"), "12345678", "jose", "antonio"));
+            users.Add(User.Create("jose@gmail.com", "12345678", "jose", "antonio"));
             await Task.Delay(1000);
-            users.Add(new User(new EmailAddress("maria@gmail.com"), "12345678", "maria", "antonieta"));
+            users.Add(User.Create("maria@gmail.com", "12345678", "maria", "antonieta"));
             await Task.Delay(1000);
-            users.Add(new User(new EmailAddress("alfonso@gmail.com"), "12345678", "alfonso", "garcia"));
+            users.Add(User.Create("alfonso@gmail.com", "12345678", "alfonso", "garcia"));
             await Task.Delay(1000);
-            users.Add(new User(new EmailAddress("ramiro@gmail.com"), "12345678", "ramiro", "quake"));
+            users.Add(User.Create("ramiro@gmail.com", "12345678", "ramiro", "quake"));
             await Task.Delay(1000);
-            users.Add(new User(new EmailAddress("carlos@gmail.com"), "12345678", "carlos", "perez"));
+            users.Add(User.Create("carlos@gmail.com", "12345678", "carlos", "perez"));
 
             return users;
         }

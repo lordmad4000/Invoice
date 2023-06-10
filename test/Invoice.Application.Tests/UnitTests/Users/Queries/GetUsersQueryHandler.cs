@@ -51,9 +51,9 @@ namespace Invoice.Application.Tests.UnitTests
         {
             return new List<User>
             {
-                new User(new EmailAddress("jose@gmail.com"), "12345678", "jose", "antonio"),
-                new User(new EmailAddress("maria@gmail.com"), "12345678", "maria", "antonieta"),
-                new User(new EmailAddress("alfonso@gmail.com"), "12345678", "alfonso", "garcia"),
+                User.Create("jose@gmail.com", "12345678", "jose", "antonio"),
+                User.Create("maria@gmail.com", "12345678", "maria", "antonieta"),
+                User.Create("alfonso@gmail.com", "12345678", "alfonso", "garcia"),
             };
         }
 
