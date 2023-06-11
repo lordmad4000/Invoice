@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
-using Invoice.Application.CQRS.Configuration.Commands.Register;
 using Invoice.Application.Common.Interfaces.Persistance;
+using Invoice.Application.IdDocumentTypes.Commands.Register;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using System;
 
 namespace Invoice.Api.Controllers
 {

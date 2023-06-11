@@ -1,6 +1,6 @@
-using Microsoft.EntityFrameworkCore;
+using Invoice.Domain.IdDocumentTypes;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Invoice.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Invoice.Infra.Mappings
 {

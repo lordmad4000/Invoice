@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Invoice.Domain.Entities;
-using Invoice.Infra.Mappings;
+﻿using Invoice.Domain.IdDocumentTypes;
 using Invoice.Domain.Users;
+using Invoice.Infra.Mappings;
+using Microsoft.EntityFrameworkCore;
 
 namespace Invoice.Infra.Data
 {

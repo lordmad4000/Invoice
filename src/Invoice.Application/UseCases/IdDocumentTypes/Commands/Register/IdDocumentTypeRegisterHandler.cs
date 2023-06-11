@@ -1,11 +1,11 @@
 using AutoMapper;
 using Invoice.Application.Common.Dto;
+using Invoice.Application.Common.Exceptions;
 using Invoice.Application.Common.Interfaces.Persistance;
-using Invoice.Application.Interfaces;
+using Invoice.Domain.IdDocumentTypes;
 using MediatR;
 using System.Threading.Tasks;
 using System.Threading;
-using Invoice.Domain.IdDocumentTypes;
 
 namespace Invoice.Application.IdDocumentTypes.Commands.Register
 {
@@ -13,32 +13,28 @@ namespace Invoice.Application.IdDocumentTypes.Commands.Register
     {
         private readonly IIdDocumentTypeRepository _idDocumentTypeRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IValidatorService _validatorService;
         private readonly IMapper _mapper;
         private readonly ICustomLogger _logger;
 
         public IdDocumentTypeRegisterHandler(IIdDocumentTypeRepository idDocumentTypeRepository,                        
                                              IUnitOfWork unitOfWork,
-                                             IValidatorService validatorService,
                                              IMapper mapper,
                                              ICustomLogger logger)
         {
             _idDocumentTypeRepository = idDocumentTypeRepository;
             _unitOfWork = unitOfWork;
-            _validatorService = validatorService;
             _mapper = mapper;
             _logger = logger;
         }
 
         public async Task<IdDocumentTypeDto> Handle(IdDocumentTypeRegisterCommand request, CancellationToken cancellationToken)
         {
-            // TODO VALIDATION
-            //if (await _idDocumentTypeRepository.GetAsync(c => c.Name.ToLower() == request.Name.ToLower(), false) != null)
-            //    throw new BusinessRuleValidationException("Name already exists.");
+            if (await _idDocumentTypeRepository.GetAsync(c => c.Name.ToLower() == request.Name.ToLower(), false) != null)
+               throw new RegisterRuleValidationException("Name already exists.");
 
             var idDocumentType = IdDocumentType.Create(request.Name);
-            //idDocumentType = await _idDocumentTypeRepository.AddAsync(idDocumentType);
-            //await _unitOfWork.SaveChangesAsync();
+            idDocumentType = await _idDocumentTypeRepository.AddAsync(idDocumentType);
+            await _unitOfWork.SaveChangesAsync();
             _logger.Debug($"IdDocumentType Register with data: {idDocumentType}");
 
             await Task.Delay(10);
