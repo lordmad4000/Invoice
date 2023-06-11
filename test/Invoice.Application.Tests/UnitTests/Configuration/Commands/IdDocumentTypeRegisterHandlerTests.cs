@@ -58,7 +58,7 @@ namespace Invoice.Application.Tests.UnitTests
         }
 
         [Fact]
-        public async Task UserRegisterCommand_Should_Throw_An_EntityValidationException()
+        public async Task UserRegisterCommand_Should_Throw_An_BusinessRuleValidationException()
         {
             // Arrange
             var idDocumentType = GetIdDocumentType();
@@ -71,7 +71,7 @@ namespace Invoice.Application.Tests.UnitTests
                                                                                   _mockLogger.Object);
 
             //Act & Assert
-            await Assert.ThrowsAsync<EntityValidationException>(async () => await idDocumentTypeRegisterHandler.Handle(idDocumentTypeRegisterCommand, new CancellationToken()));
+            await Assert.ThrowsAsync<BusinessRuleValidationException>(async () => await idDocumentTypeRegisterHandler.Handle(idDocumentTypeRegisterCommand, new CancellationToken()));
         }
 
         private IdDocumentType GetIdDocumentType()

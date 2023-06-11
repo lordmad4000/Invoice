@@ -6,7 +6,7 @@ using Invoice.Domain.Base;
 
 namespace Invoice.Application.Common.Interfaces.Persistance
 {
-    public interface IAsyncRepository<T> where T : BaseEntity
+    public interface IAsyncRepository<T> where T : AggregateRoot
     {
         Task<T> AddAsync(T entity);
         Task<T> UpdateAsync(T entity);
@@ -18,4 +18,5 @@ namespace Invoice.Application.Common.Interfaces.Persistance
         bool TryRemoveCache(string cacheKey);
         bool TrySetCache<Ty>(string cacheKey, Ty value);
     }
+
 }

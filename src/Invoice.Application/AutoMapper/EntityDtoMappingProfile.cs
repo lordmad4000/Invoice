@@ -1,6 +1,7 @@
 using AutoMapper;
 using Invoice.Application.Common.Dto;
 using Invoice.Domain.Entities;
+using Invoice.Domain.Users;
 using Invoice.Domain.ValueObjects;
 
 namespace Invoice.Application.AutoMapper

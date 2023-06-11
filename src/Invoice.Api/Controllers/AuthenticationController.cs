@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Invoice.Api.Models.Request;
 using Invoice.Api.Models.Response;
-using Invoice.Application.CQRS.Authentication.Commands;
-using Invoice.Application.CQRS.Authentication.Queries;
+using Invoice.Application.Authentication.Commands;
+using Invoice.Application.Authentication.Queries;
 using Invoice.Application.Common.Interfaces.Persistance;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
