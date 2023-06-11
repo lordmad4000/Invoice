@@ -1,6 +1,5 @@
-using System;
-using Invoice.Domain.Base;
 using Invoice.Domain.ValueObjects;
+using System;
 
 namespace Invoice.Domain.Users
 {

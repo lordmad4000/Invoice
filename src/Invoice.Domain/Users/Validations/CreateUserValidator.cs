@@ -4,6 +4,7 @@ namespace Invoice.Domain.Users.Validations
     {
         public CreateUserValidator()
         {
+            ValidateId();
             ValidateFirstName();
             ValidateLastName();
             ValidateEmail();
