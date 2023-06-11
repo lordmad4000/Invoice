@@ -35,7 +35,7 @@ namespace Invoice.Application.CQRS.Users.Commands
         {            
             var user = await _userRepository.GetAsync(c => c.EmailAddress.Address == request.Email, false);
             if (user is not null)
-                throw new EntityValidationException("Email address already exists.");
+                throw new BusinessRuleValidationException("Email address already exists.");
 
             var encryptedPassword = _passwordService.GeneratePassword(request.Email, request.Password, 16);
             user = User.Create(request.Email, encryptedPassword, request.FirstName, request.LastName);

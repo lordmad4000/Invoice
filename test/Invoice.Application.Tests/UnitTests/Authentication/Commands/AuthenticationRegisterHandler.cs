@@ -60,7 +60,7 @@ namespace Invoice.Application.Tests.UnitTests
         }
 
         [Fact]
-        public async Task AuthenticationRegisterCommand_Should_Throw_An_EntityValidationException()
+        public async Task AuthenticationRegisterCommand_Should_Throw_An_BusinessRuleValidationException()
         {
             // Arrange
             var user = GetUser();
@@ -73,7 +73,7 @@ namespace Invoice.Application.Tests.UnitTests
                                                                                   _mockLogger.Object);
 
             //Act & Assert
-            await Assert.ThrowsAsync<EntityValidationException>(async () => await AuthenticationRegisterHandler.Handle(authenticationRegisterCommand, new CancellationToken()));
+            await Assert.ThrowsAsync<BusinessRuleValidationException>(async () => await AuthenticationRegisterHandler.Handle(authenticationRegisterCommand, new CancellationToken()));
         }
 
         private User GetUser()

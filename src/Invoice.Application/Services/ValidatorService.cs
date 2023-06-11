@@ -18,7 +18,7 @@ namespace Invoice.Application.Services
                 foreach (var error in validator.Errors)
                     errors.AppendLine(error.ErrorMessage);
 
-                throw new EntityValidationException(errors.ToString());
+                throw new BusinessRuleValidationException(errors.ToString());
             }
         }
 

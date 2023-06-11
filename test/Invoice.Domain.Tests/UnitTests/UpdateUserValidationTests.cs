@@ -8,7 +8,7 @@ namespace Invoice.Domain.Tests.UnitTests
     public class UpdateUserValidationTests
     {
         [Fact]
-        public void Should_Not_Be_Throw_EntityValidationException()
+        public void Should_Not_Be_Throw_BusinessRuleValidationException()
         {   
             //Arrange
             var user = User.Create("jose@gmail.com", "123456", "jose", "antonio");
@@ -21,24 +21,24 @@ namespace Invoice.Domain.Tests.UnitTests
         }
 
         [Fact]
-        public void Empty_Password_Should_Be_Throw_EntityValidationException()
+        public void Empty_Password_Should_Be_Throw_BusinessRuleValidationException()
         {
             // Arrange
             var user = User.Create("jose@gmail.com", "123456", "jose", "antonio");
 
             // Act & Assert
-            Assert.Throws<EntityValidationException>(() => user.Update("jose@gmail.com", "", "jose", "antonio"));
+            Assert.Throws<BusinessRuleValidationException>(() => user.Update("jose@gmail.com", "", "jose", "antonio"));
         }
 
         [Fact]
-        public void Null_Password_Should_Be_Throw_EntityValidationException()
+        public void Null_Password_Should_Be_Throw_BusinessRuleValidationException()
         {
             // Arrange
             var user = User.Create("jose@gmail.com", "123456", "jose", "antonio");
 
 
             //Act & Assert
-            Assert.Throws<EntityValidationException>(() => user.Update("jose@gmail.com", null, "jose", "antonio"));
+            Assert.Throws<BusinessRuleValidationException>(() => user.Update("jose@gmail.com", null, "jose", "antonio"));
         }
 
         [Fact]
@@ -62,73 +62,73 @@ namespace Invoice.Domain.Tests.UnitTests
         }        
 
         [Fact]
-        public void Email_Length_Greater_Than_40_Should_Throw_EntityValidationException()
+        public void Email_Length_Greater_Than_40_Should_Throw_BusinessRuleValidationException()
         {   
             //Arrange
             var user = User.Create("jose@gmail.com", "123456", "jose", "antonio");
 
             //Act & Assert
-            Assert.Throws<EntityValidationException>(() => user.Update("joseaaaaaaaaaaaaaaaaaaaaaaaaaaa@gmail.com", "123456", "jose", "antonio"));
+            Assert.Throws<BusinessRuleValidationException>(() => user.Update("joseaaaaaaaaaaaaaaaaaaaaaaaaaaa@gmail.com", "123456", "jose", "antonio"));
         }
 
         [Fact]
-        public void Empty_FirstName_Should_Be_Throw_EntityValidationException()
+        public void Empty_FirstName_Should_Be_Throw_BusinessRuleValidationException()
         {
             // Arrange
             var user = User.Create("jose@gmail.com", "123456", "jose", "antonio");
             
             //Act & Assert
-            Assert.Throws<EntityValidationException>(() => user.Update("jose@gmail.com", "123456", "", "antonio"));
+            Assert.Throws<BusinessRuleValidationException>(() => user.Update("jose@gmail.com", "123456", "", "antonio"));
         }
 
         [Fact]
-        public void Null_FirstName_Should_Be_Throw_EntityValidationException()
+        public void Null_FirstName_Should_Be_Throw_BusinessRuleValidationException()
         {
             // Arrange
             var user = User.Create("jose@gmail.com", "123456", "jose", "antonio");
             
             //Act & Assert
-            Assert.Throws<EntityValidationException>(() => user.Update("jose@gmail.com", "123456", null, "antonio"));
+            Assert.Throws<BusinessRuleValidationException>(() => user.Update("jose@gmail.com", "123456", null, "antonio"));
         }        
 
         [Fact]
-        public void FirstName_Length_Greater_Than_20_Should_Be_Throw_EntityValidationException()
+        public void FirstName_Length_Greater_Than_20_Should_Be_Throw_BusinessRuleValidationException()
         {   
             //Arrange
             var user = User.Create("jose@gmail.com", "123456", "jose", "antonio");
 
             //Act & Assert
-            Assert.Throws<EntityValidationException>(() => user.Update("jose@gmail.com", "123456", "joseeeeeeeeeeeeeeeeee", "antonio"));
+            Assert.Throws<BusinessRuleValidationException>(() => user.Update("jose@gmail.com", "123456", "joseeeeeeeeeeeeeeeeee", "antonio"));
         }
 
         [Fact]
-        public void Empty_LastName_Should_Be_Throw_EntityValidationException()
+        public void Empty_LastName_Should_Be_Throw_BusinessRuleValidationException()
         {
             // Arrange
             var user = User.Create("jose@gmail.com", "123456", "jose", "antonio");
 
             //Act & Assert
-            Assert.Throws<EntityValidationException>(() => user.Update("jose@gmail.com", "123456", "jose", ""));
+            Assert.Throws<BusinessRuleValidationException>(() => user.Update("jose@gmail.com", "123456", "jose", ""));
         }
 
         [Fact]
-        public void Null_LastName_Should_Be_Throw_EntityValidationException()
+        public void Null_LastName_Should_Be_Throw_BusinessRuleValidationException()
         {
             // Arrange
             var user = User.Create("jose@gmail.com", "123456", "jose", "antonio");
 
             //Act & Assert
-            Assert.Throws<EntityValidationException>(() => user.Update("jose@gmail.com", "123456", "jose", null));
+            Assert.Throws<BusinessRuleValidationException>(() => user.Update("jose@gmail.com", "123456", "jose", null));
         }        
 
         [Fact]
-        public void LastName_Length_Greater_Than_20_Should_Be_Throw_EntityValidationException()
+        public void LastName_Length_Greater_Than_20_Should_Be_Throw_BusinessRuleValidationException()
         {   
             //Arrange
             var user = User.Create("jose@gmail.com", "123456", "jose", "antonio");
 
             //Act & Assert
-            Assert.Throws<EntityValidationException>(() => user.Update("jose@gmail.com", "123456", "jose", "antonioooooooooooooooo"));
+            Assert.Throws<BusinessRuleValidationException>(() => user.Update("jose@gmail.com", "123456", "jose", "antonioooooooooooooooo"));
         }
 
     }

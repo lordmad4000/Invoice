@@ -34,7 +34,7 @@ namespace Invoice.Domain.Users
 
             ValidationResult validator = new CreateUserValidator().Validate(this);
             if (!validator.IsValid)
-                throw new EntityValidationException(
+                throw new BusinessRuleValidationException(
                     string.Join(", ", validator.Errors.Select(x => x.ErrorMessage).ToArray()));
         }        
 
