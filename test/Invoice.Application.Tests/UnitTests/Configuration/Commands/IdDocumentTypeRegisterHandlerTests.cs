@@ -1,6 +1,6 @@
 using AutoMapper;
 using Invoice.Application.AutoMapper;
-using Invoice.Application.CQRS.Configuration.Commands.Register;
+using Invoice.Application.CQRS.IdDocumentType.Commands.Register;
 using Invoice.Application.Common.Dto;
 using Invoice.Application.Common.Interfaces.Persistance;
 using Invoice.Application.Interfaces;

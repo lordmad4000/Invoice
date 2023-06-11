@@ -2,13 +2,12 @@ using AutoMapper;
 using Invoice.Application.Common.Dto;
 using Invoice.Application.Common.Interfaces.Persistance;
 using Invoice.Application.Interfaces;
-using Invoice.Domain.Entities;
-using Invoice.Domain.Exceptions;
 using MediatR;
 using System.Threading.Tasks;
 using System.Threading;
+using Invoice.Domain.IdDocumentTypes;
 
-namespace Invoice.Application.Configuration.Commands.Register
+namespace Invoice.Application.IdDocumentTypes.Commands.Register
 {
     public class IdDocumentTypeRegisterHandler : IRequestHandler<IdDocumentTypeRegisterCommand, IdDocumentTypeDto>
     {
@@ -37,7 +36,7 @@ namespace Invoice.Application.Configuration.Commands.Register
             //if (await _idDocumentTypeRepository.GetAsync(c => c.Name.ToLower() == request.Name.ToLower(), false) != null)
             //    throw new BusinessRuleValidationException("Name already exists.");
 
-            var idDocumentType = new IdDocumentType(request.Name);
+            var idDocumentType = IdDocumentType.Create(request.Name);
             //idDocumentType = await _idDocumentTypeRepository.AddAsync(idDocumentType);
             //await _unitOfWork.SaveChangesAsync();
             _logger.Debug($"IdDocumentType Register with data: {idDocumentType}");
