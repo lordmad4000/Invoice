@@ -1,18 +1,14 @@
 ﻿using AutoMapper;
 using Invoice.Api.Models.Request;
 using Invoice.Api.Models.Response;
-using Invoice.Application.CQRS.Users.Commands;
-using Invoice.Application.CQRS.Users.Queries;
+using Invoice.Application.Users.Commands;
+using Invoice.Application.Users.Queries;
 using Invoice.Application.Common.Dto;
-using Invoice.Application.Interfaces;
 using Invoice.Domain.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System;
 
 namespace Invoice.Api.Controllers
 {
@@ -22,14 +18,11 @@ namespace Invoice.Api.Controllers
     public class UsersController : ApiController
     {
         private readonly IMediator _mediator;
-        private readonly IUserService _userService;
         private readonly IMapper _mapper;
         public UsersController(IMediator mediator,
-                               IUserService userService,
                                IMapper mapper)
         {
             _mediator = mediator;
-            _userService = userService;
             _mapper = mapper;
         }
 
@@ -108,10 +101,10 @@ namespace Invoice.Api.Controllers
             if (patchDoc.Operations.Count == 0)
                 throw new Exception("No field to update provided.");
 
-            var userDto = await _userService.GetById(id, false);
-
-            if (userDto == null)
-                throw new NotFoundException("User not found.");
+            var query = new GetUserByIdQuery(id);
+            var userDto = await _mediator.Send(query);
+            if (userDto is null)
+                throw new NotFoundException($"User with id {id} was not found");
 
             patchDoc.ApplyTo(userDto, ModelState);
 

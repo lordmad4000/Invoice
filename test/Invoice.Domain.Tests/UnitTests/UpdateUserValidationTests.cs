@@ -48,7 +48,7 @@ namespace Invoice.Domain.Tests.UnitTests
             var user = User.Create("jose@gmail.com", "123456", "jose", "antonio");
             
             //Act & Assert
-            Assert.Throws<ArgumentException>(() => user.Update("", "123456", "jose", "antonio"));
+            Assert.Throws<NotValidEmailAddressException>(() => user.Update("", "123456", "jose", "antonio"));
         }
 
         [Fact]
@@ -58,7 +58,7 @@ namespace Invoice.Domain.Tests.UnitTests
             var user = User.Create("jose@gmail.com", "123456", "jose", "antonio");
             
             //Act & Assert
-            Assert.Throws<ArgumentNullException>(() => user.Update(null, "123456", "jose", "antonio"));
+            Assert.Throws<NotValidEmailAddressException>(() => user.Update(null, "123456", "jose", "antonio"));
         }        
 
         [Fact]

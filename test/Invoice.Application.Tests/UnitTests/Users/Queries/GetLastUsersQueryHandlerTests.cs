@@ -1,6 +1,6 @@
 using AutoMapper;
 using Invoice.Application.AutoMapper;
-using Invoice.Application.CQRS.Users.Queries;
+using Invoice.Application.Users.Queries;
 using Invoice.Application.Common.Dto;
 using Invoice.Application.Common.Interfaces.Persistance;
 using Invoice.Domain.ValueObjects;
