@@ -11,6 +11,7 @@ using System.Threading;
 using System;
 using Xunit;
 using Invoice.Domain.IdDocumentTypes;
+using Invoice.Application.Common.Exceptions;
 
 namespace Invoice.Application.Tests.UnitTests
 {
@@ -54,7 +55,7 @@ namespace Invoice.Application.Tests.UnitTests
         }
 
         [Fact]
-        public async Task UserRegisterCommand_Should_Throw_An_BusinessRuleValidationException()
+        public async Task UserRegisterCommand_Should_Throw_An_RegisterRuleValidationException()
         {
             // Arrange
             var idDocumentType = GetIdDocumentType();
@@ -66,7 +67,8 @@ namespace Invoice.Application.Tests.UnitTests
                                                                                   _mockLogger.Object);
 
             //Act & Assert
-            await Assert.ThrowsAsync<BusinessRuleValidationException>(async () => await idDocumentTypeRegisterHandler.Handle(idDocumentTypeRegisterCommand, new CancellationToken()));
+            await Assert.ThrowsAsync<RegisterRuleValidationException>(async () => 
+                await idDocumentTypeRegisterHandler.Handle(idDocumentTypeRegisterCommand, new CancellationToken()));
         }
 
         private IdDocumentType GetIdDocumentType()
