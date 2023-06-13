@@ -1,8 +1,8 @@
-﻿using Invoice.Domain.Entities;
+﻿using Invoice.Domain.IdDocumentTypes;
 
 namespace Invoice.Application.Common.Interfaces.Persistance
 {
-    public interface IIdDocumentTypeRepository
+    public interface IIdDocumentTypeRepository : IAsyncRepository<IdDocumentType>
     {
     }
 }

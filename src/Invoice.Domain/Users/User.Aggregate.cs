@@ -1,10 +1,10 @@
-using System;
-using System.Linq;
 using FluentValidation.Results;
 using Invoice.Domain.Base;
 using Invoice.Domain.Exceptions;
 using Invoice.Domain.Users.Validations;
 using Invoice.Domain.ValueObjects;
+using System.Linq;
+using System;
 
 namespace Invoice.Domain.Users
 {
