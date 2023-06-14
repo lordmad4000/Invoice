@@ -27,7 +27,7 @@ namespace Invoice.Domain.Users
 
         public void Update(string emailAddress, string password, string firstName, string lastName)
         {
-            EmailAddress = EmailAddress.Create(emailAddress);
+            EmailAddress = new EmailAddress(emailAddress);
             Password = password;
             FirstName = firstName;
             LastName = lastName;
