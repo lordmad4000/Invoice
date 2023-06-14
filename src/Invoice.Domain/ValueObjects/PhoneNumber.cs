@@ -26,24 +26,12 @@ namespace Invoice.Domain.ValueObjects
 
         private bool Validate(string phoneNumber)
         {
-            string patternPhoneCountry = @"^(?<plus>[\+])(?<country>[1-9][0-9]{0,2})(?<area>0?[1-9]\d{0,2})(?<number>[0-9][\d]{7})$";
-            string patternPhone = @"^(?<area>0?[1-9]\d{0,2})(?<number>[0-9][\d]{7})$";
-            
-            if (!string.IsNullOrEmpty(phoneNumber))
-            {
-                if (phoneNumber.Length > 9)
-                {
-                    if (Regex.IsMatch(phoneNumber, patternPhoneCountry))
-                        return true;
-                }
-                else
-                {
-                    if (Regex.IsMatch(phoneNumber, patternPhone))
-                        return true;
-                }
-            }
+            string patternPhone = @"^(\(?\+[\d]{1,3}\)?)\s?([\d]{1,5})\s?([\d][\s\.-]?){6,7}$";
 
-            return false;
+            if (string.IsNullOrEmpty(phoneNumber) || !Regex.IsMatch(phoneNumber, patternPhone))
+                return false;
+
+            return true;
         }
 
         protected override IEnumerable<object> GetAtomicValues()
