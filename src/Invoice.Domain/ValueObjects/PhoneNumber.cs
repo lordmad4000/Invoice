@@ -1,10 +1,11 @@
 using Invoice.Domain.Exceptions;
 using System.Text.RegularExpressions;
 using System;
+using System.Collections.Generic;
 
 namespace Invoice.Domain.ValueObjects
 {
-    public class PhoneNumber
+    public class PhoneNumber : ValueObject
     {
         public string Phone { get; private set; } = string.Empty;
         private PhoneNumber()
@@ -15,14 +16,6 @@ namespace Invoice.Domain.ValueObjects
         {
             Phone = phoneNumber;
             Validate();
-        }
-
-        public static PhoneNumber Create(string phone)
-        {
-            var phoneNumber = new PhoneNumber(phone);
-            phoneNumber.Validate();
-
-            return phoneNumber;
         }
 
         private void Validate()
@@ -52,6 +45,15 @@ namespace Invoice.Domain.ValueObjects
 
             return false;
         }
-        
+
+        protected override IEnumerable<object> GetAtomicValues()
+        {
+            yield return Phone;
+        }
+
+        public override string ToString()
+        {
+            return Phone;
+        }
     }
 }

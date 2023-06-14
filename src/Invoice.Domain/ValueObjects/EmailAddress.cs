@@ -18,14 +18,6 @@ namespace Invoice.Domain.ValueObjects
             Validate();
         }
 
-        public static EmailAddress Create(string address)
-        {
-            var emailAddress = new EmailAddress(address);
-            emailAddress.Validate();
-
-            return emailAddress;
-        }
-
         private void Validate()
         {
             if (!MailAddress.TryCreate(Address, out _))
