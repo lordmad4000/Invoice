@@ -42,7 +42,7 @@ namespace Invoice.Domain.Tests.UnitTests
         }
 
         [Fact]
-        public void Empty_Email_Should_Be_Throw_ArgumentException()
+        public void Empty_Email_Should_Be_Throw_NotValidEmailAddressException()
         {
             // Arrange
             var user = User.Create("jose@gmail.com", "123456", "jose", "antonio");
@@ -52,7 +52,7 @@ namespace Invoice.Domain.Tests.UnitTests
         }
 
         [Fact]
-        public void Null_Email_Should_Be_Throw_ArgumentNullException()
+        public void Null_Email_Should_Be_Throw_NotValidEmailAddressException()
         {
             // Arrange
             var user = User.Create("jose@gmail.com", "123456", "jose", "antonio");
