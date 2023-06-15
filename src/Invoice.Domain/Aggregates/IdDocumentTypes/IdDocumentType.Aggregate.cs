@@ -23,7 +23,7 @@ namespace Invoice.Domain.IdDocumentTypes
         {
             Name = name;
 
-            ValidationResult validator = new CreateIdDocumentTypeValidator().Validate(this);
+            ValidationResult validator = new UpdateIdDocumentTypeValidator().Validate(this);
             if (!validator.IsValid)
                 throw new BusinessRuleValidationException(
                     string.Join(", ", validator.Errors.Select(x => x.ErrorMessage).ToArray()));

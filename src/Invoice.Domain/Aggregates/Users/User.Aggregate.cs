@@ -32,7 +32,7 @@ namespace Invoice.Domain.Users
             FirstName = firstName;
             LastName = lastName;
 
-            ValidationResult validator = new CreateUserValidator().Validate(this);
+            ValidationResult validator = new UpdateUserValidator().Validate(this);
             if (!validator.IsValid)
                 throw new BusinessRuleValidationException(
                     string.Join(", ", validator.Errors.Select(x => x.ErrorMessage).ToArray()));

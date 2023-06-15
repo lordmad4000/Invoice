@@ -47,7 +47,7 @@ public partial class Company : AggregateRoot
         Phone = new PhoneNumber(phone);
         EmailAddress = new EmailAddress(emailAddress);
 
-        ValidationResult validator = new CreateCompanyValidator().Validate(this);
+        ValidationResult validator = new UpdateCompanyValidator().Validate(this);
         if (!validator.IsValid)
             throw new BusinessRuleValidationException(
                 string.Join(", ", validator.Errors.Select(x => x.ErrorMessage).ToArray()));
