@@ -3,12 +3,6 @@ using FluentValidation;
 namespace Invoice.Domain.Companies.Validations;
 public class CompanyValidator : AbstractValidator<Company>
 {
-    public void ValidateId()
-    {
-        RuleFor(c => c.Id).NotEmpty()
-                          .NotNull();
-    }
-
     public void ValidateName()
     {
         RuleFor(c => c.Name).NotEmpty()

@@ -4,12 +4,6 @@ namespace Invoice.Domain.Users.Validations
 {
     public class UserValidator : AbstractValidator<User>
     {
-        public void ValidateId()
-        {
-            RuleFor(c => c.Id).NotEmpty()
-                              .NotNull();
-        }
-
         public void ValidateEmail()
         {
             RuleFor(c => c.EmailAddress.Address).NotEmpty()
