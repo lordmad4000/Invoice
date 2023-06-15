@@ -24,7 +24,6 @@ public partial class Company : AggregateRoot
                                  string emailAddress)
     {
         var company = new Company(Guid.NewGuid());
-
         company.Update(name, idDocumentTypeId, idDocumentNumber, street, city, country, postalCode, phone, emailAddress);
 
         return company;

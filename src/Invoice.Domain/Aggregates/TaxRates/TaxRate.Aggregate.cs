@@ -14,10 +14,10 @@ public partial class TaxRate : AggregateRoot
 
     public static TaxRate Create(string name, int value)
     {
-        var user = new TaxRate(Guid.NewGuid());
-        user.Update(name, value);
+        var taxRate = new TaxRate(Guid.NewGuid());
+        taxRate.Update(name, value);
 
-        return user;
+        return taxRate;
     }
 
     public void Update(string name, int value)

@@ -16,10 +16,7 @@ namespace Invoice.Domain.Users
 
         public static User Create(string emailAddress, string password, string firstName, string lastName)
         {
-            var user = new User(Guid.NewGuid())
-            {
-                CreationDate = DateTime.UtcNow
-            };
+            var user = new User(Guid.NewGuid()) { CreationDate = DateTime.UtcNow };
             user.Update(emailAddress, password, firstName, lastName);
 
             return user;

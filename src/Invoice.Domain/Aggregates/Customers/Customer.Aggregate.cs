@@ -24,11 +24,10 @@ public partial class Customer : AggregateRoot
                                   string phone,
                                   string emailAddress)
     {
-        var company = new Customer(Guid.NewGuid());
+        var customer = new Customer(Guid.NewGuid());
+        customer.Update(firstName, lastName, idDocumentTypeId, idDocumentNumber, street, city, country, postalCode, phone, emailAddress);
 
-        company.Update(firstName, lastName, idDocumentTypeId, idDocumentNumber, street, city, country, postalCode, phone, emailAddress);
-
-        return company;
+        return customer;
     }
 
     public void Update(string firstName,
