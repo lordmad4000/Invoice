@@ -52,5 +52,18 @@ public partial class Company : AggregateRoot
             throw new BusinessRuleValidationException(
                 string.Join(", ", validator.Errors.Select(x => x.ErrorMessage).ToArray()));
     }
+        public override string ToString()
+        {
+            return $"Id: {Id}, " +
+                   $"Name: {Name}, " +
+                   $"IdDocumentTypeId: {IdDocumentTypeId}, " +
+                   $"IdDocumentNumber: {IdDocumentNumber} ," +
+                   $"Street: {CompanyAddress.Street}, " +
+                   $"City: {CompanyAddress.City}, " +
+                   $"Country: {CompanyAddress.Country}, " +
+                   $"Postal Code: {CompanyAddress.PostalCode}, " +
+                   $"Phone: {Phone.Phone}, " +
+                   $"EmailAddress: {EmailAddress.Address}";
+        }
     
 }
