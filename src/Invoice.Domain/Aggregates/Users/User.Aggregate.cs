@@ -40,12 +40,11 @@ namespace Invoice.Domain.Users
 
         public override string ToString()
         {
-            return @$"Id {Id}, 
-                      Email {EmailAddress.Address}, 
-                      Password {Password}, 
-                      EncryptedPassword {Password}, 
-                      FirstName {FirstName}, 
-                      LastName {LastName}";
+            return @$"Id: {Id}, " +
+                    $"Email: {EmailAddress.Address}, " +
+                    $"Password: {Password}, " +
+                    $"FirstName: {FirstName}, " +
+                    $"LastName: {LastName}";
         }
 
     }
