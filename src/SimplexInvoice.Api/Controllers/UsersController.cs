@@ -32,7 +32,7 @@ namespace SimplexInvoice.Api.Controllers
         {
             var query = new GetUserByIdQuery(id);
             var userDto = await _mediator.Send(query);
-            if (userDto == null)
+            if (userDto is null)
                 throw new NotFoundException($"User with id {id} was not found");
 
             return (Ok(_mapper.Map<UserResponse>(userDto)));
@@ -72,7 +72,7 @@ namespace SimplexInvoice.Api.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             var userRemoveCommand = new UserRemoveCommand(id);
-            bool result = await _mediator.Send(userRemoveCommand) == null ? false : true;
+            bool result = await _mediator.Send(userRemoveCommand) is null ? false : true;
 
             return (Ok(result));
         }
@@ -93,7 +93,7 @@ namespace SimplexInvoice.Api.Controllers
         [HttpPatch("PatchReplaceById/{id}")]
         public async Task<IActionResult> PatchReplaceById([FromBody] JsonPatchDocument<UserDto> patchDoc, Guid id)
         {
-            if (patchDoc == null)
+            if (patchDoc is null)
                 throw new Exception("No field to update provided.");
 
             // ONLY ALLOWED REPLACE OPERATIONS

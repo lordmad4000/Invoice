@@ -52,7 +52,7 @@ namespace SimplexInvoice.Application.Users.Commands
         private async Task<User> Validate(UserRemoveCommand request)
         {
             var user = await _userRepository.GetAsync(c => c.Id == request.Id, false);
-            if (user == null)
+            if (user is null)
                 throw new NotFoundException("User not found.");
 
             _validatorService.ValidateModel(new UpdateUserValidator().Validate(user));

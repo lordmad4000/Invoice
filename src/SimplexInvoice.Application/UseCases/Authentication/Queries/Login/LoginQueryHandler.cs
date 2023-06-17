@@ -30,7 +30,7 @@ namespace SimplexInvoice.Application.Authentication.Queries
         public async Task<UserDto> Handle(LoginQuery request, CancellationToken cancellationToken)
         {
             var user = await _userRepository.GetAsync(c => c.EmailAddress.Address == request.Email, false);
-            if (user == null || _passwordService.IsCorrectPassword(user.EmailAddress.ToString(), user.Password, request.Password) == false)
+            if (user is null || _passwordService.IsCorrectPassword(user.EmailAddress.ToString(), user.Password, request.Password) == false)
                 throw new System.Exception("Login error: Invalid Username or Password.");
 
             _logger.Debug($"Login with {request.Email} and {request.Password}");

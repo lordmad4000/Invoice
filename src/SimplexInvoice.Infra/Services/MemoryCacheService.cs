@@ -35,7 +35,7 @@ namespace SimplexInvoice.Infra.Services
         {
             _memoryCache.TryGetValue(cacheKey, out value);
 
-            if (value == null)
+            if (value is null)
                 return false;
 
             return true;
