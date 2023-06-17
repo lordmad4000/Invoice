@@ -9,7 +9,7 @@ RUN apt update && apt install -y procps
 RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
 RUN apt install -y build-essential nodejs
 
-WORKDIR /src/Invoice.Api/ClientApp
+WORKDIR /src/SimplexInvoice.Api/ClientApp
 RUN npm install -g npm@8.19.3
 RUN npm install zone.js
 
@@ -23,4 +23,4 @@ RUN dotnet publish -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Invoice.Api.dll"]
+ENTRYPOINT ["dotnet", "SimplexInvoice.Api.dll"]

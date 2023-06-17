@@ -3,7 +3,7 @@
     <SourceRoot>$(MSBuildThisFileDirectory)</SourceRoot>
   </PropertyGroup>
   <PropertyGroup>
-    <Product>Invoice</Product>
+    <Product>SimplexInvoice</Product>
     <PackageVersion Condition="'$(PackageVersion)' == ''">1.0.0</PackageVersion>
     <PublishRepositoryUrl>false</PublishRepositoryUrl>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -11,9 +11,9 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <LangVersion>11.0</LangVersion>
     <NoWarn>1591</NoWarn>
-    <PackageTags>Invoice</PackageTags>
+    <PackageTags>SimplexInvoice</PackageTags>
     <Description>
-      Invoice
+      SimplexInvoice
     </Description>
   </PropertyGroup>
   <PropertyGroup>
