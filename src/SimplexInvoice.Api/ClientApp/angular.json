@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "invoiceapp": {
+    "SimplexInvoiceApp": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -79,10 +79,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "invoiceapp:build:production"
+              "browserTarget": "SimplexInvoiceApp:build:production"
             },
             "development": {
-              "browserTarget": "invoiceapp:build:development",
+              "browserTarget": "SimplexInvoiceApp:build:development",
               "proxyConfig": "proxy.conf.js"
             }
           },
@@ -91,7 +91,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "invoiceapp:build"
+            "browserTarget": "SimplexInvoiceApp:build"
           }
         },
         "test": {

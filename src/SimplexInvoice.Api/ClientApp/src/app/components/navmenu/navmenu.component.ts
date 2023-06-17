@@ -29,7 +29,7 @@ import { JWTService, PopupService } from 'src/app/shared/services';
 
 export class NavmenuComponent {
 
-  title = 'InvoiceApp';
+  title = 'SimplexInvoiceApp';
   constructor(private router: Router, 
     private popupService: PopupService,
     private jwtService: JWTService,
@@ -57,7 +57,7 @@ export class NavmenuComponent {
   aboutButtonClick() {
     console.log("About button click.")
     const tokenExpiricyTime = this.jwtService.GetTokenExpiricyTime();    
-    this.popupService.openPopupAceptar("About InvoiceApp", "Version: 0.1a | Expiration token: " + tokenExpiricyTime + " sec", "400px", "");
+    this.popupService.openPopupAceptar("About SimplexInvoiceApp", "Version: 0.1a | Expiration token: " + tokenExpiricyTime + " sec", "400px", "");
   }
 
 }
