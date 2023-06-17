@@ -19,20 +19,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="$(MicrosoftAspNetCoreSpaProxy)" />
     <PackageReference Include="AutoMapper" Version="$(AutoMapper)" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="$(AutoMapperExtensionsMicrosoftDependencyInjection)" />
+    <PackageReference Include="MediatR" Version="$(MediatR)" />
     <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="$(MicrosoftAspNetCoreJsonPatch)" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="$(MicrosoftAspNetCoreMvcNewtonsoftJson)" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="$(MicrosoftAspNetCoreSpaProxy)" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="$(MicrosoftEntityFrameworkCore)" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="$(MicrosoftEntityFrameworkCoreTools)">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="$(MicrosoftExtensionsDependencyModel)" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="$(MicrosoftVisualStudioAzureContainersToolsTargets)" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="$(SwashbuckleAspNetCore)" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="$(PomeloEntityFrameworkCoreMySql)" />
-    <PackageReference Include="MediatR" Version="$(MediatR)" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="$(SwashbuckleAspNetCore)" />
   </ItemGroup>
 
   <ItemGroup>

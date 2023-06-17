@@ -7,7 +7,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="$(AutoMapperExtensionsMicrosoftDependencyInjection)" />
     <PackageReference Include="MediatR" Version="$(MediatR)" />
-    <!-- <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="$(MediatRExtensionsMicrosoftDependencyInjection)" /> -->
+    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="$(MicrosoftExtensionsDependencyModel)" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="$(SystemIdentityModelTokensJwt)" />
   </ItemGroup>
 
