@@ -19,8 +19,8 @@ public class ProductValidator : AbstractValidator<Product>
 
     public void ValidateUnitPrice()
     {
-        RuleFor(c => c.UnitPrice).NotNull()
-                                 .GreaterThanOrEqualTo(0.0);
+        RuleFor(c => c.UnitPrice.Amount).NotNull()
+                                        .GreaterThanOrEqualTo(0.0);
     }
 
     public void ValidateProductTaxRateId()
