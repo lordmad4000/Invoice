@@ -13,8 +13,8 @@ namespace SimplexInvoice.Domain.Invoices.Validations
 
         public void ValidateTotal()
         {
-            RuleFor(c => c.Total).NotNull()
-                                 .GreaterThanOrEqualTo(0);
+            RuleFor(c => c.Total.Amount).NotNull()
+                                        .GreaterThanOrEqualTo(0);
         }
 
     }
