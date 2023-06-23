@@ -17,6 +17,7 @@ public class UpdateProductValidationTests
             product.Update("LASAÑA BOLOGNESA",
                            "LASAÑA BOLOGNESA",
                            2.60,
+                           "USD",
                            Guid.NewGuid()));
 
         //Assert
@@ -34,6 +35,7 @@ public class UpdateProductValidationTests
             product.Update("",
                            "LASAÑA BOLOGNESA",
                            2.60,
+                           "USD",
                            Guid.NewGuid()));
     }
 
@@ -48,6 +50,7 @@ public class UpdateProductValidationTests
             product.Update(null,
                            "LASAÑA BOLOGNESA",
                            2.60,
+                           "USD",
                            Guid.NewGuid()));
     }
 
@@ -62,6 +65,7 @@ public class UpdateProductValidationTests
             product.Update("LASAÑA BOLOGNESA_________________________",
                            "LASAÑA BOLOGNESA",
                            2.60,
+                           "USD",
                            Guid.NewGuid()));
     }
 
@@ -76,6 +80,7 @@ public class UpdateProductValidationTests
             product.Update("LASAÑA BOLOGNESA",
                            "",
                            2.60,
+                           "USD",
                            Guid.NewGuid()));
     }
 
@@ -90,6 +95,7 @@ public class UpdateProductValidationTests
             product.Update("LASAÑA BOLOGNESA",
                            null,
                            2.60,
+                           "USD",
                            Guid.NewGuid()));
     }
 
@@ -104,11 +110,12 @@ public class UpdateProductValidationTests
             product.Update("LASAÑA BOLOGNESA",
                            "LASAÑA BOLOGNESA_________________________",
                            2.60,
+                           "USD",
                            Guid.NewGuid()));
     }
 
     [Fact]
-    public void UnitPrice_Lesser_Than_0_Should_Be_Throw_BusinessRuleValidationException()
+    public void UnitPriceAmount_Lesser_Than_0_Should_Be_Throw_BusinessRuleValidationException()
     {
         //Arrange
         var product = GetProduct();
@@ -118,6 +125,7 @@ public class UpdateProductValidationTests
             product.Update("LASAÑA BOLOGNESA",
                            "LASAÑA BOLOGNESA",
                            -1.50,
+                           "USD",
                            Guid.NewGuid()));
     }
 
@@ -125,6 +133,7 @@ public class UpdateProductValidationTests
         Product.Create("FAIRY ULTRA",
                        "FAIRY ULTRA",
                        3.25,
+                       "EUR",
                        Guid.NewGuid());
 
 }
