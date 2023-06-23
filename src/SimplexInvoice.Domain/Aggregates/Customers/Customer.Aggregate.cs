@@ -17,15 +17,12 @@ public partial class Customer : AggregateRoot
                                   string lastName,
                                   Guid idDocumentTypeId,
                                   string idDocumentNumber,
-                                  string street,
-                                  string city,
-                                  string country,
-                                  string postalCode,
+                                  Address address,
                                   string phone,
                                   string emailAddress)
     {
         var customer = new Customer(Guid.NewGuid());
-        customer.Update(firstName, lastName, idDocumentTypeId, idDocumentNumber, street, city, country, postalCode, phone, emailAddress);
+        customer.Update(firstName, lastName, idDocumentTypeId, idDocumentNumber, address, phone, emailAddress);
 
         return customer;
     }
@@ -34,10 +31,7 @@ public partial class Customer : AggregateRoot
                        string lastName,
                        Guid idDocumentTypeId,
                        string idDocumentNumber,
-                       string street,
-                       string city,
-                       string country,
-                       string postalCode,
+                       Address address,
                        string phone,
                        string emailAddress)
     {
@@ -45,7 +39,7 @@ public partial class Customer : AggregateRoot
         LastName = lastName;
         IdDocumentTypeId = idDocumentTypeId;
         IdDocumentNumber = idDocumentNumber;
-        CustomerAddress = new Address(street, city, country, postalCode);
+        CustomerAddress = address;
         Phone = new PhoneNumber(phone);
         EmailAddress = new EmailAddress(emailAddress);
 
@@ -54,6 +48,32 @@ public partial class Customer : AggregateRoot
             throw new BusinessRuleValidationException(
                 string.Join(", ", validator.Errors.Select(x => x.ErrorMessage).ToArray()));
     }
+
+    public static Customer Create(
+        string firstName,
+        string lastName,
+        Guid idDocumentTypeId,
+        string idDocumentNumber,
+        string street,
+        string city,
+        string country,
+        string postalCode,
+        string phone,
+        string emailAddress) =>
+            Create(firstName, lastName, idDocumentTypeId, idDocumentNumber, new Address(street, city, country, postalCode), phone, emailAddress);
+
+    public void Update(
+        string firstName,
+        string lastName,
+        Guid idDocumentTypeId,
+        string idDocumentNumber,
+        string street,
+        string city,
+        string country,
+        string postalCode,
+        string phone,
+        string emailAddress) =>
+            Update(firstName, lastName, idDocumentTypeId, idDocumentNumber, new Address(street, city, country, postalCode), phone, emailAddress);
     
     public override string ToString()
     {
