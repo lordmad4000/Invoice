@@ -20,6 +20,7 @@ public class CreateInvoiceLineValidationTests
                                "LASAÑA BOLOÑESA", 
                                4, 
                                2.60, 
+                               "USD", 
                                "4%", 
                                4, 
                                10));
@@ -42,6 +43,7 @@ public class CreateInvoiceLineValidationTests
                                "LASAÑA BOLOÑESA", 
                                4, 
                                2.60, 
+                               "USD", 
                                "4%", 
                                4, 
                                10));
@@ -61,6 +63,7 @@ public class CreateInvoiceLineValidationTests
                                "LASAÑA BOLOÑESA", 
                                4, 
                                2.60, 
+                               "USD", 
                                "4%", 
                                4, 
                                10));
@@ -80,6 +83,7 @@ public class CreateInvoiceLineValidationTests
                                "LASAÑA BOLOÑESA", 
                                4, 
                                2.60, 
+                               "USD", 
                                "4%", 
                                4, 
                                10));
@@ -99,6 +103,7 @@ public class CreateInvoiceLineValidationTests
                                "LASAÑA BOLOÑESA", 
                                4, 
                                2.60, 
+                               "USD", 
                                "4%", 
                                4, 
                                10));
@@ -118,6 +123,7 @@ public class CreateInvoiceLineValidationTests
                                "LASAÑA BOLOÑESA", 
                                4, 
                                2.60, 
+                               "USD", 
                                "4%", 
                                4, 
                                10));
@@ -137,6 +143,7 @@ public class CreateInvoiceLineValidationTests
                                "LASAÑA BOLOÑESA", 
                                4, 
                                2.60, 
+                               "USD", 
                                "4%", 
                                4, 
                                10));
@@ -156,6 +163,7 @@ public class CreateInvoiceLineValidationTests
                                "LASAÑA BOLOÑESA", 
                                4, 
                                2.60, 
+                               "USD", 
                                "4%", 
                                4, 
                                10));
@@ -175,6 +183,7 @@ public class CreateInvoiceLineValidationTests
                                "", 
                                4, 
                                2.60, 
+                               "USD", 
                                "4%", 
                                4, 
                                10));
@@ -194,6 +203,7 @@ public class CreateInvoiceLineValidationTests
                                null,
                                4, 
                                2.60, 
+                               "USD", 
                                "4%", 
                                4, 
                                10));
@@ -213,13 +223,14 @@ public class CreateInvoiceLineValidationTests
                                "LASAÑA BOLOÑESA__________________________", 
                                4, 
                                2.60, 
+                               "USD", 
                                "4%", 
                                4, 
                                10));
     }
 
     [Fact]
-    public void Price_Lesser_Than_0_Should_Be_Throw_BusinessRuleValidationException()
+    public void PriceAmount_Lesser_Than_0_Should_Be_Throw_BusinessRuleValidationException()
     {
         //Arrange
 
@@ -232,6 +243,7 @@ public class CreateInvoiceLineValidationTests
                                "LASAÑA BOLOÑESA", 
                                4, 
                                -2.60, 
+                               "USD", 
                                "4%", 
                                4, 
                                10));
@@ -251,6 +263,7 @@ public class CreateInvoiceLineValidationTests
                                "LASAÑA BOLOÑESA", 
                                4, 
                                2.60, 
+                               "USD", 
                                "", 
                                4, 
                                10));
@@ -270,6 +283,7 @@ public class CreateInvoiceLineValidationTests
                                "LASAÑA BOLOÑESA", 
                                4, 
                                2.60, 
+                               "USD", 
                                null, 
                                4, 
                                10));
@@ -289,6 +303,7 @@ public class CreateInvoiceLineValidationTests
                                "LASAÑA BOLOÑESA", 
                                4, 
                                2.60, 
+                               "USD", 
                                "4%___________________", 
                                4, 
                                10));
@@ -308,6 +323,7 @@ public class CreateInvoiceLineValidationTests
                                "LASAÑA BOLOÑESA", 
                                4, 
                                2.60, 
+                               "USD", 
                                "4%", 
                                -4, 
                                10));
@@ -327,6 +343,7 @@ public class CreateInvoiceLineValidationTests
                                "LASAÑA BOLOÑESA", 
                                4, 
                                2.60, 
+                               "USD", 
                                "4%", 
                                104, 
                                10));
@@ -346,6 +363,7 @@ public class CreateInvoiceLineValidationTests
                                "LASAÑA BOLOÑESA", 
                                4, 
                                2.60, 
+                               "USD", 
                                "4%", 
                                4, 
                                -10));
@@ -365,6 +383,7 @@ public class CreateInvoiceLineValidationTests
                                "LASAÑA BOLOÑESA", 
                                4, 
                                2.60, 
+                               "USD", 
                                "4%", 
                                4, 
                                110));
