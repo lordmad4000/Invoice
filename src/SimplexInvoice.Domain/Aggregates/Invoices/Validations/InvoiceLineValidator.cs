@@ -33,8 +33,8 @@ namespace SimplexInvoice.Domain.Invoices.Validations
 
         public void ValidatePrice()
         {
-            RuleFor(c => c.Price).NotNull()
-                                 .GreaterThanOrEqualTo(0);
+            RuleFor(c => c.Price.Amount).NotNull()
+                                        .GreaterThanOrEqualTo(0);
         }
 
         public void ValidateTaxName()

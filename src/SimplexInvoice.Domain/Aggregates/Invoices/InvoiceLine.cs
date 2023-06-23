@@ -1,3 +1,4 @@
+using SimplexInvoice.Domain.ValueObjects;
 using System;
 
 namespace SimplexInvoice.Domain.Invoices;
@@ -9,12 +10,12 @@ public partial class InvoiceLine
     public string ProductName { get; private set; } = string.Empty;
     public string ProductDescription { get; private set; } = string.Empty;
     public double Quantity { get; private set; } = 0;
-    public double Price { get; private set; } = 0.0;
+    public Money Price { get; private set; } = new Money("USD", 0.0);
     public string TaxName { get; private set; } = string.Empty;
     public int TaxRate { get; private set; } = 0;
     public int DiscountRate { get; private set; } = 0;
-    public double TaxAmount { get; private set; } = 0.0;
-    public double DiscountAmount { get; private set; } = 0.0;
-    public double TaxBaseAmount { get; private set; } = 0.0;
-    public double TotalAmount { get; private set; } = 0.0;
+    public Money TaxAmount { get; private set; } = new Money("USD", 0.0);
+    public Money DiscountAmount { get; private set; } = new Money("USD", 0.0);
+    public Money TaxBaseAmount { get; private set; } = new Money("USD", 0.0);
+    public Money TotalAmount { get; private set; } = new Money("USD", 0.0);
 }
