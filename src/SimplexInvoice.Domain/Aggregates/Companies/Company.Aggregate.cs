@@ -13,36 +13,30 @@ public partial class Company : AggregateRoot
     {
     }
 
-    public static Company Create(string name, 
-                                 Guid idDocumentTypeId, 
-                                 string idDocumentNumber, 
-                                 string street, 
-                                 string city, 
-                                 string country, 
-                                 string postalCode, 
-                                 string phone, 
+    public static Company Create(string name,
+                                 Guid idDocumentTypeId,
+                                 string idDocumentNumber,
+                                 Address address,
+                                 string phone,
                                  string emailAddress)
     {
         var company = new Company(Guid.NewGuid());
-        company.Update(name, idDocumentTypeId, idDocumentNumber, street, city, country, postalCode, phone, emailAddress);
+        company.Update(name, idDocumentTypeId, idDocumentNumber, address, phone, emailAddress);
 
         return company;
     }
 
-    public void Update(string name, 
-                       Guid idDocumentTypeId, 
-                       string idDocumentNumber, 
-                       string street, 
-                       string city, 
-                       string country, 
-                       string postalCode, 
-                       string phone, 
+    public void Update(string name,
+                       Guid idDocumentTypeId,
+                       string idDocumentNumber,
+                       Address address,
+                       string phone,
                        string emailAddress)
     {
         Name = name;
         IdDocumentTypeId = idDocumentTypeId;
-        IdDocumentNumber = idDocumentNumber;        
-        CompanyAddress = new Address(street, city, country, postalCode);
+        IdDocumentNumber = idDocumentNumber;
+        CompanyAddress = address;
         Phone = new PhoneNumber(phone);
         EmailAddress = new EmailAddress(emailAddress);
 
@@ -51,18 +45,42 @@ public partial class Company : AggregateRoot
             throw new BusinessRuleValidationException(
                 string.Join(", ", validator.Errors.Select(x => x.ErrorMessage).ToArray()));
     }
-        public override string ToString()
-        {
-            return $"Id: {Id}, " +
-                   $"Name: {Name}, " +
-                   $"IdDocumentTypeId: {IdDocumentTypeId}, " +
-                   $"IdDocumentNumber: {IdDocumentNumber} ," +
-                   $"Street: {CompanyAddress.Street}, " +
-                   $"City: {CompanyAddress.City}, " +
-                   $"Country: {CompanyAddress.Country}, " +
-                   $"Postal Code: {CompanyAddress.PostalCode}, " +
-                   $"Phone: {Phone.Phone}, " +
-                   $"EmailAddress: {EmailAddress.Address}";
-        }
-    
+
+    public static Company Create(
+        string name,
+        Guid idDocumentTypeId,
+        string idDocumentNumber,
+        string street,
+        string city,
+        string country,
+        string postalCode,
+        string phone,
+        string emailAddress) =>
+            Create(name, idDocumentTypeId, idDocumentNumber, new Address(street, city, country, postalCode), phone, emailAddress);
+
+    public void Update(
+        string name,
+        Guid idDocumentTypeId,
+        string idDocumentNumber,
+        string street,
+        string city,
+        string country,
+        string postalCode,
+        string phone,
+        string emailAddress) =>
+            Update(name, idDocumentTypeId, idDocumentNumber, new Address(street, city, country, postalCode), phone, emailAddress);
+    public override string ToString()
+    {
+        return $"Id: {Id}, " +
+               $"Name: {Name}, " +
+               $"IdDocumentTypeId: {IdDocumentTypeId}, " +
+               $"IdDocumentNumber: {IdDocumentNumber} ," +
+               $"Street: {CompanyAddress.Street}, " +
+               $"City: {CompanyAddress.City}, " +
+               $"Country: {CompanyAddress.Country}, " +
+               $"Postal Code: {CompanyAddress.PostalCode}, " +
+               $"Phone: {Phone.Phone}, " +
+               $"EmailAddress: {EmailAddress.Address}";
+    }
+
 }
