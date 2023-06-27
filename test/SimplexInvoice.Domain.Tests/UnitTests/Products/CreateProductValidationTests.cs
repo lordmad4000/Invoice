@@ -13,8 +13,10 @@ public class CreateProductValidationTests
 
         //Act
         var exception = Record.Exception(() =>
-            Product.Create("LASAÑA BOLOGNESA",
+            Product.Create("10LB", 
                            "LASAÑA BOLOGNESA",
+                           "LASAÑA BOLOGNESA",
+                           1.0, 
                            2.60,
                            "USD",
                            Guid.NewGuid()));
@@ -24,14 +26,64 @@ public class CreateProductValidationTests
     }
 
     [Fact]
+    public void Empty_Code_Should_Be_Throw_BusinessRuleValidationException()
+    {
+        // Arrange
+
+        // Act & Assert
+        Assert.Throws<BusinessRuleValidationException>(() =>
+            Product.Create("", 
+                           "LASAÑA BOLOGNESA",
+                           "LASAÑA BOLOGNESA",
+                           1.0, 
+                           2.60,
+                           "USD",
+                           Guid.NewGuid()));
+    }
+
+    [Fact]
+    public void Null_Code_Should_Be_Throw_BusinessRuleValidationException()
+    {
+        // Arrange
+
+        // Act & Assert
+        Assert.Throws<BusinessRuleValidationException>(() =>
+            Product.Create(null, 
+                           "LASAÑA BOLOGNESA",
+                           "LASAÑA BOLOGNESA",
+                           1.0, 
+                           2.60,
+                           "USD",
+                           Guid.NewGuid()));
+    }
+
+    [Fact]
+    public void Code_Length_Greater_Than_20_Should_Be_Throw_BusinessRuleValidationException()
+    {
+        // Arrange
+
+        // Act & Assert
+        Assert.Throws<BusinessRuleValidationException>(() =>
+            Product.Create("10LB_________________", 
+                           "LASAÑA BOLOGNESA",
+                           "LASAÑA BOLOGNESA",
+                           1.0, 
+                           2.60,
+                           "USD",
+                           Guid.NewGuid()));
+    }
+
+    [Fact]
     public void Empty_Name_Should_Be_Throw_BusinessRuleValidationException()
     {
         // Arrange
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            Product.Create("",
+            Product.Create("10LB", 
+                           "",
                            "LASAÑA BOLOGNESA",
+                           1.0, 
                            2.60,
                            "USD",
                            Guid.NewGuid()));
@@ -44,8 +96,10 @@ public class CreateProductValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            Product.Create(null,
+            Product.Create("10LB", 
+                           null,
                            "LASAÑA BOLOGNESA",
+                           1.0, 
                            2.60,
                            "USD",
                            Guid.NewGuid()));
@@ -58,8 +112,10 @@ public class CreateProductValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            Product.Create("LASAÑA BOLOGNESA_________________________",
+            Product.Create("10LB", 
+                           "LASAÑA BOLOGNESA_________________________",
                            "LASAÑA BOLOGNESA",
+                           1.0, 
                            2.60,
                            "USD",
                            Guid.NewGuid()));
@@ -72,8 +128,10 @@ public class CreateProductValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            Product.Create("LASAÑA BOLOGNESA",
+            Product.Create("10LB", 
+                           "LASAÑA BOLOGNESA",
                            "",
+                           1.0, 
                            2.60,
                            "USD",
                            Guid.NewGuid()));
@@ -86,8 +144,10 @@ public class CreateProductValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            Product.Create("LASAÑA BOLOGNESA",
+            Product.Create("10LB", 
+                           "LASAÑA BOLOGNESA",
                            null,
+                           1.0, 
                            2.60,
                            "USD",
                            Guid.NewGuid()));
@@ -100,8 +160,42 @@ public class CreateProductValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            Product.Create("LASAÑA BOLOGNESA",
+            Product.Create("10LB", 
+                           "LASAÑA BOLOGNESA",
                            "LASAÑA BOLOGNESA_________________________",
+                           1.0, 
+                           2.60,
+                           "USD",
+                           Guid.NewGuid()));
+    }
+
+    [Fact]
+    public void PackageQuantity_Equals_0_Should_Be_Throw_BusinessRuleValidationException()
+    {
+        //Arrange
+
+        //Act & Assert
+        Assert.Throws<BusinessRuleValidationException>(() =>
+            Product.Create("10LB", 
+                           "LASAÑA BOLOGNESA",
+                           "LASAÑA BOLOGNESA",
+                           0.0, 
+                           2.60,
+                           "USD",
+                           Guid.NewGuid()));
+    }
+
+    [Fact]
+    public void PackageQuantity_Lesser_Than_0_Should_Be_Throw_BusinessRuleValidationException()
+    {
+        //Arrange
+
+        //Act & Assert
+        Assert.Throws<BusinessRuleValidationException>(() =>
+            Product.Create("10LB", 
+                           "LASAÑA BOLOGNESA",
+                           "LASAÑA BOLOGNESA",
+                           -0.5, 
                            2.60,
                            "USD",
                            Guid.NewGuid()));
@@ -114,8 +208,10 @@ public class CreateProductValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            Product.Create("LASAÑA BOLOGNESA",
+            Product.Create("10LB", 
                            "LASAÑA BOLOGNESA",
+                           "LASAÑA BOLOGNESA",
+                           1.0, 
                            -1.50,
                            "USD",
                            Guid.NewGuid()));
