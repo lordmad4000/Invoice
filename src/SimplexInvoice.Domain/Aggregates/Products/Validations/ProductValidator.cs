@@ -3,6 +3,13 @@ using FluentValidation;
 namespace SimplexInvoice.Domain.Products.Validations;
 public class ProductValidator : AbstractValidator<Product>
 {
+    public void ValidateCode()
+    {
+        RuleFor(c => c.Code).NotEmpty()
+                            .NotNull()
+                            .Length(1, 20);
+    }
+
     public void ValidateName()
     {
         RuleFor(c => c.Name).NotEmpty()
@@ -15,6 +22,12 @@ public class ProductValidator : AbstractValidator<Product>
         RuleFor(c => c.Description).NotEmpty()
                                    .NotNull()
                                    .Length(1, 40);
+    }
+
+    public void ValidatePackageQuantity()
+    {
+        RuleFor(c => c.PackageQuantity).NotNull()
+                                       .GreaterThan(0.0);
     }
 
     public void ValidateUnitPrice()

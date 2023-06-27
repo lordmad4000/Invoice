@@ -4,8 +4,10 @@ public class UpdateProductValidator : ProductValidator
 {
     public UpdateProductValidator()
     {
+        ValidateCode();
         ValidateName();
         ValidateDescription();
+        ValidatePackageQuantity();
         ValidateUnitPrice();
         ValidateProductTaxRateId();
     }
