@@ -13,18 +13,20 @@ public partial class Product : AggregateRoot
     {
     }
 
-    public static Product Create(string name, string description, double unitPrice, string currency, Guid productTaxRateId)
+    public static Product Create(string code, string name, string description, double packageQuantity, double unitPrice, string currency, Guid productTaxRateId)
     {
         var product = new Product(Guid.NewGuid());
-        product.Update(name, description, unitPrice, currency, productTaxRateId);
+        product.Update(code, name, description, packageQuantity, unitPrice, currency, productTaxRateId);
 
         return product;
     }
 
-    public void Update(string name, string description, double unitPrice, string currency, Guid productTaxRateId)
+    public void Update(string code, string name, string description, double packageQuantity, double unitPrice, string currency, Guid productTaxRateId)
     {
+        Code = code;
         Name = name;
         Description = description;
+        PackageQuantity = packageQuantity;
         UnitPrice = new Money(currency, unitPrice);
         ProductTaxRateId = productTaxRateId;
 
@@ -37,8 +39,10 @@ public partial class Product : AggregateRoot
     public override string ToString()
     {
         return $"Id: {Id}, " +
+               $"Code: {Code}, " +
                $"Name: {Name}, " +
                $"Description: {Description}, " +
+               $"PackageQuantity: {PackageQuantity}, " +
                $"UnitPrice: {UnitPrice.Amount}, " +
                $"Currency: {UnitPrice.Currency}, " +
                $"ProductTaxRateId: {ProductTaxRateId}";
