@@ -8,6 +8,7 @@ public class AddressValidator : AbstractValidator<Address>
     {
         ValidateStreet();
         ValidateCity();
+        ValidateState();
         ValidateCountry();
         ValidatePostalCode();
     }
@@ -24,6 +25,13 @@ public class AddressValidator : AbstractValidator<Address>
         RuleFor(c => c.City).NotEmpty()
                             .NotNull()
                             .Length(1, 40);
+    }
+
+    public void ValidateState()
+    {
+        RuleFor(c => c.State).NotEmpty()
+                             .NotNull()
+                             .Length(1, 40);
     }
 
     public void ValidateCountry()
