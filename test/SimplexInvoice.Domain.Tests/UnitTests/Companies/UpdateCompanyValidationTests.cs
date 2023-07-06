@@ -156,7 +156,7 @@ public class UpdateCompanyValidationTests
     }
 
     [Fact]
-    public void Phone_Lengtg_Greater_Than_40_Should_Throw_NotValidPhoneNumberException()
+    public void Phone_Length_Greater_Than_40_Should_Throw_NotValidPhoneNumberException()
     {
         //Arrange
         var company = GetCompany();

@@ -1,5 +1,6 @@
 using SimplexInvoice.Domain.Customers;
 using SimplexInvoice.Domain.Exceptions;
+using SimplexInvoice.Domain.ValueObjects;
 using System;
 using Xunit;
 
@@ -14,12 +15,12 @@ public class CreateCustomerValidationTests
         //Act
         var exception = Record.Exception(() =>
             Customer.Create("John",
-                            "Connor" ,
+                            "Connor",
                             Guid.NewGuid(),
                             "A37610482",
-                            "24, White Dog St.", "Kingston", "New York", "12401",
-                            "+01 718 222 2222",
-                            "prueba@gmail.com"));
+                            new Address("24, White Dog St.", "Kingston", "New York", "USA", "12401"),
+                            new PhoneNumber("+01 718 222 2222"),
+                            new EmailAddress("prueba@gmail.com")));
 
         //Assert
         Assert.Null(exception);
@@ -32,13 +33,13 @@ public class CreateCustomerValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-        Customer.Create("",
-                        "Connor",
-                        Guid.NewGuid(),
-                        "A37610482",
-                        "24, White Dog St.", "Kingston", "New York", "12401",
-                        "+01 718 222 2222",
-                        "prueba@gmail.com"));
+            Customer.Create("",
+                            "Connor",
+                            Guid.NewGuid(),
+                            "A37610482",
+                            new Address("24, White Dog St.", "Kingston", "New York", "USA", "12401"),
+                            new PhoneNumber("+01 718 222 2222"),
+                            new EmailAddress("prueba@gmail.com")));
     }
 
     [Fact]
@@ -48,13 +49,13 @@ public class CreateCustomerValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-        Customer.Create(null,
-                        "Connor",
-                        Guid.NewGuid(),
-                        "A37610482",
-                        "24, White Dog St.", "Kingston", "New York", "12401",
-                        "+01 718 222 2222",
-                        "prueba@gmail.com"));
+            Customer.Create(null,
+                            "Connor",
+                            Guid.NewGuid(),
+                            "A37610482",
+                            new Address("24, White Dog St.", "Kingston", "New York", "USA", "12401"),
+                            new PhoneNumber("+01 718 222 2222"),
+                            new EmailAddress("prueba@gmail.com")));
     }
 
     [Fact]
@@ -64,13 +65,13 @@ public class CreateCustomerValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-        Customer.Create("John_____________________________________",
-                        "Connor",
-                        Guid.NewGuid(),
-                        "A37610482",
-                        "24, White Dog St.", "Kingston", "New York", "12401",
-                        "+01 718 222 2222",
-                        "prueba@gmail.com"));
+            Customer.Create("John_____________________________________",
+                            "Connor",
+                            Guid.NewGuid(),
+                            "A37610482",
+                            new Address("24, White Dog St.", "Kingston", "New York", "USA", "12401"),
+                            new PhoneNumber("+01 718 222 2222"),
+                            new EmailAddress("prueba@gmail.com")));
     }
 
     [Fact]
@@ -80,13 +81,13 @@ public class CreateCustomerValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-        Customer.Create("John",
-                        "",
-                        Guid.NewGuid(),
-                        "A37610482",
-                        "24, White Dog St.", "Kingston", "New York", "12401",
-                        "+01 718 222 2222",
-                        "prueba@gmail.com"));
+            Customer.Create("John",
+                            "",
+                            Guid.NewGuid(),
+                            "A37610482",
+                            new Address("24, White Dog St.", "Kingston", "New York", "USA", "12401"),
+                            new PhoneNumber("+01 718 222 2222"),
+                            new EmailAddress("prueba@gmail.com")));
     }
 
     [Fact]
@@ -96,13 +97,13 @@ public class CreateCustomerValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-        Customer.Create("John",
-                        null,
-                        Guid.NewGuid(),
-                        "A37610482",
-                        "24, White Dog St.", "Kingston", "New York", "12401",
-                        "+01 718 222 2222",
-                        "prueba@gmail.com"));
+            Customer.Create("John",
+                            null,
+                            Guid.NewGuid(),
+                            "A37610482",
+                            new Address("24, White Dog St.", "Kingston", "New York", "USA", "12401"),
+                            new PhoneNumber("+01 718 222 2222"),
+                            new EmailAddress("prueba@gmail.com")));
     }
 
     [Fact]
@@ -112,13 +113,13 @@ public class CreateCustomerValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-        Customer.Create("John",
-                        "Connor___________________________________",
-                        Guid.NewGuid(),
-                        "A37610482",
-                        "24, White Dog St.", "Kingston", "New York", "12401",
-                        "+01 718 222 2222",
-                        "prueba@gmail.com"));
+            Customer.Create("John",
+                            "Connor___________________________________",
+                            Guid.NewGuid(),
+                            "A37610482",
+                            new Address("24, White Dog St.", "Kingston", "New York", "USA", "12401"),
+                            new PhoneNumber("+01 718 222 2222"),
+                            new EmailAddress("prueba@gmail.com")));
     }
 
     [Fact]
@@ -128,13 +129,13 @@ public class CreateCustomerValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-        Customer.Create("John",
-                        "Connor",
-                        Guid.NewGuid(),
-                        "",
-                        "24, White Dog St.", "Kingston", "New York", "12401",
-                        "+01 718 222 2222",
-                        "prueba@gmail.com"));
+            Customer.Create("John",
+                            "Connor",
+                            Guid.NewGuid(),
+                            "",
+                            new Address("24, White Dog St.", "Kingston", "New York", "USA", "12401"),
+                            new PhoneNumber("+01 718 222 2222"),
+                            new EmailAddress("prueba@gmail.com")));
     }
 
     [Fact]
@@ -144,13 +145,13 @@ public class CreateCustomerValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-        Customer.Create("John",
-                        "Connor",
-                        Guid.NewGuid(),
-                        null,
-                        "24, White Dog St.", "Kingston", "New York", "12401",
-                        "+01 718 222 2222",
-                        "prueba@gmail.com"));
+            Customer.Create("John",
+                            "Connor",
+                            Guid.NewGuid(),
+                            null,
+                            new Address("24, White Dog St.", "Kingston", "New York", "USA", "12401"),
+                            new PhoneNumber("+01 718 222 2222"),
+                            new EmailAddress("prueba@gmail.com")));
     }
 
     [Fact]
@@ -160,13 +161,13 @@ public class CreateCustomerValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-        Customer.Create("John",
-                        "Connor",
-                        Guid.NewGuid(),
-                        "A37610482                                ",
-                        "24, White Dog St.", "Kingston", "New York", "12401",
-                        "+01 718 222 2222",
-                        "prueba@gmail.com"));
+            Customer.Create("John",
+                            "Connor",
+                            Guid.NewGuid(),
+                            "A37610482                                ",
+                            new Address("24, White Dog St.", "Kingston", "New York", "USA", "12401"),
+                            new PhoneNumber("+01 718 222 2222"),
+                            new EmailAddress("prueba@gmail.com")));
     }
 
     [Fact]
@@ -179,10 +180,10 @@ public class CreateCustomerValidationTests
             Customer.Create("John",
                             "Connor",
                             Guid.NewGuid(),
-                            "A37610482                                ",
-                            "24, White Dog St.", "Kingston", "New York", "12401",
-                            "",
-                            "prueba@gmail.com"));
+                            "A37610482",
+                            new Address("24, White Dog St.", "Kingston", "New York", "USA", "12401"),
+                            new PhoneNumber(""),
+                            new EmailAddress("prueba@gmail.com")));
     }
 
     [Fact]
@@ -195,14 +196,14 @@ public class CreateCustomerValidationTests
             Customer.Create("John",
                             "Connor",
                             Guid.NewGuid(),
-                            "A37610482                                ",
-                            "24, White Dog St.", "Kingston", "New York", "12401",
-                            null,
-                            "prueba@gmail.com"));
+                            "A37610482",
+                            new Address("24, White Dog St.", "Kingston", "New York", "USA", "12401"),
+                            new PhoneNumber(null),
+                            new EmailAddress("prueba@gmail.com")));
     }
 
     [Fact]
-    public void Phone_Lengtg_Greater_Than_40_Should_Throw_NotValidPhoneNumberException()
+    public void Phone_Length_Greater_Than_40_Should_Throw_NotValidPhoneNumberException()
     {
         //Arrange
 
@@ -211,10 +212,10 @@ public class CreateCustomerValidationTests
             Customer.Create("John",
                             "Connor",
                             Guid.NewGuid(),
-                            "A37610482                                ",
-                            "24, White Dog St.", "Kingston", "New York", "12401",
-                            "+01 718 222 2222 22245 64 8454 66 78 55 6",
-                            "prueba@gmail.com"));
+                            "A37610482",
+                            new Address("24, White Dog St.", "Kingston", "New York", "USA", "12401"),
+                            new PhoneNumber("+01 718 222 2222 22245 64 8454 66 78 55 6"),
+                            new EmailAddress("prueba@gmail.com")));
     }
 
     [Fact]
@@ -227,10 +228,10 @@ public class CreateCustomerValidationTests
             Customer.Create("John",
                             "Connor",
                             Guid.NewGuid(),
-                            "A37610482                                ",
-                            "24, White Dog St.", "Kingston", "New York", "12401",
-                            "+01 718 222 2222",
-                            ""));
+                            "A37610482",
+                            new Address("24, White Dog St.", "Kingston", "New York", "USA", "12401"),
+                            new PhoneNumber("+01 718 222 2222"),
+                            new EmailAddress("")));
     }
 
     [Fact]
@@ -243,10 +244,10 @@ public class CreateCustomerValidationTests
             Customer.Create("John",
                             "Connor",
                             Guid.NewGuid(),
-                            "A37610482                                ",
-                            "24, White Dog St.", "Kingston", "New York", "12401",
-                            "+01 718 222 2222",
-                            null));
+                            "A37610482",
+                            new Address("24, White Dog St.", "Kingston", "New York", "USA", "12401"),
+                            new PhoneNumber("+01 718 222 2222"),
+                            new EmailAddress(null)));
     }
 
     [Fact]
@@ -259,10 +260,11 @@ public class CreateCustomerValidationTests
             Customer.Create("John",
                             "Connor",
                             Guid.NewGuid(),
-                            "A37610482                                ",
-                            "24, White Dog St.", "Kingston", "New York", "12401",
-                            "+01 718 222 2222",
-                            "pruebaaaaaaaaaaaaaaaaaaaaaaaaaa@gmail.com"));
+                            "A37610482",
+                            new Address("24, White Dog St.", "Kingston", "New York", "USA", "12401"),
+                            new PhoneNumber("+01 718 222 2222"),
+                            new EmailAddress("pruebaaaaaaaaaaaaaaaaaaaaaaaaaa@gmail.com")));
+
     }
 
 }

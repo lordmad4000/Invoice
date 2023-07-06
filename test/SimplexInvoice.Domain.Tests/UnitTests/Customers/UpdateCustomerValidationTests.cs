@@ -1,5 +1,6 @@
 using SimplexInvoice.Domain.Customers;
 using SimplexInvoice.Domain.Exceptions;
+using SimplexInvoice.Domain.ValueObjects;
 using System;
 using Xunit;
 
@@ -10,7 +11,7 @@ public class UpdateCustomerValidationTests
     public void Should_Not_Be_Throw_BusinessRuleValidationException()
     {
         //Arrange
-        var customer = GetCustomer();        
+        var customer = GetCustomer();
 
         //Act
         var exception = Record.Exception(() =>
@@ -18,9 +19,9 @@ public class UpdateCustomerValidationTests
                             "Reese",
                             Guid.NewGuid(),
                             "A37610482",
-                            "24, White Dog St.", "Kingston", "New York", "12401",
-                            "+01 718 222 2222",
-                            "prueba@gmail.com"));
+                            new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                            new PhoneNumber("+45 678 598 4712"),
+                            new EmailAddress("example@hotmail.com")));
 
         //Assert
         Assert.Null(exception);
@@ -34,13 +35,13 @@ public class UpdateCustomerValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-        customer.Update("",
-                        "Reese",
-                        Guid.NewGuid(),
-                        "A37610482",
-                        "24, White Dog St.", "Kingston", "New York", "12401",
-                        "+01 718 222 2222",
-                        "prueba@gmail.com"));
+            customer.Update("",
+                            "Reese",
+                            Guid.NewGuid(),
+                            "A37610482",
+                            new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                            new PhoneNumber("+45 678 598 4712"),
+                            new EmailAddress("example@hotmail.com")));
     }
 
     [Fact]
@@ -51,13 +52,13 @@ public class UpdateCustomerValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-        customer.Update(null,
-                        "Reese",
-                        Guid.NewGuid(),
-                        "A37610482",
-                        "24, White Dog St.", "Kingston", "New York", "12401",
-                        "+01 718 222 2222",
-                        "prueba@gmail.com"));
+            customer.Update(null,
+                            "Reese",
+                            Guid.NewGuid(),
+                            "A37610482",
+                            new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                            new PhoneNumber("+45 678 598 4712"),
+                            new EmailAddress("example@hotmail.com")));
     }
 
     [Fact]
@@ -68,13 +69,13 @@ public class UpdateCustomerValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-        customer.Update("Kyle_____________________________________",
-                        "Reese",        
-                        Guid.NewGuid(),
-                        "A37610482",
-                        "24, White Dog St.", "Kingston", "New York", "12401",
-                        "+01 718 222 2222",
-                        "prueba@gmail.com"));
+            customer.Update("Kyle_____________________________________",
+                            "Reese",
+                            Guid.NewGuid(),
+                            "A37610482",
+                            new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                            new PhoneNumber("+45 678 598 4712"),
+                            new EmailAddress("example@hotmail.com")));
     }
 
     [Fact]
@@ -85,13 +86,13 @@ public class UpdateCustomerValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-        customer.Update("Kyle",
-                        "",
-                        Guid.NewGuid(),
-                        "A37610482",
-                        "24, White Dog St.", "Kingston", "New York", "12401",
-                        "+01 718 222 2222",
-                        "prueba@gmail.com"));
+            customer.Update("Kyle",
+                            "",
+                            Guid.NewGuid(),
+                            "A37610482",
+                            new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                            new PhoneNumber("+45 678 598 4712"),
+                            new EmailAddress("example@hotmail.com")));
     }
 
     [Fact]
@@ -102,13 +103,13 @@ public class UpdateCustomerValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-        customer.Update("Kyle",
-                        null,
-                        Guid.NewGuid(),
-                        "A37610482",
-                        "24, White Dog St.", "Kingston", "New York", "12401",
-                        "+01 718 222 2222",
-                        "prueba@gmail.com"));
+            customer.Update("Kyle",
+                            null,
+                            Guid.NewGuid(),
+                            "A37610482",
+                            new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                            new PhoneNumber("+45 678 598 4712"),
+                            new EmailAddress("example@hotmail.com")));
     }
 
     [Fact]
@@ -119,13 +120,13 @@ public class UpdateCustomerValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-        customer.Update("Kyle",
-                        "Reese____________________________________",        
-                        Guid.NewGuid(),
-                        "A37610482",
-                        "24, White Dog St.", "Kingston", "New York", "12401",
-                        "+01 718 222 2222",
-                        "prueba@gmail.com"));
+            customer.Update("Kyle",
+                            "Reese____________________________________",
+                            Guid.NewGuid(),
+                            "A37610482",
+                            new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                            new PhoneNumber("+45 678 598 4712"),
+                            new EmailAddress("example@hotmail.com")));
     }
 
     [Fact]
@@ -136,13 +137,13 @@ public class UpdateCustomerValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-        customer.Update("Kyle",
-                        "Reese",
-                        Guid.NewGuid(),
-                        "",
-                        "24, White Dog St.", "Kingston", "New York", "12401",
-                        "+01 718 222 2222",
-                        "prueba@gmail.com"));
+            customer.Update("Kyle",
+                            "Reese",
+                            Guid.NewGuid(),
+                            "",
+                            new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                            new PhoneNumber("+45 678 598 4712"),
+                            new EmailAddress("example@hotmail.com")));
     }
 
     [Fact]
@@ -153,13 +154,13 @@ public class UpdateCustomerValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-        customer.Update("Kyle",
-                        "Reese",
-                        Guid.NewGuid(),
-                        null,
-                        "24, White Dog St.", "Kingston", "New York", "12401",
-                        "+01 718 222 2222",
-                        "prueba@gmail.com"));
+            customer.Update("Kyle",
+                            "Reese",
+                            Guid.NewGuid(),
+                            null,
+                            new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                            new PhoneNumber("+45 678 598 4712"),
+                            new EmailAddress("example@hotmail.com")));
     }
 
     [Fact]
@@ -170,13 +171,13 @@ public class UpdateCustomerValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-        customer.Update("Kyle",
-                        "Reese",
-                        Guid.NewGuid(),
-                        "A37610482                                ",
-                        "24, White Dog St.", "Kingston", "New York", "12401",
-                        "+01 718 222 2222",
-                        "prueba@gmail.com"));
+            customer.Update("Kyle",
+                            "Reese",
+                            Guid.NewGuid(),
+                            "A37610482                                ",
+                            new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                            new PhoneNumber("+45 678 598 4712"),
+                            new EmailAddress("example@hotmail.com")));
     }
 
     [Fact]
@@ -190,10 +191,10 @@ public class UpdateCustomerValidationTests
             customer.Update("Kyle",
                             "Reese",
                             Guid.NewGuid(),
-                            "A37610482                                ",
-                            "24, White Dog St.", "Kingston", "New York", "12401",
-                            "",
-                            "prueba@gmail.com"));
+                            "A37610482",
+                            new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                            new PhoneNumber(""),
+                            new EmailAddress("example@hotmail.com")));
     }
 
     [Fact]
@@ -207,14 +208,14 @@ public class UpdateCustomerValidationTests
             customer.Update("Kyle",
                             "Reese",
                             Guid.NewGuid(),
-                            "A37610482                                ",
-                            "24, White Dog St.", "Kingston", "New York", "12401",
-                            null,
-                            "prueba@gmail.com"));
+                            "A37610482",
+                            new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                            new PhoneNumber(null),
+                            new EmailAddress("example@hotmail.com")));
     }
 
     [Fact]
-    public void Phone_Lengtg_Greater_Than_40_Should_Throw_NotValidPhoneNumberException()
+    public void Phone_Length_Greater_Than_40_Should_Throw_NotValidPhoneNumberException()
     {
         //Arrange
         var customer = GetCustomer();
@@ -224,10 +225,10 @@ public class UpdateCustomerValidationTests
             customer.Update("Kyle",
                             "Reese",
                             Guid.NewGuid(),
-                            "A37610482                                ",
-                            "24, White Dog St.", "Kingston", "New York", "12401",
-                            "+01 718 222 2222 22245 64 8454 66 78 55 6",
-                            "prueba@gmail.com"));
+                            "A37610482",
+                            new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                            new PhoneNumber("+01 718 222 2222 22245 64 8454 66 78 55 6"),
+                            new EmailAddress("example@hotmail.com")));
     }
 
     [Fact]
@@ -241,10 +242,10 @@ public class UpdateCustomerValidationTests
             customer.Update("Kyle",
                             "Reese",
                             Guid.NewGuid(),
-                            "A37610482                                ",
-                            "24, White Dog St.", "Kingston", "New York", "12401",
-                            "+01 718 222 2222",
-                            ""));
+                            "A37610482",
+                            new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                            new PhoneNumber("+45 678 598 4712"),
+                            new EmailAddress("")));
     }
 
     [Fact]
@@ -258,10 +259,10 @@ public class UpdateCustomerValidationTests
             customer.Update("Kyle",
                             "Reese",
                             Guid.NewGuid(),
-                            "A37610482                                ",
-                            "24, White Dog St.", "Kingston", "New York", "12401",
-                            "+01 718 222 2222",
-                            null));
+                            "A37610482",
+                            new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                            new PhoneNumber("+45 678 598 4712"),
+                            new EmailAddress(null)));
     }
 
     [Fact]
@@ -275,10 +276,10 @@ public class UpdateCustomerValidationTests
             customer.Update("Kyle",
                             "Reese",
                             Guid.NewGuid(),
-                            "A37610482                                ",
-                            "24, White Dog St.", "Kingston", "New York", "12401",
-                            "+01 718 222 2222",
-                            "pruebaaaaaaaaaaaaaaaaaaaaaaaaaa@gmail.com"));
+                            "A37610482",
+                            new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                            new PhoneNumber("+45 678 598 4712"),
+                            new EmailAddress("exampleeeeeeeeeeeeeeeeeeeeeee@hotmail.com")));
     }
 
     private static Customer GetCustomer() =>
@@ -286,8 +287,8 @@ public class UpdateCustomerValidationTests
                         "Connor",
                         Guid.NewGuid(),
                         "A37610482",
-                        "24, White Dog St.", "Kingston", "New York", "12401",
-                        "+01 718 222 2222",
-                        "prueba@gmail.com");
+                        new Address("24, White Dog St.", "Kingston", "New York", "USA", "12401"),
+                        new PhoneNumber("+01 718 222 2222"),
+                        new EmailAddress("prueba@gmail.com"));
 
 }
