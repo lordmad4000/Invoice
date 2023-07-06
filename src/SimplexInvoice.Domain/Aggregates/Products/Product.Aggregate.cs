@@ -13,21 +13,36 @@ public partial class Product : AggregateRoot
     {
     }
 
-    public static Product Create(string code, string name, string description, double packageQuantity, double unitPrice, string currency, Guid productTaxRateId)
+    public static Product Create(string code,
+                                 string name,
+                                 string description,
+                                 double packageQuantity,
+                                 Money unitPrice,
+                                 Guid productTaxRateId)
     {
         var product = new Product(Guid.NewGuid());
-        product.Update(code, name, description, packageQuantity, unitPrice, currency, productTaxRateId);
+        product.Update(code,
+                       name,
+                       description,
+                       packageQuantity,
+                       unitPrice,
+                       productTaxRateId);
 
         return product;
     }
 
-    public void Update(string code, string name, string description, double packageQuantity, double unitPrice, string currency, Guid productTaxRateId)
+    public void Update(string code,
+                       string name,
+                       string description,
+                       double packageQuantity,
+                       Money unitPrice,
+                       Guid productTaxRateId)
     {
         Code = code;
         Name = name;
         Description = description;
         PackageQuantity = packageQuantity;
-        UnitPrice = new Money(currency, unitPrice);
+        UnitPrice = unitPrice;
         ProductTaxRateId = productTaxRateId;
 
         ValidationResult validator = new UpdateProductValidator().Validate(this);
