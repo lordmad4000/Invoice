@@ -12,18 +12,18 @@ namespace SimplexInvoice.Domain.Invoices
     {
         private InvoiceTax(Guid id) : base(id) { }
 
-        public static InvoiceTax Create(string name, double total, string currency)
+        public static InvoiceTax Create(string name, Money total)
         {
             var invoiceTax = new InvoiceTax(Guid.NewGuid());
-            invoiceTax.Update(name, total, currency);
+            invoiceTax.Update(name, total);
 
             return invoiceTax;
         }
 
-        public void Update(string name, double total, string currency)
+        public void Update(string name, Money total)
         {
             Name = name;
-            Total = new Money(currency, total);
+            Total = total;
 
             ValidationResult validator = new UpdateInvoiceTaxValidator().Validate(this);
             if (!validator.IsValid)
