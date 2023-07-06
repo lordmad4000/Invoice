@@ -1,5 +1,6 @@
 using SimplexInvoice.Domain.Exceptions;
 using SimplexInvoice.Domain.Products;
+using SimplexInvoice.Domain.ValueObjects;
 using System;
 using Xunit;
 
@@ -14,12 +15,11 @@ public class UpdateProductValidationTests
 
         //Act
         var exception = Record.Exception(() =>
-            product.Update("10LB", 
+            product.Update("10LB",
                            "LASAÑA BOLOGNESA",
                            "LASAÑA BOLOGNESA",
-                           1.5, 
-                           2.60,
-                           "USD",
+                           1.5,
+                           new Money("USD", 2.60),
                            Guid.NewGuid()));
 
         //Assert
@@ -34,12 +34,11 @@ public class UpdateProductValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            product.Update("", 
+            product.Update("",
                            "LASAÑA BOLOGNESA",
                            "LASAÑA BOLOGNESA",
-                           1.5, 
-                           2.60,
-                           "USD",
+                           1.5,
+                           new Money("USD", 2.60),
                            Guid.NewGuid()));
     }
 
@@ -51,12 +50,11 @@ public class UpdateProductValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            product.Update(null, 
+            product.Update(null,
                            "LASAÑA BOLOGNESA",
                            "LASAÑA BOLOGNESA",
-                           1.5, 
-                           2.60,
-                           "USD",
+                           1.5,
+                           new Money("USD", 2.60),
                            Guid.NewGuid()));
     }
 
@@ -68,12 +66,11 @@ public class UpdateProductValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            product.Update("10LB_________________", 
+            product.Update("10LB_________________",
                            "LASAÑA BOLOGNESA",
                            "LASAÑA BOLOGNESA",
-                           1.5, 
-                           2.60,
-                           "USD",
+                           1.5,
+                           new Money("USD", 2.60),
                            Guid.NewGuid()));
     }
 
@@ -85,12 +82,11 @@ public class UpdateProductValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            product.Update("10LB", 
+            product.Update("10LB",
                            "",
                            "LASAÑA BOLOGNESA",
-                           1.5, 
-                           2.60,
-                           "USD",
+                           1.5,
+                           new Money("USD", 2.60),
                            Guid.NewGuid()));
     }
 
@@ -102,12 +98,11 @@ public class UpdateProductValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            product.Update("10LB", 
+            product.Update("10LB",
                            null,
                            "LASAÑA BOLOGNESA",
-                           1.5, 
-                           2.60,
-                           "USD",
+                           1.5,
+                           new Money("USD", 2.60),
                            Guid.NewGuid()));
     }
 
@@ -119,12 +114,11 @@ public class UpdateProductValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            product.Update("10LB", 
+            product.Update("10LB",
                            "LASAÑA BOLOGNESA_________________________",
                            "LASAÑA BOLOGNESA",
-                           1.5, 
-                           2.60,
-                           "USD",
+                           1.5,
+                           new Money("USD", 2.60),
                            Guid.NewGuid()));
     }
 
@@ -136,12 +130,11 @@ public class UpdateProductValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            product.Update("10LB", 
+            product.Update("10LB",
                            "LASAÑA BOLOGNESA",
                            "",
-                           1.5, 
-                           2.60,
-                           "USD",
+                           1.5,
+                           new Money("USD", 2.60),
                            Guid.NewGuid()));
     }
 
@@ -153,12 +146,11 @@ public class UpdateProductValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            product.Update("10LB", 
+            product.Update("10LB",
                            "LASAÑA BOLOGNESA",
                            null,
-                           1.5, 
-                           2.60,
-                           "USD",
+                           1.5,
+                           new Money("USD", 2.60),
                            Guid.NewGuid()));
     }
 
@@ -170,12 +162,11 @@ public class UpdateProductValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            product.Update("10LB", 
+            product.Update("10LB",
                            "LASAÑA BOLOGNESA",
                            "LASAÑA BOLOGNESA_________________________",
-                           1.5, 
-                           2.60,
-                           "USD",
+                           1.5,
+                           new Money("USD", 2.60),
                            Guid.NewGuid()));
     }
 
@@ -187,12 +178,11 @@ public class UpdateProductValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            product.Update("10LB", 
+            product.Update("10LB",
                            "LASAÑA BOLOGNESA",
                            "LASAÑA BOLOGNESA",
-                           0.0, 
-                           2.60,
-                           "USD",
+                           0.0,
+                           new Money("USD", 2.60),
                            Guid.NewGuid()));
     }
 
@@ -204,12 +194,11 @@ public class UpdateProductValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            product.Update("10LB", 
+            product.Update("10LB",
                            "LASAÑA BOLOGNESA",
                            "LASAÑA BOLOGNESA",
-                           -0.5, 
-                           2.60,
-                           "USD",
+                           -0.5,
+                           new Money("USD", 2.60),
                            Guid.NewGuid()));
     }
 
@@ -221,12 +210,11 @@ public class UpdateProductValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            product.Update("10LB", 
+            product.Update("10LB",
                            "LASAÑA BOLOGNESA",
                            "LASAÑA BOLOGNESA",
-                           1.5, 
-                           -1.50,
-                           "USD",
+                           1.5,
+                           new Money("USD", -1.50),
                            Guid.NewGuid()));
     }
 
@@ -234,9 +222,8 @@ public class UpdateProductValidationTests
         Product.Create("10VFU",
                        "FAIRY ULTRA",
                        "FAIRY ULTRA",
-                       1.0, 
-                       3.25,
-                       "EUR",
+                       1.0,
+                       new Money("EUR", 3.25),
                        Guid.NewGuid());
 
 }
