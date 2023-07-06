@@ -1,5 +1,6 @@
 using SimplexInvoice.Domain.Companies;
 using SimplexInvoice.Domain.Exceptions;
+using SimplexInvoice.Domain.ValueObjects;
 using System;
 using Xunit;
 
@@ -11,16 +12,16 @@ public class UpdateCompanyValidationTests
     public void Should_Not_Be_Throw_BusinessRuleValidationException()
     {
         //Arrange
-        var company = GetCompany();        
+        var company = GetCompany();
 
         //Act
         var exception = Record.Exception(() =>
             company.Update("Prueba S.L.",
                            Guid.NewGuid(),
                            "A37610482",
-                           "24, White Dog St.", "Kingston", "New York", "12401",
-                           "+01 718 222 2222",
-                           "prueba@gmail.com"));
+                           new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                           new PhoneNumber("+45 678 598 4712"),
+                           new EmailAddress("example@hotmail.com")));
 
         //Assert
         Assert.Null(exception);
@@ -34,12 +35,12 @@ public class UpdateCompanyValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-        company.Update("",
-                       Guid.NewGuid(),
-                       "A37610482",
-                       "24, White Dog St.", "Kingston", "New York", "12401",
-                       "+01 718 222 2222",
-                       "prueba@gmail.com"));
+            company.Update("",
+                           Guid.NewGuid(),
+                           "A37610482",
+                           new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                           new PhoneNumber("+45 678 598 4712"),
+                           new EmailAddress("example@hotmail.com")));
     }
 
     [Fact]
@@ -50,12 +51,12 @@ public class UpdateCompanyValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-        company.Update(null,
-                       Guid.NewGuid(),
-                       "A37610482",
-                       "24, White Dog St.", "Kingston", "New York", "12401",
-                       "+01 718 222 2222",
-                       "prueba@gmail.com"));
+            company.Update(null,
+                           Guid.NewGuid(),
+                           "A37610482",
+                           new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                           new PhoneNumber("+45 678 598 4712"),
+                           new EmailAddress("example@hotmail.com")));
     }
 
     [Fact]
@@ -66,12 +67,12 @@ public class UpdateCompanyValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-        company.Update("Prueba                               S.L.",
-                       Guid.NewGuid(),
-                       "A37610482",
-                       "24, White Dog St.", "Kingston", "New York", "12401",
-                       "+01 718 222 2222",
-                       "prueba@gmail.com"));
+            company.Update("Prueba                               S.L.",
+                           Guid.NewGuid(),
+                           "A37610482",
+                           new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                           new PhoneNumber("+45 678 598 4712"),
+                           new EmailAddress("example@hotmail.com")));
     }
 
     [Fact]
@@ -82,12 +83,12 @@ public class UpdateCompanyValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-        company.Update("Prueba S.L.",
-                       Guid.NewGuid(),
-                       "",
-                       "24, White Dog St.", "Kingston", "New York", "12401",
-                       "+01 718 222 2222",
-                       "prueba@gmail.com"));
+            company.Update("Prueba S.L.",
+                           Guid.NewGuid(),
+                           "",
+                           new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                           new PhoneNumber("+45 678 598 4712"),
+                           new EmailAddress("example@hotmail.com")));
     }
 
     [Fact]
@@ -98,12 +99,12 @@ public class UpdateCompanyValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-        company.Update("Prueba S.L.",
-                       Guid.NewGuid(),
-                       null,
-                       "24, White Dog St.", "Kingston", "New York", "12401",
-                       "+01 718 222 2222",
-                       "prueba@gmail.com"));
+            company.Update("Prueba S.L.",
+                           Guid.NewGuid(),
+                           null,
+                           new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                           new PhoneNumber("+45 678 598 4712"),
+                           new EmailAddress("example@hotmail.com")));
     }
 
     [Fact]
@@ -114,12 +115,12 @@ public class UpdateCompanyValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-        company.Update("Prueba S.L.",
-                       Guid.NewGuid(),
-                       "A37610482                                ",
-                       "24, White Dog St.", "Kingston", "New York", "12401",
-                       "+01 718 222 2222",
-                       "prueba@gmail.com"));
+            company.Update("Prueba S.L.",
+                           Guid.NewGuid(),
+                           "A37610482                                ",
+                           new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                           new PhoneNumber("+45 678 598 4712"),
+                           new EmailAddress("example@hotmail.com")));
     }
 
     [Fact]
@@ -132,10 +133,10 @@ public class UpdateCompanyValidationTests
         Assert.Throws<NotValidPhoneNumberException>(() =>
             company.Update("Prueba S.L.",
                            Guid.NewGuid(),
-                           "A37610482                                ",
-                           "24, White Dog St.", "Kingston", "New York", "12401",
-                           "",
-                           "prueba@gmail.com"));
+                           "A37610482",
+                           new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                           new PhoneNumber(""),
+                           new EmailAddress("example@hotmail.com")));
     }
 
     [Fact]
@@ -148,10 +149,10 @@ public class UpdateCompanyValidationTests
         Assert.Throws<NotValidPhoneNumberException>(() =>
             company.Update("Prueba S.L.",
                            Guid.NewGuid(),
-                           "A37610482                                ",
-                           "24, White Dog St.", "Kingston", "New York", "12401",
-                           null,
-                           "prueba@gmail.com"));
+                           "A37610482",
+                           new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                           new PhoneNumber(null),
+                           new EmailAddress("example@hotmail.com")));
     }
 
     [Fact]
@@ -164,10 +165,10 @@ public class UpdateCompanyValidationTests
         Assert.Throws<NotValidPhoneNumberException>(() =>
             company.Update("Prueba S.L.",
                            Guid.NewGuid(),
-                           "A37610482                                ",
-                           "24, White Dog St.", "Kingston", "New York", "12401",
-                           "+01 718 222 2222 22245 64 8454 66 78 55 6",
-                           "prueba@gmail.com"));
+                           "A37610482",
+                           new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                           new PhoneNumber("+01 718 222 2222 22245 64 8454 66 78 55 6"),
+                           new EmailAddress("example@hotmail.com")));
     }
 
     [Fact]
@@ -180,10 +181,10 @@ public class UpdateCompanyValidationTests
         Assert.Throws<NotValidEmailAddressException>(() =>
             company.Update("Prueba S.L.",
                            Guid.NewGuid(),
-                           "A37610482                                ",
-                           "24, White Dog St.", "Kingston", "New York", "12401",
-                           "+01 718 222 2222",
-                           ""));
+                           "A37610482",
+                           new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                           new PhoneNumber("+45 678 598 4712"),
+                           new EmailAddress("")));
     }
 
     [Fact]
@@ -196,10 +197,10 @@ public class UpdateCompanyValidationTests
         Assert.Throws<NotValidEmailAddressException>(() =>
             company.Update("Prueba S.L.",
                            Guid.NewGuid(),
-                           "A37610482                                ",
-                           "24, White Dog St.", "Kingston", "New York", "12401",
-                           "+01 718 222 2222",
-                           null));
+                           "A37610482",
+                           new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                           new PhoneNumber("+45 678 598 4712"),
+                           new EmailAddress(null)));
     }
 
     [Fact]
@@ -212,18 +213,17 @@ public class UpdateCompanyValidationTests
         Assert.Throws<BusinessRuleValidationException>(() =>
             company.Update("Prueba S.L.",
                            Guid.NewGuid(),
-                           "A37610482                                ",
-                           "24, White Dog St.", "Kingston", "New York", "12401",
-                           "+01 718 222 2222",
-                           "pruebaaaaaaaaaaaaaaaaaaaaaaaaaa@gmail.com"));
+                           "A37610482",
+                           new Address("31, Black Cat Av.", "Austin", "Texas", "USA", "58694"),
+                           new PhoneNumber("+45 678 598 4712"),
+                           new EmailAddress("exampleeeeeeeeeeeeeeeeeeeeeee@hotmail.com")));
     }
 
     private static Company GetCompany() =>
         Company.Create("Prueba S.L.",
                        Guid.NewGuid(),
                        "A37610482",
-                       "24, White Dog St.", "Kingston", "New York", "12401",
-                       "+01 718 222 2222",
-                       "prueba@gmail.com");
-
+                       new Address("24, White Dog St.", "Kingston", "New York", "USA", "12401"),
+                       new PhoneNumber("+01 718 222 2222"),
+                       new EmailAddress("prueba@gmail.com"));
 }
