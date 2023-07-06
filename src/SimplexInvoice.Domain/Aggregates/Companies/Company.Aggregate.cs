@@ -17,11 +17,11 @@ public partial class Company : AggregateRoot
                                  Guid idDocumentTypeId,
                                  string idDocumentNumber,
                                  Address address,
-                                 string phone,
-                                 string emailAddress)
+                                 PhoneNumber phoneNumber,
+                                 EmailAddress emailAddress)
     {
         var company = new Company(Guid.NewGuid());
-        company.Update(name, idDocumentTypeId, idDocumentNumber, address, phone, emailAddress);
+        company.Update(name, idDocumentTypeId, idDocumentNumber, address, phoneNumber, emailAddress);
 
         return company;
     }
@@ -30,15 +30,15 @@ public partial class Company : AggregateRoot
                        Guid idDocumentTypeId,
                        string idDocumentNumber,
                        Address address,
-                       string phone,
-                       string emailAddress)
+                       PhoneNumber phoneNumber,
+                       EmailAddress emailAddress)
     {
         Name = name;
         IdDocumentTypeId = idDocumentTypeId;
         IdDocumentNumber = idDocumentNumber;
         CompanyAddress = address;
-        Phone = new PhoneNumber(phone);
-        EmailAddress = new EmailAddress(emailAddress);
+        Phone = phoneNumber;
+        EmailAddress = emailAddress;
 
         ValidationResult validator = new UpdateCompanyValidator().Validate(this);
         if (!validator.IsValid)
@@ -46,29 +46,6 @@ public partial class Company : AggregateRoot
                 string.Join(", ", validator.Errors.Select(x => x.ErrorMessage).ToArray()));
     }
 
-    public static Company Create(
-        string name,
-        Guid idDocumentTypeId,
-        string idDocumentNumber,
-        string street,
-        string city,
-        string country,
-        string postalCode,
-        string phone,
-        string emailAddress) =>
-            Create(name, idDocumentTypeId, idDocumentNumber, new Address(street, city, country, postalCode), phone, emailAddress);
-
-    public void Update(
-        string name,
-        Guid idDocumentTypeId,
-        string idDocumentNumber,
-        string street,
-        string city,
-        string country,
-        string postalCode,
-        string phone,
-        string emailAddress) =>
-            Update(name, idDocumentTypeId, idDocumentNumber, new Address(street, city, country, postalCode), phone, emailAddress);
     public override string ToString()
     {
         return $"Id: {Id}, " +
@@ -77,6 +54,7 @@ public partial class Company : AggregateRoot
                $"IdDocumentNumber: {IdDocumentNumber} ," +
                $"Street: {CompanyAddress.Street}, " +
                $"City: {CompanyAddress.City}, " +
+               $"State: {CompanyAddress.State}, " +
                $"Country: {CompanyAddress.Country}, " +
                $"Postal Code: {CompanyAddress.PostalCode}, " +
                $"Phone: {Phone.Phone}, " +
