@@ -1,5 +1,6 @@
 using SimplexInvoice.Domain.Exceptions;
 using SimplexInvoice.Domain.Invoices;
+using SimplexInvoice.Domain.ValueObjects;
 using Xunit;
 
 namespace SimplexInvoice.Domain.Tests.UnitTests;
@@ -12,7 +13,7 @@ public class CreateInvoiceTaxValidationTests
 
         //Act
         var exception = Record.Exception(() =>
-            InvoiceTax.Create("10%", 12.24, "USD"));
+            InvoiceTax.Create("10%", new Money("USD", 12.24)));
 
         //Assert
         Assert.Null(exception);
@@ -25,7 +26,7 @@ public class CreateInvoiceTaxValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            InvoiceTax.Create("", 12.24, "USD"));
+            InvoiceTax.Create("", new Money("USD", 12.24)));
     }
 
     [Fact]
@@ -35,7 +36,7 @@ public class CreateInvoiceTaxValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            InvoiceTax.Create(null, 12.24, "USD"));
+            InvoiceTax.Create(null, new Money("USD", 12.24)));
     }
 
     [Fact]
@@ -45,7 +46,7 @@ public class CreateInvoiceTaxValidationTests
 
         // Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            InvoiceTax.Create("10%__________________", 12.24, "USD"));
+            InvoiceTax.Create("10%__________________", new Money("USD", 12.24)));
     }
 
     [Fact]
@@ -55,7 +56,7 @@ public class CreateInvoiceTaxValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            InvoiceTax.Create("10%", -5.12, "USD"));
+            InvoiceTax.Create("10%", new Money("USD", -5.12)));
     }
 
 }
