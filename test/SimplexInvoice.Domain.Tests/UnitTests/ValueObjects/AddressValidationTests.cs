@@ -15,6 +15,7 @@ namespace SimplexInvoice.Domain.Tests.UnitTests
             var exception = Record.Exception(() => new Address("24, White Dog St.",
                                                                "Kingston",
                                                                "New York",
+                                                               "USA",
                                                                "12401"));
 
             //Assert
@@ -30,6 +31,7 @@ namespace SimplexInvoice.Domain.Tests.UnitTests
             Assert.Throws<NotValidAddressException>(() => new Address("",
                                                                       "Kingston",
                                                                       "New York",
+                                                                      "USA",
                                                                       "12401"));
         }
 
@@ -42,6 +44,7 @@ namespace SimplexInvoice.Domain.Tests.UnitTests
             Assert.Throws<NotValidAddressException>(() => new Address(null,
                                                                       "Kingston",
                                                                       "New York",
+                                                                      "USA",
                                                                       "12401"));
         }
 
@@ -54,6 +57,7 @@ namespace SimplexInvoice.Domain.Tests.UnitTests
             Assert.Throws<NotValidAddressException>(() => new Address("24, White Dog St.________________________",
                                                                       "Kingston",
                                                                       "New York",
+                                                                      "USA",
                                                                       "12401"));
         }
 
@@ -66,6 +70,7 @@ namespace SimplexInvoice.Domain.Tests.UnitTests
             Assert.Throws<NotValidAddressException>(() => new Address("24, White Dog St.",
                                                                       "",
                                                                       "New York",
+                                                                      "USA",
                                                                       "12401"));
         }
 
@@ -78,6 +83,7 @@ namespace SimplexInvoice.Domain.Tests.UnitTests
             Assert.Throws<NotValidAddressException>(() => new Address("24, White Dog St.",
                                                                       null,
                                                                       "New York",
+                                                                      "USA",
                                                                       "12401"));
         }
 
@@ -90,6 +96,46 @@ namespace SimplexInvoice.Domain.Tests.UnitTests
             Assert.Throws<NotValidAddressException>(() => new Address("24, White Dog St.",
                                                                       "Kingston_________________________________",
                                                                       "New York",
+                                                                      "USA",
+                                                                      "12401"));
+        }
+
+        [Fact]
+        public void Empty_State_Should_Be_Throw_NotValidAddressException()
+        {
+            //Arrange
+
+            //Act & Assert
+            Assert.Throws<NotValidAddressException>(() => new Address("24, White Dog St.",
+                                                                      "Kingston",
+                                                                      "",
+                                                                      "USA",
+                                                                      "12401"));
+        }
+
+        [Fact]
+        public void Null_State_Should_Be_Throw_NotValidAddressException()
+        {
+            //Arrange
+
+            //Act & Assert
+            Assert.Throws<NotValidAddressException>(() => new Address("24, White Dog St.",
+                                                                      "Kingston",
+                                                                      null,
+                                                                      "USA",
+                                                                      "12401"));
+        }
+
+        [Fact]
+        public void State_Length_Greater_Than_40_Should_Be_Throw_NotValidAddressException()
+        {
+            //Arrange
+
+            //Act & Assert
+            Assert.Throws<NotValidAddressException>(() => new Address("24, White Dog St.",
+                                                                      "Kingston",
+                                                                      "New York_________________________________",
+                                                                      "USA",
                                                                       "12401"));
         }
 
@@ -101,6 +147,7 @@ namespace SimplexInvoice.Domain.Tests.UnitTests
             //Act & Assert
             Assert.Throws<NotValidAddressException>(() => new Address("24, White Dog St.",
                                                                       "Kingston",
+                                                                      "New York",
                                                                       "",
                                                                       "12401"));
         }
@@ -113,6 +160,7 @@ namespace SimplexInvoice.Domain.Tests.UnitTests
             //Act & Assert
             Assert.Throws<NotValidAddressException>(() => new Address("24, White Dog St.",
                                                                       "Kingston",
+                                                                      "New York",
                                                                       null,
                                                                       "12401"));
         }
@@ -125,7 +173,8 @@ namespace SimplexInvoice.Domain.Tests.UnitTests
             //Act & Assert
             Assert.Throws<NotValidAddressException>(() => new Address("24, White Dog St.",
                                                                       "Kingston",
-                                                                      "New York_________________________________",
+                                                                      "New York",
+                                                                      "USA______________________________________",
                                                                       "12401"));
         }
 
@@ -138,6 +187,7 @@ namespace SimplexInvoice.Domain.Tests.UnitTests
             Assert.Throws<NotValidAddressException>(() => new Address("24, White Dog St.",
                                                                       "Kingston",
                                                                       "New York",
+                                                                      "USA",
                                                                       ""));
         }
 
@@ -150,6 +200,7 @@ namespace SimplexInvoice.Domain.Tests.UnitTests
             Assert.Throws<NotValidAddressException>(() => new Address("24, White Dog St.",
                                                                       "Kingston",
                                                                       "New York",
+                                                                      "USA",
                                                                       null));
         }
 
@@ -162,6 +213,7 @@ namespace SimplexInvoice.Domain.Tests.UnitTests
             Assert.Throws<NotValidAddressException>(() => new Address("24, White Dog St.",
                                                                       "Kingston",
                                                                       "New York",
+                                                                      "USA",
                                                                       "12401____________________________________"));
         }
 
