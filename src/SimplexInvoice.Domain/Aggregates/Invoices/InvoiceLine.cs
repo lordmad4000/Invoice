@@ -9,6 +9,7 @@ public partial class InvoiceLine
     public string ProductCode { get; private set; } = string.Empty;
     public string ProductName { get; private set; } = string.Empty;
     public string ProductDescription { get; private set; } = string.Empty;
+    public int Packages { get; private set; } = 0;
     public double Quantity { get; private set; } = 0;
     public Money Price { get; private set; } = new Money("USD", 0.0);
     public string TaxName { get; private set; } = string.Empty;
