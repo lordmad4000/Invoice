@@ -13,29 +13,30 @@ public partial class InvoiceLine : Aggregate
     private InvoiceLine(Guid id) : base(id) { }
 
     public static InvoiceLine Create(Guid invoiceId,
-                                        int lineNumber,
-                                        string productCode,
-                                        string productName,
-                                        string productDescription,
-                                        double quantity,
-                                        double price,
-                                        string currency,
-                                        string taxName,
-                                        int taxRate,
-                                        int discountRate)
+                                     int lineNumber,
+                                     string productCode,
+                                     string productName,
+                                     string productDescription,
+                                     int packages,
+                                     double quantity,
+                                     Money price,
+                                     string taxName,
+                                     int taxRate,
+                                     int discountRate)
     {
         var invoiceLine = new InvoiceLine(Guid.NewGuid());
         invoiceLine.Update(invoiceId,
-                              lineNumber,
-                              productCode,
-                              productName,
-                              productDescription,
-                              quantity,
-                              price,
-                              currency,
-                              taxName,
-                              taxRate,
-                              discountRate);
+                           lineNumber,
+                           productCode,
+                           productName,
+                           productDescription,
+                           packages,
+                           quantity,
+                           price,
+                           taxName,
+                           taxRate,
+                           discountRate);
+
         return invoiceLine;
     }
 
@@ -44,9 +45,9 @@ public partial class InvoiceLine : Aggregate
                        string productCode,
                        string productName,
                        string productDescription,
+                       int packages,
                        double quantity,
-                       double price,
-                       string currency,
+                       Money price,
                        string taxName,
                        int taxRate,
                        int discountRate)
@@ -56,8 +57,9 @@ public partial class InvoiceLine : Aggregate
         ProductCode = productCode;
         ProductName = productName;
         ProductDescription = productDescription;
+        Packages = packages;
         Quantity = quantity;
-        Price = new Money(currency, price);
+        Price = price;
         TaxName = taxName;
         TaxRate = taxRate;
         DiscountRate = discountRate;
@@ -68,15 +70,15 @@ public partial class InvoiceLine : Aggregate
                 string.Join(", ", validator.Errors.Select(x => x.ErrorMessage).ToArray()));
 
         Quantity = Math.Round(quantity, QuantityRoundDigits);
-        CalculateAmounts(currency);
+        CalculateAmounts();
     }
 
-    private void CalculateAmounts(string currency)
+    private void CalculateAmounts()
     {
-        TaxAmount = new Money(currency, CalculateTaxAmount());
-        DiscountAmount = new Money(currency, CalculateDiscountAmount());
-        TaxBaseAmount = new Money(currency, CalculateTaxBaseAmount());
-        TotalAmount = new Money(currency, CalculateTotalAmount());
+        TaxAmount = new Money(Price.Currency, CalculateTaxAmount());
+        DiscountAmount = new Money(Price.Currency, CalculateDiscountAmount());
+        TaxBaseAmount = new Money(Price.Currency, CalculateTaxBaseAmount());
+        TotalAmount = new Money(Price.Currency, CalculateTotalAmount());
     }
 
     private double CalculateTaxAmount() =>
@@ -99,16 +101,17 @@ public partial class InvoiceLine : Aggregate
                $"ProductCode: {ProductCode}, " +
                $"ProductName: {ProductName}, " +
                $"ProductDescription: {ProductDescription}, " +
+               $"Packages: {Packages}, " +
                $"Quantity: {Quantity}, " +
                $"Price: {Price.Amount}, " +
+               $"Currency: {Price.Currency}, " +
                $"TaxName: {TaxName}, " +
                $"TaxRate: {TaxRate}, " +
                $"DiscountRate: {DiscountRate}, " +
                $"TaxAmount: {TaxAmount.Amount}, " +
                $"DiscountAmount: {DiscountAmount.Amount}, " +
                $"TaxBaseAmount: {TaxBaseAmount.Amount}, " +
-               $"TotalAmount: {TotalAmount.Amount}" +
-               $"Currency: {Price.Currency}";
+               $"TotalAmount: {TotalAmount.Amount}";
     }
 
 }
