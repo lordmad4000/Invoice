@@ -1,5 +1,6 @@
 using SimplexInvoice.Domain.Exceptions;
 using SimplexInvoice.Domain.Invoices;
+using SimplexInvoice.Domain.ValueObjects;
 using System;
 using Xunit;
 
@@ -14,16 +15,16 @@ public class UpdateInvoiceLineValidationTests
 
         //Act
         var exception = Record.Exception(() =>
-            invoiceLine.Update(Guid.NewGuid(), 
-                               1, 
-                               "LB", 
-                               "LASAÑA BOLOÑESA", 
-                               "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "EUR", 
-                               "4%", 
-                               4, 
+            invoiceLine.Update(Guid.NewGuid(),
+                               1,
+                               "LB",
+                               "LASAÑA BOLOÑESA",
+                               "LASAÑA BOLOÑESA",
+                               1,
+                               4,
+                               new Money("USD", 2.60),
+                               "4%",
+                               4,
                                10));
 
         //Assert
@@ -38,16 +39,16 @@ public class UpdateInvoiceLineValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            invoiceLine.Update(Guid.NewGuid(), 
-                               0, 
-                               "LB", 
-                               "LASAÑA BOLOÑESA", 
-                               "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "EUR", 
-                               "4%", 
-                               4, 
+            invoiceLine.Update(Guid.NewGuid(),
+                               0,
+                               "LB",
+                               "LASAÑA BOLOÑESA",
+                               "LASAÑA BOLOÑESA",
+                               1,
+                               4,
+                               new Money("EUR", 2.60),
+                               "4%",
+                               4,
                                10));
     }
 
@@ -59,16 +60,16 @@ public class UpdateInvoiceLineValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            invoiceLine.Update(Guid.NewGuid(), 
-                               0, 
-                               "", 
-                               "LASAÑA BOLOÑESA", 
-                               "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "EUR", 
-                               "4%", 
-                               4, 
+            invoiceLine.Update(Guid.NewGuid(),
+                               1,
+                               "",
+                               "LASAÑA BOLOÑESA",
+                               "LASAÑA BOLOÑESA",
+                               1,
+                               4,
+                               new Money("EUR", 2.60),
+                               "4%",
+                               4,
                                10));
     }
 
@@ -80,16 +81,16 @@ public class UpdateInvoiceLineValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            invoiceLine.Update(Guid.NewGuid(), 
-                               0, 
-                               null, 
-                               "LASAÑA BOLOÑESA", 
-                               "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "EUR", 
-                               "4%", 
-                               4, 
+            invoiceLine.Update(Guid.NewGuid(),
+                               1,
+                               null,
+                               "LASAÑA BOLOÑESA",
+                               "LASAÑA BOLOÑESA",
+                               1,
+                               4,
+                               new Money("EUR", 2.60),
+                               "4%",
+                               4,
                                10));
     }
 
@@ -101,16 +102,16 @@ public class UpdateInvoiceLineValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            invoiceLine.Update(Guid.NewGuid(), 
-                               0, 
-                               "LB___________________", 
-                               "LASAÑA BOLOÑESA", 
-                               "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "EUR", 
-                               "4%", 
-                               4, 
+            invoiceLine.Update(Guid.NewGuid(),
+                               1,
+                               "LB___________________",
+                               "LASAÑA BOLOÑESA",
+                               "LASAÑA BOLOÑESA",
+                               1,
+                               4,
+                               new Money("EUR", 2.60),
+                               "4%",
+                               4,
                                10));
     }
 
@@ -122,16 +123,16 @@ public class UpdateInvoiceLineValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            invoiceLine.Update(Guid.NewGuid(), 
-                               0, 
-                               "LB", 
-                               "", 
-                               "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "EUR", 
-                               "4%", 
-                               4, 
+            invoiceLine.Update(Guid.NewGuid(),
+                               1,
+                               "LB",
+                               "",
+                               "LASAÑA BOLOÑESA",
+                               1,
+                               4,
+                               new Money("EUR", 2.60),
+                               "4%",
+                               4,
                                10));
     }
 
@@ -143,16 +144,16 @@ public class UpdateInvoiceLineValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            invoiceLine.Update(Guid.NewGuid(), 
-                               0, 
+            invoiceLine.Update(Guid.NewGuid(),
+                               1,
                                "LB",
                                null,
-                               "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "EUR", 
-                               "4%", 
-                               4, 
+                               "LASAÑA BOLOÑESA",
+                               1,
+                               4,
+                               new Money("EUR", 2.60),
+                               "4%",
+                               4,
                                10));
     }
 
@@ -164,16 +165,16 @@ public class UpdateInvoiceLineValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            invoiceLine.Update(Guid.NewGuid(), 
-                               0, 
-                               "LB", 
-                               "LASAÑA BOLOÑESA__________________________", 
-                               "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "EUR", 
-                               "4%", 
-                               4, 
+            invoiceLine.Update(Guid.NewGuid(),
+                               1,
+                               "LB",
+                               "LASAÑA BOLOÑESA__________________________",
+                               "LASAÑA BOLOÑESA",
+                               1,
+                               4,
+                               new Money("EUR", 2.60),
+                               "4%",
+                               4,
                                10));
     }
 
@@ -185,16 +186,16 @@ public class UpdateInvoiceLineValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            invoiceLine.Update(Guid.NewGuid(), 
-                               0, 
-                               "LB", 
-                               "LASAÑA BOLOÑESA", 
-                               "", 
-                               4, 
-                               2.60, 
-                               "EUR", 
-                               "4%", 
-                               4, 
+            invoiceLine.Update(Guid.NewGuid(),
+                               1,
+                               "LB",
+                               "LASAÑA BOLOÑESA",
+                               "",
+                               1,
+                               4,
+                               new Money("EUR", 2.60),
+                               "4%",
+                               4,
                                10));
     }
 
@@ -206,16 +207,16 @@ public class UpdateInvoiceLineValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            invoiceLine.Update(Guid.NewGuid(), 
-                               0, 
+            invoiceLine.Update(Guid.NewGuid(),
+                               1,
                                "LB",
-                               "LASAÑA BOLOÑESA", 
+                               "LASAÑA BOLOÑESA",
                                null,
-                               4, 
-                               2.60, 
-                               "EUR", 
-                               "4%", 
-                               4, 
+                               1,
+                               4,
+                               new Money("EUR", 2.60),
+                               "4%",
+                               4,
                                10));
     }
 
@@ -227,16 +228,16 @@ public class UpdateInvoiceLineValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            invoiceLine.Update(Guid.NewGuid(), 
-                               0, 
-                               "LB", 
-                               "LASAÑA BOLOÑESA", 
-                               "LASAÑA BOLOÑESA__________________________", 
-                               4, 
-                               2.60, 
-                               "EUR", 
-                               "4%", 
-                               4, 
+            invoiceLine.Update(Guid.NewGuid(),
+                               1,
+                               "LB",
+                               "LASAÑA BOLOÑESA",
+                               "LASAÑA BOLOÑESA__________________________",
+                               1,
+                               4,
+                               new Money("EUR", 2.60),
+                               "4%",
+                               4,
                                10));
     }
 
@@ -248,16 +249,16 @@ public class UpdateInvoiceLineValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            invoiceLine.Update(Guid.NewGuid(), 
-                               0, 
-                               "LB", 
-                               "LASAÑA BOLOÑESA", 
-                               "LASAÑA BOLOÑESA", 
-                               4, 
-                               -2.60, 
-                               "EUR", 
-                               "4%", 
-                               4, 
+            invoiceLine.Update(Guid.NewGuid(),
+                               1,
+                               "LB",
+                               "LASAÑA BOLOÑESA",
+                               "LASAÑA BOLOÑESA",
+                               1,
+                               4,
+                               new Money("EUR", -2.60),
+                               "4%",
+                               4,
                                10));
     }
 
@@ -269,16 +270,16 @@ public class UpdateInvoiceLineValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            invoiceLine.Update(Guid.NewGuid(), 
-                               0, 
-                               "LB", 
-                               "LASAÑA BOLOÑESA", 
-                               "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "EUR", 
-                               "", 
-                               4, 
+            invoiceLine.Update(Guid.NewGuid(),
+                               1,
+                               "LB",
+                               "LASAÑA BOLOÑESA",
+                               "LASAÑA BOLOÑESA",
+                               1,
+                               4,
+                               new Money("EUR", 2.60),
+                               "",
+                               4,
                                10));
     }
 
@@ -290,16 +291,16 @@ public class UpdateInvoiceLineValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            invoiceLine.Update(Guid.NewGuid(), 
-                               0, 
-                               "LB", 
-                               "LASAÑA BOLOÑESA", 
-                               "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "EUR", 
-                               null, 
-                               4, 
+            invoiceLine.Update(Guid.NewGuid(),
+                               1,
+                               "LB",
+                               "LASAÑA BOLOÑESA",
+                               "LASAÑA BOLOÑESA",
+                               1,
+                               4,
+                               new Money("EUR", 2.60),
+                               null,
+                               4,
                                10));
     }
 
@@ -311,16 +312,16 @@ public class UpdateInvoiceLineValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            invoiceLine.Update(Guid.NewGuid(), 
-                               0, 
-                               "LB", 
-                               "LASAÑA BOLOÑESA", 
-                               "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "EUR", 
-                               "4%___________________", 
-                               4, 
+            invoiceLine.Update(Guid.NewGuid(),
+                               1,
+                               "LB",
+                               "LASAÑA BOLOÑESA",
+                               "LASAÑA BOLOÑESA",
+                               1,
+                               4,
+                               new Money("EUR", 2.60),
+                               "4%___________________",
+                               4,
                                10));
     }
 
@@ -332,37 +333,37 @@ public class UpdateInvoiceLineValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            invoiceLine.Update(Guid.NewGuid(), 
-                               0, 
-                               "LB", 
-                               "LASAÑA BOLOÑESA", 
-                               "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "EUR", 
-                               "4%", 
-                               -4, 
+            invoiceLine.Update(Guid.NewGuid(),
+                               1,
+                               "LB",
+                               "LASAÑA BOLOÑESA",
+                               "LASAÑA BOLOÑESA",
+                               1,
+                               4,
+                               new Money("EUR", 2.60),
+                               "4%",
+                               -4,
                                10));
     }
 
     [Fact]
-    public void TaxRate_Greater_Than_0_Should_Be_Throw_BusinessRuleValidationException()
+    public void TaxRate_Greater_Than_100_Should_Be_Throw_BusinessRuleValidationException()
     {
         //Arrange
         InvoiceLine invoiceLine = GetInvoiceLine();
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            invoiceLine.Update(Guid.NewGuid(), 
-                               0, 
-                               "LB", 
-                               "LASAÑA BOLOÑESA", 
-                               "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "EUR", 
-                               "4%", 
-                               104, 
+            invoiceLine.Update(Guid.NewGuid(),
+                               1,
+                               "LB",
+                               "LASAÑA BOLOÑESA",
+                               "LASAÑA BOLOÑESA",
+                               1,
+                               4,
+                               new Money("EUR", 2.60),
+                               "4%",
+                               104,
                                10));
     }
 
@@ -374,51 +375,51 @@ public class UpdateInvoiceLineValidationTests
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            invoiceLine.Update(Guid.NewGuid(), 
-                               0, 
-                               "LB", 
-                               "LASAÑA BOLOÑESA", 
-                               "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "EUR", 
-                               "4%", 
-                               4, 
+            invoiceLine.Update(Guid.NewGuid(),
+                               1,
+                               "LB",
+                               "LASAÑA BOLOÑESA",
+                               "LASAÑA BOLOÑESA",
+                               1,
+                               4,
+                               new Money("EUR", 2.60),
+                               "4%",
+                               4,
                                -10));
     }
 
     [Fact]
-    public void DiscountRate_Greater_Than_0_Should_Be_Throw_BusinessRuleValidationException()
+    public void DiscountRate_Greater_Than_100_Should_Be_Throw_BusinessRuleValidationException()
     {
         //Arrange
         InvoiceLine invoiceLine = GetInvoiceLine();
 
         //Act & Assert
         Assert.Throws<BusinessRuleValidationException>(() =>
-            invoiceLine.Update(Guid.NewGuid(), 
-                               0, 
-                               "LB", 
-                               "LASAÑA BOLOÑESA", 
-                               "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "EUR", 
-                               "4%", 
-                               4, 
+            invoiceLine.Update(Guid.NewGuid(),
+                               1,
+                               "LB",
+                               "LASAÑA BOLOÑESA",
+                               "LASAÑA BOLOÑESA",
+                               1,
+                               4,
+                               new Money("EUR", 2.60),
+                               "4%",
+                               4,
                                110));
     }
 
     private static InvoiceLine GetInvoiceLine() =>
-            InvoiceLine.Create(Guid.NewGuid(), 
-                               1, 
-                               "FU", 
-                               "FAIRY ULTRA", 
-                               "FAIRY ULTRA", 
-                               2, 
-                               3.25, 
-                               "USD", 
-                               "21%", 
-                               21, 
+            InvoiceLine.Create(Guid.NewGuid(),
+                               2,
+                               "FU",
+                               "FAIRY ULTRA",
+                               "FAIRY ULTRA",
+                               0,
+                               2,
+                               new Money("USD", 3.25),
+                               "21%",
+                               21,
                                5);
 
 }

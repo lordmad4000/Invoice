@@ -1,5 +1,6 @@
 using SimplexInvoice.Domain.Exceptions;
 using SimplexInvoice.Domain.Invoices;
+using SimplexInvoice.Domain.ValueObjects;
 using System;
 using Xunit;
 
@@ -18,9 +19,9 @@ public class CreateInvoiceLineValidationTests
                                "LB", 
                                "LASAÑA BOLOÑESA", 
                                "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "USD", 
+                               1,
+                               4,
+                               new Money("USD", 2.60),
                                "4%", 
                                4, 
                                10));
@@ -41,9 +42,9 @@ public class CreateInvoiceLineValidationTests
                                "LB", 
                                "LASAÑA BOLOÑESA", 
                                "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "USD", 
+                               1,
+                               4,
+                               new Money("USD", 2.60),
                                "4%", 
                                4, 
                                10));
@@ -61,9 +62,9 @@ public class CreateInvoiceLineValidationTests
                                "", 
                                "LASAÑA BOLOÑESA", 
                                "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "USD", 
+                               1,
+                               4,
+                               new Money("USD", 2.60),
                                "4%", 
                                4, 
                                10));
@@ -81,9 +82,9 @@ public class CreateInvoiceLineValidationTests
                                null, 
                                "LASAÑA BOLOÑESA", 
                                "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "USD", 
+                               1,
+                               4,
+                               new Money("USD", 2.60),
                                "4%", 
                                4, 
                                10));
@@ -101,9 +102,9 @@ public class CreateInvoiceLineValidationTests
                                "LB___________________", 
                                "LASAÑA BOLOÑESA", 
                                "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "USD", 
+                               1,
+                               4,
+                               new Money("USD", 2.60),
                                "4%", 
                                4, 
                                10));
@@ -121,9 +122,9 @@ public class CreateInvoiceLineValidationTests
                                "LB", 
                                "", 
                                "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "USD", 
+                               1,
+                               4,
+                               new Money("USD", 2.60),
                                "4%", 
                                4, 
                                10));
@@ -141,9 +142,9 @@ public class CreateInvoiceLineValidationTests
                                "LB",
                                null,
                                "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "USD", 
+                               1,
+                               4,
+                               new Money("USD", 2.60),
                                "4%", 
                                4, 
                                10));
@@ -161,9 +162,9 @@ public class CreateInvoiceLineValidationTests
                                "LB", 
                                "LASAÑA BOLOÑESA__________________________", 
                                "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "USD", 
+                               1,
+                               4,
+                               new Money("USD", 2.60),
                                "4%", 
                                4, 
                                10));
@@ -181,9 +182,9 @@ public class CreateInvoiceLineValidationTests
                                "LB", 
                                "LASAÑA BOLOÑESA", 
                                "", 
-                               4, 
-                               2.60, 
-                               "USD", 
+                               1,
+                               4,
+                               new Money("USD", 2.60),
                                "4%", 
                                4, 
                                10));
@@ -201,9 +202,9 @@ public class CreateInvoiceLineValidationTests
                                "LB",
                                "LASAÑA BOLOÑESA", 
                                null,
-                               4, 
-                               2.60, 
-                               "USD", 
+                               1,
+                               4,
+                               new Money("USD", 2.60),
                                "4%", 
                                4, 
                                10));
@@ -221,9 +222,9 @@ public class CreateInvoiceLineValidationTests
                                "LB", 
                                "LASAÑA BOLOÑESA", 
                                "LASAÑA BOLOÑESA__________________________", 
-                               4, 
-                               2.60, 
-                               "USD", 
+                               1,
+                               4,
+                               new Money("USD", 2.60),
                                "4%", 
                                4, 
                                10));
@@ -241,9 +242,9 @@ public class CreateInvoiceLineValidationTests
                                "LB", 
                                "LASAÑA BOLOÑESA", 
                                "LASAÑA BOLOÑESA", 
-                               4, 
-                               -2.60, 
-                               "USD", 
+                               1,
+                               4,
+                               new Money("USD", -2.60),
                                "4%", 
                                4, 
                                10));
@@ -261,9 +262,9 @@ public class CreateInvoiceLineValidationTests
                                "LB", 
                                "LASAÑA BOLOÑESA", 
                                "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "USD", 
+                               1,
+                               4,
+                               new Money("USD", 2.60),
                                "", 
                                4, 
                                10));
@@ -281,9 +282,9 @@ public class CreateInvoiceLineValidationTests
                                "LB", 
                                "LASAÑA BOLOÑESA", 
                                "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "USD", 
+                               1,
+                               4,
+                               new Money("USD", 2.60),
                                null, 
                                4, 
                                10));
@@ -301,9 +302,9 @@ public class CreateInvoiceLineValidationTests
                                "LB", 
                                "LASAÑA BOLOÑESA", 
                                "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "USD", 
+                               1,
+                               4,
+                               new Money("USD", 2.60),
                                "4%___________________", 
                                4, 
                                10));
@@ -321,16 +322,16 @@ public class CreateInvoiceLineValidationTests
                                "LB", 
                                "LASAÑA BOLOÑESA", 
                                "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "USD", 
+                               1,
+                               4,
+                               new Money("USD", 2.60),
                                "4%", 
                                -4, 
                                10));
     }
 
     [Fact]
-    public void TaxRate_Greater_Than_0_Should_Be_Throw_BusinessRuleValidationException()
+    public void TaxRate_Greater_Than_100_Should_Be_Throw_BusinessRuleValidationException()
     {
         //Arrange
 
@@ -341,9 +342,9 @@ public class CreateInvoiceLineValidationTests
                                "LB", 
                                "LASAÑA BOLOÑESA", 
                                "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "USD", 
+                               1,
+                               4,
+                               new Money("USD", 2.60),
                                "4%", 
                                104, 
                                10));
@@ -361,16 +362,16 @@ public class CreateInvoiceLineValidationTests
                                "LB", 
                                "LASAÑA BOLOÑESA", 
                                "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "USD", 
+                               1,
+                               4,
+                               new Money("USD", 2.60),
                                "4%", 
                                4, 
                                -10));
     }
 
     [Fact]
-    public void DiscountRate_Greater_Than_0_Should_Be_Throw_BusinessRuleValidationException()
+    public void DiscountRate_Greater_Than_100_Should_Be_Throw_BusinessRuleValidationException()
     {
         //Arrange
 
@@ -381,9 +382,9 @@ public class CreateInvoiceLineValidationTests
                                "LB", 
                                "LASAÑA BOLOÑESA", 
                                "LASAÑA BOLOÑESA", 
-                               4, 
-                               2.60, 
-                               "USD", 
+                               1,
+                               4,
+                               new Money("USD", 2.60),
                                "4%", 
                                4, 
                                110));
