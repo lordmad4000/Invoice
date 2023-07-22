@@ -7,7 +7,6 @@ public class UpdateCompanyValidator : CompanyValidator
         ValidateName();
         ValidateIdDocumentTypeId();
         ValidateIdDocumentNumber();
-        ValidatePhone();
         ValidateEmail();
     }
 
