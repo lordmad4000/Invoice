@@ -15,10 +15,23 @@ namespace SimplexInvoice.Infra.Mappings
             {
                 navbuilder.HasIndex(o => o.Address)
                           .IsUnique();
+
                 navbuilder.Property(o => o.Address)
                           .HasColumnName("EmailAddress")
+                          .HasMaxLength(40)
                           .IsRequired();
             });
+
+            builder.Property(c => c.Password)
+                   .IsRequired();
+
+            builder.Property(c => c.FirstName)
+                   .HasMaxLength(20)
+                   .IsRequired();
+
+            builder.Property(c => c.LastName)
+                   .HasMaxLength(20)
+                   .IsRequired();
         }
 
     }
