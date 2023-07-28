@@ -10,6 +10,13 @@ namespace SimplexInvoice.Infra.Mappings
         {
             builder.HasIndex(c => c.Id)
                    .IsUnique();
+
+            builder.HasIndex(c => c.Name)
+                   .IsUnique();
+
+            builder.Property(c => c.Name)
+                   .HasMaxLength(20)
+                   .IsRequired();
         }
 
     }
