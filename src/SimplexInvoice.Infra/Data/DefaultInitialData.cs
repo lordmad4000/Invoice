@@ -10,6 +10,7 @@ namespace SimplexInvoice.Infra.Data
             AddDefaultUserData(migrationBuilder);
             AddDefaultIdDocumentTypeData(migrationBuilder);
             AddDefaultTaxRateData(migrationBuilder);
+            AddDefaultProductData(migrationBuilder);
         }
 
         private static void AddDefaultUserData(MigrationBuilder migrationBuilder)
@@ -47,6 +48,26 @@ namespace SimplexInvoice.Infra.Data
                                          ('ab6aecb2-d180-414d-8658-3ac383e73cdd', '4%', '4'),
                                          ('93ba2608-89cb-493f-848e-65169261d813', '10%', '10'),
                                          ('5dbd86d1-f989-47fd-ac4d-ab2bf4ea3564', '21%', '21')");
+        }
+
+        private static void AddDefaultProductData(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.Sql(@"INSERT INTO simplexinvoice.Product 
+                                   (Id, 
+                                    Code, 
+                                    Name, 
+                                    Description, 
+                                    PackageQuantity, 
+                                    Currency, 
+                                    UnitPrice, 
+                                    ProductTaxRateId) 
+                                   VALUES ('81f197d3-9260-4d28-933c-8540ff1a4c2d', 
+                                           '1', 'DEFAULT PRODUCT', 
+                                           'DEFAULT PRODUCT', 
+                                           '1', 
+                                           'EUR', 
+                                           '1', 
+                                           '3248b83b-990e-4627-ac82-c4a146e81754')");
         }
 
     }
