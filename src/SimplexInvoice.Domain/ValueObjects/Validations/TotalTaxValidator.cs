@@ -6,6 +6,7 @@ public class TotalTaxValidator : AbstractValidator<TotalTax>
     public TotalTaxValidator()
     {
         ValidateName();
+        ValidateBaseAmount();
         ValidateAmount();
     }
 
@@ -13,6 +14,11 @@ public class TotalTaxValidator : AbstractValidator<TotalTax>
     {
         RuleFor(c => c.Name).NotEmpty()
                             .Length(1, 20);
+    }
+
+    public void ValidateBaseAmount()
+    {
+        RuleFor(c => c.BaseAmount).NotNull();
     }
 
     public void ValidateAmount()

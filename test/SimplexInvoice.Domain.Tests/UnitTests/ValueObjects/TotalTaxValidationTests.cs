@@ -11,7 +11,7 @@ public class TotalTaxValidationTests
         //Arrange
 
         //Act
-        var exception = Record.Exception(() => new TotalTax("4%", 1.22));
+        var exception = Record.Exception(() => new TotalTax("4%", 30.40, 1.22));
 
         //Assert
         Assert.Null(exception);
@@ -23,7 +23,7 @@ public class TotalTaxValidationTests
         //Arrange            
 
         //Act & Assert
-        Assert.Throws<NotValidTotalTaxException>(() => new TotalTax("", 1.22));
+        Assert.Throws<NotValidTotalTaxException>(() => new TotalTax("", 30.40, 1.22));
     }
 
     [Fact]
@@ -32,7 +32,7 @@ public class TotalTaxValidationTests
         //Arrange            
 
         //Act & Assert
-        Assert.Throws<NotValidTotalTaxException>(() => new TotalTax(null, 1.22));
+        Assert.Throws<NotValidTotalTaxException>(() => new TotalTax(null, 30.40, 1.22));
     }
 
     [Fact]
@@ -41,7 +41,7 @@ public class TotalTaxValidationTests
         //Arrange            
 
         //Act & Assert
-        Assert.Throws<NotValidTotalTaxException>(() => new TotalTax("10%__________________", 1.22));
+        Assert.Throws<NotValidTotalTaxException>(() => new TotalTax("10%__________________", 30.40, 1.22));
     }
 
 }
