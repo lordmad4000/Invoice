@@ -31,7 +31,6 @@ public class Money : ValueObject
         if (!validator.IsValid)
             throw new NotValidMoneyException(
                 string.Join(", ", validator.Errors.Select(x => x.ErrorMessage).ToArray()));
-
     }
 
     protected override IEnumerable<object> GetAtomicValues()
