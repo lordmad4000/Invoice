@@ -75,10 +75,10 @@ public partial class InvoiceLine : Aggregate
 
     private void CalculateAmounts()
     {
-        TaxAmount = new Money(Price.Currency, CalculateTaxAmount());
-        DiscountAmount = new Money(Price.Currency, CalculateDiscountAmount());
-        TaxBaseAmount = new Money(Price.Currency, CalculateTaxBaseAmount());
-        TotalAmount = new Money(Price.Currency, CalculateTotalAmount());
+        Tax = new Money(Price.Currency, CalculateTaxAmount());
+        Discount = new Money(Price.Currency, CalculateDiscountAmount());
+        TaxBase = new Money(Price.Currency, CalculateTaxBaseAmount());
+        Total = new Money(Price.Currency, CalculateTotalAmount());
     }
 
     private double CalculateTaxAmount() =>
@@ -108,10 +108,10 @@ public partial class InvoiceLine : Aggregate
                $"TaxName: {TaxName}, " +
                $"TaxRate: {TaxRate}, " +
                $"DiscountRate: {DiscountRate}, " +
-               $"TaxAmount: {TaxAmount.Amount}, " +
-               $"DiscountAmount: {DiscountAmount.Amount}, " +
-               $"TaxBaseAmount: {TaxBaseAmount.Amount}, " +
-               $"TotalAmount: {TotalAmount.Amount}";
+               $"TaxAmount: {Tax.Amount}, " +
+               $"DiscountAmount: {Discount.Amount}, " +
+               $"TaxBaseAmount: {TaxBase.Amount}, " +
+               $"TotalAmount: {Total.Amount}";
     }
 
 }

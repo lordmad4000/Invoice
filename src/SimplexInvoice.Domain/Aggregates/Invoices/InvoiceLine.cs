@@ -15,8 +15,9 @@ public partial class InvoiceLine
     public string TaxName { get; private set; } = string.Empty;
     public int TaxRate { get; private set; } = 0;
     public int DiscountRate { get; private set; } = 0;
-    public Money TaxAmount { get; private set; } = new Money("USD", 0.0);
-    public Money DiscountAmount { get; private set; } = new Money("USD", 0.0);
-    public Money TaxBaseAmount { get; private set; } = new Money("USD", 0.0);
-    public Money TotalAmount { get; private set; } = new Money("USD", 0.0);
+    public Money Tax { get; private set; } = new Money("USD", 0.0);
+    public Money Discount { get; private set; } = new Money("USD", 0.0);
+    public Money TaxBase { get; private set; } = new Money("USD", 0.0);
+    public Money Total { get; private set; } = new Money("USD", 0.0);
+
 }
