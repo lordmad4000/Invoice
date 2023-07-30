@@ -1,6 +1,6 @@
+using Microsoft.Extensions.DependencyInjection;
 using SimplexInvoice.Application.Interfaces;
 using SimplexInvoice.Application.Services;
-using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 namespace SimplexInvoice.Application
@@ -12,6 +12,7 @@ namespace SimplexInvoice.Application
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
             services.AddScoped<IValidatorService, ValidatorService>();
             services.AddScoped<IPasswordService, UserPasswordService>();
+            services.AddScoped<ApplicationTestService>();            
 
             return services;            
         }        

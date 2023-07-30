@@ -4,6 +4,7 @@ using SimplexInvoice.Application.IdDocumentTypes.Commands.Register;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SimplexInvoice.Application.Services;
 
 namespace SimplexInvoice.Api.Controllers
 {
@@ -15,14 +16,17 @@ namespace SimplexInvoice.Api.Controllers
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
         private readonly ICustomLogger _logger;
+        private readonly ApplicationTestService _applicationTestService;
 
         public ConfigurationController(IMediator mediator,
                                        IMapper mapper,
-                                       ICustomLogger logger)
+                                       ICustomLogger logger,
+                                       ApplicationTestService applicationTestService)
         {
             _mediator = mediator;
             _mapper = mapper;
             _logger = logger;
+            _applicationTestService = applicationTestService;
         }
 
         [HttpPost("IdDocumentTypeRegister")]
@@ -35,6 +39,15 @@ namespace SimplexInvoice.Api.Controllers
             var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/{idDocumentTypeDto.Id}";
 
             return (Created(url, idDocumentTypeDto));
+        }
+
+        [HttpGet("Test")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Test()
+        {
+            await _applicationTestService.Test();
+
+            return Ok();            
         }
     }
 }

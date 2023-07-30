@@ -1,15 +1,16 @@
-using SimplexInvoice.Application.Common.Interfaces.Persistance;
-using SimplexInvoice.Domain.Interfaces;
-using SimplexInvoice.Infra.Configuration;
-using SimplexInvoice.Infra.Data;
-using SimplexInvoice.Infra.Repositories;
-using SimplexInvoice.Infra.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using SimplexInvoice.Application.Common.Interfaces.Persistance;
+using SimplexInvoice.Application.Interfaces;
+using SimplexInvoice.Domain.Interfaces;
+using SimplexInvoice.Infra.Configuration;
+using SimplexInvoice.Infra.Data;
+using SimplexInvoice.Infra.Repositories;
+using SimplexInvoice.Infra.Services;
 using System.Text;
 using System;
 
@@ -24,6 +25,7 @@ namespace SimplexInvoice.Infra
             services.AddScoped<IIdDocumentTypeRepository, IdDocumentTypeRepository>();
             services.AddScoped<IPasswordEncryption, PasswordEncryptService>();
             services.AddScoped<ITokenService, JWTokenService>();
+            services.AddScoped<IInfraTestService, InfraTestService>();
             services.AddSingleton<ICustomLogger, LoggerSeriLog>();
 
             return services;            
