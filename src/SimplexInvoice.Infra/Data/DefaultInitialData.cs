@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using System;
+using System.Collections.Generic;
 
 namespace SimplexInvoice.Infra.Data
 {
     public static class DefaultInitialData
     {
-        public static void AddDefaultData(MigrationBuilder migrationBuilder)
+        public static void AddDefaultInitialData(MigrationBuilder migrationBuilder)
         {              
             AddDefaultUserData(migrationBuilder);
             AddDefaultIdDocumentTypeData(migrationBuilder);
@@ -13,7 +14,7 @@ namespace SimplexInvoice.Infra.Data
             AddDefaultProductData(migrationBuilder);
         }
 
-        private static void AddDefaultUserData(MigrationBuilder migrationBuilder)
+        public static void AddDefaultUserData(MigrationBuilder migrationBuilder)
         {
             string creationDate = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss");
 
@@ -32,7 +33,7 @@ namespace SimplexInvoice.Infra.Data
                                          '{creationDate}');");
         }
 
-        private static void AddDefaultIdDocumentTypeData(MigrationBuilder migrationBuilder)
+        public static void AddDefaultIdDocumentTypeData(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.Sql(@"INSERT INTO simplexinvoice.IdDocumentType (Id, Name)
                                    VALUES('25cdf776-e147-4898-92b7-a3280cbe9a34', 'NIE'),
@@ -41,7 +42,7 @@ namespace SimplexInvoice.Infra.Data
                                          ('ae2e1245-885b-477f-a79d-cb273e7c2bc1', 'DNI')");
         }
 
-        private static void AddDefaultTaxRateData(MigrationBuilder migrationBuilder)
+        public static void AddDefaultTaxRateData(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.Sql(@"INSERT INTO simplexinvoice.TaxRate (Id, Name, Value)
                                    VALUES('3248b83b-990e-4627-ac82-c4a146e81754', '0%', '0'),
@@ -50,7 +51,7 @@ namespace SimplexInvoice.Infra.Data
                                          ('5dbd86d1-f989-47fd-ac4d-ab2bf4ea3564', '21%', '21')");
         }
 
-        private static void AddDefaultProductData(MigrationBuilder migrationBuilder)
+        public static void AddDefaultProductData(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.Sql(@"INSERT INTO simplexinvoice.Product 
                                    (Id, 
@@ -69,6 +70,36 @@ namespace SimplexInvoice.Infra.Data
                                            '1', 
                                            '3248b83b-990e-4627-ac82-c4a146e81754')");
         }
+
+        public static void AddDefaultCompanyData(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.Sql(@"INSERT INTO simplexinvoice.Company 
+                                   (Id, 
+                                    Name, 
+                                    IdDocumentTypeId, 
+                                    IdDocumentNumber, 
+                                    Street, 
+                                    City, 
+                                    State, 
+                                    Country, 
+                                    PostalCode, 
+                                    Phone, 
+                                    EmailAddress) 
+                                   VALUES('efea1745-469d-4382-b68b-4d1cc3d49cff', 
+                                          'Default Company', 
+                                          '2dda9061-4e0a-4c8a-bc10-cd998bb9946f', 
+                                          'B37232972', 
+                                          'Default Street', 
+                                          'Default City', 
+                                          'Default State', 
+                                          'Default Country', 
+                                          '90210', 
+                                          '+34 689 45 96 34', 
+                                          'defaultcompany@company.com');");
+        }
+
+
+        
 
     }
 }
