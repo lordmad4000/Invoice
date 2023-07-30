@@ -153,7 +153,7 @@ namespace SimplexInvoice.Infra.Migrations
                 column: "Id",
                 unique: true);
 
-            DefaultInitialData.AddDefaultData(migrationBuilder);
+            DefaultInitialData.AddDefaultInitialData(migrationBuilder);
         }
 
         /// <inheritdoc />
