@@ -5,6 +5,7 @@ using SimplexInvoice.Domain.TaxRates;
 using SimplexInvoice.Infra.Mappings;
 using SimplexInvoice.Domain.Products;
 using SimplexInvoice.Domain.Companies;
+using SimplexInvoice.Domain.Customers;
 
 namespace SimplexInvoice.Infra.Data
 {
@@ -19,6 +20,7 @@ namespace SimplexInvoice.Infra.Data
         public DbSet<TaxRate> TaxRate { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<Company> Company { get; set; }
+        public DbSet<Customer> Customer { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {            
@@ -27,6 +29,7 @@ namespace SimplexInvoice.Infra.Data
             modelBuilder.ApplyConfiguration(new TaxRateMap());
             modelBuilder.ApplyConfiguration(new ProductMap());
             modelBuilder.ApplyConfiguration(new CompanyMap());
+            modelBuilder.ApplyConfiguration(new CustomerMap());
             base.OnModelCreating(modelBuilder);
         }
     }
