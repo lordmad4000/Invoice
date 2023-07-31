@@ -89,17 +89,43 @@ namespace SimplexInvoice.Infra.Data
                                           'Default Company', 
                                           '2dda9061-4e0a-4c8a-bc10-cd998bb9946f', 
                                           'B37232972', 
-                                          'Default Street', 
-                                          'Default City', 
-                                          'Default State', 
-                                          'Default Country', 
+                                          'Default Company Street', 
+                                          'Default Company City', 
+                                          'Default Company State', 
+                                          'Default Company Country', 
                                           '90210', 
                                           '+34 689 45 96 34', 
                                           'defaultcompany@company.com');");
         }
 
-
-        
+        public static void AddDefaultCustomerData(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.Sql(@"INSERT INTO simplexinvoice.Customer
+                                   (Id, 
+                                    FirstName, 
+                                    LastName,
+                                    IdDocumentTypeId, 
+                                    IdDocumentNumber, 
+                                    Street, 
+                                    City, 
+                                    State, 
+                                    Country, 
+                                    PostalCode, 
+                                    Phone, 
+                                    EmailAddress) 
+                                   VALUES('1ce71b42-47eb-4d0c-819c-cc2efc31fedc', 
+                                          'Default FirstName Customer', 
+                                          'Default LastName Customer', 
+                                          '2dda9061-4e0a-4c8a-bc10-cd998bb9946f', 
+                                          '03282511C2', 
+                                          'Default Customer Street', 
+                                          'Default Customer City', 
+                                          'Default Customer State', 
+                                          'Default Customer Country', 
+                                          '90211', 
+                                          '+34 657 22 17 56', 
+                                          'defaultcustomer@customer.com');");
+        }
 
     }
 }
