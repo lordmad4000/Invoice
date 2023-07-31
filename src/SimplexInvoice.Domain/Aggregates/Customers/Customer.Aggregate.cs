@@ -39,7 +39,7 @@ public partial class Customer : AggregateRoot
         LastName = lastName;
         IdDocumentTypeId = idDocumentTypeId;
         IdDocumentNumber = idDocumentNumber;
-        CustomerAddress = address;
+        Address = address;
         Phone = phoneNumber;
         EmailAddress = emailAddress;
 
@@ -56,11 +56,11 @@ public partial class Customer : AggregateRoot
                $"LastName: {LastName}, " +
                $"IdDocumentTypeId: {IdDocumentTypeId}, " +
                $"IdDocumentNumber: {IdDocumentNumber} ," +
-               $"Street: {CustomerAddress.Street}, " +
-               $"City: {CustomerAddress.City}, " +
-               $"State: {CustomerAddress.State}, " +
-               $"Country: {CustomerAddress.Country}, " +
-               $"Postal Code: {CustomerAddress.PostalCode}, " +
+               $"Street: {Address.Street}, " +
+               $"City: {Address.City}, " +
+               $"State: {Address.State}, " +
+               $"Country: {Address.Country}, " +
+               $"Postal Code: {Address.PostalCode}, " +
                $"Phone: {Phone.Phone}, " +
                $"EmailAddress: {EmailAddress.Address}";
     }

@@ -75,14 +75,6 @@ public class CompanyMap : IEntityTypeConfiguration<Company>
                .IsRequired()
                .OnDelete(DeleteBehavior.Restrict);
 
-        //builder.HasOne<IdDocumentType>()
-
-        //    builder.HasOne<TaxRate>()
-        //           .WithMany()
-        //           .HasForeignKey(c => c.ProductTaxRateId)
-        //           .IsRequired()
-        //           .OnDelete(DeleteBehavior.Restrict);
-        //}
     }
 
 }
