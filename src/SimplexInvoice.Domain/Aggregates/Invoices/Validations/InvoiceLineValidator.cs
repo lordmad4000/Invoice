@@ -13,21 +13,18 @@ namespace SimplexInvoice.Domain.Invoices.Validations
         public void ValidateProductCode()
         {
             RuleFor(c => c.ProductCode).NotEmpty()
-                                       .NotNull()
                                        .Length(1, 20);
         }
 
         public void ValidateProductName()
         {
             RuleFor(c => c.ProductName).NotEmpty()
-                                       .NotNull()
                                        .Length(1, 40);
         }
 
         public void ValidateProductDescription()
         {
             RuleFor(c => c.ProductDescription).NotEmpty()
-                                              .NotNull()
                                               .Length(1, 40);
         }
 
@@ -40,7 +37,6 @@ namespace SimplexInvoice.Domain.Invoices.Validations
         public void ValidateTaxName()
         {
             RuleFor(c => c.TaxName).NotEmpty()
-                                   .NotNull()
                                    .Length(1, 20);
         }
 

@@ -6,6 +6,7 @@ using SimplexInvoice.Infra.Mappings;
 using SimplexInvoice.Domain.Products;
 using SimplexInvoice.Domain.Companies;
 using SimplexInvoice.Domain.Customers;
+using SimplexInvoice.Domain.Invoices;
 
 namespace SimplexInvoice.Infra.Data
 {
@@ -21,6 +22,8 @@ namespace SimplexInvoice.Infra.Data
         public DbSet<Product> Product { get; set; }
         public DbSet<Company> Company { get; set; }
         public DbSet<Customer> Customer { get; set; }
+        public DbSet<Invoice> Invoice{ get; set; }
+        public DbSet<InvoiceLine> InvoiceLine { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {            
@@ -30,6 +33,8 @@ namespace SimplexInvoice.Infra.Data
             modelBuilder.ApplyConfiguration(new ProductMap());
             modelBuilder.ApplyConfiguration(new CompanyMap());
             modelBuilder.ApplyConfiguration(new CustomerMap());
+            modelBuilder.ApplyConfiguration(new InvoiceMap());
+            modelBuilder.ApplyConfiguration(new InvoiceLineMap());
             base.OnModelCreating(modelBuilder);
         }
     }

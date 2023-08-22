@@ -7,8 +7,8 @@ public partial class Invoice
 {
     private readonly HashSet<InvoiceLine> _invoiceLines = new HashSet<InvoiceLine>();
     private readonly HashSet<TotalTax> _totalTaxes = new HashSet<TotalTax>();
-    public IReadOnlyList<InvoiceLine> InvoiceLines => _invoiceLines.ToList();
-    public IReadOnlyList<TotalTax> TotalTaxes => _totalTaxes.ToList();
+    public IReadOnlyCollection<InvoiceLine> InvoiceLines => _invoiceLines.ToList();
+    public IReadOnlyCollection<TotalTax> TotalTaxes => _totalTaxes.ToList();
     public string Number { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
     public string CompanyName { get; private set; } = string.Empty;
