@@ -17,6 +17,7 @@ namespace SimplexInvoice.Application.Common.Interfaces.Persistance
         bool TryGetCache<Ty>(string cacheKey, out Ty value);
         bool TryRemoveCache(string cacheKey);
         bool TrySetCache<Ty>(string cacheKey, Ty value);
+        Task<int> SaveChangesAsync();
     }
 
 }

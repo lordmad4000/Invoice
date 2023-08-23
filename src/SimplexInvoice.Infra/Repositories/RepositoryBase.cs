@@ -14,11 +14,13 @@ namespace SimplexInvoice.Infra.Repositories
     public class RepositoryBase<T> : IAsyncRepository<T> where T : AggregateRoot
     {
         private readonly DbSet<T> _dbSet;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly string _cacheKey = $"{typeof(T)}";
         private readonly ICacheService _cacheService;
-        public RepositoryBase(EFContext context, ICacheService cacheService = null)
+        public RepositoryBase(IUnitOfWork unitOfWork, ICacheService cacheService = null)
         {
-            _dbSet = context.Set<T>();
+            _unitOfWork = unitOfWork;
+            _dbSet = _unitOfWork.GetContext().Set<T>();
             _cacheService = cacheService;
         }
 
@@ -160,6 +162,9 @@ namespace SimplexInvoice.Infra.Repositories
 
             return false;
         }
+
+        public async Task<int> SaveChangesAsync() =>
+            await _unitOfWork.SaveChangesAsync();
 
     }
 }

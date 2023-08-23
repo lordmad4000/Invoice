@@ -12,17 +12,14 @@ namespace SimplexInvoice.Application.IdDocumentTypes.Commands.Register
     public class IdDocumentTypeRegisterHandler : IRequestHandler<IdDocumentTypeRegisterCommand, IdDocumentTypeDto>
     {
         private readonly IIdDocumentTypeRepository _idDocumentTypeRepository;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ICustomLogger _logger;
 
         public IdDocumentTypeRegisterHandler(IIdDocumentTypeRepository idDocumentTypeRepository,                        
-                                             IUnitOfWork unitOfWork,
                                              IMapper mapper,
                                              ICustomLogger logger)
         {
             _idDocumentTypeRepository = idDocumentTypeRepository;
-            _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
         }
@@ -34,7 +31,7 @@ namespace SimplexInvoice.Application.IdDocumentTypes.Commands.Register
 
             var idDocumentType = IdDocumentType.Create(request.Name);
             idDocumentType = await _idDocumentTypeRepository.AddAsync(idDocumentType);
-            await _unitOfWork.SaveChangesAsync();
+            await _idDocumentTypeRepository.SaveChangesAsync();
             _logger.Debug($"IdDocumentType Register with data: {idDocumentType}");
 
             await Task.Delay(10);

@@ -14,6 +14,9 @@ namespace SimplexInvoice.Infra.Data
             _dbContext = dbContext;
         }
 
+        public EFContext GetContext() =>
+            _dbContext;
+
         public async Task<int> SaveChangesAsync()
         {
             try
@@ -30,5 +33,6 @@ namespace SimplexInvoice.Infra.Data
         {
             GC.SuppressFinalize(this);
         }
+
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace SimplexInvoice.Application.Common.Interfaces.Persistance
+namespace SimplexInvoice.Infra.Data
 {
     public interface IUnitOfWork: IDisposable
     {
+        EFContext GetContext();
         Task<int> SaveChangesAsync();
     }
 }

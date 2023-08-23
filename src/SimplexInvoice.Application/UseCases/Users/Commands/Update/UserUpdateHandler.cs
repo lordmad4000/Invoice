@@ -14,19 +14,16 @@ namespace SimplexInvoice.Application.Users.Commands
     public class UserUpdateHandler : IRequestHandler<UserUpdateCommand, UserDto>
     {
         private readonly IUserRepository _userRepository;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IPasswordService _passwordService;
         private readonly IMapper _mapper;
         private readonly ICustomLogger _logger;
 
         public UserUpdateHandler(IUserRepository userRepository,
-                                 IUnitOfWork unitOfWork,
                                  IPasswordService passwordService,
                                  IMapper mapper,
                                  ICustomLogger logger)
         {
             _userRepository = userRepository;
-            _unitOfWork = unitOfWork;
             _passwordService = passwordService;
             _mapper = mapper;
             _logger = logger;
@@ -40,7 +37,7 @@ namespace SimplexInvoice.Application.Users.Commands
             var encryptedPassword = _passwordService.GeneratePassword(request.Email, request.Password, 16);
             user.Update(request.Email, encryptedPassword, request.FirstName, request.LastName);
             await _userRepository.UpdateAsync(user);
-            if (await _unitOfWork.SaveChangesAsync() == 0)
+            if (await _userRepository.SaveChangesAsync() == 0)
                 throw new Exception("User could not be updated succesfully.");
 
             _logger.Debug(@$"User Update with data: {user}");

@@ -11,9 +11,9 @@ namespace SimplexInvoice.Infra.Repositories
     public class UserRepository : RepositoryBase<User>, IUserRepository
     {
         private readonly EFContext _context;
-        public UserRepository(EFContext dbContext, ICacheService cacheService) : base(dbContext, cacheService)
+        public UserRepository(IUnitOfWork unitOfWork, ICacheService cacheService) : base(unitOfWork, cacheService)
         {
-            _context = dbContext;
+            _context = unitOfWork.GetContext();
         }
 
         public async Task<List<User>> GetLastUsers(int take)

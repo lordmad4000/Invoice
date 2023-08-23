@@ -7,9 +7,9 @@ namespace SimplexInvoice.Infra.Repositories
     public class IdDocumentTypeRepository : RepositoryBase<IdDocumentType>, IIdDocumentTypeRepository
     {
         private readonly EFContext _context;
-        public IdDocumentTypeRepository(EFContext dbContext, ICacheService cacheService) : base(dbContext, cacheService)
+        public IdDocumentTypeRepository(IUnitOfWork unitOfWork, ICacheService cacheService) : base(unitOfWork, cacheService)
         {
-            _context = dbContext;
+            _context = unitOfWork.GetContext();
         }
 
     }
