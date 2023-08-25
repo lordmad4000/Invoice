@@ -2,8 +2,8 @@ version: "3"
 services:
   database:
     image: mysql:8.0
-    container_name: invoice_db
-    hostname: invoice_db
+    container_name: simplexinvoice_db
+    hostname: simplexinvoice_db
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     ports:
@@ -11,8 +11,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: RdlqT2BZUKyos832
   api:
-    container_name: invoice_api
-    hostname: invoice_api
+    container_name: simplexinvoice_api
+    hostname: simplexinvoice_api
     build:
       context: .
       dockerfile: Dockerfile
@@ -26,7 +26,7 @@ services:
       DBHOST: database
       ASPNETCORE_ENVIRONMENT: "Release"
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
-      ConnectionStrings__DefaultConnection: "server=invoice_db;Database=invoice;uid=root;Password=RdlqT2BZUKyos832;persistsecurityinfo=True;"
+      ConnectionStrings__DefaultConnection: "server=simplexinvoice_db;Database=simplexinvoice;uid=root;Password=RdlqT2BZUKyos832;persistsecurityinfo=True;"
       JWTConfig_SecretKey: "asdwda1d8a4sd8w4das8d*w8d*asd@#r"
       CacheConfig_AbsoluteExpirationInHours: 1
       CacheConfig_SlidingExpirationInMinutes: 30
