@@ -11,8 +11,8 @@ using SimplexInvoice.Infra.Configuration;
 using SimplexInvoice.Infra.Data;
 using SimplexInvoice.Infra.Repositories;
 using SimplexInvoice.Infra.Services;
-using System.Text;
 using System;
+using System.Text;
 
 namespace SimplexInvoice.Infra
 {
@@ -21,8 +21,14 @@ namespace SimplexInvoice.Infra
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ICompanyRepository, CompanyRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IIdDocumentTypeRepository, IdDocumentTypeRepository>();
+            services.AddScoped<IInvoiceLineRepository, InvoiceLineRepository>();
+            services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ITaxRateRepository, TaxRateRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPasswordEncryption, PasswordEncryptService>();
             services.AddScoped<ITokenService, JWTokenService>();
             services.AddScoped<IInfraTestService, InfraTestService>();
@@ -33,13 +39,17 @@ namespace SimplexInvoice.Infra
 
         public static IServiceCollection AddUnitOfWork(this IServiceCollection services)
         {
-            return services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            return services;
         }
 
         public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
         {
             string connectionString = configuration.GetConnectionString("DefaultConnection");
-            return services.AddDbContext<EFContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+            services.AddDbContext<EFContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
+            return services;
         }        
 
         public static IServiceCollection AddCache(this IServiceCollection services, IConfiguration configuration)

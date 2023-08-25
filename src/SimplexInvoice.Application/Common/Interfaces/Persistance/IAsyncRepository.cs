@@ -6,7 +6,7 @@ using SimplexInvoice.Domain.Base;
 
 namespace SimplexInvoice.Application.Common.Interfaces.Persistance
 {
-    public interface IAsyncRepository<T> where T : AggregateRoot
+    public interface IAsyncRepository<T> where T : Entity
     {
         Task<T> AddAsync(T entity);
         Task<T> UpdateAsync(T entity);

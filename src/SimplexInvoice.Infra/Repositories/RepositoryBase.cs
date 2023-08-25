@@ -11,7 +11,7 @@ using System;
 
 namespace SimplexInvoice.Infra.Repositories
 {
-    public class RepositoryBase<T> : IAsyncRepository<T> where T : AggregateRoot
+    public class RepositoryBase<T> : IAsyncRepository<T> where T : Entity
     {
         private readonly DbSet<T> _dbSet;
         private readonly IUnitOfWork _unitOfWork;
