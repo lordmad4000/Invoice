@@ -19,7 +19,6 @@ namespace SimplexInvoice.Application.Tests.UnitTests
     {
         private readonly IMapper _mapper;
         private readonly Mock<IUserRepository> _mockUserRepository;
-        private readonly Mock<IUnitOfWork> _mockUnitOfWork;
         private readonly Mock<IPasswordService> _mockPasswordService;
         private readonly Mock<ICustomLogger> _mockLogger;
         
@@ -31,7 +30,6 @@ namespace SimplexInvoice.Application.Tests.UnitTests
             });
             _mapper = mapperConfig.CreateMapper();
             _mockUserRepository = new Mock<IUserRepository>();
-            _mockUnitOfWork = new Mock<IUnitOfWork>();
             _mockPasswordService = new Mock<IPasswordService>();
             _mockLogger = new Mock<ICustomLogger>();
         }
@@ -46,7 +44,6 @@ namespace SimplexInvoice.Application.Tests.UnitTests
             _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<bool>(), It.IsAny<string>())).ReturnsAsync(default(User));
             _mockPasswordService.Setup(x => x.GeneratePassword(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())).Returns("12345678");
             var authenticationRegisterHandler = new AuthenticationRegisterHandler(_mockUserRepository.Object, 
-                                                                                  _mockUnitOfWork.Object, 
                                                                                   _mockPasswordService.Object,
                                                                                   _mapper,
                                                                                   _mockLogger.Object);
@@ -66,7 +63,6 @@ namespace SimplexInvoice.Application.Tests.UnitTests
             var authenticationRegisterCommand = GetAuthenticationRegisterCommand();
             _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<bool>(), It.IsAny<string>())).ReturnsAsync(user);
             var AuthenticationRegisterHandler = new AuthenticationRegisterHandler(_mockUserRepository.Object, 
-                                                                                  _mockUnitOfWork.Object, 
                                                                                   _mockPasswordService.Object,
                                                                                   _mapper,
                                                                                   _mockLogger.Object);

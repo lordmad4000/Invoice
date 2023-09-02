@@ -6,6 +6,6 @@ namespace SimplexInvoice.Application.Common.Interfaces.Persistance
 {
     public interface IUserRepository : IAsyncRepository<User>
     {
-        Task<List<User>> GetLastUsers(int take);
+        Task<IEnumerable<User>> GetLastUsers(int take);
     }
 }

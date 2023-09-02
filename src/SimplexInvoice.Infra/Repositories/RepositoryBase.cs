@@ -79,7 +79,7 @@ namespace SimplexInvoice.Infra.Repositories
             return result;
         }
 
-        public async Task<List<T>> ListAsync(Expression<Func<T, bool>> expression)
+        public async Task<IEnumerable<T>> ListAsync(Expression<Func<T, bool>> expression)
         {
             if (!TryGetCache(_cacheKey, out List<T> results))
             {

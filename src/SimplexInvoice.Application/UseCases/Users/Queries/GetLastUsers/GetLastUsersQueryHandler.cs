@@ -5,6 +5,7 @@ using MediatR;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Linq;
 
 namespace SimplexInvoice.Application.Users.Queries
 {
@@ -26,9 +27,10 @@ namespace SimplexInvoice.Application.Users.Queries
         public async Task<List<UserDto>> Handle(GetLastUsersQuery request, CancellationToken cancellationToken)
         {
             var users = await _userRepository.GetLastUsers(request.Count);
-            _logger.Debug($"GetLastUsers count: {request.Count}");
+            var usersDto = _mapper.Map<List<UserDto>>(users);
+            _logger.Debug($"GetLastUsers count: {usersDto.Count}");
 
-            return _mapper.Map<List<UserDto>>(users);
+            return usersDto;
         }
     }
 }

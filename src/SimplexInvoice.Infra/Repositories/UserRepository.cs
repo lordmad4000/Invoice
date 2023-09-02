@@ -16,7 +16,7 @@ namespace SimplexInvoice.Infra.Repositories
             _context = unitOfWork.GetContext();
         }
 
-        public async Task<List<User>> GetLastUsers(int take)
+        public async Task<IEnumerable<User>> GetLastUsers(int take)
         {
             var query = _context.User.AsNoTracking();
 

@@ -19,7 +19,6 @@ namespace SimplexInvoice.Application.Tests.UnitTests
     {
         private readonly IMapper _mapper;
         private readonly Mock<IUserRepository> _mockUserRepository;
-        private readonly Mock<IUnitOfWork> _mockUnitOfWork;
         private readonly Mock<IValidatorService> _mockValidatorService;
         private readonly Mock<IPasswordService> _mockPasswordService;
         private readonly Mock<ICustomLogger> _mockLogger;
@@ -32,7 +31,6 @@ namespace SimplexInvoice.Application.Tests.UnitTests
             });
             _mapper = mapperConfig.CreateMapper();
             _mockUserRepository = new Mock<IUserRepository>();
-            _mockUnitOfWork = new Mock<IUnitOfWork>();
             _mockValidatorService = new Mock<IValidatorService>();
             _mockPasswordService = new Mock<IPasswordService>();  
             _mockLogger = new Mock<ICustomLogger>();          
@@ -47,7 +45,6 @@ namespace SimplexInvoice.Application.Tests.UnitTests
             _mockUserRepository.Setup(x => x.DeleteAsync(It.IsAny<Guid>())).ReturnsAsync(true);
             _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<bool>(), It.IsAny<string>())).ReturnsAsync(user);
             var userRemoveHandler = new UserRemoveHandler(_mockUserRepository.Object, 
-                                                          _mockUnitOfWork.Object, 
                                                           _mockValidatorService.Object, 
                                                           _mockPasswordService.Object,
                                                           _mapper,
@@ -69,7 +66,6 @@ namespace SimplexInvoice.Application.Tests.UnitTests
             _mockUserRepository.Setup(x => x.DeleteAsync(It.IsAny<Guid>())).ReturnsAsync(false);
             _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<bool>(), It.IsAny<string>())).ReturnsAsync(user);
             var userRemoveHandler = new UserRemoveHandler(_mockUserRepository.Object, 
-                                                          _mockUnitOfWork.Object, 
                                                           _mockValidatorService.Object, 
                                                           _mockPasswordService.Object,
                                                           _mapper,
