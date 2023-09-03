@@ -27,7 +27,7 @@ namespace SimplexInvoice.Application.Users.Queries
 
         public async Task<List<UserDto>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
-            var users = await _userRepository.ListAsync(c => c.Id != Guid.Empty);            
+            var users = await _userRepository.ListAsync(c => c.Id != Guid.Empty, cancellationToken);
             var usersDto = _mapper.Map<List<UserDto>>(users.ToList());
             _logger.Debug($"GetUsers count: {usersDto.Count}");
 

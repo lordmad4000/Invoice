@@ -35,9 +35,9 @@ namespace SimplexInvoice.Api.Controllers
 
         [AllowAnonymous]
         [HttpGet("Login")]
-        public async Task<IActionResult> Login(string email, [DataType(DataType.Password)] string password)
+        public async Task<IActionResult> Login(string email, [DataType(DataType.Password)] string password, CancellationToken cancellationToken)
         {
-            var userDto = await _mediator.Send(new LoginQuery(email, password));
+            var userDto = await _mediator.Send(new LoginQuery(email, password), cancellationToken);
             var userLoginResponse = new UserLoginResponse
             {
                 Id = userDto.Id,
@@ -49,7 +49,7 @@ namespace SimplexInvoice.Api.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<IActionResult> Register([FromBody] UserRegisterRequest userRegisterRequest)
+        public async Task<IActionResult> Register([FromBody] UserRegisterRequest userRegisterRequest, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
                 throw new Exception(ModelState.ToString());
@@ -58,7 +58,7 @@ namespace SimplexInvoice.Api.Controllers
                                                                                   userRegisterRequest.Password,
                                                                                   userRegisterRequest.FirstName,
                                                                                   userRegisterRequest.LastName);
-            var userDto = await _mediator.Send(authenticationRegisterCommand);
+            var userDto = await _mediator.Send(authenticationRegisterCommand, cancellationToken);
             var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/{userDto.Id}";
 
             return (Created(url, _mapper.Map<UserResponse>(userDto)));

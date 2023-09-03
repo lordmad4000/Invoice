@@ -8,6 +8,8 @@ using System.Linq.Expressions;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
+using System.Threading;
+using SimplexInvoice.Domain.Exceptions;
 
 namespace SimplexInvoice.Infra.Repositories
 {
@@ -24,35 +26,33 @@ namespace SimplexInvoice.Infra.Repositories
             _cacheService = cacheService;
         }
 
-        public async Task<T> AddAsync(T entity)
+        public async Task<T> AddAsync(T entity, CancellationToken cancellationToken)
         {
-            await _dbSet.AddAsync(entity);
-
+            await _dbSet.AddAsync(entity, cancellationToken);
             TryRemoveCache(_cacheKey);
 
             return entity;
         }
 
-        public async Task<bool> DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
             var entity = await _dbSet.FindAsync(id);
+            if (entity is null)
+                throw new NotFoundException($"{typeof(T).Name} not found.");
 
-            if (entity != null)
-                return await DeleteAsync(entity);
-
-            return await Task.FromResult(false);
+            Delete(entity, cancellationToken);
         }
 
-        public async Task<bool> DeleteAsync(T entity)
+        public void Delete(T entity, CancellationToken cancellationToken)
         {
+            if (cancellationToken.IsCancellationRequested)
+                throw new OperationCanceledException("Delete operation cancelled.");
+
             _dbSet.Remove(entity);
-
             TryRemoveCache(_cacheKey);
-
-            return await Task.FromResult(true);
         }
 
-        public async Task<T> GetAsync(Expression<Func<T, bool>> expression, bool tracking, string expressionCacheKey = "")
+        public async Task<T> GetAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken, bool tracking, string expressionCacheKey = "")
         {
             var cacheKey = string.IsNullOrEmpty(expressionCacheKey) ? "" : $"{_cacheKey}{expressionCacheKey}";
 
@@ -61,17 +61,16 @@ namespace SimplexInvoice.Infra.Repositories
                 try
                 {
                     if (tracking)
-                        result = await _dbSet.FirstOrDefaultAsync(expression);
+                        result = await _dbSet.FirstOrDefaultAsync(expression, cancellationToken);
 
                     else
                         result = await _dbSet.AsNoTracking()
-                                             .FirstOrDefaultAsync(expression);
+                                             .FirstOrDefaultAsync(expression, cancellationToken);
                 }
                 catch (Exception ex)
                 {
                     throw new DataBaseException(ex.InnerException.Message);
                 }
-
                 if (!String.IsNullOrEmpty(cacheKey))
                     TrySetCache(cacheKey, result);
             }
@@ -79,29 +78,31 @@ namespace SimplexInvoice.Infra.Repositories
             return result;
         }
 
-        public async Task<IEnumerable<T>> ListAsync(Expression<Func<T, bool>> expression)
+        public async Task<IEnumerable<T>> ListAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken)
         {
             if (!TryGetCache(_cacheKey, out List<T> results))
             {
                 try
                 {
-                    results = await _dbSet.Where(expression).ToListAsync();
+                    results = await _dbSet.Where(expression)
+                                          .ToListAsync(cancellationToken);
                 }
                 catch (Exception ex)
                 {
                     throw new DataBaseException(ex.InnerException.Message);
                 }
-
                 TrySetCache(_cacheKey, results);
             }
 
             return results;
         }
 
-        public async Task<T> UpdateAsync(T entity)
+        public async Task<T> UpdateAsync(T entity, CancellationToken cancellationToken)
         {
-            _dbSet.Update(entity);
+            if (cancellationToken.IsCancellationRequested)
+                throw new OperationCanceledException("Update operation cancelled.");
 
+            _dbSet.Update(entity);
             TryRemoveCache(_cacheKey);
 
             return await Task.FromResult(entity);
@@ -163,8 +164,13 @@ namespace SimplexInvoice.Infra.Repositories
             return false;
         }
 
-        public async Task<int> SaveChangesAsync() =>
-            await _unitOfWork.SaveChangesAsync();
+        public async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+        {
+            if (cancellationToken.IsCancellationRequested)
+                throw new OperationCanceledException("Operation cancelled.");
+
+            return await _unitOfWork.SaveChangesAsync();
+        }
 
     }
 }

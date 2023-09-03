@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace SimplexInvoice.Infra.Repositories
 {
@@ -16,13 +17,13 @@ namespace SimplexInvoice.Infra.Repositories
             _context = unitOfWork.GetContext();
         }
 
-        public async Task<IEnumerable<User>> GetLastUsers(int take)
+        public async Task<IEnumerable<User>> GetLastUsers(int take, CancellationToken cancellationToken)
         {
             var query = _context.User.AsNoTracking();
 
             return await query.OrderByDescending(x => x.CreationDate)
                               .Take(take)
-                              .ToListAsync();
+                              .ToListAsync(cancellationToken);
         }
     }
 }

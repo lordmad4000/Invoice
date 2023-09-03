@@ -31,13 +31,13 @@ namespace SimplexInvoice.Application.Users.Commands
 
         public async Task<UserDto> Handle(UserUpdateCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetAsync(c => c.Id == request.Id, false) 
+            var user = await _userRepository.GetAsync(c => c.Id == request.Id, cancellationToken, false) 
                 ?? throw new NotFoundException("User not found.");
 
             var encryptedPassword = _passwordService.GeneratePassword(request.Email, request.Password, 16);
             user.Update(request.Email, encryptedPassword, request.FirstName, request.LastName);
-            await _userRepository.UpdateAsync(user);
-            if (await _userRepository.SaveChangesAsync() == 0)
+            await _userRepository.UpdateAsync(user, cancellationToken);
+            if (await _userRepository.SaveChangesAsync(cancellationToken) == 0)
                 throw new Exception("User could not be updated succesfully.");
 
             _logger.Debug(@$"User Update with data: {user}");

@@ -28,10 +28,10 @@ namespace SimplexInvoice.Api.Controllers
         }
 
         [HttpGet("GetById{id}")]
-        public async Task<IActionResult> GetById(Guid id)
+        public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
         {
             var query = new GetUserByIdQuery(id);
-            var userDto = await _mediator.Send(query);
+            var userDto = await _mediator.Send(query, cancellationToken);
             if (userDto is null)
                 throw new NotFoundException($"User with id {id} was not found");
 
@@ -39,59 +39,59 @@ namespace SimplexInvoice.Api.Controllers
         }
 
         [HttpGet("GetLast{count}")]
-        public async Task<IActionResult> GetLast(int count)
+        public async Task<IActionResult> GetLast(int count, CancellationToken cancellationToken)
         {
             var query = new GetLastUsersQuery(count);
-            var usersDto = await _mediator.Send(query);
+            var usersDto = await _mediator.Send(query, cancellationToken);
 
             return (Ok(_mapper.Map<List<UserResponse>>(usersDto)));
         }
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
         {
             var query = new GetUsersQuery();
-            var usersDto = await _mediator.Send(query);
+            var usersDto = await _mediator.Send(query, cancellationToken);
 
             return (Ok(_mapper.Map<List<UserResponse>>(usersDto)));
         }
 
         [HttpPut("Update")]
-        public async Task<IActionResult> Update([FromBody] UserUpdateRequest userUpdateRequest)
+        public async Task<IActionResult> Update([FromBody] UserUpdateRequest userUpdateRequest, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
                 throw new Exception(ModelState.ToString());
 
             var userUpdateCommand = _mapper.Map<UserUpdateCommand>(userUpdateRequest);
-            var userDto = await _mediator.Send(userUpdateCommand);
+            var userDto = await _mediator.Send(userUpdateCommand, cancellationToken);
 
             return (Ok(_mapper.Map<UserResponse>(userDto)));
         }
 
         [HttpDelete("Delete/{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
         {
             var userRemoveCommand = new UserRemoveCommand(id);
-            bool result = await _mediator.Send(userRemoveCommand) is null ? false : true;
+            bool result = await _mediator.Send(userRemoveCommand, cancellationToken);
 
             return (Ok(result));
         }
 
         [HttpPost("Register")]
-        public async Task<IActionResult> Register([FromBody] UserRegisterRequest userRegisterRequest)
+        public async Task<IActionResult> Register([FromBody] UserRegisterRequest userRegisterRequest, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
                 throw new Exception(ModelState.ToString());
 
             var userRegisterCommand = _mapper.Map<UserRegisterCommand>(userRegisterRequest);
-            var userDto = await _mediator.Send(userRegisterCommand);
+            var userDto = await _mediator.Send(userRegisterCommand, cancellationToken);
             var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/{userDto.Id}";
 
             return (Created(url, _mapper.Map<UserResponse>(userDto)));
         }
 
         [HttpPatch("PatchReplaceById/{id}")]
-        public async Task<IActionResult> PatchReplaceById([FromBody] JsonPatchDocument<UserDto> patchDoc, Guid id)
+        public async Task<IActionResult> PatchReplaceById([FromBody] JsonPatchDocument<UserDto> patchDoc, Guid id, CancellationToken cancellationToken)
         {
             if (patchDoc is null)
                 throw new Exception("No field to update provided.");
@@ -103,7 +103,7 @@ namespace SimplexInvoice.Api.Controllers
                 throw new Exception("No field to update provided.");
 
             var query = new GetUserByIdQuery(id);
-            var userDto = await _mediator.Send(query);
+            var userDto = await _mediator.Send(query, cancellationToken);
             if (userDto is null)
                 throw new NotFoundException($"User with id {id} was not found");
 

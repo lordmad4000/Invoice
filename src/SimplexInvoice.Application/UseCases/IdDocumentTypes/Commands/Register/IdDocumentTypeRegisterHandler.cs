@@ -26,12 +26,12 @@ namespace SimplexInvoice.Application.IdDocumentTypes.Commands.Register
 
         public async Task<IdDocumentTypeDto> Handle(IdDocumentTypeRegisterCommand request, CancellationToken cancellationToken)
         {
-            if (await _idDocumentTypeRepository.GetAsync(c => c.Name.ToLower() == request.Name.ToLower(), false) != null)
+            if (await _idDocumentTypeRepository.GetAsync(c => c.Name.ToLower() == request.Name.ToLower(), cancellationToken, false) != null)
                throw new RegisterRuleValidationException("Name already exists.");
 
             var idDocumentType = IdDocumentType.Create(request.Name);
-            idDocumentType = await _idDocumentTypeRepository.AddAsync(idDocumentType);
-            await _idDocumentTypeRepository.SaveChangesAsync();
+            idDocumentType = await _idDocumentTypeRepository.AddAsync(idDocumentType, cancellationToken);
+            await _idDocumentTypeRepository.SaveChangesAsync(cancellationToken);
             _logger.Debug($"IdDocumentType Register with data: {idDocumentType}");
 
             await Task.Delay(10);

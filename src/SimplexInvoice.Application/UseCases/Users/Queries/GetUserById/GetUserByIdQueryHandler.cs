@@ -24,7 +24,7 @@ namespace SimplexInvoice.Application.Users.Queries
 
         public async Task<UserDto> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetAsync(c => c.Id == request.Id, true, $"Id=={request.Id}");
+            var user = await _userRepository.GetAsync(c => c.Id == request.Id, cancellationToken, true, $"Id=={request.Id}");
             _logger.Debug($"GetUserById with data: {user.ToString()}");
 
             return _mapper.Map<UserDto>(user);
