@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="UseCases\Users - Copia\**" />
+    <EmbeddedResource Remove="UseCases\Users - Copia\**" />
+    <None Remove="UseCases\Users - Copia\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="$(AutoMapperExtensionsMicrosoftDependencyInjection)" />
     <PackageReference Include="MediatR" Version="$(MediatR)" />
     <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="$(MicrosoftExtensionsDependencyModel)" />

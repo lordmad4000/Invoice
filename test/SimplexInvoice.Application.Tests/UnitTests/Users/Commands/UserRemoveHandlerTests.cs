@@ -12,6 +12,8 @@ using System.Threading;
 using System;
 using Xunit;
 using SimplexInvoice.Domain.Users;
+using SimplexInvoice.Domain.Exceptions;
+using SimplexInvoice.Application.Users.Exceptions;
 
 namespace SimplexInvoice.Application.Tests.UnitTests
 {
@@ -42,38 +44,32 @@ namespace SimplexInvoice.Application.Tests.UnitTests
             // Arrange
             var user = GetUser();
             var userRemoveCommand = GetUserRemoveCommand();
-            _mockUserRepository.Setup(x => x.DeleteAsync(It.IsAny<Guid>())).ReturnsAsync(true);
-            _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<bool>(), It.IsAny<string>())).ReturnsAsync(user);
+            _mockUserRepository.Setup(x => x.DeleteAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()));
+            _mockUserRepository.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
             var userRemoveHandler = new UserRemoveHandler(_mockUserRepository.Object, 
-                                                          _mockValidatorService.Object, 
-                                                          _mockPasswordService.Object,
-                                                          _mapper,
                                                           _mockLogger.Object);
 
             //Act
-            UserDto userDto = await userRemoveHandler.Handle(userRemoveCommand, new CancellationToken());
+            bool result = await userRemoveHandler.Handle(userRemoveCommand, new CancellationToken());
 
             //Assert
-            Assert.NotNull(userDto);
+            Assert.True(result);
         }
 
         [Fact]
-        public async Task UserRegisterCommand_Should_Be_Null()
+        public async Task UserRemoveCommand_Should_Throw_UserRemovingException()
         {
             // Arrange
             var user = GetUser();
             var userRemoveCommand = GetUserRemoveCommand();
-            _mockUserRepository.Setup(x => x.DeleteAsync(It.IsAny<Guid>())).ReturnsAsync(false);
-            _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<bool>(), It.IsAny<string>())).ReturnsAsync(user);
-            var userRemoveHandler = new UserRemoveHandler(_mockUserRepository.Object, 
-                                                          _mockValidatorService.Object, 
-                                                          _mockPasswordService.Object,
-                                                          _mapper,
+            _mockUserRepository.Setup(x => x.DeleteAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()));
+            _mockUserRepository.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(0);
+            var userRemoveHandler = new UserRemoveHandler(_mockUserRepository.Object,
                                                           _mockLogger.Object);
 
             //Act & Assert
-            await Assert.ThrowsAsync<System.Exception>(() => 
-            userRemoveHandler.Handle(userRemoveCommand, new CancellationToken()));
+            await Assert.ThrowsAsync<UserRemovingException>(async () =>
+                await userRemoveHandler.Handle(userRemoveCommand, new CancellationToken()));
         }
 
         private User GetUser()

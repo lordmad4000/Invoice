@@ -1,14 +1,8 @@
-using AutoMapper;
-using SimplexInvoice.Application.Common.Dto;
-using SimplexInvoice.Application.Common.Interfaces.Persistance;
-using SimplexInvoice.Application.Interfaces;
-using SimplexInvoice.Domain.Exceptions;
 using MediatR;
-using System.Threading.Tasks;
+using SimplexInvoice.Application.Common.Interfaces.Persistance;
+using SimplexInvoice.Application.Users.Exceptions;
 using System.Threading;
-using System;
-using SimplexInvoice.Domain.Users;
-using SimplexInvoice.Domain.Users.Validations;
+using System.Threading.Tasks;
 
 namespace SimplexInvoice.Application.Users.Commands
 {
@@ -28,9 +22,10 @@ namespace SimplexInvoice.Application.Users.Commands
         public async Task<bool> Handle(UserRemoveCommand request, CancellationToken cancellationToken)
         {
             await _userRepository.DeleteAsync(request.Id, cancellationToken);
-            var result = await _userRepository.SaveChangesAsync(cancellationToken);
-            if (result > 0)
-                _logger.Debug(@$"User with id {request.Id} removed.");
+            if (await _userRepository.SaveChangesAsync(cancellationToken) == 0)
+                throw new UserRemovingException($"Error removing the User.");
+
+            _logger.Debug(@$"User with id {request.Id} removed.");
 
             return true;
         }

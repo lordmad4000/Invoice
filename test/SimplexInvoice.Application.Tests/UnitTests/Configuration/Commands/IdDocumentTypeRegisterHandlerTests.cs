@@ -38,8 +38,8 @@ namespace SimplexInvoice.Application.Tests.UnitTests
             // Arrange
             var idDocumentType = GetIdDocumentType();
             var idDocumentTypeRegisterCommand = GetIdDocumentTypeRegisterCommand();
-            _mockIdDocumentTypeRepository.Setup(x => x.AddAsync(It.IsAny<IdDocumentType>())).ReturnsAsync(idDocumentType);
-            _mockIdDocumentTypeRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<IdDocumentType, bool>>>(), It.IsAny<bool>(), It.IsAny<string>())).ReturnsAsync(default(IdDocumentType));
+            _mockIdDocumentTypeRepository.Setup(x => x.AddAsync(It.IsAny<IdDocumentType>(), It.IsAny<CancellationToken>())).ReturnsAsync(idDocumentType);
+            _mockIdDocumentTypeRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<IdDocumentType, bool>>>(), It.IsAny<CancellationToken>(), It.IsAny<bool>(), It.IsAny<string>())).ReturnsAsync(default(IdDocumentType));
             var idDocumentTypeRegisterHandler = new IdDocumentTypeRegisterHandler(_mockIdDocumentTypeRepository.Object,
                                                                                   _mapper,
                                                                                   _mockLogger.Object);
@@ -57,7 +57,7 @@ namespace SimplexInvoice.Application.Tests.UnitTests
             // Arrange
             var idDocumentType = GetIdDocumentType();
             var idDocumentTypeRegisterCommand = GetIdDocumentTypeRegisterCommand();
-            _mockIdDocumentTypeRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<IdDocumentType, bool>>>(), It.IsAny<bool>(), It.IsAny<string>())).ReturnsAsync(idDocumentType);
+            _mockIdDocumentTypeRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<IdDocumentType, bool>>>(), It.IsAny<CancellationToken>(), It.IsAny<bool>(), It.IsAny<string>())).ReturnsAsync(idDocumentType);
             var idDocumentTypeRegisterHandler = new IdDocumentTypeRegisterHandler(_mockIdDocumentTypeRepository.Object,
                                                                                   _mapper,
                                                                                   _mockLogger.Object);

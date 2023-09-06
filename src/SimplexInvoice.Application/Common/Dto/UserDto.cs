@@ -9,7 +9,6 @@ namespace SimplexInvoice.Application.Common.Dto
         [Required(ErrorMessage = "Email is required.")]
         [StringLength(40, ErrorMessage = "Email cannot be longer than 40 characters.")]
         public string Email { get; set; }
-
         [Required(ErrorMessage = "Password is required.")]
         [DataType(DataType.Password)]
         [StringLength(10, MinimumLength = 6, ErrorMessage = "Password must be between 6 and 10 characters.")]

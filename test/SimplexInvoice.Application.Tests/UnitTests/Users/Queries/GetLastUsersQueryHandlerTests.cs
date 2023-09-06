@@ -37,9 +37,10 @@ namespace SimplexInvoice.Application.Tests.UnitTests
             // Arrange
             var users = await GetUsers();
             int count = 3;
-            _mockUserRepository.Setup(x => x.GetLastUsers(It.IsAny<int>())).ReturnsAsync(users.OrderByDescending(x => x.CreationDate)
-                                                                                              .Take(3)
-                                                                                              .ToList());
+            _mockUserRepository.Setup(x => x.GetLastUsers(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+                               .ReturnsAsync(users.OrderByDescending(x => x.CreationDate)                                                                                                          
+                               .Take(3)                                                                                                          
+                               .ToList());
             var getLastUsersQueryHandler = new GetLastUsersQueryHandler(_mockUserRepository.Object, _mapper, _mockLogger.Object);
 
             //Act

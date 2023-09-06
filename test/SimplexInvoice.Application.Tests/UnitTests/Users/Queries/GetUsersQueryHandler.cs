@@ -37,7 +37,7 @@ namespace SimplexInvoice.Application.Tests.UnitTests
         {
             // Arrange
             var users = GetUsers();
-            _mockUserRepository.Setup(x => x.ListAsync(It.IsAny<Expression<Func<User, bool>>>())).ReturnsAsync(users);
+            _mockUserRepository.Setup(x => x.ListAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<CancellationToken>())).ReturnsAsync(users);
             var getUsersQueryHandler = new GetUsersQueryHandler(_mockUserRepository.Object, _mapper, _mockLogger.Object);
 
             //Act
