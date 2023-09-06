@@ -1,5 +1,5 @@
-using SimplexInvoice.Application.Common.Dto;
 using MediatR;
+using SimplexInvoice.Application.Common.Dto;
 using System;
 
 namespace SimplexInvoice.Application.Users.Commands;
