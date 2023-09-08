@@ -1,10 +1,12 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
-namespace SimplexInvoice.Application.Common.Dto
+namespace SimplexInvoice.Application.Common.Dto;
+
+public partial class IdDocumentTypeDto
 {
-    public partial class IdDocumentTypeDto
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-    }
+    public Guid Id { get; set; }
+    [Required(ErrorMessage = "Name is required.")]
+    [StringLength(20, ErrorMessage = "Name cannot be longer than 20 characters.")]
+    public string Name { get; set; }
 }
