@@ -757,7 +757,7 @@ namespace SimplexInvoice.Infra.Migrations
 
             modelBuilder.Entity("SimplexInvoice.Domain.Products.Product", b =>
                 {
-                    b.HasOne("SimplexInvoice.Domain.TaxRates.TaxRate", null)
+                    b.HasOne("SimplexInvoice.Domain.TaxRates.TaxRate", "ProductTaxRate")
                         .WithMany()
                         .HasForeignKey("ProductTaxRateId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -789,6 +789,8 @@ namespace SimplexInvoice.Infra.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("ProductId");
                         });
+
+                    b.Navigation("ProductTaxRate");
 
                     b.Navigation("UnitPrice")
                         .IsRequired();

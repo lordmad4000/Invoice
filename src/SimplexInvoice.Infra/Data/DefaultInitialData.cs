@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using System;
-using System.Collections.Generic;
 
 namespace SimplexInvoice.Infra.Data
 {
@@ -12,6 +11,9 @@ namespace SimplexInvoice.Infra.Data
             AddDefaultIdDocumentTypeData(migrationBuilder);
             AddDefaultTaxRateData(migrationBuilder);
             AddDefaultProductData(migrationBuilder);
+            AddDefaultCompanyData(migrationBuilder);
+            AddDefaultCustomerData(migrationBuilder);
+            AddDefaultInvoiceData(migrationBuilder);
         }
 
         public static void AddDefaultUserData(MigrationBuilder migrationBuilder)

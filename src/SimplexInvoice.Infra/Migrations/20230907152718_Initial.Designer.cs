@@ -11,8 +11,8 @@ using SimplexInvoice.Infra.Data;
 namespace SimplexInvoice.Infra.Migrations
 {
     [DbContext(typeof(EFContext))]
-    [Migration("20230822082609_Added_Invoice")]
-    partial class Added_Invoice
+    [Migration("20230907152718_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -760,7 +760,7 @@ namespace SimplexInvoice.Infra.Migrations
 
             modelBuilder.Entity("SimplexInvoice.Domain.Products.Product", b =>
                 {
-                    b.HasOne("SimplexInvoice.Domain.TaxRates.TaxRate", null)
+                    b.HasOne("SimplexInvoice.Domain.TaxRates.TaxRate", "ProductTaxRate")
                         .WithMany()
                         .HasForeignKey("ProductTaxRateId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -792,6 +792,8 @@ namespace SimplexInvoice.Infra.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("ProductId");
                         });
+
+                    b.Navigation("ProductTaxRate");
 
                     b.Navigation("UnitPrice")
                         .IsRequired();
