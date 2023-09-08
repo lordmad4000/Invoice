@@ -1,15 +1,15 @@
-﻿using SimplexInvoice.Application.Common.Interfaces.Persistance;
+﻿using Microsoft.EntityFrameworkCore;
+using SimplexInvoice.Application.Common.Interfaces.Persistance;
 using SimplexInvoice.Domain.Base;
+using SimplexInvoice.Domain.Exceptions;
 using SimplexInvoice.Infra.Data;
 using SimplexInvoice.Infra.Exceptions;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Linq;
-using System.Threading.Tasks;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
-using SimplexInvoice.Domain.Exceptions;
+using System.Threading.Tasks;
 
 namespace SimplexInvoice.Infra.Repositories
 {
@@ -52,7 +52,7 @@ namespace SimplexInvoice.Infra.Repositories
             TryRemoveCache(_cacheKey);
         }
 
-        public async Task<T> GetAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken, bool tracking, string expressionCacheKey = "")
+        public async Task<T> GetAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken, bool tracking, string expressionCacheKey = "", string[] includes = null)
         {
             var cacheKey = string.IsNullOrEmpty(expressionCacheKey) ? "" : $"{_cacheKey}{expressionCacheKey}";
 
@@ -60,12 +60,14 @@ namespace SimplexInvoice.Infra.Repositories
             {
                 try
                 {
-                    if (tracking)
-                        result = await _dbSet.FirstOrDefaultAsync(expression, cancellationToken);
+                    var query = _dbSet.AsQueryable();
+                    if (!tracking)
+                        query = query.AsNoTracking();
 
-                    else
-                        result = await _dbSet.AsNoTracking()
-                                             .FirstOrDefaultAsync(expression, cancellationToken);
+                    if (includes != null)
+                        query = includes.Aggregate(query, (current, include) => current.Include(include));
+
+                    result = await query.FirstOrDefaultAsync(expression, cancellationToken);
                 }
                 catch (Exception ex)
                 {
@@ -78,14 +80,21 @@ namespace SimplexInvoice.Infra.Repositories
             return result;
         }
 
-        public async Task<IEnumerable<T>> ListAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken)
+        public async Task<IEnumerable<T>> ListAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken, bool tracking = false, string[] includes = null)
         {
             if (!TryGetCache(_cacheKey, out List<T> results))
             {
                 try
                 {
-                    results = await _dbSet.Where(expression)
-                                          .ToListAsync(cancellationToken);
+                    var query = _dbSet.AsQueryable();
+                    if (!tracking)
+                        query = query.AsNoTracking();
+
+                    if (includes != null)
+                        query = includes.Aggregate(query, (current, include) => current.Include(include));
+
+                    results = await query.Where(expression)
+                                         .ToListAsync(cancellationToken);
                 }
                 catch (Exception ex)
                 {
