@@ -30,7 +30,8 @@ public class ProductRegisterHandler : IRequestHandler<ProductRegisterCommand, Pr
                                          request.Description,
                                          request.PackageQuantity,
                                          new Money(request.Currency, request.Price),
-                                         request.ProductTaxRateId);        
+                                         request.ProductTaxRateId);   
+        
         ProductDto productDto = _mapper.Map<ProductDto>(await _productRepository.AddAsync(product, cancellationToken));
         if (await _productRepository.SaveChangesAsync(cancellationToken) == 0)
             throw new ProductRegisteringException($"Error registering the Product.");
