@@ -1,5 +1,6 @@
 using AutoMapper;
 using SimplexInvoice.Application.Common.Dto;
+using SimplexInvoice.Application.Products.Commands;
 using SimplexInvoice.Application.TaxRates.Commands;
 using SimplexInvoice.Domain.IdDocumentTypes;
 using SimplexInvoice.Domain.Products;
@@ -25,6 +26,9 @@ namespace SimplexInvoice.Application.AutoMapper
                                                        x => x.MapFrom(src => src.UnitPrice.Amount))
                                             .ForMember(c => c.Currency,
                                                        x => x.MapFrom(src => src.UnitPrice.Currency));
+            CreateMap<ProductDto, Product>().ForMember(c => c.UnitPrice,
+                                                       x => x.MapFrom(src => new Money(src.Currency, src.Price)));
+            CreateMap<ProductDto, ProductUpdateCommand>();
             CreateMap<TaxRateDto, TaxRate>();
             CreateMap<TaxRate, TaxRateDto>();
             CreateMap<TaxRateDto, TaxRateUpdateCommand>();
