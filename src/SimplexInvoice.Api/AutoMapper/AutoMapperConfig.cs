@@ -11,10 +11,12 @@ namespace SimplexInvoice.Api.AutoMapper
             {
                 cfg.AllowNullCollections = true;
                 cfg.AllowNullDestinationValues = true;
-                cfg.AddProfile(new DtoToResponseMappingProfile());
                 cfg.AddProfile(new RequestToCommandMappingProfile());
-                cfg.AddProfile(new EntityDtoMappingProfile());
+                cfg.AddProfile(new RequestToDtoMappingProfile());
+                cfg.AddProfile(new ResponseToDtoMappingProfile());
+                cfg.AddProfile(new EntityToDtoMappingProfile());
+                cfg.AddProfile(new DtoToCommandMappingProfile());
             });
-        }
+        }       
     }
 }
