@@ -2,13 +2,15 @@ using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace SimplexInvoice.Application.Common.Dto;
-
-public class CompanyDto
+public class CustomerDto
 {
     public Guid Id { get; set; }
-    [Required(ErrorMessage = "Name is required.")]
-    [StringLength(40, ErrorMessage = "Name cannot be longer than 40 characters.")]
-    public string Name { get; set; }
+    [Required(ErrorMessage = "FirstName is required.")]
+    [StringLength(40, ErrorMessage = "FirstName cannot be longer than 40 characters.")]
+    public string FirstName { get; set; }
+    [Required(ErrorMessage = "LastName is required.")]
+    [StringLength(40, ErrorMessage = "LastName cannot be longer than 40 characters.")]
+    public string LastName { get; set; }
     [Required(ErrorMessage = "IdDocumentTypeId is required.")]
     public Guid IdDocumentTypeId { get; set; }
     [Required(ErrorMessage = "IdDocumentNumber is required.")]
@@ -33,6 +35,6 @@ public class CompanyDto
     public string Phone { get; set; }
     [Required(ErrorMessage = "Email is required.")]
     [StringLength(40, ErrorMessage = "Email cannot be longer than 40 characters.")]
-    public string Email { get; set; }
+    public string Email { get; set; }    
     public IdDocumentTypeDto IdDocumentType { get; set; }
 }

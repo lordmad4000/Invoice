@@ -1,6 +1,7 @@
 using AutoMapper;
 using SimplexInvoice.Application.Common.Dto;
 using SimplexInvoice.Domain.Companies;
+using SimplexInvoice.Domain.Customers;
 using SimplexInvoice.Domain.IdDocumentTypes;
 using SimplexInvoice.Domain.Products;
 using SimplexInvoice.Domain.TaxRates;
@@ -54,6 +55,30 @@ namespace SimplexInvoice.Application.AutoMapper
                                                        x => x.MapFrom(src => new PhoneNumber(src.Phone)))
                                             .ForMember(c => c.EmailAddress,
                                                        x => x.MapFrom(src => new EmailAddress(src.Email)));
+
+            CreateMap<Customer, CustomerDto>().ForMember(c => c.Street,
+                                                         x => x.MapFrom(src => src.Address.Street))
+                                              .ForMember(c => c.Street,
+                                                         x => x.MapFrom(src => src.Address.Street))
+                                              .ForMember(c => c.City,
+                                                         x => x.MapFrom(src => src.Address.City))
+                                              .ForMember(c => c.State,
+                                                         x => x.MapFrom(src => src.Address.State))
+                                              .ForMember(c => c.Country,
+                                                         x => x.MapFrom(src => src.Address.Country))
+                                              .ForMember(c => c.PostalCode,
+                                                         x => x.MapFrom(src => src.Address.PostalCode))
+                                              .ForMember(c => c.Phone,
+                                                         x => x.MapFrom(src => src.Phone.Phone))
+                                              .ForMember(c => c.Email,
+                                                         x => x.MapFrom(src => src.EmailAddress.Address));
+
+            CreateMap<CustomerDto, Customer>().ForMember(c => c.Address,
+                                                         x => x.MapFrom(src => new Address(src.Street, src.City, src.State, src.Country, src.PostalCode)))
+                                              .ForMember(c => c.Phone,
+                                                         x => x.MapFrom(src => new PhoneNumber(src.Phone)))
+                                              .ForMember(c => c.EmailAddress,
+                                                         x => x.MapFrom(src => new EmailAddress(src.Email)));
 
         }
     }
