@@ -94,8 +94,14 @@ namespace SimplexInvoice.Domain.Invoices
                     string.Join(", ", validator.Errors.Select(x => x.ErrorMessage).ToArray()));
         }
 
+        public void CalculateAmounts()
+        {
+            TryClearAndReplaceLines(InvoiceLines.ToList());
+        }
+
         private void CalculateTotals()
         {
+            SetInvoiceTaxes();
             string currency = _invoiceLines.Select(c => c.Price.Currency).First();
             TotalTax = new Money(currency, _invoiceLines.Sum(c => c.Tax.Amount));
             TotalDiscount = new Money(currency, _invoiceLines.Sum(c => c.Discount.Amount));
@@ -118,10 +124,7 @@ namespace SimplexInvoice.Domain.Invoices
         {
             string taxName = invoiceLines.First().TaxName;
             int taxRate = invoiceLines.First().TaxRate;
-            double baseAmount = 0;
-            foreach (var invoiceLine in invoiceLines)
-                baseAmount += invoiceLine.Quantity * invoiceLine.Price.Amount;
-
+            double baseAmount = invoiceLines.Sum(c => c.Quantity * c.Price.Amount);
             double amount = baseAmount * taxRate / 100;
 
             return new TotalTax(taxName, baseAmount, amount);
@@ -129,21 +132,23 @@ namespace SimplexInvoice.Domain.Invoices
 
         public void AddLine(InvoiceLine invoiceLine)
         {
+            invoiceLine.CalculateAmounts();
             _invoiceLines.Add(invoiceLine);
             Validate();
             Reenumerate();
-            SetInvoiceTaxes();
             CalculateTotals();
         }
 
         public void AddLines(ICollection<InvoiceLine> invoiceLines)
         {
             foreach (var invoiceLine in invoiceLines)
+            {
+                invoiceLine.CalculateAmounts();
                 _invoiceLines.Add(invoiceLine);
+            }
 
             Validate();
             Reenumerate();
-            SetInvoiceTaxes();
             CalculateTotals();
         }
 
@@ -186,7 +191,6 @@ namespace SimplexInvoice.Domain.Invoices
                 return false;
 
             Reenumerate();
-            SetInvoiceTaxes();
             CalculateTotals();
 
             return true;
@@ -202,7 +206,7 @@ namespace SimplexInvoice.Domain.Invoices
             foreach (var invoiceLine in sortedInvoiceLines)
             {
                 lineNumber++;
-                invoiceLine.Update(invoiceLine.InvoiceId,
+                invoiceLine.Update(Id,
                                    lineNumber,
                                    invoiceLine.ProductCode,
                                    invoiceLine.ProductName,

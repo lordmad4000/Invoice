@@ -154,7 +154,6 @@ public class InvoiceMap : IEntityTypeConfiguration<Invoice>
             navbuilder.Ignore(o => o.Currency);
         });
 
-        //builder.Ignore(c => c.InvoiceLines);
         builder.Ignore(c => c.TotalTaxes);
         builder.Ignore(c => c.TotalTax);
         builder.Ignore(c => c.TotalDiscount);

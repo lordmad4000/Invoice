@@ -29,7 +29,7 @@ namespace SimplexInvoice.Application.Tests.UnitTests
         {
             var mapperConfig = new MapperConfiguration(cfg => 
             {
-                cfg.AddProfile(new EntityDtoMappingProfile());
+                cfg.AddProfile(new EntityToDtoMappingProfile());
             });
             _mapper = mapperConfig.CreateMapper();
             _mockUserRepository = new Mock<IUserRepository>();

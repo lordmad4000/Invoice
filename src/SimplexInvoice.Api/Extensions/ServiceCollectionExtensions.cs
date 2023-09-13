@@ -2,6 +2,7 @@
 using SimplexInvoice.Application.AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 namespace SimplexInvoice.Api.Extensions
 {
@@ -41,9 +42,11 @@ namespace SimplexInvoice.Api.Extensions
 
         public static IServiceCollection AddAutoMapperSetup(this IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(DtoToResponseMappingProfile), 
-                                   typeof(RequestToCommandMappingProfile),
-                                   typeof(EntityDtoMappingProfile));
+            services.AddAutoMapper(typeof(RequestToCommandMappingProfile),
+                                   typeof(RequestToDtoMappingProfile),
+                                   typeof(ResponseToDtoMappingProfile),
+                                   typeof(EntityToDtoMappingProfile),
+                                   typeof(DtoToCommandMappingProfile));
             AutoMapperConfig.RegisterMappings();
 
             return services;

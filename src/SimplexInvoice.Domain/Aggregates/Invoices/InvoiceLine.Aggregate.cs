@@ -73,7 +73,7 @@ public partial class InvoiceLine : Aggregate
         CalculateAmounts();
     }
 
-    private void CalculateAmounts()
+    public void CalculateAmounts()
     {
         Tax = new Money(Price.Currency, CalculateTaxAmount());
         Discount = new Money(Price.Currency, CalculateDiscountAmount());
