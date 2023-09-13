@@ -1,4 +1,4 @@
-# Invoice (WIP)
+# Simplex Invoice (WIP)
 
 A basic Invoice App example in Angular 15 for the Frontend using the following:
 
@@ -27,7 +27,7 @@ First you need [Docker](www.docker.com) and [Docker Compose](https://docs.docker
 
 Once the container is created to recreate de BBDD run this command:
 
-    dotnet ef database update --context EfContext --startup-project src/Invoice.Api/Invoice.Api.csproj
+    dotnet ef database update --context EfContext --startup-project src/SimplexInvoice.Api/SimplexInvoice.Api.csproj
 
 Finally open the following url in you browser:
 

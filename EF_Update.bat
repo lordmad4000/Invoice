@@ -1,1 +1,1 @@
-dotnet ef database update --context EfContext --startup-project src/Invoice.Api/Invoice.Api.csproj
+dotnet ef database update --context EfContext --startup-project src/SimplexInvoice.Api/SimplexInvoice.Api.csproj

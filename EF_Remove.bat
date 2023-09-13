@@ -1,0 +1,1 @@
+dotnet ef migrations remove --context EfContext --project src/SimplexInvoice.Infra/SimplexInvoice.Infra.csproj --startup-project src/SimplexInvoice.Api/SimplexInvoice.Api.csproj

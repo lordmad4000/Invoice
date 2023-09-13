@@ -3,7 +3,7 @@
     <SourceRoot>$(MSBuildThisFileDirectory)</SourceRoot>
   </PropertyGroup>
   <PropertyGroup>
-    <Product>Invoice</Product>
+    <Product>SimplexInvoice</Product>
     <PackageVersion Condition="'$(PackageVersion)' == ''">1.0.0</PackageVersion>
     <PublishRepositoryUrl>false</PublishRepositoryUrl>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -11,9 +11,9 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <LangVersion>11.0</LangVersion>
     <NoWarn>1591</NoWarn>
-    <PackageTags>Invoice</PackageTags>
+    <PackageTags>SimplexInvoice</PackageTags>
     <Description>
-      Invoice
+      SimplexInvoice
     </Description>
   </PropertyGroup>
   <PropertyGroup>
@@ -28,13 +28,12 @@
     <MediatR>12.0.1</MediatR>
     <MediatRExtensionsMicrosoftDependencyInjection>11.0.0</MediatRExtensionsMicrosoftDependencyInjection>
     <MicrosoftAspNetCoreAuthenticationJwtBearer>7.0.5</MicrosoftAspNetCoreAuthenticationJwtBearer>
-    <!-- <MicrosoftAspNetCoreCors>2.2.0</MicrosoftAspNetCoreCors> -->
     <MicrosoftAspNetCoreJsonPatch>7.0.5</MicrosoftAspNetCoreJsonPatch>
     <MicrosoftAspNetCoreMvcNewtonsoftJson>3.1.1</MicrosoftAspNetCoreMvcNewtonsoftJson>
     <MicrosoftAspNetCoreSpaProxy>7.0.2</MicrosoftAspNetCoreSpaProxy>
-    <!-- <MicrosoftAspNetCoreSpaServicesExtensions>3.1.26</MicrosoftAspNetCoreSpaServicesExtensions> -->
     <MicrosoftEntityFrameworkCore>7.0.5</MicrosoftEntityFrameworkCore>
     <MicrosoftEntityFrameworkCoreTools>7.0.5</MicrosoftEntityFrameworkCoreTools>    
+    <MicrosoftExtensionsDependencyModel>7.0.0</MicrosoftExtensionsDependencyModel>
     <MicrosoftNETTestSdk>16.5.0</MicrosoftNETTestSdk>
     <MicrosoftVisualStudioAzureContainersToolsTargets>1.14.0</MicrosoftVisualStudioAzureContainersToolsTargets>
     <Moq>4.18.2</Moq>
