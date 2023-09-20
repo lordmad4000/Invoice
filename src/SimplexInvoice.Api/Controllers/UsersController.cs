@@ -85,7 +85,7 @@ namespace SimplexInvoice.Api.Controllers
 
             var userRegisterCommand = _mapper.Map<UserRegisterCommand>(userRegisterRequest);
             var userDto = await _mediator.Send(userRegisterCommand, cancellationToken);
-            var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/{userDto.Id}";
+            string url = GetByIdUrl(userDto.Id);
 
             return (Created(url, _mapper.Map<UserResponse>(userDto)));
         }

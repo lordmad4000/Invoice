@@ -1,8 +1,6 @@
-﻿using SimplexInvoice.Api.AutoMapper;
+﻿using Microsoft.OpenApi.Models;
+using SimplexInvoice.Api.AutoMapper;
 using SimplexInvoice.Application.AutoMapper;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
-using System.Reflection;
 
 namespace SimplexInvoice.Api.Extensions
 {

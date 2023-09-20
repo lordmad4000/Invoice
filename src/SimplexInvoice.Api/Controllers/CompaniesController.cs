@@ -49,7 +49,7 @@ public class CompaniesController : ApiController
 
         var companyRegisterCommand = _mapper.Map<CompanyRegisterCommand>(companyRegisterRequest);
         var companyDto = await _mediator.Send(companyRegisterCommand, cancellationToken);
-        var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/{companyDto.Id}";
+        string url = GetByIdUrl(companyDto.Id);
 
         return (Created(url, companyDto));
     }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SimplexInvoice.Api.Models.Request;
 using SimplexInvoice.Application.Customers.Queries;
+using SimplexInvoice.Application.Common.Dto;
 
 namespace SimplexInvoice.Api.Controllers;
 
@@ -48,7 +49,7 @@ public class CustomersController : ApiController
 
         var customerRegisterCommand = _mapper.Map<CustomerRegisterCommand>(customerRegisterRequest);
         var customerDto = await _mediator.Send(customerRegisterCommand, cancellationToken);
-        var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/{customerDto.Id}";
+        string url = GetByIdUrl(customerDto.Id);
 
         return (Created(url, customerDto));
     }

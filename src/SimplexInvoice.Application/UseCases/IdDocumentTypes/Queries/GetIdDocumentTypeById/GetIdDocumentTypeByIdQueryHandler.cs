@@ -14,8 +14,8 @@ public class GetIdDocumentTypeByIdQueryHandler : IRequestHandler<GetIdDocumentTy
     private readonly ICustomLogger _logger;
 
     public GetIdDocumentTypeByIdQueryHandler(IIdDocumentTypeRepository idDocumentTypeRepository,
-                                     IMapper mapper,
-                                     ICustomLogger logger)
+                                             IMapper mapper,
+                                             ICustomLogger logger)
     {
         _idDocumentTypeRepository = idDocumentTypeRepository;
         _mapper = mapper;

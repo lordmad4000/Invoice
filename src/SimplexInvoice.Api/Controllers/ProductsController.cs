@@ -49,7 +49,7 @@ public class ProductsController : ApiController
 
         var productRegisterCommand = _mapper.Map<ProductRegisterCommand>(productRegisterRequest);
         var productDto = await _mediator.Send(productRegisterCommand, cancellationToken);
-        var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/{productDto.Id}";
+        string url = GetByIdUrl(productDto.Id);
 
         return (Created(url, productDto));
     }
