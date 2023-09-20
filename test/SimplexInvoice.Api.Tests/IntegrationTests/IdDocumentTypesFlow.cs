@@ -100,5 +100,46 @@ public class IdDocumentTypesFlow
         };
     }
 
+    [Fact]
+    public async Task Register_IdDocumentType_Then_GetAll_Then_RemoveIt()
+    {
+        //Arrange
+        var idDocumentTypeDto = new IdDocumentTypeDto { Name = "TEST" };
+        IServiceCollection services = ServicesConfiguration.BuildDependencies();
+        using (ServiceProvider serviceProvider = services.BuildServiceProvider())
+        {
+            var idDocumentTypesController = serviceProvider.GetRequiredService<IdDocumentTypesController>();
+            var idDocumentTypeRegisterRequest = new IdDocumentTypeRegisterRequest { Name = "TEST" };
+
+            //Act
+            IActionResult actionResult = await idDocumentTypesController.Register(idDocumentTypeRegisterRequest, new CancellationToken());
+
+            //Assert
+            var createdResult = actionResult as CreatedResult;
+            Assert.NotNull(createdResult);
+
+            idDocumentTypeDto = createdResult?.Value as IdDocumentTypeDto;
+            Assert.NotNull(idDocumentTypeDto);
+
+            //Act
+            actionResult = await idDocumentTypesController.GetAll(new CancellationToken());
+
+            //Assert
+            var okResult = actionResult as OkObjectResult;
+            Assert.NotNull(okResult);
+
+            var idDocumentTypeDtos = okResult?.Value as List<IdDocumentTypeDto>;
+            Assert.NotEmpty(idDocumentTypeDtos);
+
+            //Act
+            actionResult = await idDocumentTypesController.Delete(idDocumentTypeDto?.Id ?? Guid.Empty, new CancellationToken());
+
+            //Assert
+            okResult = actionResult as OkObjectResult;
+            bool result = Assert.IsType<bool>(okResult.Value);
+            Assert.True(result);
+        };
+    }
+
 #pragma warning restore CS8602
 }
