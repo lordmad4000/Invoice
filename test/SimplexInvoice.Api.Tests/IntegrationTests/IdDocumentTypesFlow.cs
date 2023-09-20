@@ -11,7 +11,7 @@ public class IdDocumentTypesFlow
 {
     [Fact]
 #pragma warning disable CS8602
-    public async Task RegisterIdDocumentType_Then_ModifyIt_Then_RemoveIt()
+    public async Task Register_IdDocumentType_Then_ModifyIt_Then_RemoveIt()
     {
         //Arrange
         var idDocumentTypeDto = new IdDocumentTypeDto { Name = "TEST" };
@@ -45,7 +45,9 @@ public class IdDocumentTypesFlow
             //Assert
             var okResult = actionResult as OkObjectResult;
             Assert.NotNull(okResult);
-            Assert.NotNull(okResult.Value);
+
+            idDocumentTypeDto = okResult?.Value as IdDocumentTypeDto;
+            Assert.NotNull(idDocumentTypeDto);
 
             //Act
             actionResult = await idDocumentTypesController.Delete(idDocumentTypeDto?.Id ?? Guid.Empty, new CancellationToken());
@@ -55,8 +57,48 @@ public class IdDocumentTypesFlow
             bool result = Assert.IsType<bool>(okResult.Value);
             Assert.True(result);
         }
-#pragma warning restore CS8602
-
     }
 
+    [Fact]
+    public async Task Register_IdDocumentType_Then_GetById_Then_RemoveIt()
+    {
+        //Arrange
+        var idDocumentTypeDto = new IdDocumentTypeDto { Name = "TEST" };
+        IServiceCollection services = ServicesConfiguration.BuildDependencies();
+        using (ServiceProvider serviceProvider = services.BuildServiceProvider())
+        {
+            var idDocumentTypesController = serviceProvider.GetRequiredService<IdDocumentTypesController>();
+            var idDocumentTypeRegisterRequest = new IdDocumentTypeRegisterRequest { Name = "TEST" };
+
+            //Act
+            IActionResult actionResult = await idDocumentTypesController.Register(idDocumentTypeRegisterRequest, new CancellationToken());
+
+            //Assert
+            var createdResult = actionResult as CreatedResult;
+            Assert.NotNull(createdResult);
+
+            idDocumentTypeDto = createdResult?.Value as IdDocumentTypeDto;
+            Assert.NotNull(idDocumentTypeDto);
+
+            //Act
+            actionResult = await idDocumentTypesController.GetById(idDocumentTypeDto.Id, new CancellationToken());
+
+            //Assert
+            var okResult = actionResult as OkObjectResult;
+            Assert.NotNull(okResult);
+
+            idDocumentTypeDto = okResult?.Value as IdDocumentTypeDto;
+            Assert.NotNull(idDocumentTypeDto);
+
+            //Act
+            actionResult = await idDocumentTypesController.Delete(idDocumentTypeDto?.Id ?? Guid.Empty, new CancellationToken());
+
+            //Assert
+            okResult = actionResult as OkObjectResult;
+            bool result = Assert.IsType<bool>(okResult.Value);
+            Assert.True(result);
+        };
+    }
+
+#pragma warning restore CS8602
 }
