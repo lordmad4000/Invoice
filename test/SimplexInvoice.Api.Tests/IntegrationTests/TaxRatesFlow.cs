@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using SimplexInvoice.Api.Controllers;
 using SimplexInvoice.Api.Models.Request;
+using SimplexInvoice.Api.Tests.IntegrationTests.Common;
 using SimplexInvoice.Application.Common.Dto;
 using SimplexInvoice.SimplexInvoice.Api;
 
@@ -23,12 +24,9 @@ public class TaxRatesFlow
 
             //Act
             IActionResult actionResult = await taxRatesController.Register(taxRateRegisterRequest, new CancellationToken());
+            taxRateDto = CustomConvert.CreatedResultTo<TaxRateDto>(actionResult);
 
             //Assert
-            var createdResult = actionResult as CreatedResult;
-            Assert.NotNull(createdResult);
-
-            taxRateDto = createdResult?.Value as TaxRateDto;
             Assert.NotNull(taxRateDto);
         };
 
@@ -42,20 +40,16 @@ public class TaxRatesFlow
 
             //Act
             IActionResult actionResult = await taxRatesController.Update(taxRateDto, new CancellationToken());
+            taxRateDto = CustomConvert.OkResultTo<TaxRateDto>(actionResult);
 
             //Assert
-            var okResult = actionResult as OkObjectResult;
-            Assert.NotNull(okResult);
-
-            taxRateDto = okResult?.Value as TaxRateDto;
             Assert.NotNull(taxRateDto);
 
             //Act
             actionResult = await taxRatesController.Delete(taxRateDto?.Id ?? Guid.Empty, new CancellationToken());
+            bool result = CustomConvert.OkResultTo<bool>(actionResult);
 
             //Assert
-            okResult = actionResult as OkObjectResult;
-            bool result = Assert.IsType<bool>(okResult.Value);
             Assert.True(result);
         }
     }
@@ -73,30 +67,23 @@ public class TaxRatesFlow
 
             //Act
             IActionResult actionResult = await taxRatesController.Register(taxRateRegisterRequest, new CancellationToken());
+            taxRateDto = CustomConvert.CreatedResultTo<TaxRateDto>(actionResult);
 
             //Assert
-            var createdResult = actionResult as CreatedResult;
-            Assert.NotNull(createdResult);
-
-            taxRateDto = createdResult?.Value as TaxRateDto;
             Assert.NotNull(taxRateDto);
 
             //Act
             actionResult = await taxRatesController.GetById(taxRateDto.Id, new CancellationToken());
+            taxRateDto = CustomConvert.OkResultTo<TaxRateDto>(actionResult);
 
             //Assert
-            var okResult = actionResult as OkObjectResult;
-            Assert.NotNull(okResult);
-
-            taxRateDto = okResult?.Value as TaxRateDto;
             Assert.NotNull(taxRateDto);
 
             //Act
             actionResult = await taxRatesController.Delete(taxRateDto?.Id ?? Guid.Empty, new CancellationToken());
+            bool result = CustomConvert.OkResultTo<bool>(actionResult);
 
             //Assert
-            okResult = actionResult as OkObjectResult;
-            bool result = Assert.IsType<bool>(okResult.Value);
             Assert.True(result);
         };
     }
@@ -114,30 +101,23 @@ public class TaxRatesFlow
 
             //Act
             IActionResult actionResult = await taxRatesController.Register(taxRateRegisterRequest, new CancellationToken());
+            taxRateDto = CustomConvert.CreatedResultTo<TaxRateDto>(actionResult);
 
             //Assert
-            var createdResult = actionResult as CreatedResult;
-            Assert.NotNull(createdResult);
-
-            taxRateDto = createdResult?.Value as TaxRateDto;
             Assert.NotNull(taxRateDto);
 
             //Act
             actionResult = await taxRatesController.GetAll(new CancellationToken());
+            var taxRateDtos = CustomConvert.OkResultTo<List<TaxRateDto>>(actionResult);
 
             //Assert
-            var okResult = actionResult as OkObjectResult;
-            Assert.NotNull(okResult);
-
-            var taxRateDtos = okResult?.Value as List<TaxRateDto>;
             Assert.NotEmpty(taxRateDtos);
 
             //Act
             actionResult = await taxRatesController.Delete(taxRateDto?.Id ?? Guid.Empty, new CancellationToken());
+            bool result = CustomConvert.OkResultTo<bool>(actionResult);
 
             //Assert
-            okResult = actionResult as OkObjectResult;
-            bool result = Assert.IsType<bool>(okResult.Value);
             Assert.True(result);
         };
     }

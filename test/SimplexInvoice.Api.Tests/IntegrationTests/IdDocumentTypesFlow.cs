@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using SimplexInvoice.Api.Controllers;
 using SimplexInvoice.Api.Models.Request;
+using SimplexInvoice.Api.Tests.IntegrationTests.Common;
 using SimplexInvoice.Application.Common.Dto;
 using SimplexInvoice.SimplexInvoice.Api;
 
@@ -23,12 +24,9 @@ public class IdDocumentTypesFlow
 
             //Act
             IActionResult actionResult = await idDocumentTypesController.Register(idDocumentTypeRegisterRequest, new CancellationToken());
+            idDocumentTypeDto = CustomConvert.CreatedResultTo<IdDocumentTypeDto>(actionResult);
 
             //Assert
-            var createdResult = actionResult as CreatedResult;
-            Assert.NotNull(createdResult);
-
-            idDocumentTypeDto = createdResult?.Value as IdDocumentTypeDto;
             Assert.NotNull(idDocumentTypeDto);
         };
 
@@ -41,20 +39,16 @@ public class IdDocumentTypesFlow
 
             //Act
             IActionResult actionResult = await idDocumentTypesController.Update(idDocumentTypeDto, new CancellationToken());
+            idDocumentTypeDto = CustomConvert.OkResultTo<IdDocumentTypeDto>(actionResult);
 
             //Assert
-            var okResult = actionResult as OkObjectResult;
-            Assert.NotNull(okResult);
-
-            idDocumentTypeDto = okResult?.Value as IdDocumentTypeDto;
             Assert.NotNull(idDocumentTypeDto);
 
             //Act
             actionResult = await idDocumentTypesController.Delete(idDocumentTypeDto?.Id ?? Guid.Empty, new CancellationToken());
+            bool result = CustomConvert.OkResultTo<bool>(actionResult);
 
             //Assert
-            okResult = actionResult as OkObjectResult;
-            bool result = Assert.IsType<bool>(okResult.Value);
             Assert.True(result);
         }
     }
@@ -72,30 +66,23 @@ public class IdDocumentTypesFlow
 
             //Act
             IActionResult actionResult = await idDocumentTypesController.Register(idDocumentTypeRegisterRequest, new CancellationToken());
+            idDocumentTypeDto = CustomConvert.CreatedResultTo<IdDocumentTypeDto>(actionResult);
 
             //Assert
-            var createdResult = actionResult as CreatedResult;
-            Assert.NotNull(createdResult);
-
-            idDocumentTypeDto = createdResult?.Value as IdDocumentTypeDto;
             Assert.NotNull(idDocumentTypeDto);
 
             //Act
             actionResult = await idDocumentTypesController.GetById(idDocumentTypeDto.Id, new CancellationToken());
+            idDocumentTypeDto = CustomConvert.OkResultTo<IdDocumentTypeDto>(actionResult);
 
             //Assert
-            var okResult = actionResult as OkObjectResult;
-            Assert.NotNull(okResult);
-
-            idDocumentTypeDto = okResult?.Value as IdDocumentTypeDto;
             Assert.NotNull(idDocumentTypeDto);
 
             //Act
             actionResult = await idDocumentTypesController.Delete(idDocumentTypeDto?.Id ?? Guid.Empty, new CancellationToken());
+            bool result = CustomConvert.OkResultTo<bool>(actionResult);
 
             //Assert
-            okResult = actionResult as OkObjectResult;
-            bool result = Assert.IsType<bool>(okResult.Value);
             Assert.True(result);
         };
     }
@@ -113,30 +100,23 @@ public class IdDocumentTypesFlow
 
             //Act
             IActionResult actionResult = await idDocumentTypesController.Register(idDocumentTypeRegisterRequest, new CancellationToken());
+            idDocumentTypeDto = CustomConvert.CreatedResultTo<IdDocumentTypeDto>(actionResult);
 
             //Assert
-            var createdResult = actionResult as CreatedResult;
-            Assert.NotNull(createdResult);
-
-            idDocumentTypeDto = createdResult?.Value as IdDocumentTypeDto;
             Assert.NotNull(idDocumentTypeDto);
 
             //Act
             actionResult = await idDocumentTypesController.GetAll(new CancellationToken());
+            var idDocumentTypeDtos = CustomConvert.OkResultTo<List<IdDocumentTypeDto>>(actionResult);
 
             //Assert
-            var okResult = actionResult as OkObjectResult;
-            Assert.NotNull(okResult);
-
-            var idDocumentTypeDtos = okResult?.Value as List<IdDocumentTypeDto>;
             Assert.NotEmpty(idDocumentTypeDtos);
 
             //Act
             actionResult = await idDocumentTypesController.Delete(idDocumentTypeDto?.Id ?? Guid.Empty, new CancellationToken());
+            bool result = CustomConvert.OkResultTo<bool>(actionResult);
 
             //Assert
-            okResult = actionResult as OkObjectResult;
-            bool result = Assert.IsType<bool>(okResult.Value);
             Assert.True(result);
         };
     }
