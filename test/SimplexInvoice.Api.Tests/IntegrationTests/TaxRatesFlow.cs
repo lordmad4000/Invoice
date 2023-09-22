@@ -10,7 +10,6 @@ namespace SimplexInvoice.Api.Tests.IntegrationTests;
 
 public class TaxRatesFlow
 {
-#pragma warning disable CS8602
     [Fact]
     public async Task Register_TaxRate_Then_ModifyIt_Then_RemoveIt()
     {
@@ -31,6 +30,9 @@ public class TaxRatesFlow
         };
 
         //Arrange
+        if (taxRateDto is null)
+            throw new Exception("TaxRateDto is null.");
+
         services = ServicesConfiguration.BuildDependencies();
         using (ServiceProvider serviceProvider = services.BuildServiceProvider())
         {
@@ -71,6 +73,8 @@ public class TaxRatesFlow
 
             //Assert
             Assert.NotNull(taxRateDto);
+            if (taxRateDto is null)
+                throw new Exception("TaxRateDto is null.");
 
             //Act
             actionResult = await taxRatesController.GetById(taxRateDto.Id, new CancellationToken());
@@ -121,6 +125,5 @@ public class TaxRatesFlow
             Assert.True(result);
         };
     }
-#pragma warning restore CS8602
 
 }

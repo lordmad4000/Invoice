@@ -11,7 +11,6 @@ namespace SimplexInvoice.Api.Tests.IntegrationTests;
 public class IdDocumentTypesFlow
 {
     [Fact]
-#pragma warning disable CS8602
     public async Task Register_IdDocumentType_Then_ModifyIt_Then_RemoveIt()
     {
         //Arrange
@@ -31,6 +30,9 @@ public class IdDocumentTypesFlow
         };
 
         //Arrange
+        if (idDocumentTypeDto is null)
+            throw new Exception("IdDocumentTypeDto is null.");
+
         services = ServicesConfiguration.BuildDependencies();
         using (ServiceProvider serviceProvider = services.BuildServiceProvider())
         {
@@ -70,6 +72,8 @@ public class IdDocumentTypesFlow
 
             //Assert
             Assert.NotNull(idDocumentTypeDto);
+            if (idDocumentTypeDto is null)
+                throw new Exception("IdDocumentTypeDto is null.");
 
             //Act
             actionResult = await idDocumentTypesController.GetById(idDocumentTypeDto.Id, new CancellationToken());
@@ -121,5 +125,4 @@ public class IdDocumentTypesFlow
         };
     }
 
-#pragma warning restore CS8602
 }

@@ -1,9 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SimplexInvoice.Api.Controllers;
-using SimplexInvoice.Api.Models.Request;
-using SimplexInvoice.Application.Common.Dto;
-using SimplexInvoice.Application.Common.Interfaces.Persistance;
-using System.ComponentModel.Design.Serialization;
 
 namespace SimplexInvoice.Api.Tests.IntegrationTests.Common
 {

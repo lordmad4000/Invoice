@@ -10,7 +10,6 @@ namespace SimplexInvoice.Api.Tests.IntegrationTests;
 
 public class CustomersFlow
 {
-#pragma warning disable CS8602
     [Fact]
     public async Task Register_Customer_Then_ModifyIt_Then_RemoveIt()
     {
@@ -30,7 +29,8 @@ public class CustomersFlow
 
             //Assert
             Assert.NotNull(customerDto);
-            customerId = customerDto.Id;
+            if (customerDto is not null)
+                customerId = customerDto.Id;
         };
 
         //Arrange
@@ -73,6 +73,8 @@ public class CustomersFlow
 
             //Assert
             Assert.NotNull(customerDto);
+            if (customerDto is null)
+                throw new Exception("CustomerDto is null.");
 
             //Act
             actionResult = await customersController.GetById(customerDto.Id, new CancellationToken());
@@ -135,32 +137,8 @@ public class CustomersFlow
         return idDocumentTypes.First().Id;
     }
 
-#pragma warning restore CS8602
-
-    private CustomerDto GetCustomerDto()
-    {
-        CustomerDto customerDto = new CustomerDto
-        {
-            Id = Guid.Empty,
-            FirstName = "TEST FIRSTNAME",
-            LastName = "TEST LASTNAME",
-            IdDocumentTypeId = Guid.NewGuid(),
-            IdDocumentNumber = "TEST DOCUMENT NUMBER",
-            Street = "TEST STREET",
-            City = "TEST CITY",
-            State = "TEST STATE",
-            Country = "TEST COUNTRY",
-            PostalCode = "TEST POSTAL CODE",
-            Phone = "+01 718 222 2222",
-            Email = "test@test.com"
-        };
-
-        return customerDto;
-    }
-
-    private CustomerRegisterRequest GetCustomerRegisterRequest(Guid idDocumentTypeId)
-    {
-        CustomerRegisterRequest customerDto = new CustomerRegisterRequest
+    private CustomerRegisterRequest GetCustomerRegisterRequest(Guid idDocumentTypeId) =>
+        new CustomerRegisterRequest
         {
             FirstName = "TEST FIRSTNAME",
             LastName = "TEST LASTNAME",
@@ -175,12 +153,8 @@ public class CustomersFlow
             Email = "test@test.com"
         };
 
-        return customerDto;
-    }
-
-    private CustomerUpdateRequest GetCustomerUpdateRequest(Guid id, Guid idDocumentTypeId)
-    {
-        CustomerUpdateRequest customerDto = new CustomerUpdateRequest
+    private CustomerUpdateRequest GetCustomerUpdateRequest(Guid id, Guid idDocumentTypeId) =>
+        new CustomerUpdateRequest
         {
             Id = id,
             FirstName = "TEST FIRSTNAME MOD",
@@ -195,9 +169,4 @@ public class CustomersFlow
             Phone = "+01 718 222 2222",
             Email = "testmod@testmod.com"
         };
-
-        return customerDto;
-    }    
-
-
 }
