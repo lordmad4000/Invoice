@@ -10,6 +10,21 @@ namespace SimplexInvoice.Api.Tests.IntegrationTests;
 
 public class CustomersFlow
 {
+    private Guid IdDocumentTypeId { get; set; } = Guid.Empty;
+    public CustomersFlow()
+    {
+        IServiceCollection services = ServicesConfiguration.BuildDependencies();
+        using (ServiceProvider serviceProvider = services.BuildServiceProvider())
+        {
+
+            var idDocumentTypeController = serviceProvider.GetRequiredService<IdDocumentTypesController>();
+            var actionResult = idDocumentTypeController.GetAll(new CancellationToken());
+            var idDocumentTypes = CustomConvert.OkResultTo<List<IdDocumentTypeDto>>(actionResult.Result);
+            if (idDocumentTypes is not null)
+                IdDocumentTypeId = idDocumentTypes.First().Id;
+        }
+    }
+
     [Fact]
     public async Task Register_Customer_Then_ModifyIt_Then_RemoveIt()
     {
@@ -21,7 +36,7 @@ public class CustomersFlow
         {
             idDocumentTypeId = await GetFirstIdDocumentTypeId(serviceProvider);
             var customersController = serviceProvider.GetRequiredService<CustomersController>();
-            CustomerRegisterRequest customerRegisterRequest = GetCustomerRegisterRequest(idDocumentTypeId);
+            CustomerRegisterRequest customerRegisterRequest = GetCustomerRegisterRequest();
 
             //Act
             IActionResult actionResult = await customersController.Register(customerRegisterRequest, new CancellationToken());
@@ -38,7 +53,7 @@ public class CustomersFlow
         using (ServiceProvider serviceProvider = services.BuildServiceProvider())
         {
             var customersController = serviceProvider.GetRequiredService<CustomersController>();
-            CustomerUpdateRequest customerUpdateRequest = GetCustomerUpdateRequest(customerId, idDocumentTypeId);
+            CustomerUpdateRequest customerUpdateRequest = GetCustomerUpdateRequest(customerId);
 
             //Act
             IActionResult actionResult = await customersController.Update(customerUpdateRequest, new CancellationToken());
@@ -65,7 +80,7 @@ public class CustomersFlow
         {
             Guid idDocumentTypeId = await GetFirstIdDocumentTypeId(serviceProvider);
             var customersController = serviceProvider.GetRequiredService<CustomersController>();
-            CustomerRegisterRequest customerRegisterRequest = GetCustomerRegisterRequest(idDocumentTypeId);
+            CustomerRegisterRequest customerRegisterRequest = GetCustomerRegisterRequest();
 
             //Act
             IActionResult actionResult = await customersController.Register(customerRegisterRequest, new CancellationToken());
@@ -101,7 +116,7 @@ public class CustomersFlow
         {
             Guid idDocumentTypeId = await GetFirstIdDocumentTypeId(serviceProvider);
             var customersController = serviceProvider.GetRequiredService<CustomersController>();
-            CustomerRegisterRequest customerRegisterRequest = GetCustomerRegisterRequest(idDocumentTypeId);
+            CustomerRegisterRequest customerRegisterRequest = GetCustomerRegisterRequest();
 
             //Act
             IActionResult actionResult = await customersController.Register(customerRegisterRequest, new CancellationToken());
@@ -128,8 +143,8 @@ public class CustomersFlow
 
     private async Task<Guid> GetFirstIdDocumentTypeId(ServiceProvider serviceProvider)
     {
-        var taxRatesController = serviceProvider.GetRequiredService<IdDocumentTypesController>();
-        var actionResult = await taxRatesController.GetAll(new CancellationToken());
+        var idDocumentTypeController = serviceProvider.GetRequiredService<IdDocumentTypesController>();
+        var actionResult = await idDocumentTypeController.GetAll(new CancellationToken());
         var idDocumentTypes = CustomConvert.OkResultTo<List<IdDocumentTypeDto>>(actionResult);
         if (idDocumentTypes is null)
             throw new Exception("IdDocumentTypes not found.");
@@ -137,12 +152,12 @@ public class CustomersFlow
         return idDocumentTypes.First().Id;
     }
 
-    private CustomerRegisterRequest GetCustomerRegisterRequest(Guid idDocumentTypeId) =>
+    private CustomerRegisterRequest GetCustomerRegisterRequest() =>
         new CustomerRegisterRequest
         {
             FirstName = "TEST FIRSTNAME",
             LastName = "TEST LASTNAME",
-            IdDocumentTypeId = idDocumentTypeId,
+            IdDocumentTypeId = IdDocumentTypeId,
             IdDocumentNumber = "TEST DOCUMENT NUMBER",
             Street = "TEST STREET",
             City = "TEST CITY",
@@ -153,13 +168,13 @@ public class CustomersFlow
             Email = "test@test.com"
         };
 
-    private CustomerUpdateRequest GetCustomerUpdateRequest(Guid id, Guid idDocumentTypeId) =>
+    private CustomerUpdateRequest GetCustomerUpdateRequest(Guid id) =>
         new CustomerUpdateRequest
         {
             Id = id,
             FirstName = "TEST FIRSTNAME MOD",
             LastName = "TEST LASTNAME MOD",
-            IdDocumentTypeId = idDocumentTypeId,
+            IdDocumentTypeId = IdDocumentTypeId,
             IdDocumentNumber = "TEST DOCUMENT NUMBER MOD",
             Street = "TEST STREET MOD",
             City = "TEST CITY MOD",
