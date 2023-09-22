@@ -54,9 +54,10 @@ public static class ServicesConfiguration
         services.Configure<CacheConfig>(configuration.GetSection("CacheConfig"));
         services.AddMemoryCache();
         services.AddSingleton<ICacheService, MemoryCacheService>();
-        services.AddScoped<IdDocumentTypesController>();
-        services.AddScoped<TaxRatesController>();
-        services.AddScoped<CustomersController>();
+        services.AddTransient<IdDocumentTypesController>();
+        services.AddTransient<TaxRatesController>();
+        services.AddTransient<CustomersController>();
+        services.AddTransient<CompaniesController>();
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ValidatorService).Assembly));
 
         return services;                     
