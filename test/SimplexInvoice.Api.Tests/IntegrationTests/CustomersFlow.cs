@@ -11,6 +11,7 @@ namespace SimplexInvoice.Api.Tests.IntegrationTests;
 public class CustomersFlow
 {
     private Guid IdDocumentTypeId { get; set; } = Guid.Empty;
+    private Guid CustomerId { get; set; } = Guid.Empty;
     public CustomersFlow()
     {
         IServiceCollection services = ServicesConfiguration.BuildDependencies();
@@ -29,12 +30,9 @@ public class CustomersFlow
     public async Task Register_Customer_Then_ModifyIt_Then_RemoveIt()
     {
         //Arrange
-        Guid customerId = Guid.NewGuid();
-        Guid idDocumentTypeId = Guid.NewGuid();
         IServiceCollection services = ServicesConfiguration.BuildDependencies();
         using (ServiceProvider serviceProvider = services.BuildServiceProvider())
         {
-            idDocumentTypeId = await GetFirstIdDocumentTypeId(serviceProvider);
             var customersController = serviceProvider.GetRequiredService<CustomersController>();
             CustomerRegisterRequest customerRegisterRequest = GetCustomerRegisterRequest();
 
@@ -45,7 +43,7 @@ public class CustomersFlow
             //Assert
             Assert.NotNull(customerDto);
             if (customerDto is not null)
-                customerId = customerDto.Id;
+                CustomerId = customerDto.Id;
         };
 
         //Arrange
@@ -53,7 +51,7 @@ public class CustomersFlow
         using (ServiceProvider serviceProvider = services.BuildServiceProvider())
         {
             var customersController = serviceProvider.GetRequiredService<CustomersController>();
-            CustomerUpdateRequest customerUpdateRequest = GetCustomerUpdateRequest(customerId);
+            CustomerUpdateRequest customerUpdateRequest = GetCustomerUpdateRequest();
 
             //Act
             IActionResult actionResult = await customersController.Update(customerUpdateRequest, new CancellationToken());
@@ -63,7 +61,7 @@ public class CustomersFlow
             Assert.NotNull(customerDto);
 
             //Act
-            actionResult = await customersController.Delete(customerDto?.Id ?? Guid.Empty, new CancellationToken());
+            actionResult = await customersController.Delete(CustomerId, new CancellationToken());
             bool result = CustomConvert.OkResultTo<bool>(actionResult);
 
             //Assert
@@ -78,7 +76,6 @@ public class CustomersFlow
         IServiceCollection services = ServicesConfiguration.BuildDependencies();
         using (ServiceProvider serviceProvider = services.BuildServiceProvider())
         {
-            Guid idDocumentTypeId = await GetFirstIdDocumentTypeId(serviceProvider);
             var customersController = serviceProvider.GetRequiredService<CustomersController>();
             CustomerRegisterRequest customerRegisterRequest = GetCustomerRegisterRequest();
 
@@ -88,18 +85,18 @@ public class CustomersFlow
 
             //Assert
             Assert.NotNull(customerDto);
-            if (customerDto is null)
-                throw new Exception("CustomerDto is null.");
+            if (customerDto is not null)
+                CustomerId = customerDto.Id;
 
             //Act
-            actionResult = await customersController.GetById(customerDto.Id, new CancellationToken());
+            actionResult = await customersController.GetById(CustomerId, new CancellationToken());
             customerDto = CustomConvert.OkResultTo<CustomerDto>(actionResult);
 
             //Assert
             Assert.NotNull(customerDto);
 
             //Act
-            actionResult = await customersController.Delete(customerDto?.Id ?? Guid.Empty, new CancellationToken());
+            actionResult = await customersController.Delete(CustomerId, new CancellationToken());
             bool result = CustomConvert.OkResultTo<bool>(actionResult);
 
             //Assert
@@ -114,13 +111,14 @@ public class CustomersFlow
         IServiceCollection services = ServicesConfiguration.BuildDependencies();
         using (ServiceProvider serviceProvider = services.BuildServiceProvider())
         {
-            Guid idDocumentTypeId = await GetFirstIdDocumentTypeId(serviceProvider);
             var customersController = serviceProvider.GetRequiredService<CustomersController>();
             CustomerRegisterRequest customerRegisterRequest = GetCustomerRegisterRequest();
 
             //Act
             IActionResult actionResult = await customersController.Register(customerRegisterRequest, new CancellationToken());
             var customerDto = CustomConvert.CreatedResultTo<CustomerDto>(actionResult);
+            if (customerDto is not null)
+                CustomerId = customerDto.Id;
 
             //Assert
             Assert.NotNull(customerDto);
@@ -133,23 +131,12 @@ public class CustomersFlow
             Assert.NotEmpty(customerDtos);
 
             //Act
-            actionResult = await customersController.Delete(customerDto?.Id ?? Guid.Empty, new CancellationToken());
+            actionResult = await customersController.Delete(CustomerId, new CancellationToken());
             bool result = CustomConvert.OkResultTo<bool>(actionResult);
 
             //Assert
             Assert.True(result);
         };
-    }
-
-    private async Task<Guid> GetFirstIdDocumentTypeId(ServiceProvider serviceProvider)
-    {
-        var idDocumentTypeController = serviceProvider.GetRequiredService<IdDocumentTypesController>();
-        var actionResult = await idDocumentTypeController.GetAll(new CancellationToken());
-        var idDocumentTypes = CustomConvert.OkResultTo<List<IdDocumentTypeDto>>(actionResult);
-        if (idDocumentTypes is null)
-            throw new Exception("IdDocumentTypes not found.");
-
-        return idDocumentTypes.First().Id;
     }
 
     private CustomerRegisterRequest GetCustomerRegisterRequest() =>
@@ -168,10 +155,10 @@ public class CustomersFlow
             Email = "test@test.com"
         };
 
-    private CustomerUpdateRequest GetCustomerUpdateRequest(Guid id) =>
+    private CustomerUpdateRequest GetCustomerUpdateRequest() =>
         new CustomerUpdateRequest
         {
-            Id = id,
+            Id = CustomerId,
             FirstName = "TEST FIRSTNAME MOD",
             LastName = "TEST LASTNAME MOD",
             IdDocumentTypeId = IdDocumentTypeId,

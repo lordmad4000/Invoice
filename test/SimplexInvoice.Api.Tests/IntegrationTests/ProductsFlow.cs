@@ -11,6 +11,8 @@ namespace SimplexInvoice.Api.Tests.IntegrationTests;
 public class ProductsFlow
 {
     private Guid TaxRateId { get; set; } = Guid.Empty;
+    private Guid ProductId { get; set; } = Guid.Empty;
+
     public ProductsFlow()
     {
         IServiceCollection services = ServicesConfiguration.BuildDependencies();
@@ -29,7 +31,6 @@ public class ProductsFlow
     public async Task Register_Product_Then_ModifyIt_Then_RemoveIt()
     {
         //Arrange
-        Guid productId = Guid.NewGuid();
         IServiceCollection services = ServicesConfiguration.BuildDependencies();
         using (ServiceProvider serviceProvider = services.BuildServiceProvider())
         {
@@ -43,7 +44,7 @@ public class ProductsFlow
             //Assert
             Assert.NotNull(productDto);
             if (productDto is not null)
-                productId = productDto.Id;
+                ProductId = productDto.Id;
         };
 
         //Arrange
@@ -51,7 +52,7 @@ public class ProductsFlow
         using (ServiceProvider serviceProvider = services.BuildServiceProvider())
         {
             var productsController = serviceProvider.GetRequiredService<ProductsController>();
-            ProductDto? productDto = GetProductDto(productId);
+            ProductDto? productDto = GetProductDto();
 
             //Act
             IActionResult actionResult = await productsController.Update(productDto, new CancellationToken());
@@ -61,7 +62,7 @@ public class ProductsFlow
             Assert.NotNull(productDto);
 
             //Act
-            actionResult = await productsController.Delete(productDto?.Id ?? Guid.Empty, new CancellationToken());
+            actionResult = await productsController.Delete(ProductId, new CancellationToken());
             bool result = CustomConvert.OkResultTo<bool>(actionResult);
 
             //Assert
@@ -85,18 +86,18 @@ public class ProductsFlow
 
             //Assert
             Assert.NotNull(productDto);
-            if (productDto is null)
-                throw new Exception("ProductDto is null.");
+            if (productDto is not null)
+                ProductId = productDto.Id;
 
             //Act
-            actionResult = await productsController.GetById(productDto.Id, new CancellationToken());
+            actionResult = await productsController.GetById(ProductId, new CancellationToken());
             productDto = CustomConvert.OkResultTo<ProductDto>(actionResult);
 
             //Assert
             Assert.NotNull(productDto);
 
             //Act
-            actionResult = await productsController.Delete(productDto?.Id ?? Guid.Empty, new CancellationToken());
+            actionResult = await productsController.Delete(ProductId, new CancellationToken());
             bool result = CustomConvert.OkResultTo<bool>(actionResult);
 
             //Assert
@@ -117,6 +118,8 @@ public class ProductsFlow
             //Act
             IActionResult actionResult = await productsController.Register(productRegisterRequest, new CancellationToken());
             var productDto = CustomConvert.CreatedResultTo<ProductDto>(actionResult);
+            if (productDto is not null)
+                ProductId = productDto.Id;
 
             //Assert
             Assert.NotNull(productDto);
@@ -129,7 +132,7 @@ public class ProductsFlow
             Assert.NotEmpty(productDtos);
 
             //Act
-            actionResult = await productsController.Delete(productDto?.Id ?? Guid.Empty, new CancellationToken());
+            actionResult = await productsController.Delete(ProductId, new CancellationToken());
             bool result = CustomConvert.OkResultTo<bool>(actionResult);
 
             //Assert
@@ -149,10 +152,10 @@ public class ProductsFlow
             ProductTaxRateId = TaxRateId
         };
 
-    private ProductDto GetProductDto(Guid id) =>
+    private ProductDto GetProductDto() =>
         new ProductDto
         {
-            Id = id,
+            Id = ProductId,
             Code = "CODE TEST MOD",
             Name = "NAME TEST MOD",
             Description = "DESCRIPTION TEST MOD",
