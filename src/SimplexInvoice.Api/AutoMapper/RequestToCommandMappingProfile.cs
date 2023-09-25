@@ -21,8 +21,7 @@ namespace SimplexInvoice.Api.AutoMapper
             CreateMap<TaxRateRegisterRequest, TaxRateRegisterCommand>();
             CreateMap<ProductRegisterRequest, ProductRegisterCommand>();
             CreateMap<IdDocumentTypeRegisterRequest, IdDocumentTypeRegisterCommand>();
-            CreateMap<CompanyRegisterRequest, CompanyRegisterCommand>();
-            CreateMap<CompanyUpdateRequest, CompanyUpdateCommand>();
+            CreateMap<CompanyRegisterUpdateRequest, CompanyRegisterUpdateCommand>();
             CreateMap<CustomerRegisterRequest, CustomerRegisterCommand>();
             CreateMap<CustomerUpdateRequest, CustomerUpdateCommand>();
             CreateMap<InvoiceRegisterRequest, InvoiceRegisterCommand>();

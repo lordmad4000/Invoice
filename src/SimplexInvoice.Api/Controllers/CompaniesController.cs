@@ -41,38 +41,16 @@ public class CompaniesController : ApiController
         return (Ok(companiesDto));
     }
 
-    [HttpPost("Register")]
-    public async Task<IActionResult> Register([FromBody] CompanyRegisterRequest companyRegisterRequest, CancellationToken cancellationToken)
-    {
-        if (!ModelState.IsValid)
-            throw new Exception(ModelState.ToString());
-
-        var companyRegisterCommand = _mapper.Map<CompanyRegisterCommand>(companyRegisterRequest);
-        var companyDto = await _mediator.Send(companyRegisterCommand, cancellationToken);
-        string url = GetByIdUrl(companyDto.Id);
-
-        return (Created(url, companyDto));
-    }
-
     [HttpPut("Update")]
-    public async Task<IActionResult> Update([FromBody] CompanyUpdateRequest companyUpdateRequest, CancellationToken cancellationToken)
+    public async Task<IActionResult> RegisterUpdate([FromBody] CompanyRegisterUpdateRequest CompanyRegisterUpdateRequest, CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
             throw new Exception(ModelState.ToString());
 
-        var companyUpdateCommand = _mapper.Map<CompanyUpdateCommand>(companyUpdateRequest);
-        CompanyDto companyDto = await _mediator.Send(companyUpdateCommand, cancellationToken);
+        var CompanyRegisterUpdateCommand = _mapper.Map<CompanyRegisterUpdateCommand>(CompanyRegisterUpdateRequest);
+        CompanyDto companyDto = await _mediator.Send(CompanyRegisterUpdateCommand, cancellationToken);
 
         return (Ok(companyDto));
-    }
-
-    [HttpDelete("Delete/{id}")]
-    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
-    {
-        var companyRemoveCommand = new CompanyRemoveCommand(id);
-        bool result = await _mediator.Send(companyRemoveCommand, cancellationToken);
-
-        return (Ok(result));
     }
 
 }

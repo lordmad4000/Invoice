@@ -15,7 +15,7 @@ namespace SimplexInvoice.Application.AutoMapper
             CreateMap<IdDocumentTypeDto, IdDocumentTypeUpdateCommand>();
             CreateMap<TaxRateDto, TaxRateUpdateCommand>();
             CreateMap<ProductDto, ProductUpdateCommand>();
-            CreateMap<CompanyDto, CompanyUpdateCommand>();
+            CreateMap<CompanyDto, CompanyRegisterUpdateCommand>();
             CreateMap<CustomerDto, CustomerUpdateCommand>();
         }
     }

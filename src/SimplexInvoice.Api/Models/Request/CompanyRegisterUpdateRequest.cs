@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SimplexInvoice.Api.Models.Request;
 
-public class CompanyRegisterRequest
+public class CompanyRegisterUpdateRequest
 {
     [Required(ErrorMessage = "Name is required.")]
     [StringLength(40, ErrorMessage = "Name cannot be longer than 40 characters.")]
