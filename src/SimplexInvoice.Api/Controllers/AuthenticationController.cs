@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using System;
+using SimplexInvoice.Application.Common.Dto;
 
 namespace SimplexInvoice.Api.Controllers
 {
@@ -59,7 +60,7 @@ namespace SimplexInvoice.Api.Controllers
                                                                                   userRegisterRequest.FirstName,
                                                                                   userRegisterRequest.LastName);
             var userDto = await _mediator.Send(authenticationRegisterCommand, cancellationToken);
-            var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/{userDto.Id}";
+            string url = GetByIdUrl(userDto.Id);
 
             return (Created(url, _mapper.Map<UserResponse>(userDto)));
         }

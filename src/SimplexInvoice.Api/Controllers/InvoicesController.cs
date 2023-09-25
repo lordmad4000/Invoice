@@ -1,10 +1,9 @@
 using AutoMapper;
-using SimplexInvoice.Application.Invoices.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SimplexInvoice.Application.Common.Dto;
 using SimplexInvoice.Api.Models.Request;
+using SimplexInvoice.Application.Invoices.Commands;
 using SimplexInvoice.Application.Invoices.Queries;
 
 namespace SimplexInvoice.Api.Controllers;
@@ -49,30 +48,9 @@ public class InvoicesController : ApiController
 
         var invoiceRegisterCommand = _mapper.Map<InvoiceRegisterCommand>(invoiceRegisterRequest);
         var invoiceDto = await _mediator.Send(invoiceRegisterCommand, cancellationToken);
-        var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/{invoiceDto.Id}";
+        string url = GetByIdUrl(invoiceDto.Id);
 
         return (Created(url, invoiceDto));
     }
-
-    //[HttpPut("Update")]
-    //public async Task<IActionResult> Update([FromBody] InvoiceDto invoiceDto, CancellationToken cancellationToken)
-    //{
-    //    if (!ModelState.IsValid)
-    //        throw new Exception(ModelState.ToString());
-
-    //    var invoiceUpdateCommand = _mapper.Map<InvoiceUpdateCommand>(invoiceDto);
-    //    invoiceDto = await _mediator.Send(invoiceUpdateCommand, cancellationToken);
-
-    //    return (Ok(invoiceDto));
-    //}
-
-    //[HttpDelete("Delete/{id}")]
-    //public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
-    //{
-    //    var invoiceRemoveCommand = new InvoiceRemoveCommand(id);
-    //    bool result = await _mediator.Send(invoiceRemoveCommand, cancellationToken);
-
-    //    return (Ok(result));
-    //}
 
 }

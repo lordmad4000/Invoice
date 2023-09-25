@@ -49,7 +49,7 @@ public class TaxRatesController : ApiController
 
         var taxRateRegisterCommand = _mapper.Map<TaxRateRegisterCommand>(taxRateRegisterRequest);
         var taxRateDto = await _mediator.Send(taxRateRegisterCommand, cancellationToken);
-        var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/{taxRateDto.Id}";
+        string url = GetByIdUrl(taxRateDto.Id);
 
         return (Created(url, taxRateDto));
     }

@@ -11,8 +11,8 @@ namespace SimplexInvoice.Api.Controllers;
 
 [Authorize]
 [AllowAnonymous]
-[ApiController]
 [Route("api/[controller]")]
+[ApiController]
 public class IdDocumentTypesController : ApiController
 {
     private readonly IMediator _mediator;
@@ -49,7 +49,7 @@ public class IdDocumentTypesController : ApiController
 
         var idDocumentTypeRegisterCommand = _mapper.Map<IdDocumentTypeRegisterCommand>(idDocumentTypeRegisterRequest);
         var idDocumentTypeDto = await _mediator.Send(idDocumentTypeRegisterCommand, cancellationToken);
-        var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/{idDocumentTypeDto.Id}";
+        string url = GetByIdUrl(idDocumentTypeDto.Id);
 
         return (Created(url, idDocumentTypeDto));
     }

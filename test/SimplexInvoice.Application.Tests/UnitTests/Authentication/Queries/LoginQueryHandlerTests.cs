@@ -24,7 +24,7 @@ namespace SimplexInvoice.Application.Tests.UnitTests
         {
             var mapperConfig = new MapperConfiguration(cfg => 
             {
-                cfg.AddProfile(new EntityDtoMappingProfile());
+                cfg.AddProfile(new EntityToDtoMappingProfile());
             });
             _mapper = mapperConfig.CreateMapper();
             _mockUserRepository = new Mock<IUserRepository>();
@@ -37,7 +37,7 @@ namespace SimplexInvoice.Application.Tests.UnitTests
         {
             // Arrange
             var user = GetUser();
-            _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<CancellationToken>(), It.IsAny<bool>(), It.IsAny<string>())).ReturnsAsync(user);
+            _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<CancellationToken>(), It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<string[]>())).ReturnsAsync(user);
             _mockPasswordService.Setup(x => x.IsCorrectPassword(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(true);
             var getUsersQueryHandler = new LoginQueryHandler(_mockUserRepository.Object, 
                                                              _mockPasswordService.Object, 
@@ -56,7 +56,7 @@ namespace SimplexInvoice.Application.Tests.UnitTests
         {
             // Arrange
             var user = GetUser();
-            _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<CancellationToken>(), It.IsAny<bool>(), It.IsAny<string>())).ReturnsAsync(default(User));
+            _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<CancellationToken>(), It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<string[]>())).ReturnsAsync(default(User));
             _mockPasswordService.Setup(x => x.IsCorrectPassword(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(true);
             var getUsersQueryHandler = new LoginQueryHandler(_mockUserRepository.Object, 
                                                              _mockPasswordService.Object, 
@@ -73,7 +73,7 @@ namespace SimplexInvoice.Application.Tests.UnitTests
         {
             // Arrange
             var user = GetUser();
-            _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<CancellationToken>(), It.IsAny<bool>(), It.IsAny<string>())).ReturnsAsync(user);
+            _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<CancellationToken>(), It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<string[]>())).ReturnsAsync(user);
             _mockPasswordService.Setup(x => x.IsCorrectPassword(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(false);
             var getUsersQueryHandler = new LoginQueryHandler(_mockUserRepository.Object, 
                                                              _mockPasswordService.Object, 

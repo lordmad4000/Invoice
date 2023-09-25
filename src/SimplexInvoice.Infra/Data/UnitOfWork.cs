@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using SimplexInvoice.Application.Common.Interfaces.Persistance;
 using SimplexInvoice.Infra.Exceptions;
 
 namespace SimplexInvoice.Infra.Data

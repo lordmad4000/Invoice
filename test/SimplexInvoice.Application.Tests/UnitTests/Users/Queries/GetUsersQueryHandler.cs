@@ -25,7 +25,7 @@ namespace SimplexInvoice.Application.Tests.UnitTests
         {
             var mapperConfig = new MapperConfiguration(cfg => 
             {
-                cfg.AddProfile(new EntityDtoMappingProfile());
+                cfg.AddProfile(new EntityToDtoMappingProfile());
             });
             _mapper = mapperConfig.CreateMapper();
             _mockUserRepository = new Mock<IUserRepository>();
@@ -37,7 +37,7 @@ namespace SimplexInvoice.Application.Tests.UnitTests
         {
             // Arrange
             var users = GetUsers();
-            _mockUserRepository.Setup(x => x.ListAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<CancellationToken>())).ReturnsAsync(users);
+            _mockUserRepository.Setup(x => x.ListAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<CancellationToken>(), It.IsAny<bool>(), It.IsAny<string[]>())).ReturnsAsync(users);
             var getUsersQueryHandler = new GetUsersQueryHandler(_mockUserRepository.Object, _mapper, _mockLogger.Object);
 
             //Act

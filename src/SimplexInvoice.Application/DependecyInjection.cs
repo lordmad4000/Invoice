@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using SimplexInvoice.Application.Interfaces;
 using SimplexInvoice.Application.Services;
+using System.Linq;
 using System.Reflection;
 
 namespace SimplexInvoice.Application
