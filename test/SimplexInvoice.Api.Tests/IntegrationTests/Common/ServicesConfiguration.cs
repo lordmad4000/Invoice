@@ -60,6 +60,7 @@ public static class ServicesConfiguration
         services.AddTransient<CompaniesController>();
         services.AddTransient<ProductsController>();
         services.AddTransient<UsersController>();
+        services.AddTransient<InvoicesController>();
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ValidatorService).Assembly));
 
         return services;                     
