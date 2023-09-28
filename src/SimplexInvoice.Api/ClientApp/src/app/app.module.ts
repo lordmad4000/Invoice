@@ -1,20 +1,21 @@
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { AuthenticationInterceptor } from './shared/interceptors/authentication.interceptor';
+import { AuthenticationService, ErrorService, JWTService, LoadFileService, PopupService } from './shared/services';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppRoutingModule } from './app-routing.module';
-import { NavmenuComponent, PopupComponent } from './components';
-import { MatDialogModule } from '@angular/material/dialog';
-import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { LoginComponent } from './components/login/login.component';
-import { UsersModule } from './modules/users';
-import { AuthenticationInterceptor } from './shared/interceptors/authentication.interceptor';
 import { HomeModule } from './modules/home';
-import { AuthenticationService, ErrorService, JWTService, LoadFileService, PopupService } from './shared/services';
+import { IdDocumentTypesModule } from './modules/iddocumenttypes';
+import { LoginComponent } from './components/login/login.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { NavmenuComponent, PopupComponent } from './components';
+import { NgModule } from '@angular/core';
+import { UsersModule } from './modules/users';
+import { TaxRatesModule } from './modules/taxrates';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,8 @@ import { AuthenticationService, ErrorService, JWTService, LoadFileService, Popup
     NavmenuComponent,
     PopupComponent,
     LoginComponent,
+    IdDocumentTypesModule,
+    TaxRatesModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },

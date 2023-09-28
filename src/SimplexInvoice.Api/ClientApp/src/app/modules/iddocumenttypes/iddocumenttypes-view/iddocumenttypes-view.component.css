@@ -1,0 +1,43 @@
+.iddocumenttypes-view-container {
+    padding: 1rem;
+}
+
+.flex-expand {
+    flex: 1 1 auto;
+}
+
+.mat-toolbar-row {
+    background-color: #FAFAFA;
+}
+
+.iddocumenttype-form {
+    vertical-align: top;
+    text-align: left;
+    width: 98%;
+    height: 98%;
+}
+
+.div-fields {
+    margin-top: 40px;
+    margin-left: 40px;
+}
+
+mat-label {
+    color: blue;
+}
+
+mat-form-field.firstname-field {
+    padding-right: 1rem;
+}
+
+.iddocumenttype-form input {
+    width: fit-content;
+    color: green;
+}
+
+mat-divider {    
+    width: 100%;
+    padding: 2px;
+    color: transparent;
+    border: 1px;
+}
