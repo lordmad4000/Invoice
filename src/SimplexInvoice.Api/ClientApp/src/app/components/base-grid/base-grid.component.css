@@ -1,0 +1,19 @@
+.base-grid-container {
+    padding: 1rem;
+}
+
+.flex-expand {
+    flex: 1 1 auto;
+}
+
+.mat-toolbar-row {
+    background-color: #FAFAFA;
+}
+
+table {
+    vertical-align: top;
+    text-align: left;
+    margin-top: 1rem;
+    overflow: auto;
+    background-color: #FAFAFA;    
+}

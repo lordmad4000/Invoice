@@ -1,0 +1,25 @@
+<div class="base-grid-container">
+    <mat-toolbar>
+        <mat-toolbar-row>
+            <button mat-button matTooltip="Back" (click)="backButtonClick()">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <span class="flex-expand"></span>
+            <button mat-button matTooltip="Add" (click)="addButtonClick()">
+                <mat-icon>add_circle</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container *ngFor="let tableColumn of tableColumns" [matColumnDef]="tableColumn.header">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header [style.width]="tableColumn.width"
+                [style.visibility]="tableColumn.visible">{{tableColumn.header}}</th>
+            <td mat-cell *matCellDef="let item" [style.width]="tableColumn.width"
+                [style.visibility]="tableColumn.visible">{{item[tableColumn.field]}}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getRecord(row)"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons>
+    </mat-paginator>
+</div>
