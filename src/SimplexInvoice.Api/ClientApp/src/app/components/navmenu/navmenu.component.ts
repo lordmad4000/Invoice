@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
+import {MatMenuModule} from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { MatListModule } from '@angular/material/list';
@@ -20,7 +21,8 @@ import { JWTService, PopupService } from 'src/app/shared/services';
     MatListModule,
     AppRoutingModule,
     MatButtonModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatMenuModule
   ], 
   selector: 'app-navmenu',
   templateUrl: './navmenu.component.html',
@@ -47,6 +49,15 @@ export class NavmenuComponent {
   homeButtonClick() {
     console.log("Home button click.")
     this.router.navigate(['/home']);
+  }
+
+  idDocumentTypesButtonClick() {
+    console.log("IdDocumentTypes button click.")
+    this.router.navigate(['/iddocumenttypes/grid']);
+  }
+
+  taxRatesButtonClick() {
+    this.router.navigate(['/taxrates/grid']);
   }
 
   usersButtonClick() {
