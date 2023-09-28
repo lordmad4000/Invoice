@@ -10,7 +10,6 @@ using SimplexInvoice.Application.Companies.Queries;
 namespace SimplexInvoice.Api.Controllers;
 
 [Authorize]
-[AllowAnonymous]
 [ApiController]
 [Route("api/[controller]")]
 public class CompaniesController : ApiController

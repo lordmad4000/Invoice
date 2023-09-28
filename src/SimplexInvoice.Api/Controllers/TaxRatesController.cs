@@ -10,7 +10,6 @@ using SimplexInvoice.Application.TaxRates.Queries;
 namespace SimplexInvoice.Api.Controllers;
 
 [Authorize]
-[AllowAnonymous]
 [ApiController]
 [Route("api/[controller]")]
 public class TaxRatesController : ApiController

@@ -10,7 +10,6 @@ using SimplexInvoice.Application.IdDocumentTypes.Queries;
 namespace SimplexInvoice.Api.Controllers;
 
 [Authorize]
-[AllowAnonymous]
 [Route("api/[controller]")]
 [ApiController]
 public class IdDocumentTypesController : ApiController
