@@ -1,0 +1,26 @@
+<div class="taxrates-edit-container">
+    <form class="taxrate-form" [formGroup]="formTaxRate">
+        <mat-toolbar>
+            <mat-toolbar-row>
+                <button mat-button matTooltip="Back" (click)="backButtonClick()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <span class="flex-expand"></span>
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <div class="div-fields">
+            <mat-form-field class="name-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>Name</mat-label>
+                <input type="text" matInput formControlName="name" matTextareaAutosize>
+            </mat-form-field>
+            <mat-form-field class="value-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>Value</mat-label>
+                <input type="text" matInput formControlName="value" matTextareaAutosize>
+            </mat-form-field>
+            <mat-divider></mat-divider>
+        </div>
+        <div>
+            <button mat-raised-button class="button-save" color="primary" mat-button matTooltip="Save changes" (click)="saveButtonClick()" [disabled]="formTaxRate.invalid">Save</button>
+        </div>
+    </form>
+</div>
