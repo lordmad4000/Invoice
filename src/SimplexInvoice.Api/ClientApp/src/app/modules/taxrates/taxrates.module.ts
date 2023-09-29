@@ -1,6 +1,8 @@
 import { BaseGridComponent } from 'src/app/components/base-grid';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { HttpLoaderFactory } from 'src/app/app.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
@@ -21,6 +23,8 @@ import { TaxRatesNewComponent } from './taxrates-new';
 import { TaxRatesRoutingModule } from './taxrates-routing.module';
 import { TaxRatesService } from 'src/app/shared/services/taxrates.service';
 import { TaxRatesViewComponent } from './taxrates-view';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { CustomTranslateService } from 'src/app/shared/services/customtranslate.service';
 
 @NgModule({
   declarations: [
@@ -47,10 +51,18 @@ import { TaxRatesViewComponent } from './taxrates-view';
     MatToolbarModule,
     MatSnackBarModule,
     MatSortModule,
-    BaseGridComponent
+    BaseGridComponent,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [ HttpClient ]
+      }
+    }),
   ],
   providers: [ 
-    TaxRatesService
+    TaxRatesService,
+    CustomTranslateService
   ],
 })
 export class TaxRatesModule { }
