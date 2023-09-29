@@ -15,12 +15,14 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgModule } from '@angular/core';
 import { TaxRatesComponent } from './taxrates.component';
+import { TaxRatesGridComponent } from './taxrates-grid';
 import { TaxRatesRoutingModule } from './taxrates-routing.module';
 import { TaxRatesService } from 'src/app/shared/services/taxrates.service';
 
 @NgModule({
   declarations: [
     TaxRatesComponent,
+    TaxRatesGridComponent
   ],
   imports: [
     CommonModule,

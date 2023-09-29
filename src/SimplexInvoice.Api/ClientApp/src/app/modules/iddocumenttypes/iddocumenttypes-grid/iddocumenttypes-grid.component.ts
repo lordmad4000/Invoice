@@ -25,10 +25,10 @@ export class IdDocumentTypesGridComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadiddocumenttypesData();
+    this.loadGridData();
   }
 
-  loadiddocumenttypesData() {
+  loadGridData() {
     this.iddocumenttypesservice.GetAll().subscribe({
       next: (res: Array<IdDocumentTypeDto>) => {
         if (res) {
