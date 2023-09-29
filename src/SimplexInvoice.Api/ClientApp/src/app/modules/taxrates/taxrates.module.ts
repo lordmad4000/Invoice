@@ -16,6 +16,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgModule } from '@angular/core';
 import { TaxRatesComponent } from './taxrates.component';
 import { TaxRatesGridComponent } from './taxrates-grid';
+import { TaxRatesNewComponent } from './taxrates-new';
 import { TaxRatesRoutingModule } from './taxrates-routing.module';
 import { TaxRatesService } from 'src/app/shared/services/taxrates.service';
 import { TaxRatesViewComponent } from './taxrates-view';
@@ -24,7 +25,8 @@ import { TaxRatesViewComponent } from './taxrates-view';
   declarations: [
     TaxRatesComponent,
     TaxRatesGridComponent,
-    TaxRatesViewComponent
+    TaxRatesViewComponent,
+    TaxRatesNewComponent
   ],
   imports: [
     CommonModule,

@@ -4,6 +4,7 @@ import { TaxRatesComponent } from './taxrates.component';
 import { TaxRatesGridComponent } from './taxrates-grid';
 import { TaxRatesViewComponent } from './taxrates-view';
 import { authGuard } from 'src/app/shared/guards/auth.guard';
+import { TaxRatesNewComponent } from './taxrates-new';
 
 const routes: Routes = [
   {
@@ -12,6 +13,7 @@ const routes: Routes = [
     children: [
       { path: 'grid', component: TaxRatesGridComponent, canActivate: [authGuard] },
       { path: 'view/:id', component: TaxRatesViewComponent, canActivate: [authGuard] },
+      { path: 'new', component: TaxRatesNewComponent, canActivate: [authGuard] },
     ],
   },
 ];
