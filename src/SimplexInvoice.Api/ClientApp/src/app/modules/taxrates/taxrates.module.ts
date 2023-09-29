@@ -18,11 +18,13 @@ import { TaxRatesComponent } from './taxrates.component';
 import { TaxRatesGridComponent } from './taxrates-grid';
 import { TaxRatesRoutingModule } from './taxrates-routing.module';
 import { TaxRatesService } from 'src/app/shared/services/taxrates.service';
+import { TaxRatesViewComponent } from './taxrates-view';
 
 @NgModule({
   declarations: [
     TaxRatesComponent,
-    TaxRatesGridComponent
+    TaxRatesGridComponent,
+    TaxRatesViewComponent
   ],
   imports: [
     CommonModule,
