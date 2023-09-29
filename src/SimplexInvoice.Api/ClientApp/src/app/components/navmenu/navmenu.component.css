@@ -3,41 +3,12 @@ mat-toolbar {
   color: white;
 }
 
-.button-menu {
-  background: #009bee;
-}
-
-mat-sidenav-container {
-  grid-template-rows: auto 1fr;
-}
-
 mat-icon {
   padding-right: 8px;
 }
 
 .flex-expand {
   flex: 1 1 auto;
-}
-
-mat-sidenav {
-  margin: 16px;
-  width: 200px;
-  border-right: none;
-  background: #009bee;
-  color: white;
-  border-radius: 20px;
-  padding: 16px;
-  text-align: left;  
-}
-
-.content {
-  margin: 16px 32px 16px 32px;
-  width: 95%;
-  border-radius: 10px;
-  /* height: calc(100vh * 0.90); */
-  height: 900px;
-  font-size: 1rem;
-  color: lightgray;
 }
 
 .navmenu-about {

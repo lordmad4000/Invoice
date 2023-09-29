@@ -1,0 +1,8 @@
+<div class="iddocumenttypes-grid-container">
+    <app-base-grid 
+        [tableColumns]="headers" 
+        [gridData]="data" 
+        (onRowClick)="getRecord($event)" 
+        (onAddButtonClick)="addButtonClick()">
+    </app-base-grid>
+</div>

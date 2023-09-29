@@ -1,41 +1,25 @@
 <mat-toolbar>
+  <!-- <h1>SimplexInvoiceApp</h1> -->
   <mat-toolbar-row>
-    <button mat-mini-fab class="button-menu" matTooltip="Show/Hide Navigation Bar" (click)="toggleSidenavClick(sidenav)">
-      <mat-icon>menu</mat-icon>
-    </button>
+    <button mat-button (click)="aboutButtonClick()">Simplex Invoice App<mat-icon>pix</mat-icon></button>
+    <button mat-button (click)="homeButtonClick()">Home<mat-icon>home</mat-icon></button>
+    <button mat-button [matMenuTriggerFor]="homeMenu">Configuration<mat-icon>settings</mat-icon></button>
+    <mat-menu #homeMenu="matMenu">
+      <button mat-menu-item>Company<mat-icon>location_city</mat-icon></button>
+      <button mat-menu-item (click)="idDocumentTypesButtonClick()">Id Document Types<mat-icon>featured_play_list</mat-icon></button>
+      <button mat-menu-item (click)="taxRatesButtonClick()">Tax Rates<mat-icon>attach_money</mat-icon></button>
+    </mat-menu>    
+    <button mat-button (click)="usersButtonClick()">Users<mat-icon>people icon</mat-icon></button>
+    <button mat-button (click)="homeButtonClick()">Customers<mat-icon>contacts</mat-icon></button>
+    <button mat-button (click)="homeButtonClick()">Products<mat-icon>shopping_basket</mat-icon></button>
+    <button mat-button (click)="homeButtonClick()">Invoices<mat-icon>receipt</mat-icon></button>
     <span class="flex-expand"></span>
-    <h1>SimplexInvoiceApp</h1>
     <span class="flex-expand"></span>
-    <button mat-button matTooltip="Login" (click)="loginButtonClick()">
-      <mat-icon>account_circle</mat-icon>
-    </button>
+    <button mat-button [matMenuTriggerFor]="loginMenu" matTooltip="Login"><mat-icon>account_circle</mat-icon></button>
+    <mat-menu #loginMenu="matMenu">
+      <button mat-menu-item (click)="loginButtonClick()">Log-in<mat-icon>login</mat-icon></button>
+      <button mat-menu-item>Log-out<mat-icon>logout</mat-icon></button>
+    </mat-menu>    
   </mat-toolbar-row>
 </mat-toolbar>
-<mat-sidenav-container class="mat-sidenav-container" autosize>
-  <mat-sidenav #sidenav class="mat-elevation-z8" opened="true" mode="side">
-    <mat-list-item>
-      <button mat-button (click)="homeButtonClick()">
-        <mat-icon>home</mat-icon>
-        <span>Home</span>
-      </button>
-    </mat-list-item>
-    <mat-list-item>
-      <button mat-button (click)="usersButtonClick()">
-        <mat-icon>person</mat-icon>
-        <span>Users</span>
-      </button>
-    </mat-list-item>
-    <mat-divider class="navmenu-about"></mat-divider>
-    <mat-list-item>
-      <button mat-button (click)="aboutButtonClick()">
-        <mat-icon>info</mat-icon>
-        <span>About</span>
-      </button>
-    </mat-list-item>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <div class="content mat-elevation-z8">
-      <router-outlet></router-outlet>
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+  <router-outlet></router-outlet>

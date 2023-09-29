@@ -10,7 +10,6 @@ using SimplexInvoice.Application.Common.Dto;
 namespace SimplexInvoice.Api.Controllers;
 
 [Authorize]
-[AllowAnonymous]
 [ApiController]
 [Route("api/[controller]")]
 public class CustomersController : ApiController
