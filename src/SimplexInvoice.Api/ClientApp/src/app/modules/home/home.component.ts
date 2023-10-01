@@ -1,9 +1,10 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { UserService } from '../../shared/services/user.service';
 import { UserResponse } from 'src/app/shared/models/userresponse';
+import { UserService } from '../../shared/services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +13,9 @@ import { UserResponse } from 'src/app/shared/models/userresponse';
 })
 
 export class HomeComponent implements OnInit {
+
+  openSnackBar = (message: string) =>
+    this.snackBar.open(message, '', { duration: 1 * 1000 });
 
     displayedColumns: string[] = [
       "email",
@@ -28,8 +32,9 @@ export class HomeComponent implements OnInit {
     dataSource = new MatTableDataSource<UserResponse>();
   
       constructor(private userservice: UserService,
-                  private router: Router) {
-    }
+                  private router: Router,
+                  private snackBar: MatSnackBar
+                  ) {}  
   
     ngOnInit(): void {
       this.loadUsersData();
@@ -46,12 +51,12 @@ export class HomeComponent implements OnInit {
         },
         error: (err : HttpErrorResponse) => {
           console.log('Error al recuperar los usuarios', err);
+          this.openSnackBar('Error: ' + err);
         }
       });
     }
   
     getRecord(row: UserResponse) {
-      console.log(row);
       this.router.navigate(['/users/view', `${row.id}`]);
     }
     

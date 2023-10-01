@@ -18,13 +18,13 @@ import { TaxRatesModule } from './modules/taxrates';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { UsersModule } from './modules/users';
+import { CustomTranslateService } from './shared/services/customtranslate.service';
 
 @NgModule({
   declarations: [
     AppComponent,    
   ],
   imports: [
-    //BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,
@@ -55,7 +55,8 @@ import { UsersModule } from './modules/users';
     JWTService,
     AuthenticationService,
     LoadFileService,
-    ErrorService
+    ErrorService,
+    CustomTranslateService
   ],
   bootstrap: [AppComponent]
 })

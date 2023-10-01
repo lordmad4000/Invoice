@@ -47,6 +47,7 @@ export class PopupService {
 
         return this.openCustomDialog(popupSettings);
     }
+    
     public createInformativePopup(msg: string): MatDialogRef<any> {
         const popInfo = new PopupProperties("POPUP.INFORMACION", msg, "500px", "auto");
 
