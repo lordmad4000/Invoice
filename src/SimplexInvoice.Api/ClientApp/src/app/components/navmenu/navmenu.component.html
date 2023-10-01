@@ -1,24 +1,26 @@
 <mat-toolbar>
-  <!-- <h1>SimplexInvoiceApp</h1> -->
   <mat-toolbar-row>
     <button mat-button (click)="aboutButtonClick()">Simplex Invoice App<mat-icon>pix</mat-icon></button>
-    <button mat-button (click)="homeButtonClick()">Home<mat-icon>home</mat-icon></button>
-    <button mat-button [matMenuTriggerFor]="homeMenu">Configuration<mat-icon>settings</mat-icon></button>
+    <button mat-button (click)="homeButtonClick()">{{ 'navmenu.home' | translate }}<mat-icon>home</mat-icon></button>
+    <button mat-button [matMenuTriggerFor]="homeMenu">{{ 'navmenu.configuration' | translate }}<mat-icon>settings</mat-icon></button>
     <mat-menu #homeMenu="matMenu">
-      <button mat-menu-item>Company<mat-icon>location_city</mat-icon></button>
-      <button mat-menu-item (click)="idDocumentTypesButtonClick()">Id Document Types<mat-icon>featured_play_list</mat-icon></button>
-      <button mat-menu-item (click)="taxRatesButtonClick()">Tax Rates<mat-icon>attach_money</mat-icon></button>
+      <button mat-menu-item>{{ 'navmenu.company' | translate }}<mat-icon>location_city</mat-icon></button>
+      <button mat-menu-item (click)="idDocumentTypesButtonClick()">{{ 'navmenu.iddocumenttypes' | translate }}<mat-icon>featured_play_list</mat-icon></button>
+      <button mat-menu-item (click)="taxRatesButtonClick()">{{ 'navmenu.taxrates' | translate }}<mat-icon>attach_money</mat-icon></button>
     </mat-menu>    
-    <button mat-button (click)="usersButtonClick()">Users<mat-icon>people icon</mat-icon></button>
-    <button mat-button (click)="homeButtonClick()">Customers<mat-icon>contacts</mat-icon></button>
-    <button mat-button (click)="homeButtonClick()">Products<mat-icon>shopping_basket</mat-icon></button>
-    <button mat-button (click)="homeButtonClick()">Invoices<mat-icon>receipt</mat-icon></button>
+    <button mat-button (click)="usersButtonClick()">{{ 'navmenu.users' | translate }}<mat-icon>people icon</mat-icon></button>
+    <button mat-button (click)="homeButtonClick()">{{ 'navmenu.customers' | translate }}<mat-icon>contacts</mat-icon></button>
+    <button mat-button (click)="homeButtonClick()">{{ 'navmenu.products' | translate }}<mat-icon>shopping_basket</mat-icon></button>
+    <button mat-button (click)="homeButtonClick()">{{ 'navmenu.invoices' | translate }}<mat-icon>receipt</mat-icon></button>
     <span class="flex-expand"></span>
+    <mat-select (selectionChange)="onChangeLanguage($event)" [value]="indexInitialOption">
+      <mat-option *ngFor="let option of languageOptions" [value]="option.value">{{ option.display }}</mat-option>
+    </mat-select>
     <span class="flex-expand"></span>
     <button mat-button [matMenuTriggerFor]="loginMenu" matTooltip="Login"><mat-icon>account_circle</mat-icon></button>
     <mat-menu #loginMenu="matMenu">
-      <button mat-menu-item (click)="loginButtonClick()">Log-in<mat-icon>login</mat-icon></button>
-      <button mat-menu-item>Log-out<mat-icon>logout</mat-icon></button>
+      <button mat-menu-item (click)="loginButtonClick()">{{ 'navmenu.login' | translate }}<mat-icon>login</mat-icon></button>
+      <button mat-menu-item>{{ 'navmenu.logout' | translate }}<mat-icon>logout</mat-icon></button>
     </mat-menu>    
   </mat-toolbar-row>
 </mat-toolbar>

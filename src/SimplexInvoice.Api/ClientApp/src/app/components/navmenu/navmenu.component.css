@@ -11,6 +11,15 @@ mat-icon {
   flex: 1 1 auto;
 }
 
+mat-select {
+  width: 6rem;
+  color: white;
+}
+
+mat-option {
+  color: white;
+}
+
 .navmenu-about {
   display: block;
   margin: 0 !important;

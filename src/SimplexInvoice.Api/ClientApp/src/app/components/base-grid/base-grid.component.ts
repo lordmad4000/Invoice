@@ -81,7 +81,6 @@ export class BaseGridComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   backButtonClick() {
-    console.log('Back button.');
     this.location.back();
   }
 
