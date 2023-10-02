@@ -24,10 +24,16 @@
     },
     "users": {
         "title": "USUARIOS",
-        "grid": {
+        "fields": {
             "email": "Correo Electronico",
             "firstname": "Nombre",
             "lastname": "Apellido"
+        },
+        "view": {
+            "popup_delete_title": "ELIMINAR",
+            "popup_deleted": "Registro eliminado.",
+            "popup_not_deleted": "Registro no eliminado.",
+            "popup_delete_message": "¿Quiere eliminar el registro?"
         }
     },
     "taxrates": {

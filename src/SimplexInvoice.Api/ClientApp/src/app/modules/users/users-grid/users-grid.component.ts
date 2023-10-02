@@ -15,13 +15,13 @@ import { UserService } from 'src/app/shared/services/user.service';
 export class UsersGridComponent implements OnInit {
  
   private translate: any = (key: string) =>
-    this.translateService.instant('users.grid.' + key);
+    this.translateService.instant('users.' + key);
 
   headers : TableColumn[] = [
     { header : 'Id', field : 'id', visible: 'hidden', width: '0%' },
-    { header : this.translate('email'), field : 'email', visible: 'visible', width: '33%' },
-    { header : this.translate('firstname'), field : 'firstname', visible: 'visible', width: '33%' },
-    { header : this.translate('lastname'), field : 'lastname', visible: 'visible', width: '33%' },
+    { header : this.translate('fields.email'), field : 'email', visible: 'visible', width: '33%' },
+    { header : this.translate('fields.firstname'), field : 'firstname', visible: 'visible', width: '33%' },
+    { header : this.translate('fields.lastname'), field : 'lastname', visible: 'visible', width: '33%' },
   ];
   data: any[] = [];
 

@@ -70,7 +70,7 @@ export class IdDocumentTypesViewComponent implements OnInit, OnDestroy {
   deleteButtonClick() {
     console.log("Delete button.");
       this.popupService
-      .createConfirmPopup("Do you want to remove the item?")
+      .createConfirmPopup("REMOVE", "Do you want to remove the item?")
       .afterClosed()
       .subscribe(result => {
         if (result == GlobalConstants.popupYesValue) {
@@ -85,11 +85,11 @@ export class IdDocumentTypesViewComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (res: boolean) => {          
           if (res) {            
-            this.popupService.openPopupAceptar("REMOVE", "Item removed.", "300px", "");
+            this.popupService.openPopupAceptar("REMOVE", "Item removed.", "18.75rem", "");
             this.router.navigate(['/iddocumenttypes/grid']);
           }
           else{
-            this.popupService.openPopupAceptar("REMOVE", "Item not removed.", "300px", "");
+            this.popupService.openPopupAceptar("REMOVE", "Item not removed.", "18.75rem", "");
           }          
         },
         error: (err: HttpErrorResponse) => {

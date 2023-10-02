@@ -24,10 +24,16 @@
     },
     "users": {
         "title": "USERS",
-        "grid": {
+        "fields": {
             "email": "Email",
             "firstname": "First Name",
             "lastname": "Last Name"
+        },
+        "view": {
+            "popup_delete_title": "DELETE",
+            "popup_deleted": "Record deleted.",
+            "popup_not_deleted": "Record not deleted.",
+            "popup_delete_message": "Do you want to delete the record?"
         }
     },
     "taxrates": {

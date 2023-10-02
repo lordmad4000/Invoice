@@ -24,8 +24,8 @@ export class PopupService {
         return dialogRef;
     }
 
-    public createConfirmPopup(msg: string): MatDialogRef<any> {
-        const popConfirm = new PopupProperties("REMOVE", msg, "400px", "auto");
+    public createConfirmPopup(title: string,msg: string): MatDialogRef<any> {
+        const popConfirm = new PopupProperties(title, msg, "25rem", "auto");
 
         const buttonNo = new PopupButton("NO", GlobalConstants.popupNoValue);
         const buttonYes = new PopupButton("YES", GlobalConstants.popupYesValue);
@@ -37,8 +37,8 @@ export class PopupService {
         return this.openCustomDialog(popConfirm);
     }
 
-    public openPopupAceptar(titulo: string, msg: string, width: string, height: string) {
-        const popupSettings = new PopupProperties(titulo, msg, width, height);
+    public openPopupAceptar(title: string, msg: string, width: string, height: string) {
+        const popupSettings = new PopupProperties(title, msg, width, height);
 
         const buttonAceptar = new PopupButton("OK", GlobalConstants.popupConfirmValue);
         popupSettings.actions = [];
@@ -49,7 +49,7 @@ export class PopupService {
     }
     
     public createInformativePopup(msg: string): MatDialogRef<any> {
-        const popInfo = new PopupProperties("POPUP.INFORMACION", msg, "500px", "auto");
+        const popInfo = new PopupProperties("POPUP.INFORMACION", msg, "31.25rem", "auto");
 
         const buttonOk = new PopupButton("OK", GlobalConstants.popupConfirmValue);
         popInfo.actions = [];
