@@ -4,7 +4,7 @@ mat-toolbar {
 }
 
 mat-icon {
-  padding-right: 8px;
+  padding-right: 1rem;
 }
 
 .flex-expand {
@@ -18,13 +18,4 @@ mat-select {
 
 mat-option {
   color: white;
-}
-
-.navmenu-about {
-  display: block;
-  margin: 0 !important;
-  padding: 0 !important;
-  border-top-width: 10px;
-  border-top-style: solid;
-  border-top-color: transparent;
 }

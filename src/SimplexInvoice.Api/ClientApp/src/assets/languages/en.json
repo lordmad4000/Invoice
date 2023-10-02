@@ -1,4 +1,36 @@
 {
-    "hello": "Hello",
-    "taxrates" : "TAX RATES"
+    "navmenu": {
+        "title": "Simplex Invoice App",
+        "home": "Home",
+        "configuration": "Configuration",
+        "company": "Company",
+        "iddocumenttypes": "Id Document Types",
+        "taxrates": "Tax Rates",
+        "users": "Users",
+        "customers": "Customers",
+        "products": "Products",
+        "invoices": "Invoices",
+        "login": "Log-in",
+        "logout": "Log-out",
+        "about_title": "About SimplexInvoiceApp",
+        "about_msg": "Version: 0.1a | Expiration token: "
+    },
+    "home": {
+        "module_title": "HOME",
+        "last_users": "LAST USERS",
+        "email": "Email",
+        "firstname": "First Name",
+        "lastname": "Last Name"
+    },
+    "users": {
+        "title": "USERS",
+        "grid": {
+            "email": "Email",
+            "firstname": "First Name",
+            "lastname": "Last Name"
+        }
+    },
+    "taxrates": {
+        "title": "TAX RATES"
+    }
 }

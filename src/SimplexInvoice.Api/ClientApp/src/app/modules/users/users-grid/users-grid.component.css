@@ -1,65 +1,24 @@
 .users-grid-container {
-    padding: 1rem;
+    padding: 0.5rem;
 }
 
-.flex-expand {
-    flex: 1 1 auto;
+.module-title {
+    padding-top: 0.5rem;
 }
 
-.mat-toolbar-row {
+.head-toolbar {
+    vertical-align: top;
+    text-align: left;
+    overflow: auto;
     background-color: #FAFAFA;
 }
 
-.mat-table {
-    vertical-align: top;
-    text-align: left;
-    margin-top: 40px;
-    margin-left: 40px;
-    overflow: auto;
-    background-color: transparent;
-}
-
-table {
-    width: 98%;
-    height: 98%;
-}
-
-/* .mat-column-select {
-    word-wrap: break-word;
-    white-space: unset;
-    flex: 0 0 18%;
-    width: 18%;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    word-break: break-word;
-} */
-
-.mat-column-email {
-    word-wrap: break-word;
-    white-space: unset;
-    flex: 0 0 38%;
-    width: 38%;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    word-break: break-word;
-}
-
-.mat-column-firstname {
-    word-wrap: break-word;
-    white-space: unset;
-    flex: 0 0 30%;
-    width: 30%;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    word-break: break-word;
-}
-
-.mat-column-lastname {
-    word-wrap: break-word;
-    white-space: unset;
-    flex: 0 0 30%;
-    width: 30%;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    word-break: break-word;
+.outer-box {
+    margin: 1rem auto;
+    text-align: center;
+    width: 12rem;
+    height: 3rem;
+    background: #009bee;
+    color: white;
+    border-radius: 0.8rem;
 }

@@ -1,4 +1,36 @@
 {
-    "hello": "Hola",
-    "taxrates" : "IMPUESTOS"
+    "navmenu": {
+        "title": "Simplex Invoice App",
+        "home": "Inicio",
+        "configuration": "Configuración",
+        "company": "Empresa",
+        "iddocumenttypes": "Documentos de identidad",
+        "taxrates": "Impuestos",
+        "users": "Usuarios",
+        "customers": "Clientes",
+        "products": "Productos",
+        "invoices": "Facturas",
+        "login": "Abrir sesión",
+        "logout": "Cerrar sesión",
+        "about_title": "Acerca de SimplexInvoiceApp",
+        "about_msg": "Versión: 0.1a | Token de vencimiento: "
+    },
+    "home": {
+        "module_title": "INICIO",
+        "last_users": "ÚLTIMOS USUARIOS",
+        "email": "Correo Electronico",
+        "firstname": "Nombre",      
+        "lastname": "Apellido"
+    },
+    "users": {
+        "title": "USUARIOS",
+        "grid": {
+            "email": "Correo Electronico",
+            "firstname": "Nombre",
+            "lastname": "Apellido"
+        }
+    },
+    "taxrates": {
+        "title": "IMPUESTOS"
+    }
 }

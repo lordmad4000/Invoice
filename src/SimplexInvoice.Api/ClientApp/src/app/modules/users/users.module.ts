@@ -15,11 +15,14 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { UsersGridComponent } from './users-grid/users-grid.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import {MatSortModule} from '@angular/material/sort';
+import { MatSortModule } from '@angular/material/sort';
 import { UserService } from '../../shared/services/user.service';
 import { UsersNewComponent } from './users-new';
 import { UsersEditComponent } from './users-edit';
 import { UsersViewComponent } from './users-view';
+import { BaseGridComponent } from 'src/app/components/base-grid';
+import { TranslateModule } from '@ngx-translate/core';
+import { CustomTranslateService } from 'src/app/shared/services/customtranslate.service';
 
 @NgModule({
   declarations: [
@@ -46,9 +49,12 @@ import { UsersViewComponent } from './users-view';
     MatToolbarModule,
     MatSnackBarModule,
     MatSortModule,
+    BaseGridComponent,
+    TranslateModule
   ],
   providers: [ 
-    UserService
+    UserService,
+    CustomTranslateService
   ],
 })
 export class UsersModule { }
