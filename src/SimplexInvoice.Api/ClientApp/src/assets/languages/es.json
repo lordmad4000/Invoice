@@ -15,6 +15,12 @@
         "about_title": "Acerca de SimplexInvoiceApp",
         "about_msg": "Versión: 0.1a | Token de vencimiento: "
     },
+    "popup":{
+        "button_yes": "SI",
+        "button_no": "NO",
+        "button_ok": "ACEPTAR",
+        "title_info": "INFORMACIÓN"
+    },
     "home": {
         "module_title": "INICIO",
         "last_users": "ÚLTIMOS USUARIOS",
@@ -26,6 +32,7 @@
         "title": "USUARIOS",
         "fields": {
             "email": "Correo Electronico",
+            "password": "Contraseña",
             "firstname": "Nombre",
             "lastname": "Apellido"
         },
@@ -34,6 +41,11 @@
             "popup_deleted": "Registro eliminado.",
             "popup_not_deleted": "Registro no eliminado.",
             "popup_delete_message": "¿Quiere eliminar el registro?"
+        },
+        "new": {
+            "confirm_password":"Confirme la Contraseña",
+            "button_save": "Guardar",
+            "password_not_match": "La Contraseña no coincide."
         }
     },
     "taxrates": {

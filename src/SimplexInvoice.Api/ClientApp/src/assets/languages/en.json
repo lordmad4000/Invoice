@@ -15,6 +15,12 @@
         "about_title": "About SimplexInvoiceApp",
         "about_msg": "Version: 0.1a | Expiration token: "
     },
+    "popup":{
+        "button_yes": "YES",
+        "button_no": "NO",
+        "button_ok": "OK",
+        "title_info": "INFORMATION"
+    },
     "home": {
         "module_title": "HOME",
         "last_users": "LAST USERS",
@@ -26,6 +32,7 @@
         "title": "USERS",
         "fields": {
             "email": "Email",
+            "password": "Password",
             "firstname": "First Name",
             "lastname": "Last Name"
         },
@@ -34,6 +41,11 @@
             "popup_deleted": "Record deleted.",
             "popup_not_deleted": "Record not deleted.",
             "popup_delete_message": "Do you want to delete the record?"
+        },
+        "new": {
+            "confirm_password": "Repeat Password",
+            "button_save": "Save",
+            "password_not_match": "Password not match."
         }
     },
     "taxrates": {
