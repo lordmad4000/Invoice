@@ -4,7 +4,7 @@
 
 .login-form {  
   text-align: center;
-  min-width: 300px;
+  min-width: 18.75rem;
   max-width: 60%;
   padding-top: 1rem;
   margin: auto;
@@ -12,7 +12,7 @@
 }
 
 .login-img {  
-  max-width: 200px;
+  max-width: 12.5rem;
   width: 50%;
 }
 

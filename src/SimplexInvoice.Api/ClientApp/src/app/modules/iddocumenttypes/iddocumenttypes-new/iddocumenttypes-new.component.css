@@ -19,8 +19,8 @@
 }
 
 .div-fields {
-  margin-top: 40px;
-  margin-left: 40px;
+  margin-top: 2.5rem;
+  margin-left: 2.5rem;
 }
 
 mat-label {
@@ -41,14 +41,14 @@ mat-form-field.firstname-field {
 }
 
 .button-save {
-  margin-left: 40px;
-  margin-top: 20px;
+  margin-left: 2.5rem;
+  margin-top: 1.25rem;
   cursor: pointer;
 }
 
 mat-divider {    
   width: 100%;
-  padding: 2px;
+  padding: 0.125rem;
   color: transparent;
-  border: 1px;
+  border: 0.063rem;
 }
