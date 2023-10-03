@@ -8,15 +8,18 @@ export class ErrorService {
 
         const errors: string[] = [];
 
-        if (httpErrorResponse.error.errors === undefined) {
+        if (typeof (httpErrorResponse.error) === 'string') {
             errors.push(httpErrorResponse.error);
         }
         else {
-            const tempErrors: Array<string> = 
-                httpErrorResponse.error.errors[Object.keys(httpErrorResponse.error.errors)[0]];
-            tempErrors.forEach(clientError => {
-                errors.push(clientError);
-            });
+            if (httpErrorResponse.error.ErrorMessage !== undefined) {
+                if (Array.isArray(httpErrorResponse.error.ErrorMessage)) {
+                    httpErrorResponse.error.ErrorMessage.forEach((error: string) => errors.push(error));
+                }
+                else {
+                    errors.push(httpErrorResponse.error.ErrorMessage);
+                }
+            }
         }
 
         return errors;
