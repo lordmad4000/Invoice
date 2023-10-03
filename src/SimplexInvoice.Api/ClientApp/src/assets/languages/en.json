@@ -15,6 +15,12 @@
         "about_title": "About SimplexInvoiceApp",
         "about_msg": "Version: 0.1a | Expiration token: "
     },
+    "head-toolbar": {
+        "button_back": "Back",
+        "button_add": "Add",
+        "button_edit": "Edit",
+        "button_delete": "Delete"
+    },
     "popup":{
         "button_yes": "YES",
         "button_no": "NO",

@@ -15,6 +15,12 @@
         "about_title": "Acerca de SimplexInvoiceApp",
         "about_msg": "Versión: 0.1a | Token de vencimiento: "
     },
+    "head-toolbar": {
+        "button_back": "Atras",
+        "button_add": "Añadir",
+        "button_edit": "Modificar",
+        "button_delete": "Eliminar"
+    },
     "popup":{
         "button_yes": "SI",
         "button_no": "NO",
