@@ -44,7 +44,9 @@
             "lastname": "Last Name",
             "password_not_match": "Password not match.",
             "button_save": "Save",
-            "button_save_tooltip": "Save changes"
+            "button_save_tooltip": "Save changes",
+            "signin": "Sign In",
+            "login": "Log In"
         },
         "popups": {
             "popup_delete_title": "DELETE",

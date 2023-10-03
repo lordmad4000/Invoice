@@ -44,7 +44,9 @@
             "lastname": "Apellido",
             "password_not_match": "La Contraseña no coincide.",
             "button_save": "Guardar",
-            "button_save_tooltip": "Guardar cambios"
+            "button_save_tooltip": "Guardar cambios",
+            "signin": "Iniciar Sesión",
+            "login": "Abrir Sesión"
         },
         "popups": {
             "popup_delete_title": "ELIMINAR",
