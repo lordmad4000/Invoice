@@ -73,7 +73,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
 
   deleteButtonClick() {
       this.popupService
-      .createConfirmPopup(this.translate('view.popup_delete_title'), this.translate('view.popup_delete_message'))
+      .createConfirmPopup(this.translate('popups.popup_delete_title'), this.translate('popups.popup_delete_message'))
       .afterClosed()
       .subscribe(result => {
         if (result == GlobalConstants.popupYesValue) {
@@ -88,11 +88,11 @@ export class UsersViewComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (res: boolean) => {          
           if (res) {            
-            this.popupService.openPopupAceptar(this.translate('view.popup_delete_title'), this.translate('view.popup_deleted'), "18.75rem", "");
+            this.popupService.openPopupAceptar(this.translate('popups.popup_delete_title'), this.translate('popups.popup_deleted'), "18.75rem", "");
             this.router.navigate(['/users/grid']);
           }
           else{
-            this.popupService.openPopupAceptar(this.translate('view.popup_delete_title'), this.translate('view.popup_not_deleted'), "18.75rem", "");
+            this.popupService.openPopupAceptar(this.translate('popups.popup_delete_title'), this.translate('popups.popup_not_deleted'), "18.75rem", "");
           }          
         },
         error: (err: HttpErrorResponse) => {

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
@@ -32,5 +33,9 @@ export class CustomTranslateService {
 
     public instant(key: string | string[], interpolateParams?: Object) : any {
         return this.translateService.instant(key, interpolateParams)
+    }
+
+    public stream(key: string | string[], interpolateParams?: Object) : Observable<any> {
+        return this.translateService.stream(key, interpolateParams);
     }
 }

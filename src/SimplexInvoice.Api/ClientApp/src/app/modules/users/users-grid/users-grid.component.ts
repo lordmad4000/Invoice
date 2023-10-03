@@ -19,9 +19,9 @@ export class UsersGridComponent implements OnInit {
 
   headers : TableColumn[] = [
     { header : 'Id', field : 'id', visible: 'hidden', width: '0%' },
-    { header : this.translate('fields.email'), field : 'email', visible: 'visible', width: '33%' },
-    { header : this.translate('fields.firstname'), field : 'firstname', visible: 'visible', width: '33%' },
-    { header : this.translate('fields.lastname'), field : 'lastname', visible: 'visible', width: '33%' },
+    { header : this.translate('forms.email'), field : 'email', visible: 'visible', width: '33%' },
+    { header : this.translate('forms.firstname'), field : 'firstname', visible: 'visible', width: '33%' },
+    { header : this.translate('forms.lastname'), field : 'lastname', visible: 'visible', width: '33%' },
   ];
   data: any[] = [];
 

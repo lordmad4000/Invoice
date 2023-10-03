@@ -30,22 +30,21 @@
     },
     "users": {
         "title": "USUARIOS",
-        "fields": {
+        "forms": {
             "email": "Correo Electronico",
             "password": "Contraseña",
+            "confirm_password":"Confirme la Contraseña",
             "firstname": "Nombre",
-            "lastname": "Apellido"
+            "lastname": "Apellido",
+            "password_not_match": "La Contraseña no coincide.",
+            "button_save": "Guardar",
+            "button_save_tooltip": "Guardar cambios"
         },
-        "view": {
+        "popups": {
             "popup_delete_title": "ELIMINAR",
             "popup_deleted": "Registro eliminado.",
             "popup_not_deleted": "Registro no eliminado.",
             "popup_delete_message": "¿Quiere eliminar el registro?"
-        },
-        "new": {
-            "confirm_password":"Confirme la Contraseña",
-            "button_save": "Guardar",
-            "password_not_match": "La Contraseña no coincide."
         }
     },
     "taxrates": {

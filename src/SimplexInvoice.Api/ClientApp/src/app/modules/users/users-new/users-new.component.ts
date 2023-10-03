@@ -51,7 +51,7 @@ export class UsersNewComponent implements OnDestroy {
     const password = this.formUser.get('password')?.value;
     const confirmPassword = this.formUser.get('confirmPassword')?.value;
     if (!password || !confirmPassword || password !== confirmPassword) {
-      this.openSnackBar(this.translate('new.password_not_match'));
+      this.openSnackBar(this.translate('forms.password_not_match'));
       return false;
     }
 

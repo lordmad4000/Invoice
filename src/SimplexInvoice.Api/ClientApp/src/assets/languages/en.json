@@ -30,22 +30,21 @@
     },
     "users": {
         "title": "USERS",
-        "fields": {
+        "forms": {
             "email": "Email",
             "password": "Password",
+            "confirm_password": "Repeat Password",
             "firstname": "First Name",
-            "lastname": "Last Name"
+            "lastname": "Last Name",
+            "password_not_match": "Password not match.",
+            "button_save": "Save",
+            "button_save_tooltip": "Save changes"
         },
-        "view": {
+        "popups": {
             "popup_delete_title": "DELETE",
             "popup_deleted": "Record deleted.",
             "popup_not_deleted": "Record not deleted.",
             "popup_delete_message": "Do you want to delete the record?"
-        },
-        "new": {
-            "confirm_password": "Repeat Password",
-            "button_save": "Save",
-            "password_not_match": "Password not match."
         }
     },
     "taxrates": {
