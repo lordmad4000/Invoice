@@ -3,6 +3,9 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SimplexInvoice.Api.Models.Request;
+using SimplexInvoice.Application.Common.Dto;
+using SimplexInvoice.Application.Common.Exceptions;
+using SimplexInvoice.Application.Common.Interfaces.Persistance;
 using SimplexInvoice.Application.Invoices.Commands;
 using SimplexInvoice.Application.Invoices.Queries;
 
@@ -15,19 +18,25 @@ public class InvoicesController : ApiController
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
+    private readonly ICustomLogger _logger;
     public InvoicesController(IMediator mediator,
-                              IMapper mapper)
+                              IMapper mapper,
+                              ICustomLogger logger)
     {
         _mediator = mediator;
         _mapper = mapper;
+        _logger = logger;
     }
 
     [HttpGet("GetById{id}")]
     public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
     {
         var query = new GetInvoiceByIdQuery(id);
+        InvoiceDto invoiceDto = await _mediator.Send(query, cancellationToken);
+        if (invoiceDto is null)
+            throw new NotFoundException($"Invoice with id {id} was not found");
 
-        return (Ok(await _mediator.Send(query, cancellationToken)));
+        return Ok(invoiceDto);
     }
 
     [HttpGet("GetAll")]
@@ -36,20 +45,18 @@ public class InvoicesController : ApiController
         var query = new GetInvoicesQuery();
         var invoicesDto = await _mediator.Send(query, cancellationToken);
 
-        return (Ok(invoicesDto));
+        return Ok(invoicesDto);
     }
 
     [HttpPost("Register")]
     public async Task<IActionResult> Register([FromBody] InvoiceRegisterRequest invoiceRegisterRequest, CancellationToken cancellationToken)
     {
-        if (!ModelState.IsValid)
-            throw new Exception(ModelState.ToString());
-
+        EnsureModelStateIsValid();
         var invoiceRegisterCommand = _mapper.Map<InvoiceRegisterCommand>(invoiceRegisterRequest);
         var invoiceDto = await _mediator.Send(invoiceRegisterCommand, cancellationToken);
         string url = GetByIdUrl(invoiceDto.Id);
 
-        return (Created(url, invoiceDto));
+        return Created(url, invoiceDto);
     }
 
 }
