@@ -1,12 +1,9 @@
-using System;
+namespace SimplexInvoice.Api.Models.Response;
 
-namespace SimplexInvoice.Api.Models.Response
+public class UserResponse
 {
-    public class UserResponse
-    {
-        public Guid Id { get; set; }
-        public string Email { get; set; } = String.Empty;
-        public string FirstName { get; set; } = String.Empty;
-        public string LastName { get; set; } = String.Empty;
-    }
+    public Guid Id { get; set; }
+    public string Email { get; set; } = String.Empty;
+    public string FirstName { get; set; } = String.Empty;
+    public string LastName { get; set; } = String.Empty;
 }
