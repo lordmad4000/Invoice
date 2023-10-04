@@ -1,9 +1,9 @@
 using AutoMapper;
+using MediatR;
 using SimplexInvoice.Application.Common.Dto;
 using SimplexInvoice.Application.Common.Interfaces.Persistance;
-using MediatR;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace SimplexInvoice.Application.Users.Queries
 {
@@ -25,7 +25,7 @@ namespace SimplexInvoice.Application.Users.Queries
         public async Task<UserDto> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
             var user = await _userRepository.GetAsync(c => c.Id == request.Id, cancellationToken, true, $"Id=={request.Id}");
-            _logger.Debug($"GetUserById with data: {user.ToString()}");
+            _logger.Debug($"GetUserById with data: {user?.ToString() ?? ""}");
 
             return _mapper.Map<UserDto>(user);
         }

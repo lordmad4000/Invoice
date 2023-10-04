@@ -3,7 +3,7 @@ using MediatR;
 using SimplexInvoice.Application.Common.Dto;
 using SimplexInvoice.Application.Common.Interfaces.Persistance;
 using SimplexInvoice.Application.Customers.Exceptions;
-using SimplexInvoice.Domain.Exceptions;
+using SimplexInvoice.Application.Common.Exceptions;
 using SimplexInvoice.Domain.ValueObjects;
 using System.Threading;
 using System.Threading.Tasks;

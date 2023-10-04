@@ -1,19 +1,18 @@
 using AutoMapper;
+using Moq;
 using SimplexInvoice.Application.AutoMapper;
-using SimplexInvoice.Application.Users.Commands;
 using SimplexInvoice.Application.Common.Dto;
+using SimplexInvoice.Application.Common.Exceptions;
 using SimplexInvoice.Application.Common.Interfaces.Persistance;
 using SimplexInvoice.Application.Interfaces;
-using SimplexInvoice.Domain.ValueObjects;
-using Moq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using System.Threading;
-using System;
-using Xunit;
-using SimplexInvoice.Domain.Users;
-using SimplexInvoice.Domain.Exceptions;
+using SimplexInvoice.Application.Users.Commands;
 using SimplexInvoice.Application.Users.Exceptions;
+using SimplexInvoice.Domain.Users;
+using System;
+using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace SimplexInvoice.Application.Tests.UnitTests
 {

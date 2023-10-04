@@ -1,12 +1,12 @@
 using AutoMapper;
+using MediatR;
 using SimplexInvoice.Application.Common.Dto;
 using SimplexInvoice.Application.Common.Interfaces.Persistance;
 using SimplexInvoice.Application.Interfaces;
 using SimplexInvoice.Domain.Exceptions;
 using SimplexInvoice.Domain.Users;
-using MediatR;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace SimplexInvoice.Application.Authentication.Commands
 {
