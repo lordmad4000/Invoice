@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SimplexInvoice.Api.Models.Request;
 using SimplexInvoice.Application.Common.Dto;
-using SimplexInvoice.Application.Common.Exceptions;
 using SimplexInvoice.Application.Common.Interfaces.Persistance;
 using SimplexInvoice.Application.IdDocumentTypes.Commands;
 using SimplexInvoice.Application.IdDocumentTypes.Queries;
@@ -33,8 +32,6 @@ public class IdDocumentTypesController : ApiController
     {
         var query = new GetIdDocumentTypeByIdQuery(id);
         IdDocumentTypeDto idDocumentTypeDto = await _mediator.Send(query, cancellationToken);
-        if (idDocumentTypeDto is null)
-            throw new NotFoundException($"IdDocumentType with id {id} was not found");
 
         return Ok(idDocumentTypeDto);
     }

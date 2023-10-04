@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SimplexInvoice.Api.Models.Request;
 using SimplexInvoice.Application.Common.Dto;
-using SimplexInvoice.Application.Common.Exceptions;
 using SimplexInvoice.Application.Common.Interfaces.Persistance;
 using SimplexInvoice.Application.TaxRates.Commands;
 using SimplexInvoice.Application.TaxRates.Queries;
@@ -33,8 +32,6 @@ public class TaxRatesController : ApiController
     {
         var query = new GetTaxRateByIdQuery(id);
         TaxRateDto taxRateDto = await _mediator.Send(query, cancellationToken);
-        if (taxRateDto is null)
-            throw new NotFoundException($"TaxRate with id {id} was not found");
 
         return Ok(taxRateDto);
     }

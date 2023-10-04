@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SimplexInvoice.Api.Models.Request;
 using SimplexInvoice.Application.Common.Dto;
-using SimplexInvoice.Application.Common.Exceptions;
 using SimplexInvoice.Application.Common.Interfaces.Persistance;
 using SimplexInvoice.Application.Companies.Commands;
 using SimplexInvoice.Application.Companies.Queries;
@@ -33,8 +32,6 @@ public class CompaniesController : ApiController
     {
         var query = new GetCompanyByIdQuery(id);
         CompanyDto companyDto = await _mediator.Send(query, cancellationToken);
-        if (companyDto is null)
-            throw new NotFoundException($"Company with id {id} was not found");
 
         return Ok(companyDto);
     }

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SimplexInvoice.Api.Models.Request;
 using SimplexInvoice.Application.Common.Dto;
-using SimplexInvoice.Application.Common.Exceptions;
 using SimplexInvoice.Application.Common.Interfaces.Persistance;
 using SimplexInvoice.Application.Invoices.Commands;
 using SimplexInvoice.Application.Invoices.Queries;
@@ -33,8 +32,6 @@ public class InvoicesController : ApiController
     {
         var query = new GetInvoiceByIdQuery(id);
         InvoiceDto invoiceDto = await _mediator.Send(query, cancellationToken);
-        if (invoiceDto is null)
-            throw new NotFoundException($"Invoice with id {id} was not found");
 
         return Ok(invoiceDto);
     }

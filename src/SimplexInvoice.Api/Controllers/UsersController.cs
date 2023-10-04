@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using SimplexInvoice.Api.Models.Request;
 using SimplexInvoice.Api.Models.Response;
 using SimplexInvoice.Application.Common.Dto;
-using SimplexInvoice.Application.Common.Exceptions;
 using SimplexInvoice.Application.Common.Interfaces.Persistance;
 using SimplexInvoice.Application.Users.Commands;
 using SimplexInvoice.Application.Users.Queries;
@@ -35,8 +34,6 @@ public class UsersController : ApiController
     {
         var query = new GetUserByIdQuery(id);
         var userDto = await _mediator.Send(query, cancellationToken);
-        if (userDto is null)
-            throw new NotFoundException($"User with id {id} was not found");
 
         return Ok(_mapper.Map<UserResponse>(userDto));
     }
@@ -94,23 +91,15 @@ public class UsersController : ApiController
     {
         if (patchDoc is null)
             throw new Exception("No field to update provided.");
-
         // ONLY ALLOWED REPLACE OPERATIONS
         patchDoc.Operations.RemoveAll(c => c.op != "replace");
-
         if (patchDoc.Operations.Count == 0)
             throw new Exception("No field to update provided.");
 
         var query = new GetUserByIdQuery(id);
         var userDto = await _mediator.Send(query, cancellationToken);
-        if (userDto is null)
-            throw new NotFoundException($"User with id {id} was not found");
-
         patchDoc.ApplyTo(userDto, ModelState);
-
-        if (!ModelState.IsValid)
-            throw new Exception(ModelState.ToString());
-
+        EnsureModelStateIsValid();
         var userUpdateCommand = _mapper.Map<UserUpdateCommand>(userDto);
         userDto = await _mediator.Send(userUpdateCommand);
 

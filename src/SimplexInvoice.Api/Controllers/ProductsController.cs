@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SimplexInvoice.Api.Models.Request;
 using SimplexInvoice.Application.Common.Dto;
-using SimplexInvoice.Application.Common.Exceptions;
 using SimplexInvoice.Application.Common.Interfaces.Persistance;
 using SimplexInvoice.Application.Products.Commands;
 using SimplexInvoice.Application.Products.Queries;
@@ -33,8 +32,6 @@ public class ProductsController : ApiController
     {
         var query = new GetProductByIdQuery(id);
         ProductDto productDto = await _mediator.Send(query, cancellationToken);
-        if (productDto is null)
-            throw new NotFoundException($"Product with id {id} was not found");
 
         return Ok(productDto);
     }
