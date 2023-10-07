@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ErrorService } from 'src/app/shared';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IdDocumentTypeDto } from 'src/app/shared/models/iddocumenttypedto';
 import { IdDocumentTypesService } from 'src/app/shared/services/iddocumenttypes.service';
 import { Router } from '@angular/router';
+import { SnackBarService } from 'src/app/shared/services/snackbar.service';
 import { TableColumn } from 'src/app/shared/interfaces/tablecolumn';
 
 @Component({
@@ -13,15 +15,17 @@ import { TableColumn } from 'src/app/shared/interfaces/tablecolumn';
 
 export class IdDocumentTypesGridComponent implements OnInit {
 
-  headers : TableColumn[] = [
-    { header : 'Id', field : 'id', visible: 'hidden', width: '0%' },
-    { header : 'Name', field : 'name', visible: 'visible', width: '100%' },
+  headers: TableColumn[] = [
+    { header: 'Id', field: 'id', visible: 'hidden', width: '0%' },
+    { header: 'Name', field: 'name', visible: 'visible', width: '100%' },
   ];
   data: any[] = [];
 
   constructor(
     private iddocumenttypesservice: IdDocumentTypesService,
-    private router: Router) {
+    private router: Router,
+    private errorService: ErrorService,
+    private snackBarService: SnackBarService) {
   }
 
   ngOnInit(): void {
@@ -36,7 +40,7 @@ export class IdDocumentTypesGridComponent implements OnInit {
         }
       },
       error: (err: HttpErrorResponse) => {
-        console.log('Error al recuperar los Id Document Types', err);
+        this.snackBarService.openSnackBar(this.errorService.HttpErrorResponseToString(err));
       }
     });
   }
@@ -49,5 +53,5 @@ export class IdDocumentTypesGridComponent implements OnInit {
   addButtonClick() {
     this.router.navigate(['/iddocumenttypes/new']);
   }
-  
+
 }

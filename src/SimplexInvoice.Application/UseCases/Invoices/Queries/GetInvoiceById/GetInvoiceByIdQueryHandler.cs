@@ -2,7 +2,7 @@ using AutoMapper;
 using MediatR;
 using SimplexInvoice.Application.Common.Dto;
 using SimplexInvoice.Application.Common.Interfaces.Persistance;
-using SimplexInvoice.Domain.Exceptions;
+using SimplexInvoice.Application.Common.Exceptions;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Collections.Generic;

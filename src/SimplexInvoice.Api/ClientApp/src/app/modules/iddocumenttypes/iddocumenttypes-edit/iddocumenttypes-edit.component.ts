@@ -6,7 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { IdDocumentTypeDto } from 'src/app/shared/models/iddocumenttypedto';
 import { IdDocumentTypesService } from 'src/app/shared/services/iddocumenttypes.service';
 import { Location } from '@angular/common';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackBarService } from 'src/app/shared/services/snackbar.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -27,7 +27,7 @@ export class IdDocumentTypesEditComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private errorService: ErrorService,
     private router: Router,
-    private snackBar: MatSnackBar) {
+    private snackBarService: SnackBarService) {
 
     this.formiddocumenttype = this.formBuilder.group({
       id: [{ value: '', disabled: true }],
@@ -42,10 +42,6 @@ export class IdDocumentTypesEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  openSnackBar(message: string) {
-    this.snackBar.open(message, '', { duration: 1 * 1000 });
-  }
-
   private getiddocumenttype(id: string) {
     this.iddocumenttypesService.Get(id).subscribe({
       next: (res: IdDocumentTypeDto) => {
@@ -55,8 +51,7 @@ export class IdDocumentTypesEditComponent implements OnInit, OnDestroy {
         }
       },
       error: (err: HttpErrorResponse) => {
-        console.log('Error al recuperar el id document type', err);
-        this.ShowErrors(err);
+        this.snackBarService.openSnackBar(this.errorService.HttpErrorResponseToString(err));
       }
     })
   }
@@ -71,24 +66,13 @@ export class IdDocumentTypesEditComponent implements OnInit, OnDestroy {
         }
       },
       error: (err: HttpErrorResponse) => {
-        this.ShowErrors(err);
+        this.snackBarService.openSnackBar(this.errorService.HttpErrorResponseToString(err));
       }
     });
   }
 
   backButtonClick() {
     this.location.back();
-  }
-
-  private ShowErrors(err: HttpErrorResponse)
-  {
-    const errors = this.errorService.GetErrorsFromHttp(err);
-    if (errors.length > 0) {
-      errors.forEach(clientError => {
-        console.log(clientError);
-        this.openSnackBar(clientError);
-      });
-    }
   }
 
   ngOnDestroy(): void {

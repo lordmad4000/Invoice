@@ -10,6 +10,7 @@ using System.Threading;
 using System;
 using Xunit;
 using SimplexInvoice.Domain.Users;
+using SimplexInvoice.Application.Common.Exceptions;
 
 namespace SimplexInvoice.Application.Tests.UnitTests
 {
@@ -31,7 +32,7 @@ namespace SimplexInvoice.Application.Tests.UnitTests
         }
 
         [Fact]
-        public async Task GetUserById_Should_Be_Found()
+        public async Task GetUserById_Should_Be_NotNull()
         {
             // Arrange
             var user = GetUser();
@@ -46,7 +47,7 @@ namespace SimplexInvoice.Application.Tests.UnitTests
         }
 
         [Fact]
-        public async Task GetUserById_Should_Not_Be_Found()
+        public async Task GetUserById_Should_Throw_NotFoundException()
         {
             // Arrange
             var user = GetUser();
@@ -54,8 +55,8 @@ namespace SimplexInvoice.Application.Tests.UnitTests
             var getUsersQueryHandler = new GetUserByIdQueryHandler(_mockUserRepository.Object, _mapper, _mockLogger.Object);
 
             //Act & Assert
-            await Assert.ThrowsAsync<System.NullReferenceException>(() => 
-            getUsersQueryHandler.Handle(new GetUserByIdQuery(user.Id), new CancellationToken()));
+            await Assert.ThrowsAsync<NotFoundException>(() => 
+                getUsersQueryHandler.Handle(new GetUserByIdQuery(user.Id), new CancellationToken()));
         }
 
         private User GetUser()

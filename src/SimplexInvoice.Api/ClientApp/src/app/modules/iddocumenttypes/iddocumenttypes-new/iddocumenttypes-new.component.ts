@@ -6,7 +6,7 @@ import { IdDocumentTypeDto } from 'src/app/shared/models/iddocumenttypedto';
 import { IdDocumentTypeRegisterRequest } from 'src/app/shared/models/iddocumenttyperegisterrequest';
 import { IdDocumentTypesService } from 'src/app/shared/services/iddocumenttypes.service';
 import { Location } from '@angular/common';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackBarService } from 'src/app/shared/services/snackbar.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -22,21 +22,15 @@ export class IdDocumentTypesNewComponent implements OnDestroy {
   private subscription: Subscription | undefined;
 
   constructor(
-    //private route: ActivatedRoute,
     private location: Location,
     private iddocumenttypesService: IdDocumentTypesService,
     private formBuilder: FormBuilder,
     private errorService: ErrorService,
-    //private router: Router,
-    private snackBar: MatSnackBar) {
+    private snackBarService: SnackBarService) {
 
     this.formiddocumenttype = this.formBuilder.group({
       name: [{ value: '', disabled: false }, Validators.required],
     });
-  }
-
-  openSnackBar(message: string) {
-    this.snackBar.open(message, '', { duration: 1 * 1000 });
   }
 
   private getiddocumenttype(id: string) {
@@ -47,7 +41,7 @@ export class IdDocumentTypesNewComponent implements OnDestroy {
           this.formiddocumenttype.patchValue(res);
         }
       },
-      error: (err : HttpErrorResponse) => {
+      error: (err: HttpErrorResponse) => {
         console.log('Error al recuperar el usuario', err);
       }
     })
@@ -62,13 +56,7 @@ export class IdDocumentTypesNewComponent implements OnDestroy {
         }
       },
       error: (err: HttpErrorResponse) => {
-        const errors = this.errorService.GetErrorsFromHttp(err);
-        if (errors.length > 0) {
-          errors.forEach(clientError => {
-            console.log(clientError);
-            this.openSnackBar(clientError);
-          });
-        }
+        this.snackBarService.openSnackBar(this.errorService.HttpErrorResponseToString(err));
       }
     });
 

@@ -1,0 +1,61 @@
+{
+    "navmenu": {
+        "title": "Simplex Invoice App",
+        "home": "Home",
+        "configuration": "Configuration",
+        "company": "Company",
+        "iddocumenttypes": "Id Document Types",
+        "taxrates": "Tax Rates",
+        "users": "Users",
+        "customers": "Customers",
+        "products": "Products",
+        "invoices": "Invoices",
+        "login": "Log-in",
+        "logout": "Log-out",
+        "about_title": "About SimplexInvoiceApp",
+        "about_msg": "Version: 0.1a | Expiration token: "
+    },
+    "head-toolbar": {
+        "button_back": "Back",
+        "button_add": "Add",
+        "button_edit": "Edit",
+        "button_delete": "Delete"
+    },
+    "popup":{
+        "button_yes": "YES",
+        "button_no": "NO",
+        "button_ok": "OK",
+        "title_info": "INFORMATION"
+    },
+    "home": {
+        "module_title": "HOME",
+        "last_users": "LAST USERS",
+        "email": "Email",
+        "firstname": "First Name",
+        "lastname": "Last Name"
+    },
+    "users": {
+        "title": "USERS",
+        "forms": {
+            "email": "Email",
+            "password": "Password",
+            "confirm_password": "Repeat Password",
+            "firstname": "First Name",
+            "lastname": "Last Name",
+            "password_not_match": "Password not match.",
+            "button_save": "Save",
+            "button_save_tooltip": "Save changes",
+            "signin": "Sign In",
+            "login": "Log In"
+        },
+        "popups": {
+            "popup_delete_title": "DELETE",
+            "popup_deleted": "Record deleted.",
+            "popup_not_deleted": "Record not deleted.",
+            "popup_delete_message": "Do you want to delete the record?"
+        }
+    },
+    "taxrates": {
+        "title": "TAX RATES"
+    }
+}

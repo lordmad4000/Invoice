@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SimplexInvoice.Application.Common.Exceptions;
 using SimplexInvoice.Application.Common.Interfaces.Persistance;
 using SimplexInvoice.Domain.Base;
-using SimplexInvoice.Domain.Exceptions;
 using SimplexInvoice.Infra.Data;
 using SimplexInvoice.Infra.Exceptions;
 using System;

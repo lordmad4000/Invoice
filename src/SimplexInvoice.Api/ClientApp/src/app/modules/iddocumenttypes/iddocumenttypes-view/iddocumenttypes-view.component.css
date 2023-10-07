@@ -18,8 +18,8 @@
 }
 
 .div-fields {
-    margin-top: 40px;
-    margin-left: 40px;
+    margin-top: 2.5rem;
+    margin-left: 2.5rem;
 }
 
 mat-label {
@@ -37,7 +37,7 @@ mat-form-field.firstname-field {
 
 mat-divider {    
     width: 100%;
-    padding: 2px;
+    padding: 0.125rem;
     color: transparent;
-    border: 1px;
+    border: 0.063rem;
 }

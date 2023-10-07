@@ -1,13 +1,5 @@
 .base-grid-container {
-    padding: 1rem;
-}
-
-.flex-expand {
-    flex: 1 1 auto;
-}
-
-.mat-toolbar-row {
-    background-color: #FAFAFA;
+    padding: 0.5rem;
 }
 
 table {
@@ -15,5 +7,5 @@ table {
     text-align: left;
     margin-top: 1rem;
     overflow: auto;
-    background-color: #FAFAFA;    
+    background-color: #FAFAFA;
 }
