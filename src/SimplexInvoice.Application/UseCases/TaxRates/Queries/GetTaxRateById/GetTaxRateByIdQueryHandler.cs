@@ -4,7 +4,7 @@ using SimplexInvoice.Application.Common.Dto;
 using SimplexInvoice.Application.Common.Interfaces.Persistance;
 using System.Threading.Tasks;
 using System.Threading;
-using SimplexInvoice.Domain.Exceptions;
+using SimplexInvoice.Application.Common.Exceptions;
 
 namespace SimplexInvoice.Application.TaxRates.Queries;
 public class GetTaxRateByIdQueryHandler : IRequestHandler<GetTaxRateByIdQuery, TaxRateDto>

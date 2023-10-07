@@ -4,7 +4,7 @@ using SimplexInvoice.Application.Common.Dto;
 using SimplexInvoice.Application.Common.Interfaces.Persistance;
 using SimplexInvoice.Application.Interfaces;
 using SimplexInvoice.Application.TaxRates.Exceptions;
-using SimplexInvoice.Domain.Exceptions;
+using SimplexInvoice.Application.Common.Exceptions;
 using System.Threading;
 using System.Threading.Tasks;
 

@@ -1,19 +1,18 @@
 using System.Globalization;
 using System;
 
-namespace SimplexInvoice.Application.Common.Exceptions
+namespace SimplexInvoice.Application.Common.Exceptions;
+
+[Serializable]
+public class RegisterRuleValidationException : Exception
 {
-    [Serializable]
-    public class RegisterRuleValidationException : Exception
+    public RegisterRuleValidationException() : base()
     {
-        public RegisterRuleValidationException() : base()
-        {
-        }
-        public RegisterRuleValidationException(string message) : base(message)
-        {
-        }
-        public RegisterRuleValidationException(string message, params object[] args) : base(String.Format(CultureInfo.CurrentCulture, message, args))
-        {
-        }        
+    }
+    public RegisterRuleValidationException(string message) : base(message)
+    {
+    }
+    public RegisterRuleValidationException(string message, params object[] args) : base(String.Format(CultureInfo.CurrentCulture, message, args))
+    {
     }
 }

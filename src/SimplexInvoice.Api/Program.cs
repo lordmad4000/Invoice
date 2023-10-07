@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using SimplexInvoice.Api.Extensions;
 using SimplexInvoice.Api.Middlewares;
 using SimplexInvoice.Application;
@@ -20,6 +21,7 @@ services.AddCors(options =>
 services.AddAutoMapperSetup();
 services.AddControllersWithViews()
         .AddNewtonsoftJson();
+services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 services.AddSwagger();
 services.AddJwtAuthentication(configuration);
 services.AddDatabase(configuration);

@@ -1,11 +1,9 @@
+using SimplexInvoice.Api.Exceptions;
+using SimplexInvoice.Api.Models.Response;
+using SimplexInvoice.Application.Common.Exceptions;
 using SimplexInvoice.Application.Common.Interfaces.Persistance;
-using SimplexInvoice.Domain.Exceptions;
 using SimplexInvoice.Infra.Exceptions;
-using Microsoft.AspNetCore.Http;
 using System.Net;
-using System.Text.Json;
-using System.Threading.Tasks;
-using System;
 
 namespace SimplexInvoice.Api.Middlewares
 {
@@ -26,22 +24,29 @@ namespace SimplexInvoice.Api.Middlewares
             {
                 await _next(context);
             }
-            catch (Exception error)
+            catch (Exception exception)
             {
                 var response = context.Response;
+                var bodyError = new HttpResponseBodyError();
                 response.ContentType = "application/json";
-                _logger.Error($"{error.GetType().Name} {error?.Message}");
+                _logger.Error($"{exception.GetType().Name} {exception?.Message}");                
 
-                switch (error)
+                switch (exception)
                 {
-                    case DataBaseException ex:
+                    case DataBaseException:
                     {
                         response.StatusCode = 500;
                         break;
                     }
-                    case NotFoundException ex:
+                    case NotFoundException:
                     {
                         response.StatusCode = (int)HttpStatusCode.NotFound;
+                        break;
+                    }
+                    case ModelStateValidationException ex:
+                    {
+                        response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        bodyError.Errors.AddRange(ex.ErrorMessages);
                         break;
                     }
                     default:
@@ -50,8 +55,9 @@ namespace SimplexInvoice.Api.Middlewares
                         break;
                     }
                 }
-                var result = JsonSerializer.Serialize(new { ErrorMessage = error?.Message });
-                await response.WriteAsync(result);
+                bodyError.Message = exception?.Message ?? "Undocumented error";
+                bodyError.Code = response.StatusCode;
+                await response.WriteAsJsonAsync(bodyError);
             }
         }
     }

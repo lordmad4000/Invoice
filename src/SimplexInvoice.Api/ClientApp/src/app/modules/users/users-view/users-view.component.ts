@@ -1,12 +1,13 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Location } from  '@angular/common';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { PopupService, UserService } from 'src/app/shared';
 import { GlobalConstants } from 'src/app/shared/const/global-constants';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Location } from  '@angular/common';
+import { PopupService, UserService } from 'src/app/shared';
+import { Subscription } from 'rxjs';
 import { UserResponse } from 'src/app/shared/models/userresponse';
+import { CustomTranslateService } from 'src/app/shared/services/customtranslate.service';
 
 @Component({
   selector: 'app-users-view',
@@ -14,6 +15,9 @@ import { UserResponse } from 'src/app/shared/models/userresponse';
   styleUrls: ['./users-view.component.css']
 })
 export class UsersViewComponent implements OnInit, OnDestroy {
+
+  private translate: any = (key: string) =>
+    this.translateService.instant('users.' + key);
 
   formUser: FormGroup;
   formLoginError = "";
@@ -26,9 +30,10 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private formBuilder: FormBuilder,
     private popupService: PopupService,
-    private router: Router) {
+    private router: Router,
+    private translateService: CustomTranslateService) {
 
-    this.formUser = formBuilder.group({
+    this.formUser = this.formBuilder.group({
       id: [{ value: '', disabled: true }],
       email: [{ value: '', disabled: true }],
       firstName: [{ value: '', disabled: true }],
@@ -59,19 +64,16 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   }
 
   backButtonClick() {
-    console.log("Back button.");
     this.location.back();
   }
 
   editButtonClick() {
-    console.log("Edit button.");
     this.router.navigate(['/users/edit', `${this.id} `]);
   }
 
   deleteButtonClick() {
-    console.log("Delete button.");
       this.popupService
-      .createConfirmPopup("Do you want to remove the item?")
+      .createConfirmPopup(this.translate('popups.popup_delete_title'), this.translate('popups.popup_delete_message'))
       .afterClosed()
       .subscribe(result => {
         if (result == GlobalConstants.popupYesValue) {
@@ -86,11 +88,11 @@ export class UsersViewComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (res: boolean) => {          
           if (res) {            
-            this.popupService.openPopupAceptar("REMOVE", "Item removed.", "300px", "");
+            this.popupService.openPopupAceptar(this.translate('popups.popup_delete_title'), this.translate('popups.popup_deleted'), "18.75rem", "");
             this.router.navigate(['/users/grid']);
           }
           else{
-            this.popupService.openPopupAceptar("REMOVE", "Item not removed.", "300px", "");
+            this.popupService.openPopupAceptar(this.translate('popups.popup_delete_title'), this.translate('popups.popup_not_deleted'), "18.75rem", "");
           }          
         },
         error: (err: HttpErrorResponse) => {

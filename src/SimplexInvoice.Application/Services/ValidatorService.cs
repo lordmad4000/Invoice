@@ -1,7 +1,7 @@
-using System.Text;
 using FluentValidation.Results;
 using SimplexInvoice.Application.Interfaces;
 using SimplexInvoice.Domain.Exceptions;
+using System.Text;
 
 namespace SimplexInvoice.Application.Services
 {

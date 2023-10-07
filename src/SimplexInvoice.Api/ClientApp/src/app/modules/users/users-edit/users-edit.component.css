@@ -1,14 +1,26 @@
 .users-edit-container {
-    padding: 1rem;
+    padding: 0.5rem;
 }
 
-.flex-expand {
-    flex: 1 1 auto;
+.module-title {
+    padding-top: 0.5rem;
 }
 
-.mat-toolbar-row {
-    justify-content: flex-end;
+.head-toolbar {
+    vertical-align: top;
+    text-align: left;
+    overflow: auto;
     background-color: #FAFAFA;
+}
+
+.outer-box {
+    margin: 1rem auto;
+    text-align: center;
+    width: 12rem;
+    height: 3rem;
+    background: #009bee;
+    color: white;
+    border-radius: 0.8rem;
 }
 
 .user-form {
@@ -19,19 +31,19 @@
 }
 
 .div-fields {
-    margin-top: 40px;
-    margin-left: 40px;
+    margin-top: 2.5rem;
+    margin-left: 2.5rem;
 }
 
 mat-label {
     color: blue;
 }
 
-mat-form-field.password-field {
+.password-field {
     padding-right: 1rem;
 }
 
-mat-form-field.firstname-field {
+.firstname-field {
     padding-right: 1rem;
 }
 
@@ -41,14 +53,14 @@ mat-form-field.firstname-field {
 }
 
 .button-save {
-    margin-left: 40px;
-    margin-top: 20px;
+    margin-left: 2.5rem;
+    margin-top: 1.25rem;
     cursor: pointer;
 }
 
 mat-divider {    
     width: 100%;
-    padding: 2px;
+    padding: 0.125rem;
     color: transparent;
-    border: 1px;
+    border: 0.063rem;
 }

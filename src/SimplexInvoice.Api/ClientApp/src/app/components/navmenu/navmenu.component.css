@@ -4,18 +4,18 @@ mat-toolbar {
 }
 
 mat-icon {
-  padding-right: 8px;
+  padding-right: 1rem;
 }
 
 .flex-expand {
   flex: 1 1 auto;
 }
 
-.navmenu-about {
-  display: block;
-  margin: 0 !important;
-  padding: 0 !important;
-  border-top-width: 10px;
-  border-top-style: solid;
-  border-top-color: transparent;
+mat-select {
+  width: 6rem;
+  color: white;
+}
+
+mat-option {
+  color: white;
 }

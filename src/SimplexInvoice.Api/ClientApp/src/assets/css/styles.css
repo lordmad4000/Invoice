@@ -13,13 +13,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   display: block;
   padding: 0.875rem 1rem;
   border-radius: 3.5rem;
-  box-shadow: 3px 3px 8px #b1b1b1, -3px -3px 8px #ffffff;
+  box-shadow: 0.188rem 0.188rem 0.5rem #b1b1b1, -0.188rem -0.188rem 0.5rem #ffffff;
   cursor: pointer;
 }
 
 .mat-raised-button:disabled {
   color: #f70a0a;
   background-color:rgb(190, 190, 190);
-  box-shadow: 3px 3px 8px #b1b1b1, -3px -3px 8px #ffffff;
+  box-shadow: 0.188rem 0.188rem 0.5rem #b1b1b1, -0.188rem -0.188rem 0.5rem #ffffff;
   cursor: not-allowed;
 } */
