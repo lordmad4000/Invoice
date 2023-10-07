@@ -19,6 +19,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { UsersModule } from './modules/users';
 import { CustomTranslateService } from './shared/services/customtranslate.service';
+import { SnackBarService } from './shared/services/snackbar.service';
 
 @NgModule({
   declarations: [
@@ -51,12 +52,13 @@ import { CustomTranslateService } from './shared/services/customtranslate.servic
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
-    PopupService,
-    JWTService,
     AuthenticationService,
-    LoadFileService,
+    CustomTranslateService,
     ErrorService,
-    CustomTranslateService
+    JWTService,
+    LoadFileService,
+    PopupService,
+    SnackBarService,
   ],
   bootstrap: [AppComponent]
 })
