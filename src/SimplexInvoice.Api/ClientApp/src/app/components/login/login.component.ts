@@ -1,17 +1,18 @@
 import { AuthenticationService } from '../../shared/services/authentication.service';
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy } from '@angular/core';
+import { ErrorService } from 'src/app/shared';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { SnackBarService } from 'src/app/shared/services/snackbar.service';
 import { Subscription } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { UserLoginResponse } from '../../shared/models/userloginresponse';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { ErrorService } from 'src/app/shared';
 
 @Component({
   selector: 'app-login',
@@ -36,7 +37,7 @@ export class LoginComponent implements OnDestroy {
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router,
-    private snackBar: MatSnackBar,
+    private snackBarService: SnackBarService,
     private errorService: ErrorService
   ) {
     this.formLogin = new FormGroup({
@@ -45,10 +46,6 @@ export class LoginComponent implements OnDestroy {
       password: new FormControl('', Validators.required),
     })
 
-  }
-
-  openSnackBar(message: string) {
-    this.snackBar.open(message, '', { duration: 1 * 1000 });
   }
 
   Login() {
@@ -66,11 +63,7 @@ export class LoginComponent implements OnDestroy {
           }
         },
         error: (err: HttpErrorResponse) => {
-          const errors = this.errorService.GetErrorsFromHttp(err);
-          console.log('Error en el login', errors.toString());
-          errors.forEach(element => {
-            this.openSnackBar(element);
-          });
+          this.snackBarService.openSnackBar(this.errorService.HttpErrorResponseToString(err));
         },
       });
   }

@@ -1,14 +1,14 @@
 import { Component, OnDestroy } from '@angular/core';
+import { CustomTranslateService } from 'src/app/shared/services/customtranslate.service';
 import { ErrorService } from 'src/app/shared/services';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Location } from '@angular/common';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackBarService } from 'src/app/shared/services/snackbar.service';
 import { Subscription } from 'rxjs';
 import { UserRegisterRequest } from 'src/app/shared/models/userregisterrequest';
 import { UserResponse } from 'src/app/shared/models/userresponse';
 import { UserService } from 'src/app/shared/services/user.service';
-import { CustomTranslateService } from 'src/app/shared/services/customtranslate.service';
 
 @Component({
   selector: 'app-users-new',
@@ -31,7 +31,7 @@ export class UsersNewComponent implements OnDestroy {
     private userService: UserService,
     private formBuilder: FormBuilder,
     private errorService: ErrorService,
-    private snackBar: MatSnackBar,
+    private snackBarService: SnackBarService,
     private translateService: CustomTranslateService) {
 
     this.formUser = this.formBuilder.group({
@@ -43,15 +43,11 @@ export class UsersNewComponent implements OnDestroy {
     });
   }
 
-  openSnackBar(message: string) {
-    this.snackBar.open(message, '', { duration: 1 * 1000 });
-  }
-
   checkPassword(): boolean {
     const password = this.formUser.get('password')?.value;
     const confirmPassword = this.formUser.get('confirmPassword')?.value;
     if (!password || !confirmPassword || password !== confirmPassword) {
-      this.openSnackBar(this.translate('forms.password_not_match'));
+      this.snackBarService.openSnackBar(this.translate('forms.password_not_match'));
       return false;
     }
 
@@ -74,19 +70,13 @@ export class UsersNewComponent implements OnDestroy {
         }
       },
       error: (err: HttpErrorResponse) => {
-        const errors = this.errorService.GetErrorsFromHttp(err);
-        if (errors.length > 0) {
-          errors.forEach(clientError => {
-            console.log(clientError);
-            this.openSnackBar(clientError);
-          });
-        }
+        this.snackBarService.openSnackBar(this.errorService.HttpErrorResponseToString(err));
       }
     });
 
   }
 
-  backButtonClick() {    
+  backButtonClick() {
     this.location.back();
   }
 
