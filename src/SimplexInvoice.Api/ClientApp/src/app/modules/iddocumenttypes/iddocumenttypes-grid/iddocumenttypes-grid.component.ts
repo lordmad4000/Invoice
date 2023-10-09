@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { CustomTranslateService } from 'src/app/shared/services/customtranslate.service';
 import { ErrorService } from 'src/app/shared';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Location } from '@angular/common';
 import { IdDocumentTypeDto } from 'src/app/shared/models/iddocumenttypedto';
 import { IdDocumentTypesService } from 'src/app/shared/services/iddocumenttypes.service';
 import { Router } from '@angular/router';
@@ -15,15 +17,21 @@ import { TableColumn } from 'src/app/shared/interfaces/tablecolumn';
 
 export class IdDocumentTypesGridComponent implements OnInit {
 
+  private translate: any = (key: string) =>
+    this.translateService.instant('iddocumenttypes.' + key);
+
+
   headers: TableColumn[] = [
     { header: 'Id', field: 'id', visible: 'hidden', width: '0%' },
-    { header: 'Name', field: 'name', visible: 'visible', width: '100%' },
+    { header: this.translate('forms.name'), field: 'name', visible: 'visible', width: '100%' },
   ];
-  data: any[] = [];
+  public data: any[] = [];
 
   constructor(
-    private iddocumenttypesservice: IdDocumentTypesService,
+    private location: Location,
+    private idDocumentTypesService: IdDocumentTypesService,
     private router: Router,
+    private translateService: CustomTranslateService,
     private errorService: ErrorService,
     private snackBarService: SnackBarService) {
   }
@@ -33,7 +41,7 @@ export class IdDocumentTypesGridComponent implements OnInit {
   }
 
   loadGridData() {
-    this.iddocumenttypesservice.GetAll().subscribe({
+    this.idDocumentTypesService.GetAll().subscribe({
       next: (res: Array<IdDocumentTypeDto>) => {
         if (res) {
           this.data = res;
@@ -52,6 +60,10 @@ export class IdDocumentTypesGridComponent implements OnInit {
 
   addButtonClick() {
     this.router.navigate(['/iddocumenttypes/new']);
+  }
+
+  backButtonClick() {
+    this.location.back();
   }
 
 }

@@ -1,4 +1,6 @@
+import { BaseGridComponent } from 'src/app/components/base-grid';
 import { CommonModule } from '@angular/common';
+import { CustomTranslateService } from 'src/app/shared/services/customtranslate.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IdDocumentTypesComponent } from './iddocumenttypes.component';
 import { IdDocumentTypesEditComponent } from './iddocumenttypes-edit';
@@ -15,12 +17,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgModule } from '@angular/core';
-import { MatSortModule } from '@angular/material/sort';
-import { BaseGridComponent } from 'src/app/components/base-grid';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -47,10 +49,12 @@ import { BaseGridComponent } from 'src/app/components/base-grid';
     MatToolbarModule,
     MatSnackBarModule,
     MatSortModule,
-    BaseGridComponent
+    BaseGridComponent,
+    TranslateModule
   ],
   providers: [ 
-    IdDocumentTypesService
+    IdDocumentTypesService,
+    CustomTranslateService
   ],
 })
 export class IdDocumentTypesModule { }

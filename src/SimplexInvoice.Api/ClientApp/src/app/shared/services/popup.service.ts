@@ -12,7 +12,7 @@ import { PopupProperties } from "../models/popup-properties";
 export class PopupService {
 
     private translate: any = (key: string) =>
-        this.translateService.instant('popup.' + key);
+        this.translateService.instant('shared.popup.' + key);
 
     public result: any;
     constructor(public dialog: MatDialog,

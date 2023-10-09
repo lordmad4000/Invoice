@@ -1,14 +1,26 @@
 .iddocumenttypes-new-container {
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
-.flex-expand {
-  flex: 1 1 auto;
+.module-title {
+  padding-top: 0.5rem;
 }
 
-.mat-toolbar-row {
-  justify-content: flex-end;
+.head-toolbar {
+  vertical-align: top;
+  text-align: left;
+  overflow: auto;
   background-color: #FAFAFA;
+}
+
+.outer-box {
+  margin: 1rem auto;
+  text-align: center;
+  width: 18rem;
+  height: 3rem;
+  background: #009bee;
+  color: white;
+  border-radius: 0.8rem;
 }
 
 .iddocumenttype-form {
@@ -27,11 +39,7 @@ mat-label {
   color: blue;
 }
 
-mat-form-field.password-field {
-  padding-right: 1rem;
-}
-
-mat-form-field.firstname-field {
+.name-field {
   padding-right: 1rem;
 }
 

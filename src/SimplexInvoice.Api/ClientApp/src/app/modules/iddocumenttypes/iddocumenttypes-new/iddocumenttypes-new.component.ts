@@ -17,39 +17,26 @@ import { Subscription } from 'rxjs';
 
 export class IdDocumentTypesNewComponent implements OnDestroy {
 
-  private iddocumenttype: IdDocumentTypeRegisterRequest = new IdDocumentTypeRegisterRequest();
-  formiddocumenttype: FormGroup;
+  private idDocumentType: IdDocumentTypeRegisterRequest = new IdDocumentTypeRegisterRequest();
+  public formIdDocumentType: FormGroup;
   private subscription: Subscription | undefined;
 
   constructor(
     private location: Location,
-    private iddocumenttypesService: IdDocumentTypesService,
+    private idDocumentTypesService: IdDocumentTypesService,
     private formBuilder: FormBuilder,
     private errorService: ErrorService,
     private snackBarService: SnackBarService) {
 
-    this.formiddocumenttype = this.formBuilder.group({
+    this.formIdDocumentType = this.formBuilder.group({
       name: [{ value: '', disabled: false }, Validators.required],
     });
   }
 
-  private getiddocumenttype(id: string) {
-    this.iddocumenttypesService.Get(id).subscribe({
-      next: (res: IdDocumentTypeDto) => {
-        if (res) {
-          this.iddocumenttype = res;
-          this.formiddocumenttype.patchValue(res);
-        }
-      },
-      error: (err: HttpErrorResponse) => {
-        console.log('Error al recuperar el usuario', err);
-      }
-    })
-  }
-
   saveButtonClick() {
-    this.iddocumenttype.name = this.formiddocumenttype.get("name")?.value;
-    this.iddocumenttypesService.Post(this.iddocumenttype).subscribe({
+    this.idDocumentType.name = this.formIdDocumentType.get("name")?.value;
+
+    this.idDocumentTypesService.Post(this.idDocumentType).subscribe({
       next: (res: IdDocumentTypeDto) => {
         if (res) {
           this.location.back();
@@ -59,7 +46,6 @@ export class IdDocumentTypesNewComponent implements OnDestroy {
         this.snackBarService.openSnackBar(this.errorService.HttpErrorResponseToString(err));
       }
     });
-
   }
 
   backButtonClick() {

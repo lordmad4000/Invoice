@@ -1,12 +1,14 @@
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { CustomTranslateService } from 'src/app/shared/services/customtranslate.service';
+import { ErrorService, PopupService } from 'src/app/shared';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { GlobalConstants } from 'src/app/shared/const/global-constants';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IdDocumentTypeDto } from 'src/app/shared/models/iddocumenttypedto';
 import { IdDocumentTypesService } from 'src/app/shared/services/iddocumenttypes.service';
 import { Location } from  '@angular/common';
-import { PopupService } from 'src/app/shared';
+import { SnackBarService } from 'src/app/shared/services/snackbar.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -16,19 +18,22 @@ import { Subscription } from 'rxjs';
 })
 export class IdDocumentTypesViewComponent implements OnInit, OnDestroy {
 
-  public formiddocumenttype: FormGroup;
+  public formIdDocumentType: FormGroup;
   private subscription: Subscription | undefined;
   private id = "";
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private iddocumenttypesService: IdDocumentTypesService,
+    private idDocumentTypesService: IdDocumentTypesService,
     private formBuilder: FormBuilder,
     private popupService: PopupService,
-    private router: Router) {
+    private router: Router,
+    private translateService: CustomTranslateService,
+    private errorService: ErrorService,
+    private snackBarService: SnackBarService) {
 
-    this.formiddocumenttype = this.formBuilder.group({
+    this.formIdDocumentType = this.formBuilder.group({
       id: [{ value: '', disabled: true }],
       name: [{ value: '', disabled: true }],
     });
@@ -37,40 +42,35 @@ export class IdDocumentTypesViewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.route.params.subscribe((params: Params): void => {
       this.id = params['id'];
-      console.log(this.id);
-      this.getiddocumenttype(this.id);
+      this.getIdDocumentType(this.id);
     });
   }
 
-  private getiddocumenttype(id: string) {
-    this.iddocumenttypesService.Get(id)
+  private getIdDocumentType(id: string) {
+    this.idDocumentTypesService.Get(id)
       .subscribe({
         next: (res: IdDocumentTypeDto) => {
           if (res) {
-            this.formiddocumenttype.patchValue(res);
-            console.log("");
+            this.formIdDocumentType.patchValue(res);
           }
         },
         error: (err: HttpErrorResponse) => {
-          console.log('Error al recuperar el usuario', err);
+          this.snackBarService.openSnackBar(this.errorService.HttpErrorResponseToString(err));
         }
       })
   }
 
   backButtonClick() {
-    console.log("Back button.");
     this.location.back();
   }
 
   editButtonClick() {
-    console.log("Edit button.");
     this.router.navigate(['/iddocumenttypes/edit', `${this.id} `]);
   }
 
   deleteButtonClick() {
-    console.log("Delete button.");
       this.popupService
-      .createConfirmPopup("REMOVE", "Do you want to remove the item?")
+      .createConfirmPopup(this.translateService.instant('shared.popup.delete_title'), this.translateService.instant('shared.popup.delete_message'))
       .afterClosed()
       .subscribe(result => {
         if (result == GlobalConstants.popupYesValue) {
@@ -81,19 +81,19 @@ export class IdDocumentTypesViewComponent implements OnInit, OnDestroy {
   }
 
   removeItem() {
-    this.iddocumenttypesService.Delete(this.id)
+    this.idDocumentTypesService.Delete(this.id)
       .subscribe({
         next: (res: boolean) => {          
           if (res) {            
-            this.popupService.openPopupAceptar("REMOVE", "Item removed.", "18.75rem", "");
+            this.popupService.openPopupAceptar(this.translateService.instant('shared.popup.delete_title'), this.translateService.instant('shared.popup.deleted'), "18.75rem", "");
             this.router.navigate(['/iddocumenttypes/grid']);
           }
           else{
-            this.popupService.openPopupAceptar("REMOVE", "Item not removed.", "18.75rem", "");
+            this.popupService.openPopupAceptar(this.translateService.instant('shared.popup.delete_title'), this.translateService.instant('shared.popup.not_deleted'), "18.75rem", "");
           }          
         },
         error: (err: HttpErrorResponse) => {
-          console.log('Error al recuperar el usuario', err);
+          this.snackBarService.openSnackBar(this.errorService.HttpErrorResponseToString(err));
         }
       })
   }
@@ -104,6 +104,5 @@ export class IdDocumentTypesViewComponent implements OnInit, OnDestroy {
     }
 
   }
-
 
 }

@@ -11,7 +11,7 @@ const routes: Routes = [
 { path: 'home', component:  HomeComponent },
 { path: 'users', loadChildren: () => import('./modules/users/users.module').then(x => x.UsersModule), canActivate: [authGuard]},
 { path: 'iddocumenttypes', loadChildren: () => import('./modules/iddocumenttypes/iddocumenttypes.module').then(x => x.IdDocumentTypesModule), canActivate: [authGuard]},
-{ path: 'taxrates', loadChildren: () => import('./modules/taxrates/taxrates.module').then(x => x.TaxRatesModule), canActivate: [authGuard]},
+//{ path: 'taxrates', loadChildren: () => import('./modules/taxrates/taxrates.module').then(x => x.TaxRatesModule), canActivate: [authGuard]},
 { path: '**', component: PageNotFoundComponent },
 ];
 

@@ -14,7 +14,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NavmenuComponent, PopupComponent } from './components';
 import { NgModule } from '@angular/core';
-import { TaxRatesModule } from './modules/taxrates';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { UsersModule } from './modules/users';
@@ -40,7 +39,6 @@ import { SnackBarService } from './shared/services/snackbar.service';
     MatDialogModule,
     NavmenuComponent,
     PopupComponent,
-    TaxRatesModule,
     UsersModule,
     TranslateModule.forRoot({
       loader: {

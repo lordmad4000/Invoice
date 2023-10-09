@@ -20,12 +20,12 @@
                     }}</mat-header-cell>
                 <mat-cell *matCellDef="let user" [ngClass]="'mat-column-email'"> {{user.email}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="firstname">
+            <ng-container matColumnDef="firstName">
                 <mat-header-cell *matHeaderCellDef [ngClass]="'mat-column-firstname'">{{ 'home.firstname' |
                     translate }}</mat-header-cell>
                 <mat-cell *matCellDef="let user" [ngClass]="'mat-column-firstname'"> {{user.firstName}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="lastname">
+            <ng-container matColumnDef="lastName">
                 <mat-header-cell *matHeaderCellDef [ngClass]="'mat-column-lastname'">{{ 'home.lastname' | translate
                     }}</mat-header-cell>
                 <mat-cell *matCellDef="let user" [ngClass]="'mat-column-lastname'"> {{user.lastName}} </mat-cell>

@@ -17,8 +17,8 @@ export class HomeComponent implements OnInit {
 
     displayedColumns: string[] = [
       "email",
-      "firstname",
-      "lastname"
+      "firstName",
+      "lastName"
     ];   
     users: UserResponse[] = [];
     dataSource = new MatTableDataSource<UserResponse>();
