@@ -64,6 +64,10 @@
         }
     },
     "taxrates": {
-        "title": "IMPUESTOS"
+        "title": "IMPUESTOS",
+        "forms": {
+            "name": "Nombre",
+            "value": "Valor"
+        }
     }
 }
