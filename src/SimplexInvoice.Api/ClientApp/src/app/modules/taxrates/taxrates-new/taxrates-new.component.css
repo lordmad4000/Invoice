@@ -1,4 +1,4 @@
-.iddocumenttypes-new-container {
+.taxrates-new-container {
   padding: 0.5rem;
 }
 
@@ -16,14 +16,14 @@
 .outer-box {
   margin: 1rem auto;
   text-align: center;
-  width: 18rem;
+  width: 12rem;
   height: 3rem;
   background: #009bee;
   color: white;
   border-radius: 0.8rem;
 }
 
-.iddocumenttype-form {
+.taxrate-form {
   vertical-align: top;
   text-align: left;
   width: 98%;
@@ -43,7 +43,7 @@ mat-label {
   padding-right: 1rem;
 }
 
-.iddocumenttype-form input {
+.taxrate-form input {
   width: fit-content;
   color: green;
 }

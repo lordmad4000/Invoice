@@ -23,7 +23,6 @@ export class UsersEditComponent implements OnInit, OnDestroy {
 
   private user: UserUpdateRequest = new UserUpdateRequest();
   public formUser: FormGroup;
-  public passwordError = false;
   private subscription: Subscription | undefined;
 
   constructor(
@@ -49,7 +48,6 @@ export class UsersEditComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.route.params.subscribe((params: Params): void => {
       const id = params['id'];
-      console.log(id);
       this.getUser(id);
     });
   }

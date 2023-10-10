@@ -2,13 +2,13 @@ import { BaseGridComponent } from 'src/app/components/base-grid';
 import { CommonModule } from '@angular/common';
 import { CustomTranslateService } from 'src/app/shared/services/customtranslate.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IdDocumentTypesComponent } from './iddocumenttypes.component';
-import { IdDocumentTypesEditComponent } from './iddocumenttypes-edit';
-import { IdDocumentTypesGridComponent } from './iddocumenttypes-grid/iddocumenttypes-grid.component';
-import { IdDocumentTypesNewComponent } from './iddocumenttypes-new';
-import { IdDocumentTypesRoutingModule } from './iddocumenttypes-routing.module';
-import { IdDocumentTypesService } from 'src/app/shared/services/iddocumenttypes.service';
-import { IdDocumentTypesViewComponent } from './iddocumenttypes-view';
+import { TaxRatesComponent } from './taxrates.component';
+import { TaxRatesEditComponent } from './taxrates-edit';
+import { TaxRatesGridComponent } from './taxrates-grid/taxrates-grid.component';
+import { TaxRatesNewComponent } from './taxrates-new';
+import { TaxRatesRoutingModule } from './taxrates-routing.module';
+import { TaxRatesService } from 'src/app/shared/services/taxrates.service';
+import { TaxRatesViewComponent } from './taxrates-view';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
@@ -26,15 +26,15 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
-    IdDocumentTypesComponent,
-    IdDocumentTypesGridComponent,
-    IdDocumentTypesEditComponent,
-    IdDocumentTypesNewComponent,
-    IdDocumentTypesViewComponent
+    TaxRatesComponent,
+    TaxRatesGridComponent,
+    TaxRatesEditComponent,
+    TaxRatesNewComponent,
+    TaxRatesViewComponent
   ],
   imports: [
     CommonModule,
-    IdDocumentTypesRoutingModule,
+    TaxRatesRoutingModule,
     MatTableModule,
     MatCheckboxModule,
     MatFormFieldModule,
@@ -53,8 +53,8 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule
   ],
   providers: [ 
-    IdDocumentTypesService,
+    TaxRatesService,
     CustomTranslateService
   ],
 })
-export class IdDocumentTypesModule { }
+export class TaxRatesModule { }

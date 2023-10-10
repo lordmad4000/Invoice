@@ -1,4 +1,4 @@
-.iddocumenttypes-grid-container {
+.taxrates-grid-container {
     padding: 0.5rem;
 }
 
@@ -16,7 +16,7 @@
 .outer-box {
     margin: 1rem auto;
     text-align: center;
-    width: 18rem;
+    width: 12rem;
     height: 3rem;
     background: #009bee;
     color: white;

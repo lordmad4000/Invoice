@@ -1,11 +1,11 @@
-<div class="iddocumenttypes-view-container">
+<div class="taxrates-view-container">
     <mat-toolbar class="head-toolbar">
         <mat-toolbar-row>
             <button mat-button matTooltip="{{ 'head-toolbar.button_back' | translate }}" (click)="backButtonClick()">
                 <mat-icon>arrow_back</mat-icon>
             </button>
             <div class="outer-box">
-                <h1 class="module-title">{{ 'iddocumenttypes.title' | translate }}</h1>
+                <h1 class="module-title">{{ 'taxrates.title' | translate }}</h1>
             </div>
             <button mat-button matTooltip="{{ 'head-toolbar.button_edit' | translate }}" (click)="editButtonClick()">
                 <mat-icon>edit</mat-icon>
@@ -16,11 +16,15 @@
             </button>
         </mat-toolbar-row>
     </mat-toolbar>
-    <form class="iddocumenttype-form" [formGroup]="formIdDocumentType">
+    <form class="taxrate-form" [formGroup]="formTaxRate">
         <div class="div-fields">
             <mat-form-field class="name-field" appearance="fill" mat-form-fieldAutoSize>
-                <mat-label>{{ 'iddocumenttypes.forms.name' | translate }}</mat-label>
+                <mat-label>{{ 'taxrates.forms.name' | translate }}</mat-label>
                 <input type="text" matInput formControlName="name" matTextareaAutosize>
+            </mat-form-field>
+            <mat-form-field class="value-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>{{ 'taxrates.forms.value' | translate }}</mat-label>
+                <input type="number" matInput formControlName="value" matTextareaAutosize>
             </mat-form-field>
         </div>
     </form>

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomTranslateService } from 'src/app/shared/services/customtranslate.service';
+import { ErrorService } from 'src/app/shared';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { SnackBarService } from 'src/app/shared/services/snackbar.service';
 import { TableColumn } from 'src/app/shared/interfaces/tablecolumn';
 import { UserResponse } from 'src/app/shared/models/userresponse';
 import { UserService } from 'src/app/shared/services/user.service';
@@ -20,8 +22,9 @@ export class UsersGridComponent implements OnInit {
   headers : TableColumn[] = [
     { header : 'Id', field : 'id', visible: 'hidden', width: '0%' },
     { header : this.translate('forms.email'), field : 'email', visible: 'visible', width: '33%' },
-    { header : this.translate('forms.firstname'), field : 'firstname', visible: 'visible', width: '33%' },
-    { header : this.translate('forms.lastname'), field : 'lastname', visible: 'visible', width: '33%' },
+    { header : this.translate('forms.password'), field : 'password', visible: 'hidden', width: '0%' },
+    { header : this.translate('forms.firstname'), field : 'firstName', visible: 'visible', width: '33%' },
+    { header : this.translate('forms.lastname'), field : 'lastName', visible: 'visible', width: '33%' },
   ];
   data: any[] = [];
 
@@ -29,7 +32,9 @@ export class UsersGridComponent implements OnInit {
     private location: Location,
     private userservice: UserService,
     private router: Router,
-    private translateService: CustomTranslateService) {
+    private translateService: CustomTranslateService,
+    private errorService: ErrorService,
+    private snackBarService: SnackBarService) {
   }
 
   ngOnInit(): void {
@@ -44,7 +49,7 @@ export class UsersGridComponent implements OnInit {
         }
       },
       error: (err: HttpErrorResponse) => {
-        console.log('Error al recuperar los usuarios', err);
+        this.snackBarService.openSnackBar(this.errorService.HttpErrorResponseToString(err));
       }
     });
   }

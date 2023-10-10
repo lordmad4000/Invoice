@@ -21,11 +21,21 @@
         "button_edit": "Edit",
         "button_delete": "Delete"
     },
-    "popup":{
-        "button_yes": "YES",
-        "button_no": "NO",
-        "button_ok": "OK",
-        "title_info": "INFORMATION"
+    "shared": {
+        "popup": {
+            "button_yes": "YES",
+            "button_no": "NO",
+            "button_ok": "OK",
+            "title_info": "INFORMATION",
+            "delete_title": "DELETE",
+            "deleted": "Record deleted.",
+            "not_deleted": "Record not deleted.",
+            "delete_message": "Do you want to delete the record?"
+        },
+        "buttons": {
+            "save": "Save",
+            "save_tooltip": "Save changes"
+        }
     },
     "home": {
         "module_title": "HOME",
@@ -43,19 +53,21 @@
             "firstname": "First Name",
             "lastname": "Last Name",
             "password_not_match": "Password not match.",
-            "button_save": "Save",
-            "button_save_tooltip": "Save changes",
             "signin": "Sign In",
             "login": "Log In"
-        },
-        "popups": {
-            "popup_delete_title": "DELETE",
-            "popup_deleted": "Record deleted.",
-            "popup_not_deleted": "Record not deleted.",
-            "popup_delete_message": "Do you want to delete the record?"
+        }
+    },
+    "iddocumenttypes": {
+        "title": "ID DOCUMENT TYPES",
+        "forms": {
+            "name": "Name"
         }
     },
     "taxrates": {
-        "title": "TAX RATES"
+        "title": "TAX RATES",
+        "forms": {
+            "name": "Name",
+            "value": "Value"
+        }
     }
 }

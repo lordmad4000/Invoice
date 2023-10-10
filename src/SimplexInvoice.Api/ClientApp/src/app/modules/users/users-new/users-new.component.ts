@@ -22,17 +22,16 @@ export class UsersNewComponent implements OnDestroy {
     this.translateService.instant('users.' + key);
 
   private user: UserRegisterRequest = new UserRegisterRequest();
-  formUser: FormGroup;
-  formLoginError = "";
+  public formUser: FormGroup;
   private subscription: Subscription | undefined;
 
   constructor(
     private location: Location,
     private userService: UserService,
     private formBuilder: FormBuilder,
+    private translateService: CustomTranslateService,
     private errorService: ErrorService,
-    private snackBarService: SnackBarService,
-    private translateService: CustomTranslateService) {
+    private snackBarService: SnackBarService) {
 
     this.formUser = this.formBuilder.group({
       email: [{ value: '', disabled: false }, Validators.required],

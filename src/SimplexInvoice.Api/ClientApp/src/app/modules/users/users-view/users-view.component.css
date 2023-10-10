@@ -39,7 +39,7 @@ mat-label {
     color: blue;
 }
 
-mat-form-field.firstname-field {
+.firstname-field {
     padding-right: 1rem;
 }
 

@@ -3,33 +3,34 @@ import { CustomTranslateService } from 'src/app/shared/services/customtranslate.
 import { ErrorService } from 'src/app/shared';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Location } from '@angular/common';
-import { IdDocumentTypeDto } from 'src/app/shared/models/iddocumenttypedto';
-import { IdDocumentTypesService } from 'src/app/shared/services/iddocumenttypes.service';
+import { TaxRateDto } from 'src/app/shared/models/taxratedto';
+import { TaxRatesService } from 'src/app/shared/services/taxrates.service';
 import { Router } from '@angular/router';
 import { SnackBarService } from 'src/app/shared/services/snackbar.service';
 import { TableColumn } from 'src/app/shared/interfaces/tablecolumn';
 
 @Component({
-  selector: 'app-iddocumenttypes-grid',
-  templateUrl: './iddocumenttypes-grid.component.html',
-  styleUrls: ['./iddocumenttypes-grid.component.css']
+  selector: 'app-taxrates-grid',
+  templateUrl: './taxrates-grid.component.html',
+  styleUrls: ['./taxrates-grid.component.css']
 })
 
-export class IdDocumentTypesGridComponent implements OnInit {
+export class TaxRatesGridComponent implements OnInit {
 
   private translate: any = (key: string) =>
-    this.translateService.instant('iddocumenttypes.' + key);
+    this.translateService.instant('taxrates.' + key);
 
 
   headers: TableColumn[] = [
     { header: 'Id', field: 'id', visible: 'hidden', width: '0%' },
-    { header: this.translate('forms.name'), field: 'name', visible: 'visible', width: '100%' },
+    { header: this.translate('forms.name'), field: 'name', visible: 'visible', width: '50%' },
+    { header: this.translate('forms.value'), field: 'value', visible: 'visible', width: '50%' },
   ];
   public data: any[] = [];
 
   constructor(
     private location: Location,
-    private idDocumentTypesService: IdDocumentTypesService,
+    private taxRatesService: TaxRatesService,
     private router: Router,
     private translateService: CustomTranslateService,
     private errorService: ErrorService,
@@ -41,8 +42,8 @@ export class IdDocumentTypesGridComponent implements OnInit {
   }
 
   loadGridData() {
-    this.idDocumentTypesService.GetAll().subscribe({
-      next: (res: Array<IdDocumentTypeDto>) => {
+    this.taxRatesService.GetAll().subscribe({
+      next: (res: Array<TaxRateDto>) => {
         if (res) {
           this.data = res;
         }
@@ -54,12 +55,12 @@ export class IdDocumentTypesGridComponent implements OnInit {
   }
 
   getRecord(event: any) {
-    const row = event as IdDocumentTypeDto;
-    this.router.navigate(['/iddocumenttypes/view', `${row.id}`]);
+    const row = event as TaxRateDto;
+    this.router.navigate(['/taxrates/view', `${row.id}`]);
   }
 
   addButtonClick() {
-    this.router.navigate(['/iddocumenttypes/new']);
+    this.router.navigate(['/taxrates/new']);
   }
 
   backButtonClick() {

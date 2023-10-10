@@ -3,51 +3,52 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ErrorService } from 'src/app/shared/services/error.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { IdDocumentTypeDto } from 'src/app/shared/models/iddocumenttypedto';
-import { IdDocumentTypesService } from 'src/app/shared/services/iddocumenttypes.service';
+import { TaxRateDto } from 'src/app/shared/models/taxratedto';
+import { TaxRatesService } from 'src/app/shared/services/taxrates.service';
 import { Location } from '@angular/common';
 import { SnackBarService } from 'src/app/shared/services/snackbar.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-iddocumenttypes-edit',
-  templateUrl: './iddocumenttypes-edit.component.html',
-  styleUrls: ['./iddocumenttypes-edit.component.css']
+  selector: 'app-taxrates-edit',
+  templateUrl: './taxrates-edit.component.html',
+  styleUrls: ['./taxrates-edit.component.css']
 })
-export class IdDocumentTypesEditComponent implements OnInit, OnDestroy {
+export class TaxRatesEditComponent implements OnInit, OnDestroy {
 
-  private idDocumentType: IdDocumentTypeDto = new IdDocumentTypeDto();
-  public formIdDocumentType: FormGroup;
+  private taxRate: TaxRateDto = new TaxRateDto();
+  public formTaxRate: FormGroup;
   private subscription: Subscription | undefined;
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private idDocumentTypesService: IdDocumentTypesService,
+    private taxRatesService: TaxRatesService,
     private formBuilder: FormBuilder,
     private errorService: ErrorService,
     private router: Router,
     private snackBarService: SnackBarService) {
 
-    this.formIdDocumentType = this.formBuilder.group({
+    this.formTaxRate = this.formBuilder.group({
       id: [{ value: '', disabled: true }],
       name: [{ value: '', disabled: false }],
+      value: [{ value: '', disabled: false }],
     });
   }
 
   ngOnInit(): void {
     this.subscription = this.route.params.subscribe((params: Params): void => {
       const id = params['id'];
-      this.getIdDocumentType(id);
+      this.getTaxRate(id);
     });
   }
 
-  private getIdDocumentType(id: string) {
-    this.idDocumentTypesService.Get(id).subscribe({
-      next: (res: IdDocumentTypeDto) => {
+  private getTaxRate(id: string) {
+    this.taxRatesService.Get(id).subscribe({
+      next: (res: TaxRateDto) => {
         if (res) {
-          this.idDocumentType = res;
-          this.formIdDocumentType.patchValue(res);
+          this.taxRate = res;
+          this.formTaxRate.patchValue(res);
         }
       },
       error: (err: HttpErrorResponse) => {
@@ -57,12 +58,13 @@ export class IdDocumentTypesEditComponent implements OnInit, OnDestroy {
   }
 
   saveButtonClick() {
-    this.idDocumentType.id = this.formIdDocumentType.get("id")?.value;
-    this.idDocumentType.name = this.formIdDocumentType.get("name")?.value;
-    this.idDocumentTypesService.Update(this.idDocumentType).subscribe({
-      next: (res: IdDocumentTypeDto) => {
+    this.taxRate.id = this.formTaxRate.get("id")?.value;
+    this.taxRate.name = this.formTaxRate.get("name")?.value;
+    this.taxRate.value = this.formTaxRate.get("value")?.value;
+    this.taxRatesService.Update(this.taxRate).subscribe({
+      next: (res: TaxRateDto) => {
         if (res) {
-          this.router.navigate(['/iddocumenttypes/view', `${res.id}`]);
+          this.router.navigate(['/taxrates/view', `${res.id}`]);
         }
       },
       error: (err: HttpErrorResponse) => {

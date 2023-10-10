@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { TaxRateDto } from '../models/taxratedto';
-import { TaxRateRegisterRequest } from '../models/TaxRateRegisterRequest';
+import { TaxRateRegisterRequest } from '../models/taxrateregisterrequest';
 import { environment } from 'src/environments/environment';
 
 @Injectable()
