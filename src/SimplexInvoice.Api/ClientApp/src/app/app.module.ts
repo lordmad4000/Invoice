@@ -5,6 +5,7 @@ import { AuthenticationService, ErrorService, JWTService, LoadFileService, Popup
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
+import { CustomTranslateService } from './shared/services/customtranslate.service';
 import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { HomeModule } from './modules/home';
@@ -14,11 +15,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NavmenuComponent, PopupComponent } from './components';
 import { NgModule } from '@angular/core';
+import { SnackBarService } from './shared/services/snackbar.service';
+import { TaxRatesModule } from './modules/taxrates';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { UsersModule } from './modules/users';
-import { CustomTranslateService } from './shared/services/customtranslate.service';
-import { SnackBarService } from './shared/services/snackbar.service';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { SnackBarService } from './shared/services/snackbar.service';
     NavmenuComponent,
     PopupComponent,
     UsersModule,
+    TaxRatesModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
