@@ -1,4 +1,5 @@
 export * from './authentication.service';
+export * from './companies.service';
 export * from './customtranslate.service';
 export * from './error.service';
 export * from './iddocumenttypes.service';

@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
+import { IdDocumentTypeDto } from '../models/iddocumenttypedto';
+import { IdDocumentTypeRegisterRequest } from '../models/iddocumenttyperegisterrequest';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
-import { IdDocumentTypeDto } from '../models/iddocumenttypedto';
-import { IdDocumentTypeRegisterRequest } from '../models/iddocumenttyperegisterrequest';
 
 @Injectable()
 export class IdDocumentTypesService {
@@ -27,18 +27,18 @@ export class IdDocumentTypesService {
         return this.httpClient.get<IdDocumentTypeDto>(url);
     }
 
-    public Post(iddocumenttype: IdDocumentTypeRegisterRequest): Observable<IdDocumentTypeDto> {
+    public Post(idDocumentTypeRegisterRequest: IdDocumentTypeRegisterRequest): Observable<IdDocumentTypeDto> {
 
         const url = `${this.baseUrl}/Register`;
 
-        return this.httpClient.post<IdDocumentTypeDto>(url, iddocumenttype);
+        return this.httpClient.post<IdDocumentTypeDto>(url, idDocumentTypeRegisterRequest);
     }
 
-    public Update(iddocumenttype: IdDocumentTypeDto): Observable<IdDocumentTypeDto> {
+    public Update(idDocumentTypeDto: IdDocumentTypeDto): Observable<IdDocumentTypeDto> {
 
         const url = `${this.baseUrl}/Update`;
 
-        return this.httpClient.put<IdDocumentTypeDto>(url, iddocumenttype);
+        return this.httpClient.put<IdDocumentTypeDto>(url, idDocumentTypeDto);
     }
 
     public Delete(id: string): Observable<boolean> {

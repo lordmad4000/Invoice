@@ -27,22 +27,13 @@ public class CompaniesController : ApiController
         _logger = logger;
     }
 
-    [HttpGet("GetById{id}")]
-    public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
+    [HttpGet("Get")]
+    public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
-        var query = new GetCompanyByIdQuery(id);
+        var query = new GetCompanyQuery();
         CompanyDto companyDto = await _mediator.Send(query, cancellationToken);
 
         return Ok(companyDto);
-    }
-
-    [HttpGet("GetAll")]
-    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
-    {
-        var query = new GetCompaniesQuery();
-        var companiesDto = await _mediator.Send(query, cancellationToken);
-
-        return Ok(companiesDto);
     }
 
     [HttpPut("Update")]

@@ -69,5 +69,20 @@
             "name": "Nombre",
             "value": "Valor"
         }
+    },
+    "companies": {
+        "title": "EMPRESA",
+        "forms": {
+            "name": "Nombre",
+            "iddocumenttype": "Tipo de Documento",
+            "iddocumentnumber": "Número de Documento",
+            "street": "Calle",
+            "city": "Ciudad",
+            "state": "Estado",
+            "country": "País",
+            "postalcode": "Código Postal",
+            "phone": "Número de Teléfono",
+            "email": "Correo Electronico"
+        }
     }
 }

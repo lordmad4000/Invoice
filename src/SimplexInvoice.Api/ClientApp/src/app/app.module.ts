@@ -5,6 +5,7 @@ import { AuthenticationService, ErrorService, JWTService, LoadFileService, Popup
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
+import { CompaniesModule } from './modules/companies';
 import { CustomTranslateService } from './shared/services/customtranslate.service';
 import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
@@ -42,6 +43,7 @@ import { UsersModule } from './modules/users';
     PopupComponent,
     UsersModule,
     TaxRatesModule,
+    CompaniesModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

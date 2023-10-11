@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/internal/Observable';
-import { environment } from 'src/environments/environment';
-import { UserResponse } from '../models/userresponse';
-import { UserRegisterRequest } from '../models/userregisterrequest';
-import { UserUpdateRequest } from '../models/userupdaterequest';
 import { JsonDocument } from '../models/jsondocument';
+import { Observable } from 'rxjs/internal/Observable';
+import { UserRegisterRequest } from '../models/userregisterrequest';
+import { UserResponse } from '../models/userresponse';
+import { UserUpdateRequest } from '../models/userupdaterequest';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class UserService {
@@ -36,18 +36,18 @@ export class UserService {
         return this.httpClient.get<UserResponse>(url);
     }
 
-    public Post(user: UserRegisterRequest): Observable<UserResponse> {
+    public Post(userRegisterRequest: UserRegisterRequest): Observable<UserResponse> {
 
         const url = `${this.baseUrl}/Register`;
 
-        return this.httpClient.post<UserResponse>(url, user);
+        return this.httpClient.post<UserResponse>(url, userRegisterRequest);
     }
 
-    public Update(user: UserUpdateRequest): Observable<UserResponse> {
+    public Update(userUpdateRequest: UserUpdateRequest): Observable<UserResponse> {
 
         const url = `${this.baseUrl}/Update`;
 
-        return this.httpClient.put<UserResponse>(url, user);
+        return this.httpClient.put<UserResponse>(url, userUpdateRequest);
     }
 
     public Patch(jsonDocument: JsonDocument[], id: string): Observable<UserResponse> {

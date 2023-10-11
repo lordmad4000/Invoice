@@ -1,0 +1,65 @@
+<div class="companies-edit-container">
+    <mat-toolbar class="head-toolbar">
+        <mat-toolbar-row>
+            <button mat-button matTooltip="{{ 'head-toolbar.button_back' | translate }}" (click)="backButtonClick()">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <div class="outer-box">
+                <h1 class="module-title">{{ 'companies.title' | translate }}</h1>
+            </div>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <form class="company-form" [formGroup]="formCompany">
+        <div class="div-fields">
+            <mat-form-field class="name-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>{{ 'companies.forms.name' | translate }}</mat-label>
+                <input type="text" matInput formControlName="name" matTextareaAutosize>
+            </mat-form-field>
+            <mat-divider></mat-divider>
+            <mat-form-field class="iddocumenttype-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>{{ 'companies.forms.iddocumenttype' | translate }}</mat-label>
+                <input type="text" matInput formControlName="idDocumentTypeName" matTextareaAutosize>
+            </mat-form-field>
+            <mat-form-field class="iddocumentnumber-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>{{ 'companies.forms.iddocumentnumber' | translate }}</mat-label>
+                <input type="text" matInput formControlName="idDocumentNumber" matTextareaAutosize>
+            </mat-form-field>
+            <mat-divider></mat-divider>
+            <mat-form-field class="street-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>{{ 'companies.forms.street' | translate }}</mat-label>
+                <input type="text" matInput formControlName="street" matTextareaAutosize>
+            </mat-form-field>
+            <mat-form-field class="city-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>{{ 'companies.forms.city' | translate }}</mat-label>
+                <input type="text" matInput formControlName="city" matTextareaAutosize>
+            </mat-form-field>
+            <mat-form-field class="postalcode-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>{{ 'companies.forms.postalcode' | translate }}</mat-label>
+                <input type="text" matInput formControlName="postalCode" matTextareaAutosize>
+            </mat-form-field>
+            <mat-divider></mat-divider>
+            <mat-form-field class="state-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>{{ 'companies.forms.state' | translate }}</mat-label>
+                <input type="text" matInput formControlName="state" matTextareaAutosize>
+            </mat-form-field>
+            <mat-form-field class="country-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>{{ 'companies.forms.country' | translate }}</mat-label>
+                <input type="text" matInput formControlName="country" matTextareaAutosize>
+            </mat-form-field>
+            <mat-divider></mat-divider>            
+            <mat-form-field class="phone-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>{{ 'companies.forms.phone' | translate }}</mat-label>
+                <input type="text" matInput formControlName="phone" matTextareaAutosize>
+            </mat-form-field>
+            <mat-form-field class="email-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>{{ 'companies.forms.email' | translate }}</mat-label>
+                <input type="text" matInput formControlName="email" matTextareaAutosize>
+            </mat-form-field>
+        </div>
+        <div>
+            <button mat-raised-button class="button-save" color="primary" mat-button
+                matTooltip="{{ 'shared.buttons.save_tooltip' | translate }}" (click)="saveButtonClick()"
+                [disabled]="formCompany.invalid">{{ 'shared.buttons.save' | translate }}</button>
+        </div>
+    </form>
+</div>
