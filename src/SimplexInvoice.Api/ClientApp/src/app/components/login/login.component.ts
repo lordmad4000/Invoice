@@ -1,28 +1,33 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { UserLoginResponse } from '../../shared/models/userloginresponse';
 import { AuthenticationService } from '../../shared/services/authentication.service';
+import { CommonModule } from '@angular/common';
+import { Component, OnDestroy } from '@angular/core';
+import { ErrorService } from 'src/app/shared';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { SnackBarService } from 'src/app/shared/services/snackbar.service';
+import { Subscription } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
+import { UserLoginResponse } from '../../shared/models/userloginresponse';
 
 @Component({
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    CommonModule
-  ], 
-
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSnackBarModule,
+    ReactiveFormsModule,
+    TranslateModule
+  ],
 })
 export class LoginComponent implements OnDestroy {
   formLogin: FormGroup;
@@ -30,20 +35,20 @@ export class LoginComponent implements OnDestroy {
   private subscription: Subscription | undefined;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private authenticationService : AuthenticationService,
-    private router: Router
+    private authenticationService: AuthenticationService,
+    private router: Router,
+    private snackBarService: SnackBarService,
+    private errorService: ErrorService
   ) {
-
     this.formLogin = new FormGroup({
-      version: new FormControl( { value: '1.0.0', disabled: true }, Validators.required),
-      email: new FormControl( '', Validators.required),
-      password: new FormControl( '', Validators.required),
+      version: new FormControl({ value: '1.0.0', disabled: true }, Validators.required),
+      email: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required),
     })
 
   }
 
-  Login() {    
+  Login() {
     this.authenticationService
       .Login(this.formLogin.value.email, this.formLogin.value.password)
       .subscribe({
@@ -58,15 +63,7 @@ export class LoginComponent implements OnDestroy {
           }
         },
         error: (err: HttpErrorResponse) => {
-          console.log('Error en el login', err);
-          const error = new String(err.error).valueOf();
-          if (error.includes('html') || !error){
-            this.formLoginError = "Unexpected error";
-          }
-          else {
-            this.formLoginError = err.error;
-          }
-
+          this.snackBarService.openSnackBar(this.errorService.HttpErrorResponseToString(err));
         },
       });
   }

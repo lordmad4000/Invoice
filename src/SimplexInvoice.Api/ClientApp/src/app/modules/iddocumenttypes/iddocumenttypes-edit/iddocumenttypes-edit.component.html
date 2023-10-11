@@ -1,0 +1,26 @@
+<div class="iddocumenttypes-edit-container">
+    <mat-toolbar class="head-toolbar">
+        <mat-toolbar-row>
+            <button mat-button matTooltip="{{ 'head-toolbar.button_back' | translate }}" (click)="backButtonClick()">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <div class="outer-box">
+                <h1 class="module-title">{{ 'iddocumenttypes.title' | translate }}</h1>
+            </div>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <form class="iddocumenttype-form" [formGroup]="formIdDocumentType">
+        <div class="div-fields">
+            <mat-form-field class="name-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>{{ 'iddocumenttypes.forms.name' | translate }}</mat-label>
+                <input type="text" matInput formControlName="name" matTextareaAutosize>
+            </mat-form-field>
+            <mat-divider></mat-divider>
+        </div>
+        <div>
+            <button mat-raised-button class="button-save" color="primary" mat-button
+                matTooltip="{{ 'shared.buttons.save_tooltip' | translate }}" (click)="saveButtonClick()"
+                [disabled]="formIdDocumentType.invalid">{{ 'shared.buttons.save' | translate }}</button>
+        </div>
+    </form>
+</div>

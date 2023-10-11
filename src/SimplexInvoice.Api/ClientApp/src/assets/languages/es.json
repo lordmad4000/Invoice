@@ -1,0 +1,88 @@
+{
+    "navmenu": {
+        "title": "Simplex Invoice App",
+        "home": "Inicio",
+        "configuration": "Configuración",
+        "company": "Empresa",
+        "iddocumenttypes": "Documentos de identidad",
+        "taxrates": "Impuestos",
+        "users": "Usuarios",
+        "customers": "Clientes",
+        "products": "Productos",
+        "invoices": "Facturas",
+        "login": "Abrir sesión",
+        "logout": "Cerrar sesión",
+        "about_title": "Acerca de SimplexInvoiceApp",
+        "about_msg": "Versión: 0.1a | Token de vencimiento: "
+    },
+    "head-toolbar": {
+        "button_back": "Atras",
+        "button_add": "Añadir",
+        "button_edit": "Modificar",
+        "button_delete": "Eliminar"
+    },
+    "shared": {
+        "popup": {
+            "button_yes": "SI",
+            "button_no": "NO",
+            "button_ok": "ACEPTAR",
+            "title_info": "INFORMACIÓN",
+            "delete_title": "ELIMINAR",
+            "deleted": "Registro eliminado.",
+            "not_deleted": "Registro no eliminado.",
+            "delete_message": "¿Quiere eliminar el registro?"
+        },
+        "buttons": {
+            "save": "Guardar",
+            "save_tooltip": "Guardar cambios"
+        }
+    },
+    "home": {
+        "module_title": "INICIO",
+        "last_users": "ÚLTIMOS USUARIOS",
+        "email": "Correo Electronico",
+        "firstname": "Nombre",
+        "lastname": "Apellido"
+    },
+    "users": {
+        "title": "USUARIOS",
+        "forms": {
+            "email": "Correo Electronico",
+            "password": "Contraseña",
+            "confirm_password": "Confirme la Contraseña",
+            "firstname": "Nombre",
+            "lastname": "Apellido",
+            "password_not_match": "La Contraseña no coincide.",
+            "signin": "Iniciar Sesión",
+            "login": "Abrir Sesión"
+        }
+    },
+    "iddocumenttypes": {
+        "title": "TIPOS DE DOCUMENTO",
+        "forms": {
+            "name": "Nombre"
+        }
+    },
+    "taxrates": {
+        "title": "IMPUESTOS",
+        "forms": {
+            "name": "Nombre",
+            "value": "Valor"
+        }
+    },
+    "companies": {
+        "title": "EMPRESA",
+        "forms": {
+            "name": "Nombre",
+            "iddocumenttype": "Tipo de Documento",
+            "iddocumentnumber": "Número de Documento",
+            "street": "Calle",
+            "city": "Ciudad",
+            "state": "Estado",
+            "country": "País",
+            "postalcode": "Código Postal",
+            "phone": "Número de Teléfono",
+            "email": "Correo Electronico"
+        }
+    }
+}

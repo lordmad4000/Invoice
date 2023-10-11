@@ -1,50 +1,23 @@
+.nav-menu {
+  display: block;
+}
 mat-toolbar {
   background: #009bee;
   color: white;
 }
 
-.button-menu {
-  background: #009bee;
-}
-
-mat-sidenav-container {
-  grid-template-rows: auto 1fr;
-}
-
 mat-icon {
-  padding-right: 8px;
+  padding-right: 1rem;
 }
 
 .flex-expand {
   flex: 1 1 auto;
 }
 
-mat-sidenav {
-  margin: 16px;
-  width: 200px;
-  border-right: none;
-  background: #009bee;
-  color: white;
-  border-radius: 20px;
-  padding: 16px;
-  text-align: left;  
+.mat-select {
+  max-width: 5rem;
 }
 
-.content {
-  margin: 16px 32px 16px 32px;
-  width: 95%;
-  border-radius: 10px;
-  /* height: calc(100vh * 0.90); */
-  height: 900px;
-  font-size: 1rem;
-  color: lightgray;
-}
-
-.navmenu-about {
-  display: block;
-  margin: 0 !important;
-  padding: 0 !important;
-  border-top-width: 10px;
-  border-top-style: solid;
-  border-top-color: transparent;
+.mat-options {
+  font-size: 0.9rem;
 }

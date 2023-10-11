@@ -1,0 +1,11 @@
+.base-grid-container {
+    padding: 0.5rem;
+}
+
+table {
+    vertical-align: top;
+    text-align: left;
+    margin-top: 1rem;
+    overflow: auto;
+    background-color: #FAFAFA;
+}

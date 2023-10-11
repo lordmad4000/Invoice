@@ -4,7 +4,7 @@ using SimplexInvoice.Application.Common.Dto;
 using SimplexInvoice.Application.Common.Interfaces.Persistance;
 using SimplexInvoice.Application.Companies.Exceptions;
 using SimplexInvoice.Domain.Companies;
-using SimplexInvoice.Domain.Exceptions;
+using SimplexInvoice.Application.Common.Exceptions;
 using SimplexInvoice.Domain.ValueObjects;
 using System;
 using System.Linq;

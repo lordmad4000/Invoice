@@ -1,6 +1,6 @@
 export class GlobalConstants {
 
-    public static customWidthPopup = "325px";
+    public static customWidthPopup = "20.313rem";
 
     public static customHeightPopup = "auto";
 

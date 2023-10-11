@@ -1,0 +1,56 @@
+.iddocumenttypes-view-container {
+    padding: 0.5rem;
+}
+
+.module-title {
+    padding-top: 0.5rem;
+}
+
+.head-toolbar {
+    vertical-align: top;
+    text-align: left;
+    overflow: auto;
+    background-color: #FAFAFA;
+}
+
+.outer-box {
+    margin: 1rem auto;
+    text-align: center;
+    width: 18rem;
+    height: 3rem;
+    background: #009bee;
+    color: white;
+    border-radius: 0.8rem;
+}
+
+.iddocumenttype-form {
+    vertical-align: top;
+    text-align: left;
+    width: 98%;
+    height: 98%;
+}
+
+.div-fields {
+    margin-top: 2.5rem;
+    margin-left: 2.5rem;
+}
+
+mat-label {
+    color: blue;
+}
+
+.name-field {
+    padding-right: 1rem;
+}
+
+.iddocumenttype-form input {
+    width: fit-content;
+    color: green;
+}
+
+mat-divider {    
+    width: 100%;
+    padding: 0.125rem;
+    color: transparent;
+    border: 0.063rem;
+}

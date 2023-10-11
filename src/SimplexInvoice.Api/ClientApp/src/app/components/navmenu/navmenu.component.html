@@ -1,41 +1,28 @@
-<mat-toolbar>
-  <mat-toolbar-row>
-    <button mat-mini-fab class="button-menu" matTooltip="Show/Hide Navigation Bar" (click)="toggleSidenavClick(sidenav)">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <span class="flex-expand"></span>
-    <h1>SimplexInvoiceApp</h1>
-    <span class="flex-expand"></span>
-    <button mat-button matTooltip="Login" (click)="loginButtonClick()">
-      <mat-icon>account_circle</mat-icon>
-    </button>
-  </mat-toolbar-row>
-</mat-toolbar>
-<mat-sidenav-container class="mat-sidenav-container" autosize>
-  <mat-sidenav #sidenav class="mat-elevation-z8" opened="true" mode="side">
-    <mat-list-item>
-      <button mat-button (click)="homeButtonClick()">
-        <mat-icon>home</mat-icon>
-        <span>Home</span>
-      </button>
-    </mat-list-item>
-    <mat-list-item>
-      <button mat-button (click)="usersButtonClick()">
-        <mat-icon>person</mat-icon>
-        <span>Users</span>
-      </button>
-    </mat-list-item>
-    <mat-divider class="navmenu-about"></mat-divider>
-    <mat-list-item>
-      <button mat-button (click)="aboutButtonClick()">
-        <mat-icon>info</mat-icon>
-        <span>About</span>
-      </button>
-    </mat-list-item>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <div class="content mat-elevation-z8">
-      <router-outlet></router-outlet>
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<div class="nav-menu">
+  <mat-toolbar>
+    <mat-toolbar-row>
+      <button mat-button (click)="aboutButtonClick()">Simplex Invoice App<mat-icon>pix</mat-icon></button>
+      <button mat-button (click)="homeButtonClick()">{{ 'navmenu.home' | translate }}<mat-icon>home</mat-icon></button>
+      <button mat-button [matMenuTriggerFor]="homeMenu">{{ 'navmenu.configuration' | translate }}<mat-icon>settings</mat-icon></button>
+      <mat-menu #homeMenu="matMenu">
+        <button mat-menu-item (click)="companiesButtonClick()">{{ 'navmenu.company' | translate }}<mat-icon>location_city</mat-icon></button>
+        <button mat-menu-item (click)="idDocumentTypesButtonClick()">{{ 'navmenu.iddocumenttypes' | translate }}<mat-icon>featured_play_list</mat-icon></button>
+        <button mat-menu-item (click)="taxRatesButtonClick()">{{ 'navmenu.taxrates' | translate }}<mat-icon>attach_money</mat-icon></button>
+      </mat-menu>    
+      <button mat-button (click)="usersButtonClick()">{{ 'navmenu.users' | translate }}<mat-icon>people icon</mat-icon></button>
+      <button mat-button (click)="homeButtonClick()">{{ 'navmenu.customers' | translate }}<mat-icon>contacts</mat-icon></button>
+      <button mat-button (click)="homeButtonClick()">{{ 'navmenu.products' | translate }}<mat-icon>shopping_basket</mat-icon></button>
+      <button mat-button (click)="homeButtonClick()">{{ 'navmenu.invoices' | translate }}<mat-icon>receipt</mat-icon></button>
+      <span class="flex-expand"></span>
+      <mat-select class="mat-select" hideSingleSelectionIndicator="true" (selectionChange)="onChangeLanguage($event)" [value]="indexInitialOption">
+        <mat-option class="mat-options" *ngFor="let option of languageOptions" [value]="option.value">{{ option.display }}</mat-option>
+      </mat-select>
+      <button mat-button [matMenuTriggerFor]="loginMenu" matTooltip="Login"><mat-icon>account_circle</mat-icon></button>
+      <mat-menu #loginMenu="matMenu">
+        <button mat-menu-item (click)="loginButtonClick()">{{ 'navmenu.login' | translate }}<mat-icon>login</mat-icon></button>
+        <button mat-menu-item>{{ 'navmenu.logout' | translate }}<mat-icon>logout</mat-icon></button>
+      </mat-menu>    
+    </mat-toolbar-row>
+  </mat-toolbar>
+</div>
+<router-outlet></router-outlet>

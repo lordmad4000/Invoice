@@ -1,11 +1,13 @@
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { CustomTranslateService } from 'src/app/shared/services/customtranslate.service';
+import { ErrorService, PopupService, UserService } from 'src/app/shared';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { GlobalConstants } from 'src/app/shared/const/global-constants';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Location } from  '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { SnackBarService } from 'src/app/shared/services/snackbar.service';
 import { Subscription } from 'rxjs';
-import { PopupService, UserService } from 'src/app/shared';
-import { GlobalConstants } from 'src/app/shared/const/global-constants';
 import { UserResponse } from 'src/app/shared/models/userresponse';
 
 @Component({
@@ -15,8 +17,7 @@ import { UserResponse } from 'src/app/shared/models/userresponse';
 })
 export class UsersViewComponent implements OnInit, OnDestroy {
 
-  formUser: FormGroup;
-  formLoginError = "";
+  public formUser: FormGroup;
   private subscription: Subscription | undefined;
   private id = "";
 
@@ -26,9 +27,12 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private formBuilder: FormBuilder,
     private popupService: PopupService,
-    private router: Router) {
+    private router: Router,
+    private translateService: CustomTranslateService,
+    private errorService: ErrorService,
+    private snackBarService: SnackBarService) {
 
-    this.formUser = formBuilder.group({
+    this.formUser = this.formBuilder.group({
       id: [{ value: '', disabled: true }],
       email: [{ value: '', disabled: true }],
       firstName: [{ value: '', disabled: true }],
@@ -39,7 +43,6 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.route.params.subscribe((params: Params): void => {
       this.id = params['id'];
-      console.log(this.id);
       this.getUser(this.id);
     });
   }
@@ -53,25 +56,22 @@ export class UsersViewComponent implements OnInit, OnDestroy {
           }
         },
         error: (err: HttpErrorResponse) => {
-          console.log('Error al recuperar el usuario', err);
+          this.snackBarService.openSnackBar(this.errorService.HttpErrorResponseToString(err));
         }
       })
   }
 
   backButtonClick() {
-    console.log("Back button.");
     this.location.back();
   }
 
   editButtonClick() {
-    console.log("Edit button.");
     this.router.navigate(['/users/edit', `${this.id} `]);
   }
 
   deleteButtonClick() {
-    console.log("Delete button.");
       this.popupService
-      .createConfirmPopup("Do you want to remove the item?")
+      .createConfirmPopup(this.translateService.instant('shared.popup.delete_title'), this.translateService.instant('shared.popup.delete_message'))
       .afterClosed()
       .subscribe(result => {
         if (result == GlobalConstants.popupYesValue) {
@@ -86,15 +86,15 @@ export class UsersViewComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (res: boolean) => {          
           if (res) {            
-            this.popupService.openPopupAceptar("REMOVE", "Item removed.", "300px", "");
+            this.popupService.openPopupAceptar(this.translateService.instant('shared.popup.delete_title'), this.translateService.instant('shared.popup.deleted'), "18.75rem", "");
             this.router.navigate(['/users/grid']);
           }
           else{
-            this.popupService.openPopupAceptar("REMOVE", "Item not removed.", "300px", "");
+            this.popupService.openPopupAceptar(this.translateService.instant('shared.popup.delete_title'), this.translateService.instant('shared.popup.not_deleted'), "18.75rem", "");
           }          
         },
         error: (err: HttpErrorResponse) => {
-          console.log('Error al recuperar el usuario', err);
+          this.snackBarService.openSnackBar(this.errorService.HttpErrorResponseToString(err));
         }
       })
   }
@@ -105,6 +105,5 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     }
 
   }
-
 
 }

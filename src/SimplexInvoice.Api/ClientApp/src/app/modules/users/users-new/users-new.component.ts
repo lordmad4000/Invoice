@@ -1,13 +1,13 @@
-import { Location } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy } from '@angular/core';
+import { CustomTranslateService } from 'src/app/shared/services/customtranslate.service';
+import { ErrorService } from 'src/app/shared/services';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Location } from '@angular/common';
+import { SnackBarService } from 'src/app/shared/services/snackbar.service';
 import { Subscription } from 'rxjs';
 import { UserRegisterRequest } from 'src/app/shared/models/userregisterrequest';
 import { UserResponse } from 'src/app/shared/models/userresponse';
-import { ErrorService } from 'src/app/shared/services';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
@@ -18,22 +18,23 @@ import { UserService } from 'src/app/shared/services/user.service';
 
 export class UsersNewComponent implements OnDestroy {
 
+  private translate: any = (key: string) =>
+    this.translateService.instant('users.' + key);
+
   private user: UserRegisterRequest = new UserRegisterRequest();
-  formUser: FormGroup;
-  formLoginError = "";
+  public formUser: FormGroup;
   private subscription: Subscription | undefined;
 
   constructor(
-    private route: ActivatedRoute,
     private location: Location,
     private userService: UserService,
     private formBuilder: FormBuilder,
+    private translateService: CustomTranslateService,
     private errorService: ErrorService,
-    private router: Router,
-    private snackBar: MatSnackBar) {
+    private snackBarService: SnackBarService) {
 
-    this.formUser = formBuilder.group({
-      email: [{ value: '', disabled: false }, Validators.required ],
+    this.formUser = this.formBuilder.group({
+      email: [{ value: '', disabled: false }, Validators.required],
       password: [{ value: '', disabled: false }, Validators.required],
       confirmPassword: [{ value: '', disabled: false }, Validators.required],
       firstName: [{ value: '', disabled: false }, Validators.required],
@@ -41,38 +42,18 @@ export class UsersNewComponent implements OnDestroy {
     });
   }
 
-  openSnackBar(message: string) {
-    this.snackBar.open(message, '', { duration: 1 * 1000 });
-  }
-
-  checkPassword() : boolean{
+  checkPassword(): boolean {
     const password = this.formUser.get('password')?.value;
     const confirmPassword = this.formUser.get('confirmPassword')?.value;
     if (!password || !confirmPassword || password !== confirmPassword) {
-      this.openSnackBar('Password not match');
+      this.snackBarService.openSnackBar(this.translate('forms.password_not_match'));
       return false;
     }
 
     return true;
   }
 
-  private getUser(id: string) {
-    this.userService.Get(id).subscribe({
-      next: (res: UserResponse) => {
-        if (res) {
-          this.user = res;
-          this.formUser.patchValue(res);
-        }
-      },
-      error: (err : HttpErrorResponse) => {
-        console.log('Error al recuperar el usuario', err);
-      }
-    })
-  }
-
-
   saveButtonClick() {
-    console.log("Save button.");
     if (this.checkPassword() === false)
       return;
 
@@ -88,20 +69,13 @@ export class UsersNewComponent implements OnDestroy {
         }
       },
       error: (err: HttpErrorResponse) => {
-        const errors = this.errorService.GetErrorsFromHttp(err);
-        if (errors.length > 0) {
-          errors.forEach(clientError => {
-            console.log(clientError);
-            this.openSnackBar(clientError);
-          });
-        }
+        this.snackBarService.openSnackBar(this.errorService.HttpErrorResponseToString(err));
       }
     });
 
   }
 
   backButtonClick() {
-    console.log("Back button.");
     this.location.back();
   }
 
@@ -109,7 +83,6 @@ export class UsersNewComponent implements OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-
   }
 
 }

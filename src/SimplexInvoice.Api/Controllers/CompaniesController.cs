@@ -1,56 +1,49 @@
 using AutoMapper;
-using SimplexInvoice.Application.Companies.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SimplexInvoice.Application.Common.Dto;
 using SimplexInvoice.Api.Models.Request;
+using SimplexInvoice.Application.Common.Dto;
+using SimplexInvoice.Application.Common.Interfaces.Persistance;
+using SimplexInvoice.Application.Companies.Commands;
 using SimplexInvoice.Application.Companies.Queries;
 
 namespace SimplexInvoice.Api.Controllers;
 
 [Authorize]
-[AllowAnonymous]
 [ApiController]
 [Route("api/[controller]")]
 public class CompaniesController : ApiController
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
+    private readonly ICustomLogger _logger;
     public CompaniesController(IMediator mediator,
-                              IMapper mapper)
+                               IMapper mapper,
+                               ICustomLogger logger)
     {
         _mediator = mediator;
         _mapper = mapper;
+        _logger = logger;
     }
 
-    [HttpGet("GetById{id}")]
-    public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
+    [HttpGet("Get")]
+    public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
-        var query = new GetCompanyByIdQuery(id);
+        var query = new GetCompanyQuery();
+        CompanyDto companyDto = await _mediator.Send(query, cancellationToken);
 
-        return (Ok(await _mediator.Send(query, cancellationToken)));
-    }
-
-    [HttpGet("GetAll")]
-    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
-    {
-        var query = new GetCompaniesQuery();
-        var companiesDto = await _mediator.Send(query, cancellationToken);
-
-        return (Ok(companiesDto));
+        return Ok(companyDto);
     }
 
     [HttpPut("Update")]
     public async Task<IActionResult> RegisterUpdate([FromBody] CompanyRegisterUpdateRequest CompanyRegisterUpdateRequest, CancellationToken cancellationToken)
     {
-        if (!ModelState.IsValid)
-            throw new Exception(ModelState.ToString());
-
+        EnsureModelStateIsValid();
         var CompanyRegisterUpdateCommand = _mapper.Map<CompanyRegisterUpdateCommand>(CompanyRegisterUpdateRequest);
         CompanyDto companyDto = await _mediator.Send(CompanyRegisterUpdateCommand, cancellationToken);
 
-        return (Ok(companyDto));
+        return Ok(companyDto);
     }
 
 }

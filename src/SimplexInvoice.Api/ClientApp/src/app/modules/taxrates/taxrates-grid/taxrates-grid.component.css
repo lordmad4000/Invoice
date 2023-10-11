@@ -1,0 +1,24 @@
+.taxrates-grid-container {
+    padding: 0.5rem;
+}
+
+.module-title {
+    padding-top: 0.5rem;
+}
+
+.head-toolbar {
+    vertical-align: top;
+    text-align: left;
+    overflow: auto;
+    background-color: #FAFAFA;
+}
+
+.outer-box {
+    margin: 1rem auto;
+    text-align: center;
+    width: 12rem;
+    height: 3rem;
+    background: #009bee;
+    color: white;
+    border-radius: 0.8rem;
+}

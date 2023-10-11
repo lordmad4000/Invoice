@@ -1,9 +1,11 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ErrorService } from 'src/app/shared';
+import { HttpErrorResponse } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { UserService } from '../../shared/services/user.service';
+import { SnackBarService } from 'src/app/shared/services/snackbar.service';
 import { UserResponse } from 'src/app/shared/models/userresponse';
+import { UserService } from '../../shared/services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -15,21 +17,17 @@ export class HomeComponent implements OnInit {
 
     displayedColumns: string[] = [
       "email",
-      "firstname",
-      "lastname"
-    ];
-  
-    start = 0;
-    limit = 50;
-    end: number = this.limit + this.start;
-    selectedRowIndex = 0;
-  
+      "firstName",
+      "lastName"
+    ];   
     users: UserResponse[] = [];
     dataSource = new MatTableDataSource<UserResponse>();
   
       constructor(private userservice: UserService,
-                  private router: Router) {
-    }
+                  private router: Router,
+                  private snackBarService: SnackBarService,
+                  private errorService: ErrorService
+                  ) {}  
   
     ngOnInit(): void {
       this.loadUsersData();
@@ -40,28 +38,16 @@ export class HomeComponent implements OnInit {
         next: (res: Array<UserResponse>) => {
           if (res) {
             this.users = res;
-            this.dataSource = new MatTableDataSource(this.getTableData(this.start, this.end));
-            this.updateIndex();
+            this.dataSource =new MatTableDataSource(res);
           }
         },
         error: (err : HttpErrorResponse) => {
-          console.log('Error al recuperar los usuarios', err);
-        }
+          this.snackBarService.openSnackBar(this.errorService.HttpErrorResponseToString(err));        }
       });
     }
   
     getRecord(row: UserResponse) {
-      console.log(row);
       this.router.navigate(['/users/view', `${row.id}`]);
-    }
-    
-    getTableData(start: number, end: number) {
-      return this.users.slice(start, end);
-    }
-  
-    updateIndex() {
-      this.start = this.end;
-      this.end = this.limit + this.start;
     }
 
   }

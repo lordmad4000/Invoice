@@ -1,39 +1,44 @@
 <div class="users-new-container">
+    <mat-toolbar class="head-toolbar">
+        <mat-toolbar-row>
+            <button mat-button matTooltip="{{ 'head-toolbar.button_back' | translate }}" (click)="backButtonClick()">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <div class="outer-box">
+                <h1 class="module-title">{{ 'users.title' | translate }}</h1>
+            </div>
+        </mat-toolbar-row>
+    </mat-toolbar>
     <form class="user-form" [formGroup]="formUser">
-      <mat-toolbar>
-          <mat-toolbar-row>
-              <button mat-button matTooltip="Back" (click)="backButtonClick()">
-                  <mat-icon>arrow_back</mat-icon>
-              </button>
-              <span class="flex-expand"></span>
-          </mat-toolbar-row>
-      </mat-toolbar>
-      <div class="div-fields">
-          <mat-form-field class="email-field" appearance="fill" mat-form-fieldAutoSize>
-              <mat-label>Email</mat-label>
-              <input type="text" matInput formControlName="email" matTextareaAutosize>
-          </mat-form-field>
-          <mat-divider></mat-divider>
-          <mat-form-field class="password-field" appearance="fill" mat-form-fieldAutoSize>
-              <mat-label>Password</mat-label>
-              <input type="password" matInput formControlName="password" matTextareaAutosize>
-          </mat-form-field>
-          <mat-form-field class="confirmpassword-field" appearance="fill" mat-form-fieldAutoSize>
-              <mat-label>Repeat Password</mat-label>
-              <input type="password" matInput formControlName="confirmPassword" matTextareaAutosize (change)="checkPassword()">
-          </mat-form-field>
-          <mat-divider></mat-divider>
-          <mat-form-field class="firstname-field" appearance="fill" mat-form-fieldAutoSize>
-              <mat-label>FirstName</mat-label>
-              <input type="text" matInput formControlName="firstName" matTextareaAutosize>
-          </mat-form-field>
-          <mat-form-field class="lastname-field" appearance="fill" mat-form-fieldAutoSize>
-              <mat-label>LastName</mat-label>
-              <input type="text" matInput formControlName="lastName" matTextareaAutosize>
-          </mat-form-field>
-      </div>
-      <div>
-          <button mat-raised-button class="button-save" color="primary" matTooltip="Save" (click)="saveButtonClick()">Save</button>
-      </div>
+        <div class="div-fields">
+            <mat-form-field class="email-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>{{ 'users.forms.email' | translate }}</mat-label>
+                <input type="text" matInput formControlName="email" matTextareaAutosize>
+            </mat-form-field>
+            <mat-divider></mat-divider>
+            <mat-form-field class="password-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>{{ 'users.forms.password' | translate }}</mat-label>
+                <input type="password" matInput formControlName="password" matTextareaAutosize>
+            </mat-form-field>
+            <mat-form-field class="confirmpassword-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>{{ 'users.new.confirm_password' | translate }}</mat-label>
+                <input type="password" matInput formControlName="confirmPassword" matTextareaAutosize
+                    (change)="checkPassword()">
+            </mat-form-field>
+            <mat-divider></mat-divider>
+            <mat-form-field class="firstname-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>{{ 'users.forms.firstname' | translate }}</mat-label>
+                <input type="text" matInput formControlName="firstName" matTextareaAutosize>
+            </mat-form-field>
+            <mat-form-field class="lastname-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>{{ 'users.forms.lastname' | translate }}</mat-label>
+                <input type="text" matInput formControlName="lastName" matTextareaAutosize>
+            </mat-form-field>
+        </div>
+        <div>
+            <button mat-raised-button class="button-save" color="primary"
+                matTooltip="{{ 'shared.buttons.save_tooltip' | translate }}" (click)="saveButtonClick()">{{
+                'shared.buttons.save' | translate }}</button>
+        </div>
     </form>
 </div>
