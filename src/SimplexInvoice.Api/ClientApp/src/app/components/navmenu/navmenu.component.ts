@@ -84,6 +84,10 @@ export class NavmenuComponent {
     this.router.navigate(['/taxrates/grid']);
   }
 
+  companiesButtonClick() {
+    this.router.navigate(['/companies/view']);
+  }
+
   usersButtonClick() {
     this.router.navigate(['/users/grid']);
   }
