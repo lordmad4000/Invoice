@@ -27,18 +27,18 @@ export class TaxRatesService {
         return this.httpClient.get<TaxRateDto>(url);
     }
 
-    public Post(iddocumenttype: TaxRateRegisterRequest): Observable<TaxRateDto> {
+    public Post(taxRateRegisterRequest: TaxRateRegisterRequest): Observable<TaxRateDto> {
 
         const url = `${this.baseUrl}/Register`;
 
-        return this.httpClient.post<TaxRateDto>(url, iddocumenttype);
+        return this.httpClient.post<TaxRateDto>(url, taxRateRegisterRequest);
     }
 
-    public Update(iddocumenttype: TaxRateDto): Observable<TaxRateDto> {
+    public Update(taxRateDto: TaxRateDto): Observable<TaxRateDto> {
 
         const url = `${this.baseUrl}/Update`;
 
-        return this.httpClient.put<TaxRateDto>(url, iddocumenttype);
+        return this.httpClient.put<TaxRateDto>(url, taxRateDto);
     }
 
     public Delete(id: string): Observable<boolean> {
