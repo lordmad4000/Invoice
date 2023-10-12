@@ -22,18 +22,18 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrls: ['./navmenu.component.css'],
   standalone: true,
   imports: [
-    CommonModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatDividerModule,
-    MatListModule,
     AppRoutingModule,
+    CommonModule,
     MatButtonModule,
-    MatTooltipModule,
+    MatDividerModule,
+    MatIconModule,
+    MatListModule,
     MatMenuModule,
-    MatSelectModule,
     MatOptionModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatTooltipModule,
     TranslateModule
   ]
 })

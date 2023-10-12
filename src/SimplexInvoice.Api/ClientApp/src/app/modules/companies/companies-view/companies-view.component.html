@@ -14,47 +14,47 @@
     </mat-toolbar>
     <form class="company-form" [formGroup]="formCompany">
         <div class="div-fields">
-            <mat-form-field class="name-field" appearance="fill" mat-form-fieldAutoSize>
+            <mat-form-field class="name-field" appearance="fill" matTooltip='{{ this.formCompany.get("name")?.value }}' mat-form-fieldAutoSize>
                 <mat-label>{{ 'companies.forms.name' | translate }}</mat-label>
                 <input type="text" matInput formControlName="name" matTextareaAutosize>
             </mat-form-field>
             <mat-divider></mat-divider>
-            <mat-form-field class="iddocumenttype-field" appearance="fill" mat-form-fieldAutoSize>
+            <mat-form-field class="iddocumenttype-field" appearance="fill" matTooltip='{{ this.formCompany.get("idDocumentTypeName")?.value }}' mat-form-fieldAutoSize>
                 <mat-label>{{ 'companies.forms.iddocumenttype' | translate }}</mat-label>
                 <input type="text" matInput formControlName="idDocumentTypeName" matTextareaAutosize>
             </mat-form-field>
-            <mat-form-field class="iddocumentnumber-field" appearance="fill" mat-form-fieldAutoSize>
+            <mat-form-field class="iddocumentnumber-field" appearance="fill" matTooltip='{{ this.formCompany.get("idDocumentNumber")?.value }}' mat-form-fieldAutoSize>
                 <mat-label>{{ 'companies.forms.iddocumentnumber' | translate }}</mat-label>
                 <input type="text" matInput formControlName="idDocumentNumber" matTextareaAutosize>
             </mat-form-field>
             <mat-divider></mat-divider>
-            <mat-form-field class="street-field" appearance="fill" mat-form-fieldAutoSize>
+            <mat-form-field class="street-field" appearance="fill" matTooltip='{{ this.formCompany.get("street")?.value }}' mat-form-fieldAutoSize>
                 <mat-label>{{ 'companies.forms.street' | translate }}</mat-label>
                 <input type="text" matInput formControlName="street" matTextareaAutosize>
             </mat-form-field>
-            <mat-form-field class="city-field" appearance="fill" mat-form-fieldAutoSize>
+            <mat-form-field class="city-field" appearance="fill" matTooltip='{{ this.formCompany.get("city")?.value }}' mat-form-fieldAutoSize>
                 <mat-label>{{ 'companies.forms.city' | translate }}</mat-label>
                 <input type="text" matInput formControlName="city" matTextareaAutosize>
             </mat-form-field>
-            <mat-form-field class="postalcode-field" appearance="fill" mat-form-fieldAutoSize>
+            <mat-form-field class="postalcode-field" appearance="fill" matTooltip='{{ this.formCompany.get("postalCode")?.value }}' mat-form-fieldAutoSize>
                 <mat-label>{{ 'companies.forms.postalcode' | translate }}</mat-label>
                 <input type="text" matInput formControlName="postalCode" matTextareaAutosize>
             </mat-form-field>
             <mat-divider></mat-divider>
-            <mat-form-field class="state-field" appearance="fill" mat-form-fieldAutoSize>
+            <mat-form-field class="state-field" appearance="fill" matTooltip='{{ this.formCompany.get("state")?.value }}' mat-form-fieldAutoSize>
                 <mat-label>{{ 'companies.forms.state' | translate }}</mat-label>
                 <input type="text" matInput formControlName="state" matTextareaAutosize>
             </mat-form-field>
-            <mat-form-field class="country-field" appearance="fill" mat-form-fieldAutoSize>
+            <mat-form-field class="country-field" appearance="fill" matTooltip='{{ this.formCompany.get("country")?.value }}' mat-form-fieldAutoSize>
                 <mat-label>{{ 'companies.forms.country' | translate }}</mat-label>
                 <input type="text" matInput formControlName="country" matTextareaAutosize>
             </mat-form-field>
             <mat-divider></mat-divider>            
-            <mat-form-field class="phone-field" appearance="fill" mat-form-fieldAutoSize>
+            <mat-form-field class="phone-field" appearance="fill" matTooltip='{{ this.formCompany.get("phone")?.value }}' mat-form-fieldAutoSize>
                 <mat-label>{{ 'companies.forms.phone' | translate }}</mat-label>
                 <input type="text" matInput formControlName="phone" matTextareaAutosize>
             </mat-form-field>
-            <mat-form-field class="email-field" appearance="fill" mat-form-fieldAutoSize>
+            <mat-form-field class="email-field" appearance="fill" matTooltip='{{ this.formCompany.get("email")?.value }}' mat-form-fieldAutoSize>
                 <mat-label>{{ 'companies.forms.email' | translate }}</mat-label>
                 <input type="text" matInput formControlName="email" matTextareaAutosize>
             </mat-form-field>
