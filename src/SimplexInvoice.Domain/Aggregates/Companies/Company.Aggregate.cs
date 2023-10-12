@@ -39,6 +39,7 @@ public partial class Company : AggregateRoot
         Address = address;
         Phone = phoneNumber;
         EmailAddress = emailAddress;
+        IdDocumentType = null;
 
         ValidationResult validator = new UpdateCompanyValidator().Validate(this);
         if (!validator.IsValid)
