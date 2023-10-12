@@ -1,18 +1,20 @@
 import { BaseGridComponent } from 'src/app/components/base-grid';
 import { CommonModule } from '@angular/common';
-import { CustomTranslateService } from 'src/app/shared/services/customtranslate.service';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CompaniesComponent } from './companies.component';
 import { CompaniesEditComponent } from './companies-edit';
 import { CompaniesRoutingModule } from './companies-routing.module';
 import { CompaniesService } from 'src/app/shared/services/companies.service';
 import { CompaniesViewComponent } from './companies-view';
+import { CustomTranslateService } from 'src/app/shared/services/customtranslate.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
@@ -28,24 +30,26 @@ import { TranslateModule } from '@ngx-translate/core';
     CompaniesEditComponent,
     CompaniesViewComponent
   ],
-  imports: [
+  imports: [    
+    BaseGridComponent,
     CommonModule,
     CompaniesRoutingModule,
-    MatTableModule,
-    MatCheckboxModule,
-    MatFormFieldModule,
-    MatSelectModule,
     FormsModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatDividerModule,
-    MatIconModule,
     MatButtonModule,
-    MatTooltipModule,
-    MatToolbarModule,
+    MatCheckboxModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatListModule,
+    MatInputModule,
+    MatOptionModule,
+    MatSelectModule,
     MatSnackBarModule,
     MatSortModule,
-    BaseGridComponent,
+    MatTableModule,
+    MatToolbarModule,
+    MatTooltipModule,
+    ReactiveFormsModule,
     TranslateModule
   ],
   providers: [ 

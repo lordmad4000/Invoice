@@ -39,8 +39,20 @@ mat-label {
     color: blue;
 }
 
-.iddocumenttype-field {
+.mat-select {
+    max-width: 10rem;
+    height: 0.5rem;
+}
+
+.mat-options {
+    font-size: 1rem;
+    height: 0.5rem;
+}
+
+.iddocumentnumber-field {
+    padding-left: 1rem;
     padding-right: 1rem;
+    height: 5.3rem;
 }
 
 .street-field {
@@ -70,7 +82,7 @@ mat-label {
     cursor: pointer;
 }
 
-mat-divider {    
+mat-divider {
     width: 100%;
     padding: 0.125rem;
     color: transparent;

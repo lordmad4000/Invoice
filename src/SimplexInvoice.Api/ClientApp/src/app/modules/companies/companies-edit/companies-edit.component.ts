@@ -6,6 +6,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ErrorService } from 'src/app/shared/services/error.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import { IdDocumentTypeDto } from 'src/app/shared/models';
+import { IdDocumentTypesService } from 'src/app/shared';
+import { MatSelectChange } from '@angular/material/select';
 import { SnackBarService } from 'src/app/shared/services/snackbar.service';
 import { Subscription } from 'rxjs';
 
@@ -17,12 +20,15 @@ import { Subscription } from 'rxjs';
 export class CompaniesEditComponent implements OnInit, OnDestroy {
 
   private company: CompanyUpdateRequest = new CompanyUpdateRequest();
+  public idDocumentTypes: IdDocumentTypeDto[] = [];
+  public selectedIdDocumentTypeId: string = '';
   public formCompany: FormGroup;
   private subscription: Subscription | undefined;
 
   constructor(
     private route: ActivatedRoute,
     private companiesService: CompaniesService,
+    private idDocumentTypeService: IdDocumentTypesService,
     private formBuilder: FormBuilder,
     private errorService: ErrorService,
     private router: Router,
@@ -44,10 +50,25 @@ export class CompaniesEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.loadIdDocumentTypes();
     this.subscription = this.route.params.subscribe((params: Params): void => {
       const id = params['id'];
       this.getCompany(id);
     });
+  }
+
+  private loadIdDocumentTypes() {
+    this.idDocumentTypeService.GetAll().subscribe({
+      next: (res: IdDocumentTypeDto[]) => {
+        if (res) {
+          this.idDocumentTypes = res;
+          this.selectedIdDocumentTypeId = res[0].id;
+        }
+      },
+      error: (err: HttpErrorResponse) => {
+        this.snackBarService.openSnackBar(this.errorService.HttpErrorResponseToString(err));
+      }
+    })
   }
 
   private getCompany(id: string) {
@@ -55,7 +76,7 @@ export class CompaniesEditComponent implements OnInit, OnDestroy {
       next: (res: CompanyDto) => {
         if (res) {
           this.formCompany.patchValue(res);
-          this.formCompany.patchValue( { idDocumentTypeName: res.idDocumentType.name });
+          this.formCompany.patchValue({ idDocumentTypeName: res.idDocumentType.name });
         }
       },
       error: (err: HttpErrorResponse) => {
@@ -66,7 +87,7 @@ export class CompaniesEditComponent implements OnInit, OnDestroy {
 
   saveButtonClick() {
     this.company.name = this.formCompany.get("name")?.value;
-    this.company.idDocumentTypeId = this.formCompany.get("idDocumentTypeId")?.value;
+    this.company.idDocumentTypeId = this.selectedIdDocumentTypeId;
     this.company.idDocumentNumber = this.formCompany.get("idDocumentNumber")?.value;
     this.company.street = this.formCompany.get("street")?.value;
     this.company.city = this.formCompany.get("city")?.value;
@@ -74,7 +95,7 @@ export class CompaniesEditComponent implements OnInit, OnDestroy {
     this.company.country = this.formCompany.get("country")?.value;
     this.company.postalCode = this.formCompany.get("postalCode")?.value;
     this.company.phone = this.formCompany.get("phone")?.value;
-    this.company.email = this.formCompany.get("email")?.value;   
+    this.company.email = this.formCompany.get("email")?.value;
     this.companiesService.Update(this.company).subscribe({
       next: (res: CompanyDto) => {
         if (res) {
@@ -85,6 +106,10 @@ export class CompaniesEditComponent implements OnInit, OnDestroy {
         this.snackBarService.openSnackBar(this.errorService.HttpErrorResponseToString(err));
       }
     });
+  }
+
+  onChangeIdDocumentTypes(event: MatSelectChange) {
+    this.selectedIdDocumentTypeId = event.value;
   }
 
   backButtonClick() {
