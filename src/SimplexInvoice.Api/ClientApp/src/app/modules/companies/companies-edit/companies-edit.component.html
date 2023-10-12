@@ -16,9 +16,11 @@
                 <input type="text" matInput formControlName="name" matTextareaAutosize>
             </mat-form-field>
             <mat-divider></mat-divider>
-            <mat-form-field class="iddocumenttype-field" appearance="fill" mat-form-fieldAutoSize>
+            <mat-form-field appearance="outline">
                 <mat-label>{{ 'companies.forms.iddocumenttype' | translate }}</mat-label>
-                <input type="text" matInput formControlName="idDocumentTypeName" matTextareaAutosize>
+                <mat-select class="mat-select" hideSingleSelectionIndicator="true" (selectionChange)="onChangeIdDocumentTypes($event)" [value]="selectedIdDocumentTypeId">
+                    <mat-option class="mat-options" *ngFor="let option of idDocumentTypes" [value]="option.id">{{ option.name }}</mat-option>
+                </mat-select>
             </mat-form-field>
             <mat-form-field class="iddocumentnumber-field" appearance="fill" mat-form-fieldAutoSize>
                 <mat-label>{{ 'companies.forms.iddocumentnumber' | translate }}</mat-label>
