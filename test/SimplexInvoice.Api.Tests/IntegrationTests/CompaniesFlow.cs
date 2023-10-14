@@ -4,54 +4,53 @@ using SimplexInvoice.Api.Controllers;
 using SimplexInvoice.Api.Models.Request;
 using SimplexInvoice.Api.Tests.IntegrationTests.Common;
 using SimplexInvoice.Application.Common.Dto;
+using SimplexInvoice.Domain.Companies;
 using SimplexInvoice.SimplexInvoice.Api;
 
 namespace SimplexInvoice.Api.Tests.IntegrationTests;
 
 public class CompaniesFlow
 {
-    private CompanyDto Company { get; set; } = new CompanyDto();
-    public CompaniesFlow()
-    {
-        IServiceCollection services = ServicesConfiguration.BuildDependencies();
-        using (ServiceProvider serviceProvider = services.BuildServiceProvider())
-        {
-            var companysController = serviceProvider.GetRequiredService<CompaniesController>();
-            var actionResult = companysController.GetAll(new CancellationToken());
-            var companyDtos = CustomConvert.OkResultTo<List<CompanyDto>>(actionResult.Result);
-            if (companyDtos is not null)
-                Company = companyDtos.First();
-        };
-    }
 
     [Fact]
     public async Task ModifyNameProperty_Then_RestoreNameProperty()
     {
         //Arrange
-        string oldCompanyName = Company.Name;
+        CompanyDto? companyDto = new CompanyDto();
         IServiceCollection services = ServicesConfiguration.BuildDependencies();
         using (ServiceProvider serviceProvider = services.BuildServiceProvider())
         {
             var companysController = serviceProvider.GetRequiredService<CompaniesController>();
-            CompanyRegisterUpdateRequest companyRegisterUpdateRequest = GetCompanyRegisterUpdateRequest();
-
-            //Act
-            IActionResult actionResult = await companysController.RegisterUpdate(companyRegisterUpdateRequest, new CancellationToken());
-            var companyDto = CustomConvert.OkResultTo<CompanyDto>(actionResult);
-
-            //Assert
-            Assert.NotNull(companyDto);
-        }
+            var actionResult = companysController.Get(new CancellationToken());
+            companyDto = CustomConvert.OkResultTo<CompanyDto>(actionResult.Result);
+            if (companyDto is null)
+                throw new Exception("Error al recuperar la compañia, no se pueden ejecutar los tests.");
+        };
+        string oldCompanyName = companyDto.Name;
         services = ServicesConfiguration.BuildDependencies();
         using (ServiceProvider serviceProvider = services.BuildServiceProvider())
         {
             var companysController = serviceProvider.GetRequiredService<CompaniesController>();
-            CompanyRegisterUpdateRequest companyRegisterUpdateRequest = GetCompanyRegisterUpdateRequest();
+            CompanyRegisterUpdateRequest companyRegisterUpdateRequest = GetCompanyRegisterUpdateRequest(companyDto);
+
+            //Act
+            IActionResult actionResult = await companysController.RegisterUpdate(companyRegisterUpdateRequest, new CancellationToken());
+            companyDto = CustomConvert.OkResultTo<CompanyDto>(actionResult);
+
+            //Assert
+            Assert.NotNull(companyDto);
+        }
+        //Arrange
+        services = ServicesConfiguration.BuildDependencies();
+        using (ServiceProvider serviceProvider = services.BuildServiceProvider())
+        {
+            var companysController = serviceProvider.GetRequiredService<CompaniesController>();
+            CompanyRegisterUpdateRequest companyRegisterUpdateRequest = GetCompanyRegisterUpdateRequest(companyDto);
             companyRegisterUpdateRequest.Name = oldCompanyName;
 
             //Act
             IActionResult actionResult = await companysController.RegisterUpdate(companyRegisterUpdateRequest, new CancellationToken());
-            var companyDto = CustomConvert.OkResultTo<CompanyDto>(actionResult);
+            companyDto = CustomConvert.OkResultTo<CompanyDto>(actionResult);
 
             //Assert
             Assert.NotNull(companyDto);
@@ -59,53 +58,19 @@ public class CompaniesFlow
 
     }
 
-    [Fact]
-    public async Task GetById_Should_No_Be_Null()
-    {
-        IServiceCollection services = ServicesConfiguration.BuildDependencies();
-        using (ServiceProvider serviceProvider = services.BuildServiceProvider())
-        {
-            var companysController = serviceProvider.GetRequiredService<CompaniesController>();
-
-            //Act
-            IActionResult actionResult = await companysController.GetById(Company.Id, new CancellationToken());
-            var companyDto = CustomConvert.OkResultTo<CompanyDto>(actionResult);
-
-            //Assert
-            Assert.NotNull(companyDto);
-        }
-    }
-
-    [Fact]
-    public async Task GetAll_Count_Should_Be_1()
-    {
-        IServiceCollection services = ServicesConfiguration.BuildDependencies();
-        using (ServiceProvider serviceProvider = services.BuildServiceProvider())
-        {
-            var companysController = serviceProvider.GetRequiredService<CompaniesController>();
-
-            //Act
-            IActionResult actionResult = await companysController.GetAll(new CancellationToken());
-            var companyDtos = CustomConvert.OkResultTo<List<CompanyDto>>(actionResult);
-
-            //Assert
-            Assert.Single(companyDtos);
-        }
-    }   
-
-    private CompanyRegisterUpdateRequest GetCompanyRegisterUpdateRequest() =>
+    private CompanyRegisterUpdateRequest GetCompanyRegisterUpdateRequest(CompanyDto company) =>
         new CompanyRegisterUpdateRequest
         {
             Name = "TEST NAME",
-            IdDocumentTypeId = Company.IdDocumentTypeId,
-            IdDocumentNumber = Company.IdDocumentNumber,
-            Street = Company.Street,
-            City = Company.City,
-            State = Company.State,
-            Country = Company.Country,
-            PostalCode = Company.PostalCode,
-            Phone = Company.Phone,
-            Email = Company.Email
+            IdDocumentTypeId = company.IdDocumentTypeId,
+            IdDocumentNumber = company.IdDocumentNumber,
+            Street = company.Street,
+            City = company.City,
+            State = company.State,
+            Country = company.Country,
+            PostalCode = company.PostalCode,
+            Phone = company.Phone,
+            Email = company.Email
         };
 
 }
