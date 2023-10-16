@@ -82,7 +82,23 @@
             "country": "País",
             "postalcode": "Código Postal",
             "phone": "Número de Teléfono",
-            "email": "Correo Electronico"
+            "email": "Correo Electrónico"
+        }
+    },
+    "customers": {
+        "title": "CLIENTES",
+        "forms": {
+            "firstname": "Nombre",
+            "lastname": "Apellido",
+            "iddocumenttype": "Tipo de Documento",
+            "iddocumentnumber": "Número de Documento",
+            "street": "Calle",
+            "city": "Ciudad",
+            "state": "Estado",
+            "country": "País",
+            "postalcode": "Código Postal",
+            "phone": "Número de Teléfono",
+            "email": "Correo Electrónico"
         }
     }
 }

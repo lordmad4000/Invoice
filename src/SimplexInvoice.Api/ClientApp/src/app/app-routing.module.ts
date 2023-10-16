@@ -13,6 +13,7 @@ const routes: Routes = [
 { path: 'iddocumenttypes', loadChildren: () => import('./modules/iddocumenttypes/iddocumenttypes.module').then(x => x.IdDocumentTypesModule), canActivate: [authGuard]},
 { path: 'taxrates', loadChildren: () => import('./modules/taxrates/taxrates.module').then(x => x.TaxRatesModule), canActivate: [authGuard]},
 { path: 'companies', loadChildren: () => import('./modules/companies/companies.module').then(x => x.CompaniesModule), canActivate: [authGuard]},
+{ path: 'customers', loadChildren: () => import('./modules/customers/customers.module').then(x => x.CustomersModule), canActivate: [authGuard]},
 { path: '**', component: PageNotFoundComponent },
 ];
 
