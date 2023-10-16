@@ -92,6 +92,10 @@ export class NavmenuComponent {
     this.router.navigate(['/users/grid']);
   }
 
+  customersButtonClick() {
+    this.router.navigate(['/customers/grid']);
+  }
+
   aboutButtonClick() {
     const tokenExpiricyTime = this.jwtService.GetTokenExpiricyTime();
     this.popupService.openPopupAceptar(this.translate('about_title'),

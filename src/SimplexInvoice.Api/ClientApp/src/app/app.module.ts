@@ -7,6 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { CompaniesModule } from './modules/companies';
 import { CustomTranslateService } from './shared/services/customtranslate.service';
+import { CustomersModule } from './modules/customers';
 import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { HomeModule } from './modules/home';
@@ -44,6 +45,7 @@ import { UsersModule } from './modules/users';
     UsersModule,
     TaxRatesModule,
     CompaniesModule,
+    CustomersModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
