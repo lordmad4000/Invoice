@@ -1,0 +1,70 @@
+<div class="customers-view-container">
+    <mat-toolbar class="head-toolbar">
+        <mat-toolbar-row>
+            <button mat-button matTooltip="{{ 'head-toolbar.button_back' | translate }}" (click)="backButtonClick()">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <div class="outer-box">
+                <h1 class="module-title">{{ 'customers.title' | translate }}</h1>
+            </div>
+            <button mat-button matTooltip="{{ 'head-toolbar.button_edit' | translate }}" (click)="editButtonClick()">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-button matTooltip="{{ 'head-toolbar.button_delete' | translate }}"
+                (click)="deleteButtonClick()">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <form class="customer-form" [formGroup]="formCustomer">
+        <div class="div-fields">
+            <mat-form-field class="firstname-field" appearance="fill" matTooltip='{{ this.formCustomer.get("firstName")?.value }}' mat-form-fieldAutoSize>
+                <mat-label>{{ 'customers.forms.firstname' | translate }}</mat-label>
+                <input type="text" matInput formControlName="firstName" matTextareaAutosize>
+            </mat-form-field>
+            <mat-form-field class="lastname-field" appearance="fill" matTooltip='{{ this.formCustomer.get("lastName")?.value }}' mat-form-fieldAutoSize>
+                <mat-label>{{ 'customers.forms.lastname' | translate }}</mat-label>
+                <input type="text" matInput formControlName="lastName" matTextareaAutosize>
+            </mat-form-field>
+            <mat-divider></mat-divider>
+            <mat-form-field class="iddocumenttype-field" appearance="fill" matTooltip='{{ this.formCustomer.get("idDocumentTypeName")?.value }}' mat-form-fieldAutoSize>
+                <mat-label>{{ 'customers.forms.iddocumenttype' | translate }}</mat-label>
+                <input type="text" matInput formControlName="idDocumentTypeName" matTextareaAutosize>
+            </mat-form-field>
+            <mat-form-field class="iddocumentnumber-field" appearance="fill" matTooltip='{{ this.formCustomer.get("idDocumentNumber")?.value }}' mat-form-fieldAutoSize>
+                <mat-label>{{ 'customers.forms.iddocumentnumber' | translate }}</mat-label>
+                <input type="text" matInput formControlName="idDocumentNumber" matTextareaAutosize>
+            </mat-form-field>
+            <mat-divider></mat-divider>
+            <mat-form-field class="street-field" appearance="fill" matTooltip='{{ this.formCustomer.get("street")?.value }}' mat-form-fieldAutoSize>
+                <mat-label>{{ 'customers.forms.street' | translate }}</mat-label>
+                <input type="text" matInput formControlName="street" matTextareaAutosize>
+            </mat-form-field>
+            <mat-form-field class="city-field" appearance="fill" matTooltip='{{ this.formCustomer.get("city")?.value }}' mat-form-fieldAutoSize>
+                <mat-label>{{ 'customers.forms.city' | translate }}</mat-label>
+                <input type="text" matInput formControlName="city" matTextareaAutosize>
+            </mat-form-field>
+            <mat-form-field class="postalcode-field" appearance="fill" matTooltip='{{ this.formCustomer.get("postalCode")?.value }}' mat-form-fieldAutoSize>
+                <mat-label>{{ 'customers.forms.postalcode' | translate }}</mat-label>
+                <input type="text" matInput formControlName="postalCode" matTextareaAutosize>
+            </mat-form-field>
+            <mat-divider></mat-divider>
+            <mat-form-field class="state-field" appearance="fill" matTooltip='{{ this.formCustomer.get("state")?.value }}' mat-form-fieldAutoSize>
+                <mat-label>{{ 'customers.forms.state' | translate }}</mat-label>
+                <input type="text" matInput formControlName="state" matTextareaAutosize>
+            </mat-form-field>
+            <mat-form-field class="country-field" appearance="fill" matTooltip='{{ this.formCustomer.get("country")?.value }}' mat-form-fieldAutoSize>
+                <mat-label>{{ 'customers.forms.country' | translate }}</mat-label>
+                <input type="text" matInput formControlName="country" matTextareaAutosize>
+            </mat-form-field>
+            <mat-divider></mat-divider>            
+            <mat-form-field class="phone-field" appearance="fill" matTooltip='{{ this.formCustomer.get("phone")?.value }}' mat-form-fieldAutoSize>
+                <mat-label>{{ 'customers.forms.phone' | translate }}</mat-label>
+                <input type="text" matInput formControlName="phone" matTextareaAutosize>
+            </mat-form-field>
+            <mat-form-field class="email-field" appearance="fill" matTooltip='{{ this.formCustomer.get("email")?.value }}' mat-form-fieldAutoSize>
+                <mat-label>{{ 'customers.forms.email' | translate }}</mat-label>
+                <input type="text" matInput formControlName="email" matTextareaAutosize>
+            </mat-form-field>
+        </div>    </form>
+</div>
