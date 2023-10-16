@@ -42,6 +42,7 @@ public partial class Customer : AggregateRoot
         Address = address;
         Phone = phoneNumber;
         EmailAddress = emailAddress;
+        IdDocumentType = null;
 
         ValidationResult validator = new UpdateCustomerValidator().Validate(this);
         if (!validator.IsValid)
