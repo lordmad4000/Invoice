@@ -63,7 +63,7 @@ namespace SimplexInvoice.Infra.Data
                                     PackageQuantity, 
                                     Currency, 
                                     UnitPrice, 
-                                    ProductTaxRateId) 
+                                    TaxRateId) 
                                    VALUES ('81f197d3-9260-4d28-933c-8540ff1a4c2d', 
                                            '1', 'DEFAULT PRODUCT', 
                                            'DEFAULT PRODUCT', 

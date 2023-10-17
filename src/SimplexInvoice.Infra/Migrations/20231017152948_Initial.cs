@@ -247,14 +247,14 @@ namespace SimplexInvoice.Infra.Migrations
                     Currency = table.Column<string>(type: "varchar(3)", maxLength: 3, nullable: false, defaultValue: "EUR")
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     UnitPrice = table.Column<double>(type: "double", nullable: false, defaultValue: 0.0),
-                    ProductTaxRateId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                    TaxRateId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Product", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Product_TaxRate_ProductTaxRateId",
-                        column: x => x.ProductTaxRateId,
+                        name: "FK_Product_TaxRate_TaxRateId",
+                        column: x => x.TaxRateId,
                         principalTable: "TaxRate",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -349,9 +349,9 @@ namespace SimplexInvoice.Infra.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_ProductTaxRateId",
+                name: "IX_Product_TaxRateId",
                 table: "Product",
-                column: "ProductTaxRateId");
+                column: "TaxRateId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TaxRate_Id",
