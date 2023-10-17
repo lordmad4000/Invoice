@@ -20,7 +20,7 @@ namespace SimplexInvoice.Domain.ValueObjects
 
         private void Validate()
         {
-            string patternPhone = @"^(\(?\+[\d]{1,3}\)?)\s?([\d]{1,5})\s?([\d][\s\.-]?){6,7}$";
+            string patternPhone = @"^\+?\d(\s?\d){7,20}[0-9]$";
 
             if (string.IsNullOrEmpty(Phone) || !Regex.IsMatch(Phone, patternPhone))
                 throw new NotValidPhoneNumberException(String.Format($"{Phone} is not valid phone number."));
