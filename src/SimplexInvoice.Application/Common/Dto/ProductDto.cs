@@ -23,7 +23,7 @@ public class ProductDto
     [Required(ErrorMessage = "Currency is required.")]
     [StringLength(3, MinimumLength = 3, ErrorMessage = "Currency must be 3 characters long.")]
     public string Currency { get; set; }
-    [Required(ErrorMessage = "ProductTaxRateId is required.")]
-    public Guid ProductTaxRateId { get; set; }
-    public TaxRateDto ProductTaxRate { get; set; }
+    [Required(ErrorMessage = "TaxRateId is required.")]
+    public Guid TaxRateId { get; set; }
+    public TaxRateDto TaxRate { get; set; }
 }

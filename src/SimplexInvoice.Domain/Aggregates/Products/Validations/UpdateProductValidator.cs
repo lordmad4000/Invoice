@@ -9,7 +9,7 @@ public class UpdateProductValidator : ProductValidator
         ValidateDescription();
         ValidatePackageQuantity();
         ValidateUnitPrice();
-        ValidateProductTaxRateId();
+        ValidateTaxRateId();
     }
 
 }
