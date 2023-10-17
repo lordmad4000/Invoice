@@ -24,7 +24,7 @@ public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, P
 
     public async Task<ProductDto> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
     {
-        var product = await _productRepository.GetAsync(c => c.Id == request.Id, cancellationToken, true, $"Id=={request.Id}", new string[] { "ProductTaxRate" });
+        var product = await _productRepository.GetAsync(c => c.Id == request.Id, cancellationToken, true, $"Id=={request.Id}", new string[] { "TaxRate" });
         if (product is null)
             throw new NotFoundException($"Product with id {request.Id} was not found");
 

@@ -34,7 +34,7 @@ public class ProductUpdateHandler : IRequestHandler<ProductUpdateCommand, Produc
                        request.Description,
                        request.PackageQuantity,
                        new Money(request.Currency, request.Price),
-                       request.ProductTaxRateId);
+                       request.TaxRateId);
 
         ProductDto productDto = _mapper.Map<ProductDto>(await _productRepository.UpdateAsync(product, cancellationToken));
         if (await _productRepository.SaveChangesAsync(cancellationToken) == 0)
