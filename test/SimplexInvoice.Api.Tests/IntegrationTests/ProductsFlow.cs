@@ -149,7 +149,7 @@ public class ProductsFlow
             PackageQuantity = 1,
             Price = 1,
             Currency = "TES",
-            ProductTaxRateId = TaxRateId
+            TaxRateId = TaxRateId
         };
 
     private ProductDto GetProductDto() =>
@@ -162,6 +162,6 @@ public class ProductsFlow
             PackageQuantity = 1,
             Price = 1,
             Currency = "TES",
-            ProductTaxRateId = TaxRateId
+            TaxRateId = TaxRateId
         };
 }
