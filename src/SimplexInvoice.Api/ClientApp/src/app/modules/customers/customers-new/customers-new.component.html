@@ -57,11 +57,12 @@
             <mat-divider></mat-divider>
             <mat-form-field class="phone-field" appearance="fill" mat-form-fieldAutoSize>
                 <mat-label>{{ 'customers.forms.phone' | translate }}</mat-label>
-                <input type="tel" matInput formControlName="phone" required matTextareaAutosize>
+                <input type="tel" matInput formControlName="phone" required matTextareaAutosize
+                    pattern="^\+?\d(\s?\d){7,20}[0-9]$">
             </mat-form-field>
             <mat-form-field class="email-field" appearance="fill" mat-form-fieldAutoSize>
                 <mat-label>{{ 'customers.forms.email' | translate }}</mat-label>
-                <input type="text" matInput formControlName="email" required matTextareaAutosize>
+                <input type="email" matInput formControlName="email" required matTextareaAutosize>
             </mat-form-field>
         </div>
         <div>
