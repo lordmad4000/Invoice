@@ -48,9 +48,9 @@ namespace SimplexInvoice.Infra.Mappings
                           .IsRequired();
             });
 
-            builder.HasOne(c => c.ProductTaxRate)
+            builder.HasOne(c => c.TaxRate)
                    .WithMany()
-                   .HasForeignKey(c => c.ProductTaxRateId)
+                   .HasForeignKey(c => c.TaxRateId)
                    .IsRequired()
                    .OnDelete(DeleteBehavior.Restrict);
         }
