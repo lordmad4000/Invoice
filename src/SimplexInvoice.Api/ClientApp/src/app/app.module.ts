@@ -17,6 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NavmenuComponent, PopupComponent } from './components';
 import { NgModule } from '@angular/core';
+import { ProductsModule } from './modules/products';
 import { SnackBarService } from './shared/services/snackbar.service';
 import { TaxRatesModule } from './modules/taxrates';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -46,6 +47,7 @@ import { UsersModule } from './modules/users';
     TaxRatesModule,
     CompaniesModule,
     CustomersModule,
+    ProductsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
