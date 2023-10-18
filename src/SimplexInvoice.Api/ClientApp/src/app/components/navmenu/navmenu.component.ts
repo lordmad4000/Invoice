@@ -96,6 +96,14 @@ export class NavmenuComponent {
     this.router.navigate(['/customers/grid']);
   }
 
+  productsButtonClick() {
+    this.router.navigate(['/products/grid']);
+  }
+
+  invoicesButtonClick() {
+    //this.router.navigate(['/invoices/grid']);
+  }
+
   aboutButtonClick() {
     const tokenExpiricyTime = this.jwtService.GetTokenExpiricyTime();
     this.popupService.openPopupAceptar(this.translate('about_title'),

@@ -1,0 +1,18 @@
+<div class="products-grid-container">
+    <mat-toolbar class="head-toolbar">
+        <mat-toolbar-row>
+            <button mat-button matTooltip="{{ 'head-toolbar.button_back' | translate }}" (click)="backButtonClick()">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <div class="outer-box">
+                <h1 class="module-title">{{ 'products.title' | translate }}</h1>
+            </div>
+            <button mat-button matTooltip="{{ 'head-toolbar.button_add' | translate }}" (click)="addButtonClick()">
+                <mat-icon>add_circle</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <app-base-grid [tableColumns]="headers" [gridData]="data" (onRowClick)="getRecord($event)"
+        (onAddButtonClick)="addButtonClick()">
+    </app-base-grid>
+</div>

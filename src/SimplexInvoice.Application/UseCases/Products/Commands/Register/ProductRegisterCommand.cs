@@ -10,4 +10,4 @@ public record ProductRegisterCommand(string Code,
                                      double PackageQuantity,
                                      double Price,
                                      string Currency,
-                                     Guid ProductTaxRateId) : IRequest<ProductDto>;
+                                     Guid TaxRateId) : IRequest<ProductDto>;

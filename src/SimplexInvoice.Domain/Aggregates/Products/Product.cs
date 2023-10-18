@@ -10,6 +10,6 @@ public partial class Product
     public string Description { get; private set; } = string.Empty;
     public double PackageQuantity { get; private set; } = 1.0;
     public Money UnitPrice { get; private set; } = new Money("USD", 0.0);
-    public Guid ProductTaxRateId { get; private set; } = Guid.Empty;
-    public virtual TaxRate? ProductTaxRate { get; private set; } = null;
+    public Guid TaxRateId { get; private set; } = Guid.Empty;
+    public virtual TaxRate? TaxRate { get; private set; } = null;
 }

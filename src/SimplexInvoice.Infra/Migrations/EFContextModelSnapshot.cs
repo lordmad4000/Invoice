@@ -248,7 +248,7 @@ namespace SimplexInvoice.Infra.Migrations
                         .HasColumnType("double")
                         .HasDefaultValue(0.0);
 
-                    b.Property<Guid>("ProductTaxRateId")
+                    b.Property<Guid>("TaxRateId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
@@ -262,7 +262,7 @@ namespace SimplexInvoice.Infra.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.HasIndex("ProductTaxRateId");
+                    b.HasIndex("TaxRateId");
 
                     b.ToTable("Product");
                 });
@@ -757,9 +757,9 @@ namespace SimplexInvoice.Infra.Migrations
 
             modelBuilder.Entity("SimplexInvoice.Domain.Products.Product", b =>
                 {
-                    b.HasOne("SimplexInvoice.Domain.TaxRates.TaxRate", "ProductTaxRate")
+                    b.HasOne("SimplexInvoice.Domain.TaxRates.TaxRate", "TaxRate")
                         .WithMany()
-                        .HasForeignKey("ProductTaxRateId")
+                        .HasForeignKey("TaxRateId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -790,7 +790,7 @@ namespace SimplexInvoice.Infra.Migrations
                                 .HasForeignKey("ProductId");
                         });
 
-                    b.Navigation("ProductTaxRate");
+                    b.Navigation("TaxRate");
 
                     b.Navigation("UnitPrice")
                         .IsRequired();

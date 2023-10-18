@@ -26,7 +26,7 @@ public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, ICollec
 
     public async Task<ICollection<ProductDto>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
     {
-        var products = await _productRepository.ListAsync(c => c.Id != Guid.Empty, cancellationToken, true, new string[] { "ProductTaxRate" });
+        var products = await _productRepository.ListAsync(c => c.Id != Guid.Empty, cancellationToken, true, new string[] { "TaxRate" });
         var productsDto = _mapper.Map<List<ProductDto>>(products);
         _logger.Debug($"GetProducts count: {productsDto.Count}");
 

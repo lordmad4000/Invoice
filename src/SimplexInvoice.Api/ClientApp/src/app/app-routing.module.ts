@@ -14,6 +14,7 @@ const routes: Routes = [
 { path: 'taxrates', loadChildren: () => import('./modules/taxrates/taxrates.module').then(x => x.TaxRatesModule), canActivate: [authGuard]},
 { path: 'companies', loadChildren: () => import('./modules/companies/companies.module').then(x => x.CompaniesModule), canActivate: [authGuard]},
 { path: 'customers', loadChildren: () => import('./modules/customers/customers.module').then(x => x.CustomersModule), canActivate: [authGuard]},
+{ path: 'products', loadChildren: () => import('./modules/products/products.module').then(x => x.ProductsModule), canActivate: [authGuard]},
 { path: '**', component: PageNotFoundComponent },
 ];
 

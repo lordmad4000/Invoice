@@ -100,5 +100,19 @@
             "phone": "Número de Teléfono",
             "email": "Correo Electrónico"
         }
+    },
+    "products": {
+        "title": "PRODUCTOS",
+        "forms": {
+            "code": "Código",
+            "name": "Nombre",
+            "description": "Descripción",
+            "packagequantity": "Cantidad de Paquetes",
+            "price": "Precio Unitario",
+            "currency": "Divisa",
+            "taxrate": "Impuesto",
+            "taxratename": "Nombre del Impuesto",
+            "taxratevalue": "Valor del Impuesto"
+        }
     }
 }

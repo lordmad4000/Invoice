@@ -30,7 +30,7 @@ public class ProductRegisterHandler : IRequestHandler<ProductRegisterCommand, Pr
                                          request.Description,
                                          request.PackageQuantity,
                                          new Money(request.Currency, request.Price),
-                                         request.ProductTaxRateId);   
+                                         request.TaxRateId);   
         
         ProductDto productDto = _mapper.Map<ProductDto>(await _productRepository.AddAsync(product, cancellationToken));
         if (await _productRepository.SaveChangesAsync(cancellationToken) == 0)

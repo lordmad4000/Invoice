@@ -18,7 +18,7 @@ public partial class Product : AggregateRoot
                                  string description,
                                  double packageQuantity,
                                  Money unitPrice,
-                                 Guid productTaxRateId)
+                                 Guid taxRateId)
     {
         var product = new Product(Guid.NewGuid());
         product.Update(code,
@@ -26,7 +26,7 @@ public partial class Product : AggregateRoot
                        description,
                        packageQuantity,
                        unitPrice,
-                       productTaxRateId);
+                       taxRateId);
 
         return product;
     }
@@ -36,14 +36,15 @@ public partial class Product : AggregateRoot
                        string description,
                        double packageQuantity,
                        Money unitPrice,
-                       Guid productTaxRateId)
+                       Guid taxRateId)
     {
         Code = code;
         Name = name;
         Description = description;
         PackageQuantity = packageQuantity;
         UnitPrice = unitPrice;
-        ProductTaxRateId = productTaxRateId;
+        TaxRateId = taxRateId;
+        TaxRate = null;
 
         ValidationResult validator = new UpdateProductValidator().Validate(this);
         if (!validator.IsValid)
@@ -60,7 +61,7 @@ public partial class Product : AggregateRoot
                $"PackageQuantity: {PackageQuantity}, " +
                $"UnitPrice: {UnitPrice.Amount}, " +
                $"Currency: {UnitPrice.Currency}, " +
-               $"ProductTaxRateId: {ProductTaxRateId}";
+               $"TaxRateId: {TaxRateId}";
     }
 
 }

@@ -11,8 +11,8 @@
       </mat-menu>    
       <button mat-button (click)="usersButtonClick()">{{ 'navmenu.users' | translate }}<mat-icon>people icon</mat-icon></button>
       <button mat-button (click)="customersButtonClick()">{{ 'navmenu.customers' | translate }}<mat-icon>contacts</mat-icon></button>
-      <button mat-button (click)="homeButtonClick()">{{ 'navmenu.products' | translate }}<mat-icon>shopping_basket</mat-icon></button>
-      <button mat-button (click)="homeButtonClick()">{{ 'navmenu.invoices' | translate }}<mat-icon>receipt</mat-icon></button>
+      <button mat-button (click)="productsButtonClick()">{{ 'navmenu.products' | translate }}<mat-icon>shopping_basket</mat-icon></button>
+      <button mat-button (click)="invoicesButtonClick()">{{ 'navmenu.invoices' | translate }}<mat-icon>receipt</mat-icon></button>
       <span class="flex-expand"></span>
       <mat-select class="mat-select" hideSingleSelectionIndicator="true" (selectionChange)="onChangeLanguage($event)" [value]="indexInitialOption">
         <mat-option class="mat-options" *ngFor="let option of languageOptions" [value]="option.value">{{ option.display }}</mat-option>
