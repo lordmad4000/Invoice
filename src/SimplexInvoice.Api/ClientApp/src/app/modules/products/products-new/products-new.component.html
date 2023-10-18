@@ -1,0 +1,61 @@
+<div class="products-new-container">
+    <mat-toolbar class="head-toolbar">
+        <mat-toolbar-row>
+            <button mat-button matTooltip="{{ 'head-toolbar.button_back' | translate }}" (click)="backButtonClick()">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <div class="outer-box">
+                <h1 class="module-title">{{ 'products.title' | translate }}</h1>
+            </div>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <form class="product-form" [formGroup]="formProduct">
+        <div class="div-fields">
+            <mat-form-field class="code-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>{{ 'products.forms.code' | translate }}</mat-label>
+                <input type="text" matInput formControlName="code" required matTextareaAutosize>
+            </mat-form-field>
+            <mat-divider></mat-divider>
+            <mat-form-field class="name-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>{{ 'products.forms.name' | translate }}</mat-label>
+                <input type="text" matInput formControlName="name" required matTextareaAutosize>
+            </mat-form-field>
+            <mat-form-field class="description-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>{{ 'products.forms.description' | translate }}</mat-label>
+                <input type="text" matInput formControlName="description" required matTextareaAutosize>
+            </mat-form-field>
+            <mat-divider></mat-divider>
+            <mat-form-field class="packagequantity-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>{{ 'products.forms.packagequantity' | translate }}</mat-label>
+                <input type="number" matInput formControlName="packageQuantity" required matTextareaAutosize>
+            </mat-form-field>
+            <mat-form-field class="price-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>{{ 'products.forms.price' | translate }}</mat-label>
+                <input type="number" matInput formControlName="price" pattern="^\d*(\.\d{0,2})?$" required
+                    matTextareaAutosize>
+            </mat-form-field>
+            <mat-form-field class="currency-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>{{ 'products.forms.currency' | translate }}</mat-label>
+                <input type="text" matInput formControlName="currency" required matTextareaAutosize>
+            </mat-form-field>
+            <mat-divider></mat-divider>
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'products.forms.taxrate' | translate }}</mat-label>
+                <mat-select class="mat-select" hideSingleSelectionIndicator="true"
+                    (selectionChange)="onChangeTaxRates($event)" [value]="selectedTaxRateId">
+                    <mat-option class="mat-options" *ngFor="let option of taxRates" [value]="option.id">{{
+                        option.name }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="taxratevalue-field" appearance="fill" mat-form-fieldAutoSize>
+                <mat-label>{{ 'products.forms.taxratevalue' | translate }}</mat-label>
+                <input type="text" matInput formControlName="taxRateValue" required matTextareaAutosize>
+            </mat-form-field>
+        </div>
+        <div>
+            <button mat-raised-button class="button-save" color="primary"
+                matTooltip="{{ 'shared.buttons.save_tooltip' | translate }}" (click)="saveButtonClick()"
+                [disabled]="formProduct.invalid">{{ 'shared.buttons.save' | translate }}</button>
+        </div>
+    </form>
+</div>
