@@ -100,5 +100,19 @@
             "phone": "Phone Number",
             "email": "Email Address"
         }
+    },
+    "products": {
+        "title": "PRODUCTS",
+        "forms": {
+            "code": "Code",
+            "name": "Name",
+            "description": "Description",
+            "packagequantity": "Package Quantity",
+            "price": "Unit Price",
+            "currency": "Currency",
+            "taxrate": "Tax Rate",
+            "taxratename": "Tax Rate Name",
+            "taxratevalue": "Tax Rate Value"
+        }
     }
 }
