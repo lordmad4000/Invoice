@@ -27,18 +27,18 @@ export class CustomersService {
         return this.httpClient.get<CustomerDto>(url);
     }
 
-    public Post(taxRateRegisterRequest: CustomerRegisterRequest): Observable<CustomerDto> {
+    public Post(customerRegisterRequest: CustomerRegisterRequest): Observable<CustomerDto> {
 
         const url = `${this.baseUrl}/Register`;
 
-        return this.httpClient.post<CustomerDto>(url, taxRateRegisterRequest);
+        return this.httpClient.post<CustomerDto>(url, customerRegisterRequest);
     }
 
-    public Update(taxRateDto: CustomerDto): Observable<CustomerDto> {
+    public Update(customerDto: CustomerDto): Observable<CustomerDto> {
 
         const url = `${this.baseUrl}/Update`;
 
-        return this.httpClient.put<CustomerDto>(url, taxRateDto);
+        return this.httpClient.put<CustomerDto>(url, customerDto);
     }
 
     public Delete(id: string): Observable<boolean> {
