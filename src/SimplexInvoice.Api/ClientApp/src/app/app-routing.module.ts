@@ -15,6 +15,7 @@ const routes: Routes = [
 { path: 'companies', loadChildren: () => import('./modules/companies/companies.module').then(x => x.CompaniesModule), canActivate: [authGuard]},
 { path: 'customers', loadChildren: () => import('./modules/customers/customers.module').then(x => x.CustomersModule), canActivate: [authGuard]},
 { path: 'products', loadChildren: () => import('./modules/products/products.module').then(x => x.ProductsModule), canActivate: [authGuard]},
+{ path: 'invoices', loadChildren: () => import('./modules/invoices/invoices.module').then(x => x.InvoicesModule), canActivate: [authGuard]},
 { path: '**', component: PageNotFoundComponent },
 ];
 

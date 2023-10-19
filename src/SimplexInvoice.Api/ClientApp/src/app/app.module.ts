@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { HomeModule } from './modules/home';
 import { IdDocumentTypesModule } from './modules/iddocumenttypes';
+import { InvoicesModule } from './modules/invoices/invoices.module';
 import { LoginComponent } from './components/login/login.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -48,6 +49,7 @@ import { UsersModule } from './modules/users';
     CompaniesModule,
     CustomersModule,
     ProductsModule,
+    InvoicesModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

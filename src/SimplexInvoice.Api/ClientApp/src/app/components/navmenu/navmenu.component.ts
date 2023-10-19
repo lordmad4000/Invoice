@@ -101,7 +101,7 @@ export class NavmenuComponent {
   }
 
   invoicesButtonClick() {
-    //this.router.navigate(['/invoices/grid']);
+    this.router.navigate(['/invoices/grid']);
   }
 
   aboutButtonClick() {

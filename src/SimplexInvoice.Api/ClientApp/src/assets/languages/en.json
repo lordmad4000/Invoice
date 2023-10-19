@@ -114,5 +114,39 @@
             "taxratename": "Tax Rate Name",
             "taxratevalue": "Tax Rate Value"
         }
+    },
+    "invoices": {
+        "title": "INVOICES",
+        "forms": {
+            "number": "Invoice Number",
+            "description": "Description",
+            "date": "Date",
+            "companyname": "Company Name",
+            "companyiddocumenttype": "Company Id Document Type",
+            "companydocumentnumber": "Company Document Number",
+            "companystreet": "Company Street",
+            "companycity": "Company City",
+            "companystate": "Company State",
+            "companycountry": "Company Country",
+            "companypostalcode": "Company Postal Code",
+            "companyphone": "Company Phone Number",
+            "companyemail": "Company Email Address",
+            "customerfullname": "Customer Name",
+            "customeriddocumenttype": "Customer Id Document Type",
+            "customerdocumentnumber": "Customer Document Number",
+            "customerstreet": "Customer Street",
+            "customercity": "Customer City",
+            "customerstate": "Customer State",
+            "customercountry": "Customer Country",
+            "customerpostalcode": "Customer Postal Code",
+            "customerphone": "Customer Phone Number",
+            "customeremail": "Customer Email Address",
+            "totaltax": "Total Taxes",
+            "totaldiscount": "Total Discount",
+            "totaltaxbase": "Total Base Taxes",
+            "total": "Total",
+            "currency": "Currency"
+        }
     }
+
 }

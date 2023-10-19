@@ -114,5 +114,38 @@
             "taxratename": "Nombre del Impuesto",
             "taxratevalue": "Valor del Impuesto"
         }
+    },
+    "invoices": {
+        "title": "FACTURAS",
+        "forms": {
+            "number": "Número de Factura",
+            "description": "Descripción",
+            "date": "Fecha",
+            "companyname": "Nombre de la Empresa",
+            "companyiddocumenttype": "Tipo de Documento de la Empresa",
+            "companydocumentnumber": "Número de Documento de la Empresa",
+            "companystreet": "Calle de la Empresa",
+            "companycity": "Ciudad de la Empresa",
+            "companystate": "Estado de la Empresa",
+            "companycountry": "País de la Empresa",
+            "companypostalcode": "Código Postal de la Empresa",
+            "companyphone": "Número de Teléfono de la Empresa",
+            "companyemail": "Correo Electrónico de la Empresa",
+            "customerfullname": "Nombre del Cliente",
+            "customeriddocumenttype": "Tipo de Documento del Cliente",
+            "customerdocumentnumber": "Número de Documento del Cliente",
+            "customerstreet": "Calle del Cliente",
+            "customercity": "Ciudad del Cliente",
+            "customerstate": "Estado del Cliente",
+            "customercountry": "País del Cliente",
+            "customerpostalcode": "Código Postal del Cliente",
+            "customerphone": "Número de Teléfono del Cliente",
+            "customeremail": "Correo Electrónico del Cliente",
+            "totaltax": "Impuestos Total",
+            "totaldiscount": "Descuento Total",
+            "totaltaxbase": "Base Imponible",
+            "total": "Total",
+            "currency": "Divisa"
+        }
     }
 }
