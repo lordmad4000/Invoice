@@ -12,6 +12,8 @@ public class InvoiceDto
     [Required(ErrorMessage = "Description is required.")]
     [StringLength(40, ErrorMessage = "Description cannot be longer than 40 characters.")]
     public string Description { get; set; }
+    [Required(ErrorMessage = "Date is required.")]
+    public DateOnly Date { get; set; }
     [Required(ErrorMessage = "CompanyName is required.")]
     [StringLength(40, ErrorMessage = "CompanyName cannot be longer than 40 characters.")]
     public string CompanyName { get; set; }

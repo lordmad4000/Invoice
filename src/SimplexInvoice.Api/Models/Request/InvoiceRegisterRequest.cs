@@ -9,6 +9,8 @@ public class InvoiceRegisterRequest
     [Required(ErrorMessage = "Description is required.")]
     [StringLength(40, ErrorMessage = "Description cannot be longer than 40 characters.")]
     public string Description { get; set; } = string.Empty;
+    [Required(ErrorMessage = "Date is required.")]
+    public DateOnly Date { get; set; }
     [Required(ErrorMessage = "CompanyName is required.")]
     [StringLength(40, ErrorMessage = "CompanyName cannot be longer than 40 characters.")]
     public string CompanyName { get; set; } = string.Empty;
