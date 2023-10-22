@@ -140,12 +140,23 @@
             "customercountry": "País del Cliente",
             "customerpostalcode": "Código Postal del Cliente",
             "customerphone": "Número de Teléfono del Cliente",
-            "customeremail": "Correo Electrónico del Cliente",
-            "totaltax": "Impuestos Total",
-            "totaldiscount": "Descuento Total",
-            "totaltaxbase": "Base Imponible",
+            "customeremail": "Correo Electrónico del Cliente",            
+            "packages": "Bultos",
+            "productdescription": "Descripción",
+            "quantity": "Cantidad",
+            "price": "Precio",
+            "taxbase": "Base Imponible",
+            "tax": "IVA",
+            "discount": "Descuento",
             "total": "Total",
-            "currency": "Divisa"
+            "currency": "Divisa",
+            "taxdetailtax": "IVA",
+            "taxdetailtaxbase": "Base Imponible",
+            "taxdetailtotaltax": "Cuota",
+            "totaltaxbase": "Base Imponible",
+            "totaltax": "IVA",
+            "totaldiscount": "Descuento",
+            "totaltotal": "Total"
         }
     }
 }

@@ -141,12 +141,22 @@
             "customerpostalcode": "Customer Postal Code",
             "customerphone": "Customer Phone Number",
             "customeremail": "Customer Email Address",
-            "totaltax": "Total Taxes",
-            "totaldiscount": "Total Discount",
-            "totaltaxbase": "Total Base Taxes",
+            "packages": "Packages",
+            "productdescription": "Description",
+            "quantity": "Quantity",
+            "price": "Price",
+            "taxbase": "Tax Base",
+            "tax": "Tax",
+            "discount": "Discount",
             "total": "Total",
-            "currency": "Currency"
+            "currency": "Currency",
+            "taxdetailtax": "Tax",
+            "taxdetailtaxbase": "Tax Base",
+            "taxdetailtotaltax": "Total Tax",
+            "totaltaxbase": "Total Base Tax",
+            "totaltax": "Total Tax",
+            "totaldiscount": "Total Discount",
+            "totaltotal": "Total"
         }
     }
-
 }

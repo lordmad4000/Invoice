@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Language } from '../models/language';
 import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -7,35 +8,40 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class CustomTranslateService {
 
-    private _currentLanguage: string = 'en';
+    private _currentLanguage: string;
+    public supportedLanguages: Language[] = [
+        { value: 'en-US', display: 'English' },
+        { value: 'es-ES', display: 'Español' },
+    ]
 
     public get currentLanguage() {
         return this._currentLanguage;
     }
+
     public set currentLanguage(value: string) {
         this._currentLanguage = value;
         this.translateService.use(value);
     }
 
     constructor(private translateService: TranslateService) {
-        console.log("");
-        this.translateService.addLangs(['en', 'es']);
+        this._currentLanguage = this.supportedLanguages[0].value;
+        this.translateService.addLangs(this.supportedLanguages.map(c => c.value));
         let language = this.translateService.getBrowserLang();
-        if (language === undefined)
-            language = 'en';
-
-        this.currentLanguage = language;
+        language = this.supportedLanguages.map(c => c.value)
+                                          .find(c => c === language);
+        if (language !== undefined)
+            this._currentLanguage = language;        
     }
 
-    public use() : void {
+    public use(): void {
         this.translateService.use(this.currentLanguage);
     }
 
-    public instant(key: string | string[], interpolateParams?: Object) : any {
+    public instant(key: string | string[], interpolateParams?: Object): any {
         return this.translateService.instant(key, interpolateParams)
     }
 
-    public stream(key: string | string[], interpolateParams?: Object) : Observable<any> {
+    public stream(key: string | string[], interpolateParams?: Object): Observable<any> {
         return this.translateService.stream(key, interpolateParams);
     }
 }
