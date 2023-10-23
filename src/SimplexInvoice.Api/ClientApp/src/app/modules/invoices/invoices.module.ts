@@ -6,6 +6,7 @@ import { InvoicesComponent } from './invoices.component';
 import { InvoicesGridComponent } from './invoices-grid/invoices-grid.component';
 import { InvoicesRoutingModule } from './invoices-routing.module';
 import { InvoicesService } from 'src/app/shared/services/invoices.service';
+import { InvoicesViewComponent } from './invoices-view';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
@@ -26,7 +27,7 @@ import { TranslateModule } from '@ngx-translate/core';
     InvoicesComponent,
     InvoicesGridComponent,
     // InvoicesNewComponent,
-    // InvoicesViewComponent
+    InvoicesViewComponent
   ],
   imports: [
     CommonModule,
