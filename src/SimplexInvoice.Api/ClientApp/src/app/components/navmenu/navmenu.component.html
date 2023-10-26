@@ -1,7 +1,7 @@
 <div class="nav-menu">
   <mat-toolbar>
     <mat-toolbar-row>
-      <button mat-button (click)="aboutButtonClick()">Simplex Invoice App<mat-icon>pix</mat-icon></button>
+      <button id="about-button" mat-button (click)="aboutButtonClick()">Simplex Invoice App<mat-icon>pix</mat-icon></button>
       <button mat-button (click)="homeButtonClick()">{{ 'navmenu.home' | translate }}<mat-icon>home</mat-icon></button>
       <button mat-button [matMenuTriggerFor]="homeMenu">{{ 'navmenu.configuration' | translate }}<mat-icon>settings</mat-icon></button>
       <mat-menu #homeMenu="matMenu">

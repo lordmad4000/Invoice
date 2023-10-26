@@ -16,6 +16,7 @@ import { InvoicesModule } from './modules/invoices/invoices.module';
 import { LoginComponent } from './components/login/login.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MoneyService } from './shared/services/money.service';
 import { NavmenuComponent, PopupComponent } from './components';
 import { NgModule } from '@angular/core';
 import { ProductsModule } from './modules/products';
@@ -67,6 +68,7 @@ import { UsersModule } from './modules/users';
     LoadFileService,
     PopupService,
     SnackBarService,
+    MoneyService
   ],
   bootstrap: [AppComponent]
 })
