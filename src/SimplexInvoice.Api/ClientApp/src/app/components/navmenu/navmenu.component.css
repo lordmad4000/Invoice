@@ -1,9 +1,17 @@
 .nav-menu {
   display: block;
+  z-index: 99;
+  position: relative;
 }
+
 mat-toolbar {
   background: #009bee;
   color: white;
+  justify-content: center;
+}
+
+mat-toolbar-row{
+  height: 64px;
 }
 
 mat-icon {
