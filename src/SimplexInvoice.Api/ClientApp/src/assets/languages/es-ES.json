@@ -34,7 +34,11 @@
         },
         "buttons": {
             "save": "Guardar",
-            "save_tooltip": "Guardar cambios"
+            "save_tooltip": "Guardar cambios",
+            "close": "Cerrar"
+        },
+        "errors": {
+            "unknown": "Error desconocido."
         }
     },
     "home": {
@@ -88,8 +92,10 @@
     "customers": {
         "title": "CLIENTES",
         "forms": {
+            "customer": "Cliente",
             "firstname": "Nombre",
             "lastname": "Apellido",
+            "fullname": "Nombre Completo",
             "iddocumenttype": "Tipo de Documento",
             "iddocumentnumber": "Número de Documento",
             "street": "Calle",
@@ -99,6 +105,14 @@
             "postalcode": "Código Postal",
             "phone": "Número de Teléfono",
             "email": "Correo Electrónico"
+        },
+        "search": {
+            "byname_chip": "Nombre",
+            "byname": "Buscar Cliente por Nombre Completo",
+            "byemail_chip": "Correo",
+            "byemail": "Buscar Cliente por Correo Electrónico",
+            "byiddocumentnumber_chip": "Documento",
+            "byiddocumentnumber": "Buscar Cliente por Número de Documento"
         }
     },
     "products": {
@@ -140,14 +154,18 @@
             "customercountry": "País del Cliente",
             "customerpostalcode": "Código Postal del Cliente",
             "customerphone": "Número de Teléfono del Cliente",
-            "customeremail": "Correo Electrónico del Cliente",            
+            "customeremail": "Correo Electrónico del Cliente",
             "packages": "Bultos",
+            "productcode": "Código",
+            "productname": "Producto",
             "productdescription": "Descripción",
             "quantity": "Cantidad",
             "price": "Precio",
+            "taxrate": "IVA (%)",
             "taxbase": "Base Imponible",
-            "tax": "IVA",
-            "discount": "Descuento",
+            "tax": "IVA Total",
+            "discountrate": "Descuento (%)",
+            "discount": "Descuento Total",
             "total": "Total",
             "currency": "Divisa",
             "taxdetailtax": "IVA",
@@ -156,7 +174,8 @@
             "totaltaxbase": "Base Imponible",
             "totaltax": "IVA",
             "totaldiscount": "Descuento",
-            "totaltotal": "Total"
+            "totaltotal": "Total",
+            "delete_line": "Eliminar linea"
         }
     }
 }

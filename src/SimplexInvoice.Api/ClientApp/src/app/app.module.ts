@@ -20,6 +20,7 @@ import { MoneyService } from './shared/services/money.service';
 import { NavmenuComponent, PopupComponent } from './components';
 import { NgModule } from '@angular/core';
 import { ProductsModule } from './modules/products';
+import { SearchComponent } from './components/search/search.component';
 import { SnackBarService } from './shared/services/snackbar.service';
 import { TaxRatesModule } from './modules/taxrates';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -44,6 +45,7 @@ import { UsersModule } from './modules/users';
     MatButtonModule,
     MatDialogModule,
     NavmenuComponent,
+    SearchComponent,
     PopupComponent,
     UsersModule,
     TaxRatesModule,

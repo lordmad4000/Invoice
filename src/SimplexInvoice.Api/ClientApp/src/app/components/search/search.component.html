@@ -1,0 +1,27 @@
+<div class="search-box" cdkDragBoundary=".invoices-new-container" cdkDrag>
+    <mat-icon class="search-handle" cdkDragHandle>open_with</mat-icon>
+    <mat-icon class="search-close" (click)="onClose()"
+        matTooltip="{{ 'shared.buttons.close' | translate }}">close</mat-icon>
+    <div class="input-search-container">
+        <mat-chip-listbox aria-label="Selection">
+            <mat-chip-option *ngFor="let option of searchInput; let i = index" [selected]="i === 0"
+                (click)="toggleChip(option)">{{ option.chipText
+                }}
+            </mat-chip-option>
+        </mat-chip-listbox>
+        <mat-form-field class="search-input">
+            <mat-label>{{ selectedSearch.inputText }}</mat-label>
+            <input matInput type="text" [(ngModel)]="inputSearch" (input)="onChangesInputSearch()">
+        </mat-form-field>
+    </div>
+    <div class="search-list-container">
+        <mat-selection-list [multiple]="false">
+            <mat-list-item *ngFor="let item of searchList" (click)="onSelectedItem(item)">
+                <div class="search-item">
+                    <mat-icon class="search-item-field">{{ listIcon }}</mat-icon>
+                    <div class="search-item-field">{{item.description }}</div>
+                </div>
+            </mat-list-item>
+        </mat-selection-list>
+    </div>
+</div>
