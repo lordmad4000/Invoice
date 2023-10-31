@@ -1,8 +1,8 @@
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, QueryList, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatChipsModule } from '@angular/material/chips';
+import { MatChipListboxChange, MatChipOption, MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -33,7 +33,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, AfterViewInit {
   @Output() onCloseEvent = new EventEmitter();
   @Output() onSelectedItemEvent = new EventEmitter<SearchItem>();
   @Output() onChangesInputSearchEvent = new EventEmitter<SearchInput>();
@@ -44,17 +44,51 @@ export class SearchComponent implements OnInit {
   public selectedSearch: SearchInput = new SearchInput();
   public inputSearch: string = '';
 
-  constructor() { }
+  constructor(private renderer: Renderer2) { }
 
   ngOnInit() {
     this.selectedSearch = this.searchInput[0];
   }
 
-  toggleChip(option: SearchInput) {
-    this.selectedSearch = option;
+  ngAfterViewInit(): void {
+    this.renderer.selectRootElement('#inputsearch').focus();
+  }
+
+  toggleChip(matChipListboxChange: MatChipListboxChange) {
+    if (matChipListboxChange.value === undefined) {
+      this.selectChipByValue(matChipListboxChange.source._chips, this.selectedSearch.chipText);
+      return;
+    }
+
+    let selectOption = this.searchInput.find(c => c.chipText === matChipListboxChange.value);
+    if (selectOption === undefined) {
+      selectOption = this.searchInput[0];
+      this.selectFirstChip(matChipListboxChange.source._chips);
+    }
+    this.selectedSearch = selectOption;
     this.inputSearch = '';
     this.searchList = [];
   }
+
+  selectFirstChip(chips: QueryList<MatChipOption>) {
+    if (chips === undefined) {
+      return;
+    }
+    chips.first.toggleSelected();
+  }
+
+  selectChipByValue(chips: QueryList<MatChipOption>, value: string) {
+    if (chips === undefined) {
+      return;
+    }
+    const chip = chips.find(c => c.value === value);
+    if (chip === undefined) {
+      chips.first.select;
+    }
+
+    chip?.toggleSelected();
+  }
+
 
   onChangesInputSearch() {
     const searchInput: SearchInput = {

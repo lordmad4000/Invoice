@@ -3,25 +3,26 @@
     <mat-icon class="search-close" (click)="onClose()"
         matTooltip="{{ 'shared.buttons.close' | translate }}">close</mat-icon>
     <div class="input-search-container">
-        <mat-chip-listbox aria-label="Selection">
+        <mat-chip-listbox (change)="toggleChip($event)">
             <mat-chip-option *ngFor="let option of searchInput; let i = index" [selected]="i === 0"
-                (click)="toggleChip(option)">{{ option.chipText
+                >{{ option.chipText
                 }}
             </mat-chip-option>
         </mat-chip-listbox>
-        <mat-form-field class="search-input">
-            <mat-label>{{ selectedSearch.inputText }}</mat-label>
-            <input matInput type="text" [(ngModel)]="inputSearch" (input)="onChangesInputSearch()">
-        </mat-form-field>
+        <div class="input-container">
+            <label for="inputsearch">{{ selectedSearch.inputText }}</label>
+            <input id="inputsearch" type="text" [(ngModel)]="inputSearch" (input)="onChangesInputSearch()" required/>
+        </div>
     </div>
     <div class="search-list-container">
         <mat-selection-list [multiple]="false">
-            <mat-list-item *ngFor="let item of searchList" (click)="onSelectedItem(item)">
+            <mat-list-option *ngFor="let item of searchList" (click)="onSelectedItem(item)"
+                (keyup.enter)="onSelectedItem(item)">
                 <div class="search-item">
                     <mat-icon class="search-item-field">{{ listIcon }}</mat-icon>
                     <div class="search-item-field">{{item.description }}</div>
                 </div>
-            </mat-list-item>
+            </mat-list-option>
         </mat-selection-list>
     </div>
 </div>
