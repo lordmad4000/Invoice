@@ -44,6 +44,12 @@
     height: 3rem;
 }
 
+.input-container mat-icon{
+    position:absolute;
+    top: 1rem;
+    left: 1rem;
+}
+
 .input-container label {
     color: blue;
     position: relative;
@@ -51,21 +57,22 @@
 }
 
 #inputsearch:focus {
-    color: green;
-    top: -10rem;
-    margin-top: -2.5rem;
-    outline: none;
     border: none;
-    margin-left: 0.5rem;
-    width: 28rem;
+    color: green;
+    left: 3rem;
+    outline: none;
+    position:absolute;
+    top: 1rem;
+    width: 26rem;
 }
 
 #inputsearch {
-    margin-top: -1.5rem;
-    outline: none;
     border: none;
-    margin-left: 0.5rem;
-    width: 28rem;
+    left: 3rem;
+    outline: none;
+    position:absolute;
+    top: 1rem;
+    width: 26rem;
 }
 
 .search-list-container {

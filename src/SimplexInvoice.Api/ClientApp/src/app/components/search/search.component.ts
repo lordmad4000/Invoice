@@ -43,6 +43,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   public selectedSearch: SearchInput = new SearchInput();
   public inputSearch: string = '';
+  public selectedOptions: any;
 
   constructor(private renderer: Renderer2) { }
 
@@ -88,7 +89,6 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
     chip?.toggleSelected();
   }
-
 
   onChangesInputSearch() {
     const searchInput: SearchInput = {

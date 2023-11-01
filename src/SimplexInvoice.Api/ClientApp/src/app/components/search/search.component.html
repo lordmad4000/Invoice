@@ -11,6 +11,7 @@
         </mat-chip-listbox>
         <div class="input-container">
             <label for="inputsearch">{{ selectedSearch.inputText }}</label>
+            <mat-icon>search</mat-icon>
             <input id="inputsearch" type="text" [(ngModel)]="inputSearch" (input)="onChangesInputSearch()" required/>
         </div>
     </div>
