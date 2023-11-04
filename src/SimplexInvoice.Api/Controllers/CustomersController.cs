@@ -74,5 +74,32 @@ public class CustomersController : ApiController
 
         return Ok(result);
     }
+    
+    [HttpGet("GetBasicCustomersContainsFullName{fullName}")]
+    public async Task<IActionResult> GetBasicCustomersContainsFullName(string fullName, CancellationToken cancellationToken)
+    {
+        var query = new GetBasicCustomersContainsFullNameQuery(fullName);
+        var basicCustomers = await _mediator.Send(query, cancellationToken);
+
+        return Ok(basicCustomers);
+    }
+    
+    [HttpGet("GetBasicCustomersContainsEmail{email}")]
+    public async Task<IActionResult> GetBasicCustomersContainsEmail(string email, CancellationToken cancellationToken)
+    {
+        var query = new GetBasicCustomersContainsEmailQuery(email);
+        var basicCustomers = await _mediator.Send(query, cancellationToken);
+
+        return Ok(basicCustomers);
+    }
+    
+    [HttpGet("GetBasicCustomersContainsIdDocumentNumber{idDocumentNumber}")]
+    public async Task<IActionResult> GetBasicCustomersContainsIdDocumentNumber(string idDocumentNumber, CancellationToken cancellationToken)
+    {
+        var query = new GetBasicCustomersContainsIdDocumentNumberQuery(idDocumentNumber);
+        var basicCustomers = await _mediator.Send(query, cancellationToken);
+
+        return Ok(basicCustomers);
+    }
 
 }
