@@ -39,6 +39,8 @@ public class CompaniesFlow
 
             //Assert
             Assert.NotNull(companyDto);
+            if (companyDto is null)
+                throw new Exception("Error al recuperar la compañia, no se pueden ejecutar los tests.");
         }
         //Arrange
         services = ServicesConfiguration.BuildDependencies();
