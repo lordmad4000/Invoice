@@ -1,3 +1,4 @@
+import { BasicCustomer } from '../models/basiccustomer';
 import { CustomerDto } from '../models/customerdto';
 import { CustomerRegisterRequest } from '../models/customerregisterrequest';
 import { HttpClient } from '@angular/common/http';
@@ -46,6 +47,28 @@ export class CustomersService {
         const url = `${this.baseUrl}/Delete/${encodeURIComponent(String(id))}`;
 
         return this.httpClient.delete<boolean>(url);
+    }
+
+    public GetBasicCustomersContainsFullName(fullName: string): Observable<Array<BasicCustomer>> {
+
+        const url = `${this.baseUrl}/GetBasicCustomersContainsFullName${encodeURIComponent(String(fullName))}`;
+
+        return this.httpClient.get<Array<BasicCustomer>>(url);
+    }
+
+    public GetBasicCustomersContainsEmail(email: string): Observable<Array<BasicCustomer>> {
+
+        const url = `${this.baseUrl}/GetBasicCustomersContainsEmail${encodeURIComponent(String(email))}`;
+
+        return this.httpClient.get<Array<BasicCustomer>>(url);
+
+    }
+
+    public GetBasicCustomersContainsIdDocumentNumber(idDocumentNumber: string): Observable<Array<BasicCustomer>> {
+
+        const url = `${this.baseUrl}/GetBasicCustomersContainsIdDocumentNumber${encodeURIComponent(String(idDocumentNumber))}`;
+
+        return this.httpClient.get<Array<BasicCustomer>>(url);
     }
 
 }
