@@ -1,5 +1,7 @@
-import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { BasicCustomer } from 'src/app/shared/models/basiccustomer';
 import { CompaniesService, CustomTranslateService, CustomersService, ErrorService, TaxRatesService } from 'src/app/shared/services';
+import { CompanyDto } from 'src/app/shared/models/companydto';
+import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { CustomerDto } from 'src/app/shared/models/customerdto';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -14,7 +16,6 @@ import { SearchInput } from 'src/app/shared/models/searchinput';
 import { SearchItem } from 'src/app/shared/models/searchitem';
 import { SnackBarService } from 'src/app/shared/services/snackbar.service';
 import { Subscription } from 'rxjs';
-import { CompanyDto } from 'src/app/shared/models/companydto';
 
 @Component({
   selector: 'app-invoices-new',
@@ -31,7 +32,7 @@ export class InvoicesNewComponent implements OnInit, OnDestroy {
   public invoiceLinesVisible: boolean = false;
   public customerSearchInput: SearchInput[] = [];
   public customerSearchVisible: boolean = false;
-  public customers: CustomerDto[] = [];
+  public basicCustomers: BasicCustomer[] = [];
   public customersList: SearchItem[] = [];
   public productSearchVisible: boolean = false;
   public productSearchInput: SearchInput[] = [];
@@ -61,7 +62,6 @@ export class InvoicesNewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.addInvoiceLine();
     this.loadAndSetCompanyData();
-    this.loadCustomers();
   }
 
   loadCustomerSearchInputData() {
@@ -171,11 +171,11 @@ export class InvoicesNewComponent implements OnInit, OnDestroy {
     this.calculateTotals();
   }
 
-  private loadCustomers() {
-    this.customersService.GetAll().subscribe({
-      next: (res: CustomerDto[]) => {
+  private getCustomersContainsFullName(fullName: string) {
+    this.customersService.GetBasicCustomersContainsFullName(fullName).subscribe({
+      next: (res: BasicCustomer[]) => {
         if (res) {
-          this.customers = res;
+          this.basicCustomers = res;
         }
       },
       error: (err: HttpErrorResponse) => {
@@ -184,6 +184,19 @@ export class InvoicesNewComponent implements OnInit, OnDestroy {
     })
 
   }
+
+  private getCustomerById(id: string){
+    this.customersService.Get(id).subscribe({
+      next: (res: CustomerDto) => {
+        if (res) {
+          this.setCustomerData(res);
+        }
+      },
+      error: (err: HttpErrorResponse) => {
+        this.snackBarService.openSnackBar(this.errorService.HttpErrorResponseToString(err));
+      }
+    })
+  }  
 
   saveButtonClick() {
     const invoice = this.setInvoiceDataFromFormData();
@@ -256,11 +269,10 @@ export class InvoicesNewComponent implements OnInit, OnDestroy {
       this.customersList = [];
     }
     else {
-      //this.customers = this.getCustomers(input.inputText);
-      let customers = this.customers.filter(c => c.firstName.toLowerCase().includes(input.inputText.toLowerCase()) || c.lastName.toLowerCase().includes(input.inputText.toLowerCase()));
-      this.customersList = customers.map(c => ({
+      this.getCustomersContainsFullName(input.inputText);
+      this.customersList = this.basicCustomers.map(c => ({
         id: c.id,
-        description: c.firstName + " " + c.lastName + " - " + c.idDocumentNumber + " - " + c.phone + " - " + c.email,
+        description: c.fullName + " - " + c.idDocumentNumber + " - " + c.phone + " - " + c.email,
         searchId: input.id,
       }));
     }
@@ -282,7 +294,10 @@ export class InvoicesNewComponent implements OnInit, OnDestroy {
   }
 
   onSelectedCustomer(item: SearchItem) {
-    const customer = this.customers.find(c => c.id === item.id);
+    this.getCustomerById(item.id);
+  }
+
+  setCustomerData(customer: CustomerDto) {
     if (customer !== undefined) {
       this.customerSearchVisible = false;
       const customerFullName = customer.firstName + ' ' + customer.lastName;
@@ -704,338 +719,6 @@ export class InvoicesNewComponent implements OnInit, OnDestroy {
       },
     ]
   }
-
-  // getCustomers(name: string): CustomerDto[] {
-  //   const data: CustomerDto[] = [
-  //     {
-  //       id: '1',
-  //       firstName: 'Moncho',
-  //       lastName: 'Ariza',
-  //       idDocumentTypeId: '',
-  //       idDocumentNumber: '659456646A',
-  //       street: 'Calle del Poncho, 2',
-  //       city: 'Madrid',
-  //       state: 'Madrid',
-  //       country: 'España',
-  //       postalCode: '28031',
-  //       phone: '617 65 22 34',
-  //       email: 'ariza@gmail.com',
-  //       idDocumentType: {
-  //         id: '',
-  //         name: ''
-  //       }
-  //     },
-  //     {
-  //       id: '2',
-  //       firstName: 'Rafael',
-  //       lastName: 'Barbosa',
-  //       idDocumentTypeId: '',
-  //       idDocumentNumber: '456789452A',
-  //       street: 'Calle del Poncho, 2',
-  //       city: 'Madrid',
-  //       state: 'Madrid',
-  //       country: 'España',
-  //       postalCode: '28031',
-  //       phone: '617 65 22 34',
-  //       email: 'barbosa@gmail.com',
-  //       idDocumentType: {
-  //         id: '',
-  //         name: ''
-  //       }
-  //     },
-  //     {
-  //       id: '3',
-  //       firstName: 'Sanbandija',
-  //       lastName: 'Humana',
-  //       idDocumentTypeId: '',
-  //       idDocumentNumber: '123987456R',
-  //       street: 'Calle del Poncho, 2',
-  //       city: 'Madrid',
-  //       state: 'Madrid',
-  //       country: 'España',
-  //       postalCode: '28031',
-  //       phone: '617 65 22 34',
-  //       email: 'humana@gmail.com',
-  //       idDocumentType: {
-  //         id: '',
-  //         name: ''
-  //       }
-  //     },
-  //     {
-  //       id: '4',
-  //       firstName: 'Rafael',
-  //       lastName: 'Sanchez',
-  //       idDocumentTypeId: '',
-  //       idDocumentNumber: '98564789B',
-  //       street: 'Calle del Poncho, 2',
-  //       city: 'Madrid',
-  //       state: 'Madrid',
-  //       country: 'España',
-  //       postalCode: '28031',
-  //       phone: '617 65 22 34',
-  //       email: 'sanchez@gmail.com',
-  //       idDocumentType: {
-  //         id: '',
-  //         name: ''
-  //       }
-  //     },
-  //     {
-  //       id: '5',
-  //       firstName: 'Sanbalier',
-  //       lastName: 'Pietrik',
-  //       idDocumentTypeId: '',
-  //       idDocumentNumber: '564879575T',
-  //       street: 'Calle del Poncho, 2',
-  //       city: 'Madrid',
-  //       state: 'Madrid',
-  //       country: 'España',
-  //       postalCode: '28031',
-  //       phone: '617 65 22 34',
-  //       email: 'pietrik@gmail.com',
-  //       idDocumentType: {
-  //         id: '',
-  //         name: ''
-  //       }
-  //     },
-  //     {
-  //       id: '6',
-  //       firstName: 'Montoro',
-  //       lastName: 'Cerdo',
-  //       idDocumentTypeId: '',
-  //       idDocumentNumber: '558964521G',
-  //       street: 'Calle del Poncho, 2',
-  //       city: 'Madrid',
-  //       state: 'Madrid',
-  //       country: 'España',
-  //       postalCode: '28031',
-  //       phone: '617 65 22 34',
-  //       email: 'ariza@gmail.com',
-  //       idDocumentType: {
-  //         id: '',
-  //         name: ''
-  //       }
-  //     },
-  //     {
-  //       id: '7',
-  //       firstName: 'Soraya',
-  //       lastName: 'Certipede',
-  //       idDocumentTypeId: '',
-  //       idDocumentNumber: '558964521G',
-  //       street: 'Calle del Poncho, 2',
-  //       city: 'Madrid',
-  //       state: 'Madrid',
-  //       country: 'España',
-  //       postalCode: '28031',
-  //       phone: '617 65 22 34',
-  //       email: 'certipede@gmail.com',
-  //       idDocumentType: {
-  //         id: '',
-  //         name: ''
-  //       }
-  //     },
-  //     {
-  //       id: '8',
-  //       firstName: 'Marcos',
-  //       lastName: 'Pier Solar',
-  //       idDocumentTypeId: '',
-  //       idDocumentNumber: '564879575T',
-  //       street: 'Calle del Poncho, 2',
-  //       city: 'Madrid',
-  //       state: 'Madrid',
-  //       country: 'España',
-  //       postalCode: '28031',
-  //       phone: '617 65 22 34',
-  //       email: 'pietrik@gmail.com',
-  //       idDocumentType: {
-  //         id: '',
-  //         name: ''
-  //       }
-  //     },
-  //     {
-  //       id: '9',
-  //       firstName: 'Jennifer',
-  //       lastName: 'Sandobal',
-  //       idDocumentTypeId: '',
-  //       idDocumentNumber: '576816489G',
-  //       street: 'Calle del Poncho, 2',
-  //       city: 'Madrid',
-  //       state: 'Madrid',
-  //       country: 'España',
-  //       postalCode: '28031',
-  //       phone: '617 65 22 34',
-  //       email: 'sanchez@gmail.com',
-  //       idDocumentType: {
-  //         id: '',
-  //         name: ''
-  //       }
-  //     },
-  //     {
-  //       id: '10',
-  //       firstName: 'Ana',
-  //       lastName: 'Huminido',
-  //       idDocumentTypeId: '',
-  //       idDocumentNumber: '123987456R',
-  //       street: 'Calle del Poncho, 2',
-  //       city: 'Madrid',
-  //       state: 'Madrid',
-  //       country: 'España',
-  //       postalCode: '28031',
-  //       phone: '617 65 22 34',
-  //       email: 'humana@gmail.com',
-  //       idDocumentType: {
-  //         id: '',
-  //         name: ''
-  //       }
-  //     },
-  //     {
-  //       id: '11',
-  //       firstName: 'Roland',
-  //       lastName: 'San 1',
-  //       idDocumentTypeId: '',
-  //       idDocumentNumber: '576816489G',
-  //       street: 'Calle del Poncho, 2',
-  //       city: 'Madrid',
-  //       state: 'Madrid',
-  //       country: 'España',
-  //       postalCode: '28031',
-  //       phone: '617 65 22 34',
-  //       email: 'sanchez@gmail.com',
-  //       idDocumentType: {
-  //         id: '',
-  //         name: ''
-  //       }
-  //     },
-  //     {
-  //       id: '12',
-  //       firstName: 'Roland',
-  //       lastName: 'San 2',
-  //       idDocumentTypeId: '',
-  //       idDocumentNumber: '576816489G',
-  //       street: 'Calle del Poncho, 2',
-  //       city: 'Madrid',
-  //       state: 'Madrid',
-  //       country: 'España',
-  //       postalCode: '28031',
-  //       phone: '617 65 22 34',
-  //       email: 'sanchez@gmail.com',
-  //       idDocumentType: {
-  //         id: '',
-  //         name: ''
-  //       }
-  //     },
-  //     {
-  //       id: '13',
-  //       firstName: 'Roland',
-  //       lastName: 'San 3',
-  //       idDocumentTypeId: '',
-  //       idDocumentNumber: '576816489G',
-  //       street: 'Calle del Poncho, 2',
-  //       city: 'Madrid',
-  //       state: 'Madrid',
-  //       country: 'España',
-  //       postalCode: '28031',
-  //       phone: '617 65 22 34',
-  //       email: 'sanchez@gmail.com',
-  //       idDocumentType: {
-  //         id: '',
-  //         name: ''
-  //       }
-  //     },
-  //     {
-  //       id: '14',
-  //       firstName: 'Roland',
-  //       lastName: 'San 4',
-  //       idDocumentTypeId: '',
-  //       idDocumentNumber: '576816489G',
-  //       street: 'Calle del Poncho, 2',
-  //       city: 'Madrid',
-  //       state: 'Madrid',
-  //       country: 'España',
-  //       postalCode: '28031',
-  //       phone: '617 65 22 34',
-  //       email: 'sanchez@gmail.com',
-  //       idDocumentType: {
-  //         id: '',
-  //         name: ''
-  //       }
-  //     },
-  //     {
-  //       id: '15',
-  //       firstName: 'Roland',
-  //       lastName: 'San 5',
-  //       idDocumentTypeId: '',
-  //       idDocumentNumber: '576816489G',
-  //       street: 'Calle del Poncho, 2',
-  //       city: 'Madrid',
-  //       state: 'Madrid',
-  //       country: 'España',
-  //       postalCode: '28031',
-  //       phone: '617 65 22 34',
-  //       email: 'sanchez@gmail.com',
-  //       idDocumentType: {
-  //         id: '',
-  //         name: ''
-  //       }
-  //     },
-  //     {
-  //       id: '16',
-  //       firstName: 'Roland',
-  //       lastName: 'San 6',
-  //       idDocumentTypeId: '',
-  //       idDocumentNumber: '576816489G',
-  //       street: 'Calle del Poncho, 2',
-  //       city: 'Madrid',
-  //       state: 'Madrid',
-  //       country: 'España',
-  //       postalCode: '28031',
-  //       phone: '617 65 22 34',
-  //       email: 'sanchez@gmail.com',
-  //       idDocumentType: {
-  //         id: '',
-  //         name: ''
-  //       }
-  //     },
-  //     {
-  //       id: '17',
-  //       firstName: 'Roland',
-  //       lastName: 'San 7',
-  //       idDocumentTypeId: '',
-  //       idDocumentNumber: '576816489G',
-  //       street: 'Calle del Poncho, 2',
-  //       city: 'Madrid',
-  //       state: 'Madrid',
-  //       country: 'España',
-  //       postalCode: '28031',
-  //       phone: '617 65 22 34',
-  //       email: 'sanchez@gmail.com',
-  //       idDocumentType: {
-  //         id: '',
-  //         name: ''
-  //       }
-  //     },
-  //     {
-  //       id: '18',
-  //       firstName: 'Roland',
-  //       lastName: 'San 88888888888888888888888888888888888888888888888888888888',
-  //       //lastName: "San 8",
-  //       idDocumentTypeId: '',
-  //       idDocumentNumber: '576816489G',
-  //       street: 'Calle del Poncho, 2',
-  //       city: 'Madrid',
-  //       state: 'Madrid',
-  //       country: 'España',
-  //       postalCode: '28031',
-  //       phone: '617 65 22 34',
-  //       email: 'sanchez@gmail.com',
-  //       idDocumentType: {
-  //         id: '',
-  //         name: ''
-  //       }
-  //     },
-  //   ]
-
-  //   return data.filter(c => c.firstName.toLowerCase().includes(name.toLowerCase()) || c.lastName.toLowerCase().includes(name.toLowerCase()));
-  // }
 
   onChange(i: any) {
     console.log(i);
