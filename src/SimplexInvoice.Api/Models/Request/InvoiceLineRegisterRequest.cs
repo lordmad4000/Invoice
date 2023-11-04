@@ -4,9 +4,6 @@ namespace SimplexInvoice.Api.Models.Request;
 
 public class InvoiceLineRegisterRequest
 {
-    [Required(ErrorMessage = "LineNumber is required.")]
-    [Range(1, int.MaxValue, ErrorMessage = "LineNumber must be greater than 0.")]
-    public int LineNumber { get; set; }
     [Required(ErrorMessage = "ProductCode is required.")]
     [StringLength(20, ErrorMessage = "ProductCode cannot be longer than 20 characters.")]
     public string ProductCode { get; set; } = string.Empty;
