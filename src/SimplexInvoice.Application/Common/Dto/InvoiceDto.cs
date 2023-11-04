@@ -8,6 +8,7 @@ public class InvoiceDto
 {    
     public Guid Id {  get; set; }
     [Required(ErrorMessage = "Number is required.")]
+    [StringLength(20, ErrorMessage = "Number cannot be longer than 20 characters.")]
     public string Number { get; set; }
     [Required(ErrorMessage = "Description is required.")]
     [StringLength(40, ErrorMessage = "Description cannot be longer than 40 characters.")]
