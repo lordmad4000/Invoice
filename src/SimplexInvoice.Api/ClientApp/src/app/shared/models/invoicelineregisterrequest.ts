@@ -1,5 +1,4 @@
 export class InvoiceLineRegisterRequest {
-    lineNumber: string = '';
     productCode: string = '';
     productName: string = '';
     productDescription: string = '';

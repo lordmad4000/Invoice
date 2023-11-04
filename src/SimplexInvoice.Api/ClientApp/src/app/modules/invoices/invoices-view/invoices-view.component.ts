@@ -23,7 +23,6 @@ export class InvoicesViewComponent implements OnInit, OnDestroy {
   public invoiceLines = new Array<InvoiceLineDto>();
   public totalTaxes = new Array<TotalTaxDto>();
   public symbol: string = '';
-  public invoiceDate: string = "20/10/2023";
   private subscription: Subscription | undefined;
   private id = "";
   public displayedColumns: string[] =
@@ -113,7 +112,6 @@ export class InvoicesViewComponent implements OnInit, OnDestroy {
             this.invoiceDto = res;
             this.invoiceLines = res.invoiceLines;
             this.totalTaxes = res.totalTaxes;
-            this.setInvoiceDate();
             this.setCurrencySymbol();
           }
         },
@@ -121,11 +119,6 @@ export class InvoicesViewComponent implements OnInit, OnDestroy {
           this.snackBarService.openSnackBar(this.errorService.HttpErrorResponseToString(err));
         }
       })
-  }
-
-  private setInvoiceDate() {
-    this.invoiceDate = this.invoiceDto.date.toLocaleString(this.translateService.currentLanguage);
-    console.log(this.invoiceDate);
   }
 
   private setCurrencySymbol() {

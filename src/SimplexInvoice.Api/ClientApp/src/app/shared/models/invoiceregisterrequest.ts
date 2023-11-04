@@ -3,7 +3,7 @@ import { InvoiceLineRegisterRequest } from "./invoicelineregisterrequest";
 export class InvoiceRegisterRequest {
     number: string = '';
     description: string = '';
-    date: Date = new Date;
+    date: string = '';
     companyName: string = '';
     companyIdDocumentType: string = '';
     companyDocumentNumber: string = '';

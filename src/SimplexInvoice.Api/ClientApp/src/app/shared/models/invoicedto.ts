@@ -5,7 +5,7 @@ export class InvoiceDto {
     id: string = '';
     number: string = '';
     description: string = '';
-    date: Date = new Date;
+    date: string = '';
     companyName: string = '';
     companyIdDocumentType: string = '';
     companyDocumentNumber: string = '';
