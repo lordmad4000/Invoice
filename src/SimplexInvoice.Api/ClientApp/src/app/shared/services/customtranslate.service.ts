@@ -36,7 +36,7 @@ export class CustomTranslateService {
         this.translateService.addLangs(this.supportedLanguages.map(c => c.value));
         let language = this.translateService.getBrowserLang();
         language = this.supportedLanguages.map(c => c.value)
-            .find(c => c === language);
+            .find(c => c.substring(1,2) === language?.substring(1,2));
         if (language !== undefined)
             this._currentLanguage = language;
 

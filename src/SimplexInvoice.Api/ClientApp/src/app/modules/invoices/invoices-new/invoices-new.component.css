@@ -1,0 +1,145 @@
+.invoices-new-container {
+  padding: 0.5rem;
+  width: 100%;
+  height: calc(100vh - 64px);
+}
+
+.module-title {
+  padding-top: 0.5rem;
+}
+
+.head-toolbar {
+  vertical-align: top;
+  text-align: left;
+  overflow: auto;
+  background-color: #FAFAFA;
+}
+
+.outer-box {
+  margin: 1rem auto;
+  text-align: center;
+  width: 12rem;
+  height: 3rem;
+  background: #009bee;
+  color: white;
+  border-radius: 0.8rem;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 1rem;
+  padding-left: 1rem;
+  width: 104rem;
+}
+
+.customer-search-button {
+  display: flex;
+  flex-direction: row;  
+  justify-content: space-between;
+  margin-top: 1.6rem;
+  min-width: unset!important;
+  width: auto;
+}
+
+.invoice-header-form {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  margin-right: 1rem;
+  width: 100%;
+}
+
+.customer-info-field {
+  margin: 1rem 1rem 0 1rem;
+}
+
+.invoice-form {
+  height: 60vh;
+  overflow: auto;
+  text-align: left;
+  vertical-align: top;
+}
+
+mat-label {
+  color: blue;
+}
+
+.row-container {
+  border-radius: 10px;
+  border: #009bee solid;
+  display: flex;
+  flex-flow: row wrap;
+  margin-top: 1rem;
+  padding-left: 1rem;
+}
+
+.invoice-line-field {
+  padding-top: 1rem;
+  width: 8rem;
+  margin-right: 1rem;
+  color: green;
+  height: 5.5rem;
+  text-align: right;
+}
+
+[id*="packages"],
+[id*="quantity"],
+[id*="price"],
+[id*="taxbase"],
+[id*="taxrate"],
+[id*="tax"],
+[id*="discountrate"],
+[id*="discount"],
+[id*="total"] {
+  text-align: right;
+}
+
+#productcode-field {
+  width: 5rem;
+}
+
+#productname-field {
+  width: 12rem;
+}
+
+.button-save {
+  margin-left: 2.5rem;
+  margin-top: 1.25rem;
+  cursor: pointer;
+}
+
+.footer-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  justify-content: space-between;
+  padding-left: 1rem;
+  width: 104rem;
+}
+
+.totals-container {
+  margin-right: 2rem;
+}
+
+.totals-fields {
+  margin-right: 1rem;
+}
+
+.totals-container input {
+  text-align: right;
+}
+
+mat-divider {
+  width: 100%;
+  padding: 0.125rem;
+  color: #ccc;
+  border: 0.063rem;
+}
+
+::ng-deep .red-snackbar {
+  --mdc-snackbar-container-color: red;
+  --mat-mdc-snack-bar-button-color: #fff;
+  --mdc-snackbar-supporting-text-color: black;
+}

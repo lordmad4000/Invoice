@@ -127,6 +127,10 @@
             "taxrate": "Impuesto",
             "taxratename": "Nombre del Impuesto",
             "taxratevalue": "Valor del Impuesto"
+        },
+        "search": {
+            "byname_chip": "Nombre",
+            "byname": "Buscar Producto por Nombre"
         }
     },
     "invoices": {

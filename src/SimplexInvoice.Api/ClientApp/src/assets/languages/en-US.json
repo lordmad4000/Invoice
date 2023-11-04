@@ -127,6 +127,10 @@
             "taxrate": "Tax Rate",
             "taxratename": "Tax Rate Name",
             "taxratevalue": "Tax Rate Value"
+        },
+        "search": {
+            "byname_chip": "Name",
+            "byname": "Search Product by Name"
         }
     },
     "invoices": {
