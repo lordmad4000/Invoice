@@ -17,7 +17,7 @@ namespace SimplexInvoice.Infra.Repositories
     {
         private readonly DbSet<T> _dbSet;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly string _cacheKey = $"{typeof(T)}";
+        protected readonly string _cacheKey = $"{typeof(T)}";
         private readonly ICacheService _cacheService;
         public RepositoryBase(IUnitOfWork unitOfWork, ICacheService cacheService = null)
         {
