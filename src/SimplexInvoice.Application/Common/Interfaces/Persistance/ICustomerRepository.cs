@@ -8,8 +8,8 @@ namespace SimplexInvoice.Application.Common.Interfaces.Persistance
 {
     public interface ICustomerRepository : IAsyncRepository<Customer>
     {
-        Task<IEnumerable<BasicCustomer>> GetBasicCustomerContainsFullName(string fullName, CancellationToken cancellationToken, bool tracking = false);
-        Task<IEnumerable<BasicCustomer>> GetBasicCustomerContainsEmail(string email, CancellationToken cancellationToken, bool tracking = false);
-        Task<IEnumerable<BasicCustomer>> GetBasicCustomerContainsIdDocumentNumber(string idDocumentNumber, CancellationToken cancellationToken, bool tracking = false);
+        Task<IEnumerable<BasicCustomer>> GetBasicCustomersContainsFullName(string fullName, CancellationToken cancellationToken, bool tracking = false);
+        Task<IEnumerable<BasicCustomer>> GetBasicCustomersContainsEmail(string email, CancellationToken cancellationToken, bool tracking = false);
+        Task<IEnumerable<BasicCustomer>> GetBasicCustomersContainsIdDocumentNumber(string idDocumentNumber, CancellationToken cancellationToken, bool tracking = false);
     }
 }

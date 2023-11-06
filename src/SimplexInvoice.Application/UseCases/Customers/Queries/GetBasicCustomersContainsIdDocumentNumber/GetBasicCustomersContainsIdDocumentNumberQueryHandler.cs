@@ -21,7 +21,7 @@ public class GetBasicCustomersContainsIdDocumentNumberQueryHandler : IRequestHan
 
     public async Task<ICollection<BasicCustomer>> Handle(GetBasicCustomersContainsIdDocumentNumberQuery request, CancellationToken cancellationToken)
     {
-        IEnumerable<BasicCustomer> basicCustomers = await _customerRepository.GetBasicCustomerContainsIdDocumentNumber(request.IdDocumentNumber, cancellationToken);
+        IEnumerable<BasicCustomer> basicCustomers = await _customerRepository.GetBasicCustomersContainsIdDocumentNumber(request.IdDocumentNumber, cancellationToken);
         _logger.Debug($"GetBasicCustomers count: {basicCustomers.Count()}");
 
         return basicCustomers.ToList();

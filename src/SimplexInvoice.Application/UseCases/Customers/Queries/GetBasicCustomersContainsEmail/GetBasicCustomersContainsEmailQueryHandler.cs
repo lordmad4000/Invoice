@@ -21,7 +21,7 @@ public class GetBasicCustomersContainsEmailQueryHandler : IRequestHandler<GetBas
 
     public async Task<ICollection<BasicCustomer>> Handle(GetBasicCustomersContainsEmailQuery request, CancellationToken cancellationToken)
     {
-        IEnumerable<BasicCustomer> basicCustomers = await _customerRepository.GetBasicCustomerContainsEmail(request.Email, cancellationToken);
+        IEnumerable<BasicCustomer> basicCustomers = await _customerRepository.GetBasicCustomersContainsEmail(request.Email, cancellationToken);
         _logger.Debug($"GetBasicCustomers count: {basicCustomers.Count()}");
 
         return basicCustomers.ToList();

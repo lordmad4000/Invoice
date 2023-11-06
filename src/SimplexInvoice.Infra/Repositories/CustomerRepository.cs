@@ -20,9 +20,9 @@ namespace SimplexInvoice.Infra.Repositories
             _context = unitOfWork.GetContext();
         }
 
-        public async Task<IEnumerable<BasicCustomer>> GetBasicCustomerContainsFullName(string fullName, CancellationToken cancellationToken, bool tracking = false)
+        public async Task<IEnumerable<BasicCustomer>> GetBasicCustomersContainsFullName(string fullName, CancellationToken cancellationToken, bool tracking = false)
         {
-            var cacheKey = $"{_cacheKey}-GetBasicCustomerContainsFullName-{fullName}";
+            var cacheKey = $"{_cacheKey}-GetBasicCustomersContainsFullName-{fullName}";
 
             if (!TryGetCache(cacheKey, out List<BasicCustomer> results))
             {
@@ -53,9 +53,9 @@ namespace SimplexInvoice.Infra.Repositories
             return results;
         }
 
-        public async Task<IEnumerable<BasicCustomer>> GetBasicCustomerContainsEmail(string email, CancellationToken cancellationToken, bool tracking = false)
+        public async Task<IEnumerable<BasicCustomer>> GetBasicCustomersContainsEmail(string email, CancellationToken cancellationToken, bool tracking = false)
         {
-            var cacheKey = $"{_cacheKey}-GetBasicCustomerContainsEmail-{email}";
+            var cacheKey = $"{_cacheKey}-GetBasicCustomersContainsEmail-{email}";
 
             if (!TryGetCache(cacheKey, out List<BasicCustomer> results))
             {
@@ -86,9 +86,9 @@ namespace SimplexInvoice.Infra.Repositories
             return results;
         }
 
-        public async Task<IEnumerable<BasicCustomer>> GetBasicCustomerContainsIdDocumentNumber(string idDocumentNumber, CancellationToken cancellationToken, bool tracking = false)
+        public async Task<IEnumerable<BasicCustomer>> GetBasicCustomersContainsIdDocumentNumber(string idDocumentNumber, CancellationToken cancellationToken, bool tracking = false)
         {
-            var cacheKey = $"{_cacheKey}-GetBasicCustomerContainsIdDocumentNumber-{idDocumentNumber}";
+            var cacheKey = $"{_cacheKey}-GetBasicCustomersContainsIdDocumentNumber-{idDocumentNumber}";
 
             if (!TryGetCache(cacheKey, out List<BasicCustomer> results))
             {

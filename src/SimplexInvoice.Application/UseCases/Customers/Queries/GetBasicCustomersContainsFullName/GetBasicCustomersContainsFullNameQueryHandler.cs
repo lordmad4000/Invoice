@@ -21,7 +21,7 @@ public class GetBasicCustomersContainsFullNameQueryHandler : IRequestHandler<Get
 
     public async Task<ICollection<BasicCustomer>> Handle(GetBasicCustomersContainsFullNameQuery request, CancellationToken cancellationToken)
     {
-        IEnumerable<BasicCustomer> basicCustomers = await _customerRepository.GetBasicCustomerContainsFullName(request.FullName, cancellationToken);
+        IEnumerable<BasicCustomer> basicCustomers = await _customerRepository.GetBasicCustomersContainsFullName(request.FullName, cancellationToken);
         _logger.Debug($"GetBasicCustomers count: {basicCustomers.Count()}");
 
         return basicCustomers.ToList();
