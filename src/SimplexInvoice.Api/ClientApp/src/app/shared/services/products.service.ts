@@ -1,3 +1,4 @@
+import { BasicProduct } from '../models/basicproduct';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
@@ -46,6 +47,20 @@ export class ProductsService {
         const url = `${this.baseUrl}/Delete/${encodeURIComponent(String(id))}`;
 
         return this.httpClient.delete<boolean>(url);
+    }    
+
+    public GetBasicProductsContainsName(name: string): Observable<BasicProduct[]> {
+
+        const url = `${this.baseUrl}/GetBasicProductsContainsName${encodeURIComponent(String(name))}`;
+
+        return this.httpClient.get<BasicProduct[]>(url);
+    }
+
+    public GetByCode(code: string): Observable<ProductDto> {
+
+        const url = `${this.baseUrl}/GetByCode${encodeURIComponent(String(code))}`;
+
+        return this.httpClient.get<ProductDto>(url);
     }
 
 }
