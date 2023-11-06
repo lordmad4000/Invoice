@@ -85,4 +85,13 @@ public class ProductsController : ApiController
         return Ok(basicProducts);
     }
 
+    [HttpGet("GetByCode{code}")]
+    public async Task<IActionResult> GetByCode(string code, CancellationToken cancellationToken)
+    {
+        var query = new GetProductByCodeQuery(code);
+        ProductDto productDto = await _mediator.Send(query, cancellationToken);
+
+        return Ok(productDto);
+    }
+
 }

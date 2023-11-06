@@ -38,6 +38,7 @@ namespace SimplexInvoice.Infra.Repositories
                                          .Select(c => new BasicProduct
                                           {
                                               Id = c.Id,
+                                              Code = c.Code,
                                               Name = c.Name,
                                               Price = c.UnitPrice.Amount,
                                               Currency = c.UnitPrice.Currency,
