@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using SimplexInvoice.Api.Models.Request;
 using SimplexInvoice.Application.Common.Dto;
 using SimplexInvoice.Application.Common.Interfaces.Persistance;
+using SimplexInvoice.Application.Customers.Queries;
 using SimplexInvoice.Application.Products.Commands;
 using SimplexInvoice.Application.Products.Queries;
 
@@ -73,6 +74,15 @@ public class ProductsController : ApiController
         bool result = await _mediator.Send(productRemoveCommand, cancellationToken);
 
         return Ok(result);
+    }
+
+    [HttpGet("GetBasicProductsContainsName{name}")]
+    public async Task<IActionResult> GetBasicProductsContainsFullName(string name, CancellationToken cancellationToken)
+    {
+        var query = new GetBasicProductsContainsNameQuery(name);
+        var basicProducts = await _mediator.Send(query, cancellationToken);
+
+        return Ok(basicProducts);
     }
 
 }
