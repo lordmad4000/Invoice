@@ -17,11 +17,6 @@
       <mat-select class="mat-select" hideSingleSelectionIndicator="true" (selectionChange)="onChangeLanguage($event)" [value]="indexInitialOption">
         <mat-option class="mat-options" *ngFor="let option of languageOptions" [value]="option.value">{{ option.display }}</mat-option>
       </mat-select>
-      <button mat-button [matMenuTriggerFor]="loginMenu" matTooltip="Login"><mat-icon>account_circle</mat-icon></button>
-      <mat-menu #loginMenu="matMenu">
-        <button mat-menu-item (click)="loginButtonClick()">{{ 'navmenu.login' | translate }}<mat-icon>login</mat-icon></button>
-        <button mat-menu-item>{{ 'navmenu.logout' | translate }}<mat-icon>logout</mat-icon></button>
-      </mat-menu>    
     </mat-toolbar-row>
   </mat-toolbar>
 </div>
