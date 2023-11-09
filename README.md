@@ -1,16 +1,17 @@
 # Simplex Invoice (WIP)
 
-A basic Invoice App example in Angular 15 for the Frontend using the following:
+A basic Invoice App example in Angular 16 for the Frontend using the following:
 
     - HTTP Interceptor class.
     - Functional route guard.
+    - Custom Translation.
 
 A basic Invoice API example in .NET 7 for the Backend using the following:
 
     - DDD.
     - Repository pattern.
     - UnitOfWork pattern.
-    - JWT Authentication.
+    - JWT Authentication & Authorization.
     - Entity Framework Code First.
     - AutoMapper.
     - MemoryCache.
