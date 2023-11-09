@@ -1,5 +1,6 @@
 import { BasicCustomer } from 'src/app/shared/models/basiccustomer';
-import { CompaniesService, CustomTranslateService, CustomersService, ErrorService, TaxRatesService } from 'src/app/shared/services';
+import { BasicProduct } from 'src/app/shared/models/basicproduct';
+import { CompaniesService, CustomTranslateService, CustomersService, ErrorService, ProductsService, TaxRatesService } from 'src/app/shared/services';
 import { CompanyDto } from 'src/app/shared/models/companydto';
 import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { CustomerDto } from 'src/app/shared/models/customerdto';
@@ -33,10 +34,12 @@ export class InvoicesNewComponent implements OnInit, OnDestroy {
   public customerSearchInput: SearchInput[] = [];
   public customerSearchVisible: boolean = false;
   public basicCustomers: BasicCustomer[] = [];
+  public basicProducts: BasicProduct[] = [];
   public customersList: SearchItem[] = [];
   public productSearchVisible: boolean = false;
   public productSearchInput: SearchInput[] = [];
   public productsList: SearchItem[] = [];
+  public productDto: ProductDto = new ProductDto;
   private actualProductIndex: number = 0;
   private subscription: Subscription | undefined;
 
@@ -44,6 +47,7 @@ export class InvoicesNewComponent implements OnInit, OnDestroy {
     private invoicesService: InvoicesService,
     private companiesService: CompaniesService,
     private customersService: CustomersService,
+    private productsService: ProductsService,
     private formBuilder: FormBuilder,
     private errorService: ErrorService,
     private renderer: Renderer2,
@@ -67,27 +71,27 @@ export class InvoicesNewComponent implements OnInit, OnDestroy {
   loadCustomerSearchInputData() {
     this.customerSearchInput = [
       {
-        id: '1',
+        id: 'name',
         inputText: this.translateService.instant('customers.search.byname'),
         chipText: this.translateService.instant('customers.search.byname_chip')
       },
       {
-        id: '2',
+        id: 'email',
+        inputText: this.translateService.instant('customers.search.byemail'),
+        chipText: this.translateService.instant('customers.search.byemail_chip')
+      },
+      {
+        id: 'iddocumentnumber',
         inputText: this.translateService.instant('customers.search.byiddocumentnumber'),
         chipText: this.translateService.instant('customers.search.byiddocumentnumber_chip')
       },
-      {
-        id: '3',
-        inputText: this.translateService.instant('customers.search.byemail'),
-        chipText: this.translateService.instant('customers.search.byemail_chip')
-      }
     ]
   }
 
   loadProductSearchInputData() {
     this.productSearchInput = [
       {
-        id: '1',
+        id: 'name',
         inputText: this.translateService.instant('products.search.byname'),
         chipText: this.translateService.instant('products.search.byname_chip')
       }
@@ -171,21 +175,49 @@ export class InvoicesNewComponent implements OnInit, OnDestroy {
     this.calculateTotals();
   }
 
-  private getCustomersContainsFullName(fullName: string) {
-    this.customersService.GetBasicCustomersContainsFullName(fullName).subscribe({
+  private getCustomersContainsFullName(searchInput: SearchInput) {
+    this.customersService.GetBasicCustomersContainsFullName(searchInput.inputText).subscribe({
       next: (res: BasicCustomer[]) => {
         if (res) {
           this.basicCustomers = res;
+          this.setCustomerList(searchInput.id);
         }
       },
       error: (err: HttpErrorResponse) => {
         this.snackBarService.openSnackBar(this.errorService.HttpErrorResponseToString(err));
       }
     })
-
   }
 
-  private getCustomerById(id: string){
+  private getCustomersContainsEmail(searchInput: SearchInput) {
+    this.customersService.GetBasicCustomersContainsEmail(searchInput.inputText).subscribe({
+      next: (res: BasicCustomer[]) => {
+        if (res) {
+          this.basicCustomers = res;
+          this.setCustomerList(searchInput.id);
+        }
+      },
+      error: (err: HttpErrorResponse) => {
+        this.snackBarService.openSnackBar(this.errorService.HttpErrorResponseToString(err));
+      }
+    })
+  }
+
+  private getCustomersContainsIdDocumentNumber(searchInput: SearchInput) {
+    this.customersService.GetBasicCustomersContainsIdDocumentNumber(searchInput.inputText).subscribe({
+      next: (res: BasicCustomer[]) => {
+        if (res) {
+          this.basicCustomers = res;
+          this.setCustomerList(searchInput.id);
+        }
+      },
+      error: (err: HttpErrorResponse) => {
+        this.snackBarService.openSnackBar(this.errorService.HttpErrorResponseToString(err));
+      }
+    })
+  }
+
+  private getCustomerById(id: string) {
     this.customersService.Get(id).subscribe({
       next: (res: CustomerDto) => {
         if (res) {
@@ -196,7 +228,43 @@ export class InvoicesNewComponent implements OnInit, OnDestroy {
         this.snackBarService.openSnackBar(this.errorService.HttpErrorResponseToString(err));
       }
     })
-  }  
+  }
+
+  private getProductsContainsName(fullName: string) {
+    this.productsService.GetBasicProductsContainsName(fullName).subscribe({
+      next: (res: BasicProduct[]) => {
+        if (res) {
+          this.basicProducts = res;
+        }
+      },
+      error: (err: HttpErrorResponse) => {
+        this.snackBarService.openSnackBar(this.errorService.HttpErrorResponseToString(err));
+      }
+    })
+
+  }
+
+  private getProductByCode(code: string, index: number) {
+    this.productsService.GetByCode(code).subscribe({
+      next: (res: ProductDto) => {
+        if (res) {
+          const product = res;
+          if (product !== undefined) {
+            this.setInvoiceLinesValues(index, product);
+            this.enableInputs(index);
+            this.calculateTotalsFromPrice(index);
+            this.renderer.selectRootElement('#packages' + index).focus();
+          }
+          else {
+            this.clearInvoiceLineData(index);
+          }
+        }
+      },
+      error: (err: HttpErrorResponse) => {
+        this.snackBarService.openSnackBar(this.errorService.HttpErrorResponseToString(err));
+      }
+    })
+  }
 
   saveButtonClick() {
     const invoice = this.setInvoiceDataFromFormData();
@@ -264,18 +332,34 @@ export class InvoicesNewComponent implements OnInit, OnDestroy {
     return invoice;
   }
 
-  onChangesCustomerSearch(input: SearchInput) {
-    if (input.inputText.length < 3) {
+  onChangesCustomerSearch(searchInput: SearchInput) {
+    if (searchInput.inputText.length < 3) {
       this.customersList = [];
     }
     else {
-      this.getCustomersContainsFullName(input.inputText);
-      this.customersList = this.basicCustomers.map(c => ({
-        id: c.id,
-        description: c.fullName + " - " + c.idDocumentNumber + " - " + c.phone + " - " + c.email,
-        searchId: input.id,
-      }));
+      switch (searchInput.id) {
+        case 'name': {
+          this.getCustomersContainsFullName(searchInput);
+          break;
+        }
+        case 'email': {
+          this.getCustomersContainsEmail(searchInput);
+          break;
+        }
+        case 'iddocumentnumber': {
+          this.getCustomersContainsIdDocumentNumber(searchInput);
+          break;
+        }
+      }
     }
+  }
+
+  setCustomerList(id: string) {
+    this.customersList = this.basicCustomers.map(c => ({
+      id: c.id,
+      description: c.fullName + " - " + c.idDocumentNumber + " - " + c.phone + " - " + c.email,
+      searchId: id,
+    }));
   }
 
   onChangesProductsSearch(input: SearchInput) {
@@ -283,11 +367,10 @@ export class InvoicesNewComponent implements OnInit, OnDestroy {
       this.productsList = [];
     }
     else {
-      let products = this.getProducts();
-      products = products.filter(c => c.name.toLowerCase().includes(input.inputText.toLowerCase()));
-      this.productsList = products.map(c => ({
+      this.getProductsContainsName(input.inputText);
+      this.productsList = this.basicProducts.map(c => ({
         id: c.id,
-        description: c.name + " - " + c.price + " - " + c.taxRate.name,
+        description: c.name + " - " + c.price + " - " + c.currency + " - " + c.taxRateValue,
         searchId: input.id
       }));
     }
@@ -346,7 +429,7 @@ export class InvoicesNewComponent implements OnInit, OnDestroy {
   }
 
   onSelectedProduct(item: SearchItem) {
-    const product = this.getProducts().find(c => c.id === item.id);
+    const product = this.basicProducts.find(c => c.id === item.id);
     if (product !== undefined) {
       this.productSearchVisible = false;
       this.invoiceLinesSetValue(this.actualProductIndex, 'productCode', product.code);
@@ -389,14 +472,14 @@ export class InvoicesNewComponent implements OnInit, OnDestroy {
     if (nextElement.includes('packages')) {
       this.onProductFocusOut(index);
     }
-    if (nextElement.includes('productcode')){
+    if (nextElement.includes('productcode')) {
       this.setInvoiceLineOk(index - 1);
     }
     this.renderer.selectRootElement(nextElement).focus();
   }
 
   onProductFocus(index: number) {
-    if (index === 0 || this.isValidInvoiceLine(index - 1)) {     
+    if (index === 0 || this.isValidInvoiceLine(index - 1)) {
       const nextElement = 'productcode' + (index + 1);
       let element = document.getElementById(nextElement);
       if (element === null) {
@@ -406,17 +489,10 @@ export class InvoicesNewComponent implements OnInit, OnDestroy {
   }
 
   onProductFocusOut(index: number) {
-    if (index === 0 || this.isValidInvoiceLine(index - 1)) {    
+    if (index === 0 || this.isValidInvoiceLine(index - 1)) {
       const productCode = this.invoiceLines.at(index).get('productCode')?.value;
-      const product = this.getProductInfo(productCode);
-      if (product !== undefined) {
-        this.setInvoiceLinesValues(index, product);
-        this.enableInputs(index);
-        this.calculateTotalsFromPrice(index);
-        this.renderer.selectRootElement('#packages' + index).focus();
-      }
-      else {
-        this.clearInvoiceLineData(index);
+      if (productCode !== '') {
+        this.getProductByCode(productCode, index);
       }
     }
   }
@@ -650,78 +726,9 @@ export class InvoicesNewComponent implements OnInit, OnDestroy {
     return !isNaN(num) && !isNaN(parseFloat(str))
   }
 
-  getProductInfo(code: string): ProductDto | undefined {
-    const data = this.getProducts();
-    return data.find(c => c.code.toLowerCase() === code.toLowerCase());
-  }
-
-  getProducts(): ProductDto[] {
-    return [
-      {
-        id: '1',
-        code: 'ALC',
-        name: 'Alcachofa',
-        description: 'Alcachofa de tudela',
-        packageQuantity: 1,
-        price: 1.5,
-        currency: 'EUR',
-        taxRateId: '',
-        taxRate: {
-          id: '',
-          name: '10%',
-          value: 10
-        }
-      },
-      {
-        id: '2',
-        code: 'BJ',
-        name: 'Berenjena',
-        description: 'Berenjena',
-        packageQuantity: 1,
-        price: 1,
-        currency: 'EUR',
-        taxRateId: '',
-        taxRate: {
-          id: '',
-          name: '4%',
-          value: 4
-        }
-      },
-      {
-        id: '3',
-        code: 'MF',
-        name: 'Manzana Fuji',
-        description: 'Manzana Fuji',
-        packageQuantity: 1,
-        price: 2.25,
-        currency: 'EUR',
-        taxRateId: '',
-        taxRate: {
-          id: '',
-          name: '4%',
-          value: 4
-        }
-      },
-      {
-        id: '4',
-        code: 'SAN',
-        name: 'Sandia',
-        description: 'Sandia',
-        packageQuantity: 1,
-        price: 0.75,
-        currency: 'EUR',
-        taxRateId: '',
-        taxRate: {
-          id: '',
-          name: '10%',
-          value: 10
-        }
-      },
-    ]
-  }
-
-  onChange(i: any) {
-    console.log(i);
-  }
+  // getProductInfo(code: string): ProductDto | undefined {
+  //   const data = this.getProducts();
+  //   return data.find(c => c.code.toLowerCase() === code.toLowerCase());
+  // }
 
 }

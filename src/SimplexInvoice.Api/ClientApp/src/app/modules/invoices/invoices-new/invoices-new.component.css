@@ -68,7 +68,7 @@ mat-label {
 
 .row-container {
   border-radius: 10px;
-  border: #009bee solid;
+  background-color: rgb(221, 221, 221);
   display: flex;
   flex-flow: row wrap;
   margin-top: 1rem;
