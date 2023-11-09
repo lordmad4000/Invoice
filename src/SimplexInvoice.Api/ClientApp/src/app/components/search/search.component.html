@@ -12,13 +12,13 @@
         <div class="input-container">
             <label for="inputsearch">{{ selectedSearch.inputText }}</label>
             <mat-icon>search</mat-icon>
-            <input id="inputsearch" type="text" [(ngModel)]="inputSearch" (input)="onChangesInputSearch()" required/>
+            <input id="inputsearch" type="text" [(ngModel)]="inputSearch" (input)="onChangesInputSearch()" (keyup.esc)="onClose()" required/>
         </div>
     </div>
     <div class="search-list-container">
         <mat-selection-list [multiple]="false">
             <mat-list-option *ngFor="let item of searchList" (click)="onSelectedItem(item)"
-                (keyup.enter)="onSelectedItem(item)">
+                (keyup.enter)="onSelectedItem(item)" (keyup.esc)="onClose()">
                 <div class="search-item">
                     <mat-icon class="search-item-field">{{ listIcon }}</mat-icon>
                     <div class="search-item-field">{{item.description }}</div>

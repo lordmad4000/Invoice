@@ -41,12 +41,12 @@
     outline: solid 2px #ccc;
     position: relative;
     width: 30rem;
-    height: 3rem;
+    height: 3.5rem;
 }
 
 .input-container mat-icon{
     position:absolute;
-    top: 1rem;
+    top: 1.5rem;
     left: 1rem;
 }
 
@@ -62,7 +62,7 @@
     left: 3rem;
     outline: none;
     position:absolute;
-    top: 1rem;
+    top: 1.5rem;
     width: 26rem;
 }
 
@@ -71,7 +71,7 @@
     left: 3rem;
     outline: none;
     position:absolute;
-    top: 1rem;
+    top: 1.5rem;
     width: 26rem;
 }
 
