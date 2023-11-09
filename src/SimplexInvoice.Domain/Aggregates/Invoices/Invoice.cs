@@ -1,4 +1,6 @@
+using Microsoft.VisualBasic;
 using SimplexInvoice.Domain.ValueObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,6 +13,7 @@ public partial class Invoice
     public IReadOnlyCollection<TotalTax> TotalTaxes => _totalTaxes.ToList();
     public string Number { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
+    public DateTime Date { get; private set; } = DateTime.UtcNow;
     public string CompanyName { get; private set; } = string.Empty;
     public string CompanyIdDocumentType { get; private set; } = string.Empty;
     public string CompanyDocumentNumber { get; private set; } = string.Empty;

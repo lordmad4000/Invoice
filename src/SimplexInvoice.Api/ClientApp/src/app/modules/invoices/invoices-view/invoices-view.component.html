@@ -1,0 +1,110 @@
+<div class="invoices-view-container">
+    <mat-toolbar class="head-toolbar">
+        <mat-toolbar-row>
+            <button mat-button matTooltip="{{ 'head-toolbar.button_back' | translate }}" (click)="backButtonClick()">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <div class="outer-box">
+                <h1 class="module-title">{{ 'invoices.title' | translate }}</h1>
+            </div>
+            <button mat-button matTooltip="{{ 'head-toolbar.button_edit' | translate }}" disabled>
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-button matTooltip="{{ 'head-toolbar.button_delete' | translate }}" disabled>
+                <mat-icon>delete</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <header>
+        <div id="company-container">
+            <img id="logo" />
+            <article id="company-data">
+                <h1>Factura</h1>
+                <div class="company-field">{{ invoiceDto.companyName }}</div>
+                <div class="company-field">{{ invoiceDto.companyDocumentNumber }}</div>
+                <div class="company-field">{{ invoiceDto.companyStreet }}</div>
+                <div class="company-field">{{ getCompanyAddress() }}</div>
+                <div class="company-field">{{ getCompanyPhoneAndEmail() }}</div>
+            </article>
+        </div>
+        <br>
+        <div id="customer-container">
+            <article id="customer-data">
+                <div class="customer-field">{{ invoiceDto.customerFullName }}</div>
+                <div class="customer-field">{{ invoiceDto.customerDocumentNumber }}</div>
+                <div class="customer-field">{{ invoiceDto.customerStreet }}</div>
+                <div class="customer-field">{{ getCustomerAddress() }}</div>
+                <div class="customer-field">{{ getCustomerPhoneAndEmail() }}</div>
+            </article>
+            <article id="invoiceinfo">
+                <div class="column-1">{{ 'invoices.forms.number' | translate }}</div>
+                <div class="column-2">{{ invoiceDto.number }}</div>
+                <div class="column-1">{{ 'invoices.forms.date' | translate }}</div>
+                <div class="column-2">{{ invoiceDto.date }}</div>
+            </article>
+        </div>
+        <br>
+    </header>
+    <div id="invoice-lines-container">
+        <table id="invoice-lines-table">
+            <thead>
+                <tr class="invoice-lines-head">
+                    <td class="invoice-lines-head">{{ 'invoices.forms.packages' | translate }}</td>
+                    <td class="invoice-lines-head">{{ 'invoices.forms.description' | translate }}</td>
+                    <td class="invoice-lines-head">{{ 'invoices.forms.quantity' | translate }}</td>
+                    <td class="invoice-lines-head">{{ 'invoices.forms.price' | translate }}</td>
+                    <td class="invoice-lines-head">{{ 'invoices.forms.taxbase' | translate }}</td>
+                    <td class="invoice-lines-head">{{ 'invoices.forms.tax' | translate }}</td>
+                    <td class="invoice-lines-head">{{ 'invoices.forms.discount' | translate }}</td>
+                    <td class="invoice-lines-head">{{ 'invoices.forms.total' | translate }}</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="invoice-lines" *ngFor="let item of invoiceLines">
+                    <td class="invoice-lines">{{ item.packages }}</td>
+                    <td class="invoice-lines-description">{{ item.productDescription }}</td>
+                    <td class="invoice-lines">{{ item.quantity }}</td>
+                    <td class="invoice-lines">{{ item.price }} {{ symbol }}</td>
+                    <td class="invoice-lines">{{ item.taxBase }} {{ symbol }}</td>
+                    <td class="invoice-lines">{{ item.tax }} {{ symbol }}</td>
+                    <td class="invoice-lines">{{ item.discount }} {{ symbol }}</td>
+                    <td class="invoice-lines">{{ item.total }} {{ symbol }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <footer>
+        <div id="footer-container">
+            <article id="tax-detail">
+                <table id="tax-detail-table">
+                    <thead>
+                        <tr class="tax-detail-head">
+                            <td class="tax-detail-head">{{ 'invoices.forms.taxdetailtax' | translate }}</td>
+                            <td class="tax-detail-head">{{ 'invoices.forms.taxdetailtaxbase' | translate }}</td>
+                            <td class="tax-detail-head">{{ 'invoices.forms.taxdetailtotaltax' | translate }}</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="tax-detail" *ngFor="let item of totalTaxes">
+                            <td id="tax-detail-name">{{ item.name }}</td>
+                            <td id="tax-detail-baseamount">{{ item.baseAmount }} {{ symbol }}</td>
+                            <td id="tax-detail-amount">{{ item.amount }} {{ symbol }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </article>
+            <article id="invoice-total">
+                <div class="column-1">{{ 'invoices.forms.totaltaxbase' | translate }}</div>
+                <div class="column-2">{{ invoiceDto.totalTaxBase }} {{ symbol }}</div>
+                <div class="column-1">{{ 'invoices.forms.totaltax' | translate }}</div>
+                <div class="column-2">{{ invoiceDto.totalTax }} {{ symbol }}</div>
+                <div class="column-1">{{ 'invoices.forms.totaldiscount' | translate }}</div>
+                <div class="column-2">{{ invoiceDto.totalDiscount }} {{ symbol }}</div>
+                <div class="column-1">{{ 'invoices.forms.totaltotal' | translate }}</div>
+                <div class="column-2">{{ invoiceDto.total }} {{ symbol }}</div>
+            </article>
+        </div>
+        <br>
+    </footer>
+</div>

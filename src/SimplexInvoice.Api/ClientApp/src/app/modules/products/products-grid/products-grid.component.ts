@@ -4,7 +4,6 @@ import { ProductDto } from 'src/app/shared/models/productdto';
 import { ProductsService } from 'src/app/shared/services/products.service';
 import { ErrorService } from 'src/app/shared';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { SnackBarService } from 'src/app/shared/services/snackbar.service';
 import { TableColumn } from 'src/app/shared/interfaces/tablecolumn';
@@ -32,7 +31,6 @@ export class ProductsGridComponent implements OnInit {
   public data: any[] = [];
 
   constructor(
-    private location: Location,
     private productsService: ProductsService,
     private router: Router,
     private translateService: CustomTranslateService,
@@ -67,7 +65,7 @@ export class ProductsGridComponent implements OnInit {
   }
 
   backButtonClick() {
-    this.location.back();
+    this.router.navigate(['/home']);
   }
 
 }

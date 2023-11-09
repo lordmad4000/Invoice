@@ -1,11 +1,13 @@
 using SimplexInvoice.Application.Common.Dto;
 using MediatR;
 using System.Collections.Generic;
+using System;
 
 namespace SimplexInvoice.Application.Invoices.Commands;
 
 public record InvoiceRegisterCommand(string Number,
                                      string Description,
+                                     DateOnly Date,
                                      string CompanyName,
                                      string CompanyIdDocumentType,
                                      string CompanyDocumentNumber,

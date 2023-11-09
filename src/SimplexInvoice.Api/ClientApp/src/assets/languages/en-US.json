@@ -34,7 +34,11 @@
         },
         "buttons": {
             "save": "Save",
-            "save_tooltip": "Save changes"
+            "save_tooltip": "Save changes",
+            "close": "Close"
+        },
+        "errors": {
+            "unknown": "Unknown error."
         }
     },
     "home": {
@@ -88,8 +92,10 @@
     "customers": {
         "title": "CUSTOMERS",
         "forms": {
+            "customer": "Customer",
             "firstname": "First Name",
             "lastname": "Last Name",
+            "fullname": "Fullname",
             "iddocumenttype": "Id Document Type",
             "iddocumentnumber": "Id Document Number",
             "street": "Street",
@@ -99,6 +105,14 @@
             "postalcode": "Postal Code",
             "phone": "Phone Number",
             "email": "Email Address"
+        },
+        "search":{
+            "byname_chip": "Name",
+            "byname": "Search Customer by Full Name",
+            "byemail_chip": "Email",
+            "byemail": "Search Customer by Email",
+            "byiddocumentnumber_chip": "Document",
+            "byiddocumentnumber": "Search Customer by Id Document Number"
         }
     },
     "products": {
@@ -113,6 +127,59 @@
             "taxrate": "Tax Rate",
             "taxratename": "Tax Rate Name",
             "taxratevalue": "Tax Rate Value"
+        },
+        "search": {
+            "byname_chip": "Name",
+            "byname": "Search Product by Name"
+        }
+    },
+    "invoices": {
+        "title": "INVOICES",
+        "forms": {
+            "number": "Invoice Number",
+            "description": "Description",
+            "date": "Date",
+            "companyname": "Company Name",
+            "companyiddocumenttype": "Company Id Document Type",
+            "companydocumentnumber": "Company Document Number",
+            "companystreet": "Company Street",
+            "companycity": "Company City",
+            "companystate": "Company State",
+            "companycountry": "Company Country",
+            "companypostalcode": "Company Postal Code",
+            "companyphone": "Company Phone Number",
+            "companyemail": "Company Email Address",
+            "customerfullname": "Customer Name",
+            "customeriddocumenttype": "Customer Id Document Type",
+            "customerdocumentnumber": "Customer Document Number",
+            "customerstreet": "Customer Street",
+            "customercity": "Customer City",
+            "customerstate": "Customer State",
+            "customercountry": "Customer Country",
+            "customerpostalcode": "Customer Postal Code",
+            "customerphone": "Customer Phone Number",
+            "customeremail": "Customer Email Address",
+            "packages": "Packages",
+            "productcode": "Code",
+            "productname": "Product",
+            "productdescription": "Description",
+            "quantity": "Quantity",
+            "price": "Price",
+            "taxrate": "Tax Rate (%)",
+            "taxbase": "Tax Base",
+            "tax": "Tax",
+            "discountrate": "Discount Rate (%)",
+            "discount": "Total Discount",
+            "total": "Total",
+            "currency": "Currency",
+            "taxdetailtax": "Tax",
+            "taxdetailtaxbase": "Tax Base",
+            "taxdetailtotaltax": "Total Tax",
+            "totaltaxbase": "Total Base Tax",
+            "totaltax": "Total Tax",
+            "totaldiscount": "Total Discount",
+            "totaltotal": "Total",
+            "delete_line": "Line delete"
         }
     }
 }

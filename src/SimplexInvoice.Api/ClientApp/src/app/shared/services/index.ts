@@ -4,6 +4,7 @@ export * from './customers.service';
 export * from './customtranslate.service';
 export * from './error.service';
 export * from './iddocumenttypes.service';
+export * from './invoices.service';
 export * from './jwt.service';
 export * from './loadfile.service';
 export * from './popup.service';

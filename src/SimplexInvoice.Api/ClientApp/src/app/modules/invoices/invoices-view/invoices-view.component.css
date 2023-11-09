@@ -1,0 +1,217 @@
+.invoices-view-container {
+    padding: 0.5rem;
+    font-size: 90%;
+    font-family: sans-serif;
+}
+
+.module-title {
+    padding-top: 0.5rem;
+}
+
+.head-toolbar {
+    vertical-align: top;
+    text-align: left;
+    overflow: auto;
+    background-color: #FAFAFA;
+}
+
+.outer-box {
+    margin: 1rem auto;
+    text-align: center;
+    width: 12rem;
+    height: 3rem;
+    background: #009bee;
+    color: white;
+    border-radius: 0.8rem;
+}
+
+mat-label {
+    color: blue;
+}
+
+
+mat-divider {
+    width: 100%;
+    padding: 0.125rem;
+    color: transparent;
+    border: 0.063rem;
+}
+
+#company-container {
+    display: flex;
+    height: 10rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#logo {
+    padding-left: 1rem;
+    height: 80%;
+}
+
+#company-data {
+    text-align: right;
+    padding-right: 1rem;
+}
+
+h1 {
+    font-size: 150%;
+    margin-top: 0rem;
+    margin-bottom: 0.5rem;
+}
+
+.company-field {
+    padding-top: 0.2rem;
+}
+
+#customer-container {
+    display: flex;
+    height: 8rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#customer-data {
+    text-align: left;
+    padding-left: 1rem;
+}
+
+.customer-field {
+    padding-top: 0.2rem;
+}
+
+#invoiceinfo {
+    border-style: solid;
+    border-width: thin 0 0 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-right: 1rem;
+}
+
+#invoiceinfo .column-1 {
+    font-weight: bold;
+    border-style: solid;
+    border-width: 0 0 thin thin;
+    height: 3rem;
+    padding-right: 1rem;
+    padding-top: 1rem;
+    text-align: right;
+    width: 12rem;
+}
+
+#invoiceinfo .column-2 {
+    border-style: solid;
+    border-width: 0 thin thin thin;
+    height: 3rem;
+    padding-left: 1rem;
+    padding-top: 1rem;
+    text-align: left;
+    width: 12rem;
+}
+
+#invoice-lines-container {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+#invoice-lines-table {
+    width: 100%;
+}
+
+.invoice-lines-head {
+    border-width: thin thin thin thin;
+    font-weight: bold;
+    height: 3rem;
+    text-align: center;
+}
+
+.invoice-lines {
+    border-width: thin thin thin thin;
+    width: 8%;
+    text-align: right;
+    padding-right: 1rem;
+    height: 3rem;
+}
+
+.invoice-lines-description {
+    padding-left: 1rem;
+    text-align: left;
+    word-wrap: break-word;
+    width: 44%;
+}
+
+#footer-container {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+#tax-detail {
+    text-align: left;
+    padding-left: 1rem;
+}
+
+#tax-detail-table {
+    width: 20rem;
+}
+
+.tax-detail-head {
+    border-width: thin thin thin thin;
+    font-weight: bold;
+    height: 3rem;
+    text-align: center;
+}
+
+.tax-detail {
+    height: 3rem;
+    text-align: right;
+}
+
+#tax-detail-name {
+    border-width: thin thin thin thin;
+    padding-right: 1rem;
+    text-align: right;
+    width: 20%;
+}
+
+#tax-detail-baseamount {
+    border-width: thin thin thin thin;
+    padding-right: 1rem;
+    text-align: right;
+    width: 50%;
+}
+
+#tax-detail-amount {
+    border-width: thin thin thin thin;
+    padding-right: 1rem;
+    text-align: right;
+    width: 30%;
+}
+
+#invoice-total {
+    border-style: solid;
+    border-width: thin 0 0 0;
+    display: grid;
+    grid-template-columns: 12rem 8rem;
+}
+
+#invoice-total .column-1 {
+    border-style: solid;
+    border-width: 0 0 thin thin;
+    font-weight: bold;
+    height: 3rem;
+    padding-right: 1rem;
+    padding-top: 1rem;
+    text-align: right;
+}
+
+#invoice-total .column-2 {
+    border-style: solid;
+    border-width: 0 thin thin thin;
+    height: 3rem;
+    padding-right: 1rem;
+    padding-top: 1rem;
+    text-align: right;
+}

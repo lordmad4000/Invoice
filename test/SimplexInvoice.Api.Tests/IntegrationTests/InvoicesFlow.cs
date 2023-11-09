@@ -80,7 +80,6 @@ public class InvoicesFlow
         {
             new InvoiceLineRegisterRequest
             {
-                LineNumber = 1,
                 ProductCode = "LB",
                 ProductName = "LASAÑA BOLOÑESA",
                 ProductDescription = "LASAÑA BOLOÑESA",
@@ -94,7 +93,6 @@ public class InvoicesFlow
             },
             new InvoiceLineRegisterRequest
             {
-                LineNumber = 1,
                 ProductCode = "BNN",
                 ProductName = "BANANA",
                 ProductDescription = "BANANA",
@@ -108,7 +106,6 @@ public class InvoicesFlow
             },
             new InvoiceLineRegisterRequest
             {
-                LineNumber = 1,
                 ProductCode = "VFU",
                 ProductName = "VAJILLAS FAIRY ULTRA",
                 ProductDescription = "VAJILLAS FAIRY ULTRA",
@@ -122,7 +119,6 @@ public class InvoicesFlow
             },
             new InvoiceLineRegisterRequest
             {
-                LineNumber = 1,
                 ProductCode = "PST",
                 ProductName = "PIPA GIRASOL TOSTADA",
                 ProductDescription = "PIPA GIRASOL TOSTADA",

@@ -9,7 +9,8 @@ namespace SimplexInvoice.Domain.Invoices.Validations
     {
         public void ValidateNumber()
         {
-            RuleFor(c => c.Number).NotEmpty();
+            RuleFor(c => c.Number).NotEmpty()
+                                  .MaximumLength(20);
         }
 
         public void ValidateDescription()

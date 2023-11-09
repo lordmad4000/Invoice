@@ -67,6 +67,7 @@ namespace SimplexInvoice.Domain.Invoices
             Number = number;
             Description = description;
             CompanyName = companyName;
+            Date = DateTime.UtcNow;
             CompanyIdDocumentType = companyIdDocumentType;
             CompanyDocumentNumber = companyDocumentNumber;
             CompanyAddress = companyAddress;
