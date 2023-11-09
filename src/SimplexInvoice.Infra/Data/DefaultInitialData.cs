@@ -131,10 +131,11 @@ namespace SimplexInvoice.Infra.Data
 
         public static void AddDefaultInvoiceData(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql(@"INSERT INTO simplexinvoice.Invoice 
+            migrationBuilder.Sql($@"INSERT INTO simplexinvoice.Invoice 
                                    (Id, 
                                     Number, 
                                     Description, 
+                                    Date, 
                                     CompanyName, 
                                     CompanyIdDocumentType, 
                                     CompanyDocumentNumber, 
@@ -158,6 +159,7 @@ namespace SimplexInvoice.Infra.Data
                                    VALUES('b3d9bb06-9514-45ed-a028-022867727d0a',
                                           '1',
                                           'Test Invoice',
+                                          '2023-10-19',
                                           'Default Company',
                                           'CIF',
                                           'B37232972',

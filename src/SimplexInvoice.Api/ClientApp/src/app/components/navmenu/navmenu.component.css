@@ -1,9 +1,17 @@
 .nav-menu {
   display: block;
+  z-index: 99;
+  position: relative;
 }
+
 mat-toolbar {
   background: #009bee;
   color: white;
+  justify-content: center;
+}
+
+mat-toolbar-row{
+  height: 64px;
 }
 
 mat-icon {
@@ -15,9 +23,14 @@ mat-icon {
 }
 
 .mat-select {
-  max-width: 5rem;
+  margin-right: 1rem;
+  max-width: 6rem;
 }
 
 .mat-options {
   font-size: 0.9rem;
+}
+
+#about-button {
+  margin-right: 2rem;
 }

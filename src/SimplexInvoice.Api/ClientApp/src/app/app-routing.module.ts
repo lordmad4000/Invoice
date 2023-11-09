@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { RouterModule, Routes } from '@angular/router';
 import { authGuard } from './shared/guards/auth.guard';
+import { InvoicesNewComponent } from './modules/invoices';
 
 const routes: Routes = [
 { path: '', redirectTo: 'login', pathMatch: 'full' },      
@@ -15,6 +16,8 @@ const routes: Routes = [
 { path: 'companies', loadChildren: () => import('./modules/companies/companies.module').then(x => x.CompaniesModule), canActivate: [authGuard]},
 { path: 'customers', loadChildren: () => import('./modules/customers/customers.module').then(x => x.CustomersModule), canActivate: [authGuard]},
 { path: 'products', loadChildren: () => import('./modules/products/products.module').then(x => x.ProductsModule), canActivate: [authGuard]},
+{ path: 'invoices', loadChildren: () => import('./modules/invoices/invoices.module').then(x => x.InvoicesModule), canActivate: [authGuard]},
+{ path: 'test', component: InvoicesNewComponent },
 { path: '**', component: PageNotFoundComponent },
 ];
 

@@ -8,6 +8,7 @@ using SimplexInvoice.Domain.Products;
 using SimplexInvoice.Domain.TaxRates;
 using SimplexInvoice.Domain.Users;
 using SimplexInvoice.Domain.ValueObjects;
+using System;
 
 namespace SimplexInvoice.Application.AutoMapper
 {
@@ -105,7 +106,9 @@ namespace SimplexInvoice.Application.AutoMapper
                                                     .ForMember(c => c.Total,
                                                                x => x.Ignore());
 
-            CreateMap<Invoice, InvoiceDto>().ForMember(c => c.CompanyStreet,
+            CreateMap<Invoice, InvoiceDto>().ForMember(c => c.Date,
+                                                       x => x.MapFrom(src => DateOnly.FromDateTime(src.Date)))
+                                            .ForMember(c => c.CompanyStreet,
                                                        x => x.MapFrom(src => src.CompanyAddress.Street))
                                             .ForMember(c => c.CompanyCity,
                                                        x => x.MapFrom(src => src.CompanyAddress.City))
@@ -144,7 +147,9 @@ namespace SimplexInvoice.Application.AutoMapper
                                             .ForMember(c => c.Currency,
                                                        x => x.MapFrom(src => src.Total.Currency));
 
-            CreateMap<InvoiceDto, Invoice>().ForMember(c => c.CompanyAddress,
+            CreateMap<InvoiceDto, Invoice>().ForMember(c => c.Date,
+                                                       x => x.MapFrom(src => src.Date.ToDateTime(TimeOnly.MinValue)))
+                                            .ForMember(c => c.CompanyAddress,
                                                        x => x.MapFrom(src => new Address(src.CompanyStreet, src.CompanyCity, src.CompanyState, src.CompanyCountry, src.CompanyPostalCode)))
                                             .ForMember(c => c.CompanyPhoneNumber,
                                                        x => x.MapFrom(src => new PhoneNumber(src.CompanyPhone)))

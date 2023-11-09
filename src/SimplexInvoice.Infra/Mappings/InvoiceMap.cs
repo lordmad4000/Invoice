@@ -1,5 +1,5 @@
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SimplexInvoice.Domain.Invoices;
 
 namespace SimplexInvoice.Infra.Mappings;
@@ -17,6 +17,9 @@ public class InvoiceMap : IEntityTypeConfiguration<Invoice>
         builder.Property(c => c.Description)
                .HasDefaultValue("")
                .HasMaxLength(40);
+
+        builder.Property(c => c.Date)
+               .IsRequired();
 
         builder.Property(c => c.CompanyName)
                .HasMaxLength(40)

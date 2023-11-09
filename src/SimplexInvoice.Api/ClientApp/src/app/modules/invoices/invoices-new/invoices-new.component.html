@@ -1,0 +1,171 @@
+<div class="invoices-new-container">
+    <mat-toolbar class="head-toolbar">
+        <mat-toolbar-row>
+            <button mat-button matTooltip="{{ 'head-toolbar.button_back' | translate }}" (click)="backButtonClick()">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <div class="outer-box">
+                <h1 class="module-title">{{ 'invoices.title' | translate }}</h1>
+            </div>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <app-search *ngIf="customerSearchVisible" listIcon="contacts" [searchInput]="customerSearchInput"
+        [searchList]="customersList" (onCloseEvent)="customerSearchVisible=false"
+        (onSelectedItemEvent)="onSelectedCustomer($event)"
+        (onChangesInputSearchEvent)="onChangesCustomerSearch($event)"></app-search>
+    <app-search *ngIf="productSearchVisible" listIcon="shopping_basket" [searchInput]="productSearchInput"
+        [searchList]="productsList" (onCloseEvent)="productSearchVisible=false"
+        (onSelectedItemEvent)="onSelectedProduct($event)"
+        (onChangesInputSearchEvent)="onChangesProductsSearch($event)"></app-search>
+    <header class="header-container">
+        <button class="customer-search-button" type="button" mat-raised-button color="primary"
+            (click)="showCustomerSearch()">{{ 'customers.forms.customer' | translate
+            }}<mat-icon>contacts</mat-icon></button>
+        <form class="invoice-header-form" [formGroup]="formInvoice">
+            <mat-form-field class="customer-info-field">
+                <mat-label>{{ 'customers.forms.fullname' | translate }}</mat-label>
+                <input matInput type="text" formControlName="customerFullName">
+            </mat-form-field>
+            <mat-form-field class="customer-info-field">
+                <mat-label>{{ 'customers.forms.iddocumentnumber' | translate }}</mat-label>
+                <input matInput type="text" formControlName="customerDocumentNumber">
+            </mat-form-field>
+            <mat-form-field class="customer-info-field">
+                <mat-label>{{ 'customers.forms.phone' | translate }}</mat-label>
+                <input matInput type="text" formControlName="customerPhone">
+            </mat-form-field>
+            <mat-form-field class="customer-info-field">
+                <mat-label>{{ 'customers.forms.email' | translate }}</mat-label>
+                <input matInput type="text" formControlName="customerEmail">
+            </mat-form-field>
+            <mat-form-field class="customer-info-field">
+                <mat-label>{{ 'invoices.forms.date' | translate }}</mat-label>
+                <input id="invoice-date-field" matInput type="date" formControlName="date" (keyup.enter)="onKeyupEnterDate($event)">
+            </mat-form-field>
+        </form>
+    </header>
+    <mat-divider></mat-divider>
+    <form class="invoice-form" *ngIf="invoiceLinesVisible" [formGroup]="formInvoiceLines">
+        <table>
+            <tbody formArrayName="invoiceLines" *ngFor="let item of getInvoiceLinesControls().controls; let i = index;">
+                <tr [formGroupName]="i">
+                    <div class="row-container">
+                        <td>
+                            <mat-form-field class="invoice-line-field" id="productcode-field"
+                                matTooltip="{{ 'productcode' + i }}" (keyup.f2)="onProductCodeKeyupF2(i)"
+                                (keyup.enter)="onFieldKeyupEnter('#packages'+ i, i)">
+                                <mat-label>{{ 'invoices.forms.productcode' | translate }}</mat-label>
+                                <input matInput [id]="'productcode' + i" type="text" formControlName="productCode"
+                                    (focusout)="onProductFocusOut(i)" (focus)="onProductFocus(i)">
+                                <mat-hint>(F2)</mat-hint>
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field class="invoice-line-field" id="productname-field"
+                                matTooltip='{{ this.invoiceLinesGetValue(i, "productDescription") }}'>
+                                <mat-label>{{ 'invoices.forms.productname' | translate }}</mat-label>
+                                <input matInput [id]="'productname' + i" type="text" formControlName="productName">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field class="invoice-line-field" id="packages-field"
+                                (keyup.enter)="onFieldKeyupEnter('#quantity' + i, i)">
+                                <mat-label>{{ 'invoices.forms.packages' | translate }}</mat-label>
+                                <input matInput [id]="'packages' + i" type="number" formControlName="packages"
+                                    onfocus="this.select()" (change)="onChangesPackages(i)">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field class="invoice-line-field" id="quantity-field"
+                                (keyup.enter)="onFieldKeyupEnter('#price' + i, i)">
+                                <mat-label>{{ 'invoices.forms.quantity' | translate }}</mat-label>
+                                <input matInput [id]="'quantity' + i" type="number" formControlName="quantity"
+                                    onfocus="this.select()" (change)="onChangesQuantity(i)">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field class="invoice-line-field" id="price-field"
+                                (keyup.enter)="onFieldKeyupEnter('#discountrate' + i, i)">
+                                <mat-label>{{ 'invoices.forms.price' | translate }}</mat-label>
+                                <input matInput [id]="'price' + i" type="number" formControlName="price"
+                                    pattern="^\d*(\.\d{0,2})?$" onfocus="this.select()" (change)="onChangesPrice(i)">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field class="invoice-line-field" id="taxbase-field">
+                                <mat-label>{{ 'invoices.forms.taxbase' | translate }}</mat-label>
+                                <input matInput [id]="'taxbase' + i" type="number" formControlName="taxBase"
+                                    onfocus="this.select()">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field class="invoice-line-field" id="taxrate-field">
+                                <mat-label>{{ 'invoices.forms.taxrate' | translate }}</mat-label>
+                                <input matInput [id]="'taxrate' + i" type="number" formControlName="taxRate">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field class="invoice-line-field" id="tax-field">
+                                <mat-label>{{ 'invoices.forms.tax' | translate }}</mat-label>
+                                <input matInput [id]="'tax' + i" type="number" formControlName="tax"
+                                    onfocus="this.select()">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field class="invoice-line-field" id="discountRate-field"
+                                (keyup.enter)="onFieldKeyupEnter('#total' + i, i)">
+                                <mat-label>{{ 'invoices.forms.discountrate' | translate }}</mat-label>
+                                <input matInput [id]="'discountrate' + i" type="number" formControlName="discountRate"
+                                    pattern="^[-\d]\d*$" onfocus="this.select()" (change)="onChangesDiscount(i)">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field class="invoice-line-field" id="discount-field">
+                                <mat-label>{{ 'invoices.forms.discount' | translate }}</mat-label>
+                                <input matInput [id]="'discount' + i" type="number" formControlName="discount">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field class="invoice-line-field" id="total-field"
+                                (keyup.enter)="onFieldKeyupEnter('#productcode' + (i + 1), i)">
+                                <mat-label>{{ 'invoices.forms.total' | translate }}</mat-label>
+                                <input matInput [id]="'total' + i" type="number" formControlName="total"
+                                    onfocus="this.select()" (change)="onChangesTotal(i)">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-icon matTooltip="{{ 'invoices.forms.delete_line' | translate }}"
+                                (click)="removeInvoiceLine(i)">delete_forever</mat-icon>
+                        </td>
+                    </div>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+    <mat-divider></mat-divider>
+    <footer class="footer-container" *ngIf="invoiceLinesVisible">
+        <div>
+            <button type="button" mat-raised-button class="button-save" color="primary" mat-button
+                matTooltip="{{ 'shared.buttons.save_tooltip' | translate }}" (click)="saveButtonClick()"
+                [disabled]="formInvoiceLines.invalid">{{ 'shared.buttons.save' | translate }}</button>
+        </div>
+        <form class="totals-container" [formGroup]="formInvoice">
+            <mat-form-field class="totals-fields">
+                <mat-label>{{ 'invoices.forms.totaltaxbase' | translate }}</mat-label>
+                <input matInput type="text" formControlName="totalTaxBase">
+            </mat-form-field>
+            <mat-form-field class="totals-fields">
+                <mat-label>{{ 'invoices.forms.totaltax' | translate }}</mat-label>
+                <input matInput type="text" formControlName="totalTax">
+            </mat-form-field>
+            <mat-form-field class="totals-fields">
+                <mat-label>{{ 'invoices.forms.totaldiscount' | translate }}</mat-label>
+                <input matInput type="text" formControlName="totalDiscount">
+            </mat-form-field>
+            <mat-form-field class="totals-fields">
+                <mat-label>{{ 'invoices.forms.totaltotal' | translate }}</mat-label>
+                <input matInput type="text" formControlName="total">
+            </mat-form-field>
+        </form>
+    </footer>
+</div>

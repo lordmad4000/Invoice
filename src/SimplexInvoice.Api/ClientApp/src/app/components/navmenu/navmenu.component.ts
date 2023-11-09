@@ -15,6 +15,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
 import { CustomTranslateService } from 'src/app/shared/services/customtranslate.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { Language } from 'src/app/shared/models/language';
 
 @Component({
   selector: 'app-navmenu',
@@ -43,11 +44,8 @@ export class NavmenuComponent {
   private translate: any = (key: string) =>
     this.translateService.instant('navmenu.' + key);
 
-  indexInitialOption: string = 'en';
-  languageOptions = [
-    { value: 'en', display: 'English' },
-    { value: 'es', display: 'Español' },
-  ]
+  public indexInitialOption: string;
+  public languageOptions: Language[];
 
   constructor(
     private router: Router,
@@ -55,9 +53,8 @@ export class NavmenuComponent {
     private jwtService: JWTService,
     private translateService: CustomTranslateService
   ) {
-    const currentLanguageOption = this.languageOptions.find(c => c.value === translateService.currentLanguage)
-    if (currentLanguageOption !== undefined)
-      this.indexInitialOption = currentLanguageOption.value;
+    this.indexInitialOption = this.translateService.currentLanguage;
+    this.languageOptions = this.translateService.supportedLanguages;
   }
 
   toggleSidenavClick(sideNav: MatSidenav) {
@@ -101,7 +98,7 @@ export class NavmenuComponent {
   }
 
   invoicesButtonClick() {
-    //this.router.navigate(['/invoices/grid']);
+    this.router.navigate(['/invoices/grid']);
   }
 
   aboutButtonClick() {

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CustomTranslateService } from 'src/app/shared/services/customtranslate.service';
 import { ErrorService } from 'src/app/shared';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { SnackBarService } from 'src/app/shared/services/snackbar.service';
 import { TableColumn } from 'src/app/shared/interfaces/tablecolumn';
@@ -29,7 +28,6 @@ export class UsersGridComponent implements OnInit {
   data: any[] = [];
 
   constructor(
-    private location: Location,
     private userservice: UserService,
     private router: Router,
     private translateService: CustomTranslateService,
@@ -64,7 +62,7 @@ export class UsersGridComponent implements OnInit {
   }
 
   backButtonClick() {
-    this.location.back();
+    this.router.navigate(['/home']);
   }
 
 }

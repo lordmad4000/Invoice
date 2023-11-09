@@ -11,8 +11,8 @@ using SimplexInvoice.Infra.Data;
 namespace SimplexInvoice.Infra.Migrations
 {
     [DbContext(typeof(EFContext))]
-    [Migration("20231017152948_Initial")]
-    partial class Initial
+    [Migration("20231019080612_Initital")]
+    partial class Initital
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -143,6 +143,9 @@ namespace SimplexInvoice.Infra.Migrations
                     b.Property<string>("CustomerIdDocumentType")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Description")
                         .IsRequired()
