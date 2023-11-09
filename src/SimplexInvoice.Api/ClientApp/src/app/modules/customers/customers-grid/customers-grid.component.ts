@@ -4,7 +4,6 @@ import { CustomerDto } from 'src/app/shared/models/customerdto';
 import { CustomersService } from 'src/app/shared/services/customers.service';
 import { ErrorService } from 'src/app/shared';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { SnackBarService } from 'src/app/shared/services/snackbar.service';
 import { TableColumn } from 'src/app/shared/interfaces/tablecolumn';
@@ -32,7 +31,6 @@ export class CustomersGridComponent implements OnInit {
   public data: any[] = [];
 
   constructor(
-    private location: Location,
     private customersService: CustomersService,
     private router: Router,
     private translateService: CustomTranslateService,
@@ -67,7 +65,7 @@ export class CustomersGridComponent implements OnInit {
   }
 
   backButtonClick() {
-    this.location.back();
+    this.router.navigate(['/home']);
   }
 
 }

@@ -4,7 +4,6 @@ import { InvoiceDto } from 'src/app/shared/models/invoicedto';
 import { InvoicesService } from 'src/app/shared/services/invoices.service';
 import { ErrorService } from 'src/app/shared';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { SnackBarService } from 'src/app/shared/services/snackbar.service';
 import { TableColumn } from 'src/app/shared/interfaces/tablecolumn';
@@ -32,7 +31,6 @@ export class InvoicesGridComponent implements OnInit {
   public data: any[] = [];
 
   constructor(
-    private location: Location,
     private invoicesService: InvoicesService,
     private router: Router,
     private translateService: CustomTranslateService,
@@ -67,7 +65,7 @@ export class InvoicesGridComponent implements OnInit {
   }
 
   backButtonClick() {
-    this.location.back();
+    this.router.navigate(['/home']);
   }
 
 }

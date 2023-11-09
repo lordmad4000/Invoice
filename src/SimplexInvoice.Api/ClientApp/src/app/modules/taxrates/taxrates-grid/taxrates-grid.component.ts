@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CustomTranslateService } from 'src/app/shared/services/customtranslate.service';
 import { ErrorService } from 'src/app/shared';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Location } from '@angular/common';
 import { TaxRateDto } from 'src/app/shared/models/taxratedto';
 import { TaxRatesService } from 'src/app/shared/services/taxrates.service';
 import { Router } from '@angular/router';
@@ -29,7 +28,6 @@ export class TaxRatesGridComponent implements OnInit {
   public data: any[] = [];
 
   constructor(
-    private location: Location,
     private taxRatesService: TaxRatesService,
     private router: Router,
     private translateService: CustomTranslateService,
@@ -64,7 +62,7 @@ export class TaxRatesGridComponent implements OnInit {
   }
 
   backButtonClick() {
-    this.location.back();
+    this.router.navigate(['/home']);
   }
 
 }
