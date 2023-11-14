@@ -29,7 +29,7 @@ import { TableColumn } from 'src/app/shared/interfaces/tablecolumn';
     MatTooltipModule,
   ]
 })
-export class BaseGridComponent implements OnInit, OnChanges, AfterViewInit {
+export class BaseGridComponent implements OnInit, OnChanges {
 
   @Input() tableColumns: TableColumn[] = [];
   @Input() gridData: any[] = [];
@@ -45,14 +45,8 @@ export class BaseGridComponent implements OnInit, OnChanges, AfterViewInit {
 
   ngOnInit(): void {
     this.displayedColumns = this.tableColumns.map((tableColumn: TableColumn) => tableColumn.header);
-    this.updateDataSource();
   }
-
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
+  
   ngOnChanges() : void {
     this.updateDataSource();
   }
@@ -60,6 +54,7 @@ export class BaseGridComponent implements OnInit, OnChanges, AfterViewInit {
   updateDataSource() {
     this.dataSource = new MatTableDataSource(this.gridData);    
     this.dataSource.sortingDataAccessor = (item, property) => this.getProperty(item, property);
+    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 

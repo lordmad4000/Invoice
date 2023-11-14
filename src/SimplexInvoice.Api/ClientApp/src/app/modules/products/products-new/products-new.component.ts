@@ -44,7 +44,7 @@ export class ProductsNewComponent implements OnInit, OnDestroy {
       description: [{ value: '', disabled: false }],
       packageQuantity: [{ value: 0.0, disabled: false }],
       price: [{ value: 0.0, disabled: false }],
-      currency: [{ value: '', disabled: false }],
+      currency: [{ value: 'EUR', disabled: false }],
       taxRateId: [{ value: '', disabled: false }],
       taxRateName: [{ value: '', disabled: true }],
       taxRateValue: [{ value: 0, disabled: true }],
