@@ -25,7 +25,7 @@ export class ProductsGridComponent implements OnInit {
     { header: this.translate('forms.code'), field: 'code', visible: 'visible', width: '20%' },
     { header: this.translate('forms.name'), field: 'name', visible: 'visible', width: '20%' },
     { header: this.translate('forms.description'), field: 'description', visible: 'visible', width: '20%' },
-    { header: this.translate('forms.unitprice'), field: 'price', visible: 'visible', width: '20%' },
+    { header: this.translate('forms.price'), field: 'price', visible: 'visible', width: '20%' },
     { header: this.translate('forms.currency'), field: 'currency', visible: 'visible', width: '20%' },
   ];
   public data: any[] = [];

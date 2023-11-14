@@ -9,10 +9,10 @@
                 }}
             </mat-chip-option>
         </mat-chip-listbox>
-        <div class="input-container">
+        <div class="input-container" (keyup.esc)="onClose()">
             <label for="inputsearch">{{ selectedSearch.inputText }}</label>
             <mat-icon>search</mat-icon>
-            <input id="inputsearch" type="text" [(ngModel)]="inputSearch" (input)="onChangesInputSearch()" (keyup.esc)="onClose()" required/>
+            <input id="inputsearch" type="text" [(ngModel)]="inputSearch" (input)="onChangesInputSearch()" required/>
         </div>
     </div>
     <div class="search-list-container">
