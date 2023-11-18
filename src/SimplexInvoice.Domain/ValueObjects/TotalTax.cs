@@ -13,8 +13,9 @@ public class TotalTax : ValueObject
     public double BaseAmount { get; private set; } = 0.0;
     public double Amount { get; private set; } = 0.0;
 
-    public TotalTax()
-    { }
+    private TotalTax()
+    {
+    }
 
     public TotalTax(string name, double baseAmount, double amount)
     {

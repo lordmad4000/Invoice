@@ -14,6 +14,10 @@ public class Address : ValueObject
     public string Country { get; private set; } = string.Empty;
     public string PostalCode { get; private set; } = string.Empty;
 
+    private Address()
+    {        
+    }
+
     public Address(string street, string city, string state, string country, string postalCode)
     {
         Street = street;
