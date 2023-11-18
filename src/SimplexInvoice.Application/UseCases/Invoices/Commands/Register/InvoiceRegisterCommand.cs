@@ -5,8 +5,7 @@ using System;
 
 namespace SimplexInvoice.Application.Invoices.Commands;
 
-public record InvoiceRegisterCommand(string Number,
-                                     string Description,
+public record InvoiceRegisterCommand(string Description,
                                      DateOnly Date,
                                      string CompanyName,
                                      string CompanyIdDocumentType,
