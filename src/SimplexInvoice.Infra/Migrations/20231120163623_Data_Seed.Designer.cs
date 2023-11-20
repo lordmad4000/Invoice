@@ -11,8 +11,8 @@ using SimplexInvoice.Infra.Data;
 namespace SimplexInvoice.Infra.Migrations
 {
     [DbContext(typeof(EFContext))]
-    [Migration("20231019080612_Initital")]
-    partial class Initital
+    [Migration("20231120163623_Data_Seed")]
+    partial class Data_Seed
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,9 +46,10 @@ namespace SimplexInvoice.Infra.Migrations
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.HasIndex("IdDocumentTypeId");
-
                     b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.HasIndex("IdDocumentTypeId", "IdDocumentNumber")
                         .IsUnique();
 
                     b.ToTable("Company");
@@ -83,9 +84,35 @@ namespace SimplexInvoice.Infra.Migrations
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.HasIndex("IdDocumentTypeId");
+                    b.HasIndex("IdDocumentTypeId", "IdDocumentNumber")
+                        .IsUnique();
 
                     b.ToTable("Customer");
+                });
+
+            modelBuilder.Entity("SimplexInvoice.Domain.Entities.AppConfiguration", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("LastInvoiceNumber")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.ToTable("AppConfiguration");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("93cb9570-7f16-4c26-aafc-3b96b2bba055"),
+                            LastInvoiceNumber = "0000000000"
+                        });
                 });
 
             modelBuilder.Entity("SimplexInvoice.Domain.IdDocumentTypes.IdDocumentType", b =>
@@ -156,11 +183,14 @@ namespace SimplexInvoice.Infra.Migrations
 
                     b.Property<string>("Number")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("Number")
                         .IsUnique();
 
                     b.ToTable("Invoice");
@@ -224,6 +254,9 @@ namespace SimplexInvoice.Infra.Migrations
                         .IsUnique();
 
                     b.HasIndex("InvoiceId");
+
+                    b.HasIndex("Id", "LineNumber")
+                        .IsUnique();
 
                     b.ToTable("InvoiceLine");
                 });
