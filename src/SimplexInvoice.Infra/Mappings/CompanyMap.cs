@@ -18,6 +18,9 @@ public class CompanyMap : IEntityTypeConfiguration<Company>
                .HasMaxLength(40)
                .IsRequired();
 
+        builder.HasIndex(p => new { p.IdDocumentTypeId, p.IdDocumentNumber })
+               .IsUnique();
+
         builder.Property(c => c.IdDocumentNumber)
                .HasMaxLength(40)
                .IsRequired();

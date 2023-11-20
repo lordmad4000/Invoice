@@ -21,6 +21,7 @@ namespace SimplexInvoice.Infra
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));
+            services.AddScoped<IAppConfigurationRepository, AppConfigurationRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IIdDocumentTypeRepository, IdDocumentTypeRepository>();

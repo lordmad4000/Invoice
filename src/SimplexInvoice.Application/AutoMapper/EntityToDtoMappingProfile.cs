@@ -2,6 +2,7 @@ using AutoMapper;
 using SimplexInvoice.Application.Common.Dto;
 using SimplexInvoice.Domain.Companies;
 using SimplexInvoice.Domain.Customers;
+using SimplexInvoice.Domain.Entities;
 using SimplexInvoice.Domain.IdDocumentTypes;
 using SimplexInvoice.Domain.Invoices;
 using SimplexInvoice.Domain.Products;
@@ -16,6 +17,9 @@ namespace SimplexInvoice.Application.AutoMapper
     {
         public EntityToDtoMappingProfile()
         {
+            CreateMap<AppConfiguration, AppConfigurationDto>();
+            CreateMap<AppConfigurationDto, AppConfiguration>();
+
             CreateMap<User, UserDto>().ForMember(c => c.Email, 
                                                  x => x.MapFrom(src => src.EmailAddress));
             CreateMap<UserDto, User>().ForMember(c => c.EmailAddress, 

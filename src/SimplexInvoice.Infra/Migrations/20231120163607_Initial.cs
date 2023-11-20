@@ -1,18 +1,31 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using SimplexInvoice.Infra.Data;
 
 #nullable disable
 
 namespace SimplexInvoice.Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class Initital : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterDatabase()
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "AppConfiguration",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    LastInvoiceNumber = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppConfiguration", x => x.Id);
+                })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
@@ -34,7 +47,7 @@ namespace SimplexInvoice.Infra.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Number = table.Column<string>(type: "longtext", nullable: false)
+                    Number = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Description = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: false, defaultValue: "")
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -262,6 +275,17 @@ namespace SimplexInvoice.Infra.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
+            migrationBuilder.InsertData(
+                table: "AppConfiguration",
+                columns: new[] { "Id", "LastInvoiceNumber" },
+                values: new object[] { new Guid("93cb9570-7f16-4c26-aafc-3b96b2bba055"), "0000000000" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppConfiguration_Id",
+                table: "AppConfiguration",
+                column: "Id",
+                unique: true);
+
             migrationBuilder.CreateIndex(
                 name: "IX_Company_EmailAddress",
                 table: "Company",
@@ -275,9 +299,10 @@ namespace SimplexInvoice.Infra.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Company_IdDocumentTypeId",
+                name: "IX_Company_IdDocumentTypeId_IdDocumentNumber",
                 table: "Company",
-                column: "IdDocumentTypeId");
+                columns: new[] { "IdDocumentTypeId", "IdDocumentNumber" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Company_Name",
@@ -298,9 +323,10 @@ namespace SimplexInvoice.Infra.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Customer_IdDocumentTypeId",
+                name: "IX_Customer_IdDocumentTypeId_IdDocumentNumber",
                 table: "Customer",
-                column: "IdDocumentTypeId");
+                columns: new[] { "IdDocumentTypeId", "IdDocumentNumber" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_IdDocumentType_Id",
@@ -321,9 +347,21 @@ namespace SimplexInvoice.Infra.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Invoice_Number",
+                table: "Invoice",
+                column: "Number",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_InvoiceLine_Id",
                 table: "InvoiceLine",
                 column: "Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InvoiceLine_Id_LineNumber",
+                table: "InvoiceLine",
+                columns: new[] { "Id", "LineNumber" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -377,13 +415,14 @@ namespace SimplexInvoice.Infra.Migrations
                 table: "User",
                 column: "Id",
                 unique: true);
-
-            DefaultInitialData.AddDefaultInitialData(migrationBuilder);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AppConfiguration");
+
             migrationBuilder.DropTable(
                 name: "Company");
 

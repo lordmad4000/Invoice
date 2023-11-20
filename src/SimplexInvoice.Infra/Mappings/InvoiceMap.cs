@@ -11,6 +11,9 @@ public class InvoiceMap : IEntityTypeConfiguration<Invoice>
         builder.HasIndex(c => c.Id)
                .IsUnique();
 
+        builder.HasIndex(c => c.Number)        
+               .IsUnique();
+
         builder.Property(c => c.Number)
                .IsRequired();
 
