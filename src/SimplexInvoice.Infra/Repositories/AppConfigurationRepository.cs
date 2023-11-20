@@ -10,7 +10,7 @@ namespace SimplexInvoice.Infra.Repositories
 {
     public class AppConfigurationRepository : IAppConfigurationRepository
     {
-        private Guid defaultId = Guid.Parse("93cb9570-7f16-4c26-aafc-3b96b2bba055");
+        private Guid defaultId = new AppConfiguration().Id;
         private readonly DbSet<AppConfiguration> _dbSet;
         private readonly IUnitOfWork _unitOfWork;
 
