@@ -12,7 +12,7 @@ public class Money : ValueObject
     public string Currency { get; private set ; } = "USD";
     public double Amount { get; private set ; } = 0.0;
 
-    public Money()
+    private Money()
     {        
     }
 

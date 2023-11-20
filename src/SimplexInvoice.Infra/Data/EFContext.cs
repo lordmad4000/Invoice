@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SimplexInvoice.Domain.IdDocumentTypes;
-using SimplexInvoice.Domain.Users;
-using SimplexInvoice.Domain.TaxRates;
-using SimplexInvoice.Infra.Mappings;
-using SimplexInvoice.Domain.Products;
 using SimplexInvoice.Domain.Companies;
 using SimplexInvoice.Domain.Customers;
+using SimplexInvoice.Domain.Entities;
+using SimplexInvoice.Domain.IdDocumentTypes;
 using SimplexInvoice.Domain.Invoices;
+using SimplexInvoice.Domain.Products;
+using SimplexInvoice.Domain.TaxRates;
+using SimplexInvoice.Domain.Users;
+using SimplexInvoice.Infra.Mappings;
 
 namespace SimplexInvoice.Infra.Data
 {
@@ -24,6 +25,7 @@ namespace SimplexInvoice.Infra.Data
         public DbSet<Customer> Customer { get; set; }
         public DbSet<Invoice> Invoice{ get; set; }
         public DbSet<InvoiceLine> InvoiceLine { get; set; }
+        public DbSet<AppConfiguration> AppConfiguration { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {            
@@ -35,6 +37,7 @@ namespace SimplexInvoice.Infra.Data
             modelBuilder.ApplyConfiguration(new CustomerMap());
             modelBuilder.ApplyConfiguration(new InvoiceMap());
             modelBuilder.ApplyConfiguration(new InvoiceLineMap());
+            modelBuilder.ApplyConfiguration(new AppConfigurationMap());
             base.OnModelCreating(modelBuilder);
         }
     }
