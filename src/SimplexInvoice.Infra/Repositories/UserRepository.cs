@@ -9,12 +9,14 @@ using System.Threading;
 
 namespace SimplexInvoice.Infra.Repositories
 {
-    public class UserRepository : RepositoryBase<User>, IUserRepository
+    public class UserRepository : CachedRepositoryDecorator<User>, IUserRepository
     {
-        private readonly EFContext _context;
-        public UserRepository(IUnitOfWork unitOfWork, ICacheService cacheService) : base(unitOfWork, cacheService)
+        public UserRepository(EFContext context, 
+                              ICacheService cacheService, 
+                              IRepository<User> repository,
+                              ICustomLogger logger)
+            : base(context, cacheService, repository, logger)
         {
-            _context = unitOfWork.GetContext();
         }
 
         public async Task<IEnumerable<User>> GetLastUsers(int take, CancellationToken cancellationToken)

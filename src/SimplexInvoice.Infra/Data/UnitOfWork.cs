@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using SimplexInvoice.Infra.Exceptions;
+using SimplexInvoice.Application.Common.Interfaces.Persistance;
+using System.Threading;
 
 namespace SimplexInvoice.Infra.Data
 {
@@ -13,14 +15,11 @@ namespace SimplexInvoice.Infra.Data
             _dbContext = dbContext;
         }
 
-        public EFContext GetContext() =>
-            _dbContext;
-
-        public async Task<int> SaveChangesAsync()
+        public async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {
             try
             {
-                return await _dbContext.SaveChangesAsync();
+                return await _dbContext.SaveChangesAsync(cancellationToken);
             }
             catch (Exception ex)
             {

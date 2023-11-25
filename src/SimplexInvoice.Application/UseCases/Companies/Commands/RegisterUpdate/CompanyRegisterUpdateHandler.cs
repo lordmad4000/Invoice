@@ -4,7 +4,6 @@ using SimplexInvoice.Application.Common.Dto;
 using SimplexInvoice.Application.Common.Interfaces.Persistance;
 using SimplexInvoice.Application.Companies.Exceptions;
 using SimplexInvoice.Domain.Companies;
-using SimplexInvoice.Application.Common.Exceptions;
 using SimplexInvoice.Domain.ValueObjects;
 using System;
 using System.Linq;
@@ -14,14 +13,17 @@ using System.Threading.Tasks;
 namespace SimplexInvoice.Application.Companies.Commands;
 public class CompanyRegisterUpdateHandler : IRequestHandler<CompanyRegisterUpdateCommand, CompanyDto>
 {
+    private readonly IUnitOfWork _unitOfWork;
     private readonly ICompanyRepository _companyRepository;
     private readonly IMapper _mapper;
     private readonly ICustomLogger _logger;
 
-    public CompanyRegisterUpdateHandler(ICompanyRepository companyRepository,
+    public CompanyRegisterUpdateHandler(IUnitOfWork unitOfWork,
+                                        ICompanyRepository companyRepository,
                                         IMapper mapper,
                                         ICustomLogger logger)
     {
+        _unitOfWork = unitOfWork;
         _companyRepository = companyRepository;
         _mapper = mapper;
         _logger = logger;
@@ -60,7 +62,7 @@ public class CompanyRegisterUpdateHandler : IRequestHandler<CompanyRegisterUpdat
                            new EmailAddress(request.Email));
             companyDto = _mapper.Map<CompanyDto>(await _companyRepository.UpdateAsync(company, cancellationToken));
         }
-        if (await _companyRepository.SaveChangesAsync(cancellationToken) == 0)
+        if (await _unitOfWork.SaveChangesAsync(cancellationToken) == 0)
             throw new CompanyRegisteringUpdatingException($"Error updating the Company.");
 
         _logger.Debug(@$"Company Updated successfully with data: {company}");

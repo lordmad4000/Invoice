@@ -8,12 +8,15 @@ namespace SimplexInvoice.Application.Products.Commands;
 
 public class ProductRemoveHandler : IRequestHandler<ProductRemoveCommand, bool>
 {
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IProductRepository _productRepository;
     private readonly ICustomLogger _logger;
 
-    public ProductRemoveHandler(IProductRepository productRepository,
-                               ICustomLogger logger)
+    public ProductRemoveHandler(IUnitOfWork unitOfWork, 
+                                IProductRepository productRepository,
+                                ICustomLogger logger)
     {
+        _unitOfWork = unitOfWork;
         _productRepository = productRepository;
         _logger = logger;
     }
@@ -21,7 +24,7 @@ public class ProductRemoveHandler : IRequestHandler<ProductRemoveCommand, bool>
     public async Task<bool> Handle(ProductRemoveCommand request, CancellationToken cancellationToken)
     {
         await _productRepository.DeleteAsync(request.Id, cancellationToken);
-        if (await _productRepository.SaveChangesAsync(cancellationToken) == 0)
+        if (await _unitOfWork.SaveChangesAsync(cancellationToken) == 0)
             throw new ProductRemovingException($"Error removing the Product.");
 
         _logger.Debug(@$"Product with id {request.Id} removed.");

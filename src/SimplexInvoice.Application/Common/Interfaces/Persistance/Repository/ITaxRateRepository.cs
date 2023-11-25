@@ -2,7 +2,7 @@
 
 namespace SimplexInvoice.Application.Common.Interfaces.Persistance
 {
-    public interface ITaxRateRepository : IAsyncRepository<TaxRate>
+    public interface ITaxRateRepository : ICacheableRepository<TaxRate>
     {
     }
 }

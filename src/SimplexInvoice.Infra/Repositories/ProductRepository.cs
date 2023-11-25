@@ -12,12 +12,14 @@ using System;
 
 namespace SimplexInvoice.Infra.Repositories
 {
-    public class ProductRepository : RepositoryBase<Product>, IProductRepository
+    public class ProductRepository : CachedRepositoryDecorator<Product>, IProductRepository
     {
-        private readonly EFContext _context;
-        public ProductRepository(IUnitOfWork unitOfWork, ICacheService cacheService) : base(unitOfWork, cacheService)
+        public ProductRepository(EFContext context, 
+                                 ICacheService cacheService, 
+                                 IRepository<Product> repository,
+                                 ICustomLogger logger)
+            : base(context, cacheService, repository, logger)
         {
-            _context = unitOfWork.GetContext();
         }
 
         public async Task<IEnumerable<BasicProduct>> GetBasicProductsContainsName(string name, CancellationToken cancellationToken, bool tracking = false)

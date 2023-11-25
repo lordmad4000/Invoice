@@ -11,13 +11,16 @@ using System.Threading.Tasks;
 namespace SimplexInvoice.Application.Customers.Commands;
 public class CustomerRegisterHandler : IRequestHandler<CustomerRegisterCommand, CustomerDto>
 {
+    private readonly IUnitOfWork _unitOfWork;
     private readonly ICustomerRepository _customerRepository;
     private readonly IMapper _mapper;
     private readonly ICustomLogger _logger;
-    public CustomerRegisterHandler(ICustomerRepository customerRepository, 
+    public CustomerRegisterHandler(IUnitOfWork unitOfWork, 
+                                   ICustomerRepository customerRepository, 
                                    IMapper mapper, 
                                    ICustomLogger logger)
     {
+        _unitOfWork = unitOfWork;
         _customerRepository = customerRepository;
         _mapper = mapper;
         _logger = logger;
@@ -38,7 +41,7 @@ public class CustomerRegisterHandler : IRequestHandler<CustomerRegisterCommand, 
                                             new EmailAddress(request.Email));
 
         CustomerDto customerDto = _mapper.Map<CustomerDto>(await _customerRepository.AddAsync(customer, cancellationToken));
-        if (await _customerRepository.SaveChangesAsync(cancellationToken) == 0)
+        if (await _unitOfWork.SaveChangesAsync(cancellationToken) == 0)
             throw new CustomerRegisteringException($"Error registering the Customer.");
 
         _logger.Debug(@$"Customer Registered successfully with data: {customer}");

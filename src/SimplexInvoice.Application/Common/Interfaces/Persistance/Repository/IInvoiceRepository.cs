@@ -2,7 +2,7 @@
 
 namespace SimplexInvoice.Application.Common.Interfaces.Persistance
 {
-    public interface IInvoiceLineRepository : IAsyncRepository<InvoiceLine>
+    public interface IInvoiceRepository : ICacheableRepository<Invoice>
     {
     }
 }

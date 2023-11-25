@@ -2,7 +2,7 @@
 
 namespace SimplexInvoice.Application.Common.Interfaces.Persistance
 {
-    public interface ICompanyRepository : IAsyncRepository<Company>
+    public interface ICompanyRepository : ICacheableRepository<Company>
     {
     }
 }

@@ -14,15 +14,18 @@ namespace SimplexInvoice.Application.Users.Commands
 
     public class UserRegisterHandler : IRequestHandler<UserRegisterCommand, UserDto>
     {
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IUserRepository _userRepository;
         private readonly IPasswordService _passwordService;
         private readonly IMapper _mapper;
         private readonly ICustomLogger _logger;
-        public UserRegisterHandler(IUserRepository userRepository,
+        public UserRegisterHandler(IUnitOfWork unitOfWork, 
+                                   IUserRepository userRepository,
                                    IPasswordService passwordService,
                                    IMapper mapper,
                                    ICustomLogger logger)
         {
+            _unitOfWork = unitOfWork;
             _userRepository = userRepository;
             _passwordService = passwordService;
             _mapper = mapper;
@@ -38,7 +41,7 @@ namespace SimplexInvoice.Application.Users.Commands
             var encryptedPassword = _passwordService.GeneratePassword(request.Email, request.Password, 16);
             user = User.Create(request.Email, encryptedPassword, request.FirstName, request.LastName);
             UserDto userDto = _mapper.Map<UserDto>(await _userRepository.AddAsync(user, cancellationToken));
-            if (await _userRepository.SaveChangesAsync(cancellationToken) == 0)
+            if (await _unitOfWork.SaveChangesAsync(cancellationToken) == 0)
                 throw new UserRegisteringException($"Error registering the User.");
 
             _logger.Debug(@$"User Registered successfully with data: {user}");

@@ -11,14 +11,17 @@ using System.Threading.Tasks;
 namespace SimplexInvoice.Application.Products.Commands;
 public class ProductUpdateHandler : IRequestHandler<ProductUpdateCommand, ProductDto>
 {
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IProductRepository _productRepository;
     private readonly IMapper _mapper;
     private readonly ICustomLogger _logger;
 
-    public ProductUpdateHandler(IProductRepository productRepository,
-                               IMapper mapper,
-                               ICustomLogger logger)
+    public ProductUpdateHandler(IUnitOfWork unitOfWork, 
+                                IProductRepository productRepository,
+                                IMapper mapper,
+                                ICustomLogger logger)
     {
+        _unitOfWork = unitOfWork;
         _productRepository = productRepository;
         _mapper = mapper;
         _logger = logger;
@@ -37,7 +40,7 @@ public class ProductUpdateHandler : IRequestHandler<ProductUpdateCommand, Produc
                        request.TaxRateId);
 
         ProductDto productDto = _mapper.Map<ProductDto>(await _productRepository.UpdateAsync(product, cancellationToken));
-        if (await _productRepository.SaveChangesAsync(cancellationToken) == 0)
+        if (await _unitOfWork.SaveChangesAsync(cancellationToken) == 0)
             throw new ProductUpdatingException($"Error updating the Product.");
 
         _logger.Debug(@$"Product Updated successfully with data: {product}");

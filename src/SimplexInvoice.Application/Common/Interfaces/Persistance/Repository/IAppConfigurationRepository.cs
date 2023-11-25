@@ -8,6 +8,5 @@ namespace SimplexInvoice.Application.Common.Interfaces.Persistance
         Task<AppConfiguration> AddAsync(AppConfiguration appConfiguration);
         void Update(AppConfiguration appConfiguration);
         Task<AppConfiguration> GetAsync();
-        Task<int> SaveChangesAsync();
     }
 }
