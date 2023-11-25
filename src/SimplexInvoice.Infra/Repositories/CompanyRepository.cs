@@ -4,12 +4,14 @@ using SimplexInvoice.Infra.Data;
 
 namespace SimplexInvoice.Infra.Repositories
 {
-    public class CompanyRepository : RepositoryBase<Company>, ICompanyRepository
+    public class CompanyRepository : CachedRepositoryDecorator<Company>, ICompanyRepository
     {
-        private readonly EFContext _context;
-        public CompanyRepository(IUnitOfWork unitOfWork, ICacheService cacheService) : base(unitOfWork, cacheService)
+        public CompanyRepository(EFContext context, 
+                                 ICacheService cacheService, 
+                                 IRepository<Company> repository,
+                                 ICustomLogger logger)
+            : base(context, cacheService, repository, logger)
         {
-            _context = unitOfWork.GetContext();
         }
 
     }

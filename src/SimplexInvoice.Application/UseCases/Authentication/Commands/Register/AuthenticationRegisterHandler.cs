@@ -13,16 +13,19 @@ namespace SimplexInvoice.Application.Authentication.Commands
 
     public class AuthenticationRegisterHandler : IRequestHandler<AuthenticationRegisterCommand, UserDto>
     {
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IUserRepository _userRepository;
         private readonly IPasswordService _passwordService;
         private readonly IMapper _mapper;
         private readonly ICustomLogger _logger;
 
-        public AuthenticationRegisterHandler(IUserRepository userRepository,                        
+        public AuthenticationRegisterHandler(IUnitOfWork unitOfWork,
+                                             IUserRepository userRepository,                        
                                              IPasswordService passwordService,
                                              IMapper mapper,
                                              ICustomLogger logger)
         {
+            _unitOfWork = unitOfWork;
             _userRepository = userRepository;
             _passwordService = passwordService;
             _mapper = mapper;
@@ -38,7 +41,7 @@ namespace SimplexInvoice.Application.Authentication.Commands
             var encryptedPassword = _passwordService.GeneratePassword(request.Email, request.Password, 16);
             user = User.Create(request.Email, encryptedPassword, request.FirstName, request.LastName);
             user = await _userRepository.AddAsync(user, cancellationToken);
-            await _userRepository.SaveChangesAsync(cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
             _logger.Debug($"Authentication Register with data: {user}");
 
             return _mapper.Map<UserDto>(user);

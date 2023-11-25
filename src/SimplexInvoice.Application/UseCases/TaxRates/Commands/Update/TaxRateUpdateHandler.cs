@@ -31,8 +31,8 @@ public class TaxRateUpdateHandler : IRequestHandler<TaxRateUpdateCommand, TaxRat
 
         taxRate.Update(request.Name, request.Value);
         TaxRateDto taxRateDto = _mapper.Map<TaxRateDto>(await _taxRateRepository.UpdateAsync(taxRate, cancellationToken));
-        if (await _taxRateRepository.SaveChangesAsync(cancellationToken) == 0)
-            throw new TaxRateUpdatingException($"Error updating the TaxRate.");
+        //if (await _taxRateRepository.SaveChangesAsync(cancellationToken) == 0)
+        //    throw new TaxRateUpdatingException($"Error updating the TaxRate.");
 
         _logger.Debug(@$"TaxRate Updated successfully with data: {taxRate}");
 

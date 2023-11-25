@@ -2,7 +2,7 @@
 
 namespace SimplexInvoice.Application.Common.Interfaces.Persistance
 {
-    public interface IIdDocumentTypeRepository : IAsyncRepository<IdDocumentType>
+    public interface IIdDocumentTypeRepository : ICacheableRepository<IdDocumentType>
     {
     }
 }

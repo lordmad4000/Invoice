@@ -14,17 +14,20 @@ using System.Threading;
 namespace SimplexInvoice.Application.Invoices.Commands;
 public class InvoiceRegisterHandler : IRequestHandler<InvoiceRegisterCommand, InvoiceDto>
 {
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IInvoiceRepository _invoiceRepository;
     private readonly IAppConfigurationRepository _configurationRepository;
     private readonly IDocumentService _documentService;
     private readonly IMapper _mapper;
     private readonly ICustomLogger _logger;
-    public InvoiceRegisterHandler(IInvoiceRepository invoiceRepository,
+    public InvoiceRegisterHandler(IUnitOfWork unitOfWork, 
+                                  IInvoiceRepository invoiceRepository,
                                   IAppConfigurationRepository configurationRepository,
                                   IDocumentService documentService,
                                   IMapper mapper,
                                   ICustomLogger logger)
     {
+        _unitOfWork = unitOfWork;
         _invoiceRepository = invoiceRepository;
         _configurationRepository = configurationRepository;
         _documentService = documentService;
@@ -68,7 +71,7 @@ public class InvoiceRegisterHandler : IRequestHandler<InvoiceRegisterCommand, In
         configuration.LastInvoiceNumber = invoiceNumber;
         InvoiceDto invoiceDto = _mapper.Map<InvoiceDto>(await _invoiceRepository.AddAsync(invoice, cancellationToken));
         _configurationRepository.Update(configuration);
-        if (await _invoiceRepository.SaveChangesAsync(cancellationToken) == 0)
+        if (await _unitOfWork.SaveChangesAsync(cancellationToken) == 0)
             throw new InvoiceRegisteringException($"Error registering the Invoice.");
 
         _logger.Debug(@$"Invoice Registered successfully with data: {invoice}");

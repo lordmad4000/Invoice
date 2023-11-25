@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace SimplexInvoice.Application.Common.Interfaces.Persistance
 {
-    public interface IProductRepository : IAsyncRepository<Product>
+    public interface IProductRepository : ICacheableRepository<Product>
     {
         Task<IEnumerable<BasicProduct>> GetBasicProductsContainsName(string name, CancellationToken cancellationToken, bool tracking = false);
     }

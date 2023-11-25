@@ -27,8 +27,8 @@ public class TaxRateRegisterHandler : IRequestHandler<TaxRateRegisterCommand, Ta
         TaxRate taxrate = TaxRate.Create(request.Name, 
                                          request.Value);
         TaxRateDto taxrateDto = _mapper.Map<TaxRateDto>(await _taxrateRepository.AddAsync(taxrate, cancellationToken));
-        if (await _taxrateRepository.SaveChangesAsync(cancellationToken) == 0)
-            throw new TaxRateRegisteringException($"Error registering the TaxRate.");
+        //if (await _taxrateRepository.SaveChangesAsync(cancellationToken) == 0)
+        //    throw new TaxRateRegisteringException($"Error registering the TaxRate.");
 
         _logger.Debug(@$"TaxRate Registered successfully with data: {taxrate}");
 

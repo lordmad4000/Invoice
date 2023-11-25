@@ -11,13 +11,16 @@ using System.Threading.Tasks;
 namespace SimplexInvoice.Application.Products.Commands;
 public class ProductRegisterHandler : IRequestHandler<ProductRegisterCommand, ProductDto>
 {
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IProductRepository _productRepository;
     private readonly IMapper _mapper;
     private readonly ICustomLogger _logger;
-    public ProductRegisterHandler(IProductRepository productRepository, 
-                                 IMapper mapper, 
-                                 ICustomLogger logger)
+    public ProductRegisterHandler(IUnitOfWork unitOfWork, 
+                                  IProductRepository productRepository, 
+                                  IMapper mapper, 
+                                  ICustomLogger logger)
     {
+        _unitOfWork = unitOfWork;
         _productRepository = productRepository;
         _mapper = mapper;
         _logger = logger;
@@ -33,7 +36,7 @@ public class ProductRegisterHandler : IRequestHandler<ProductRegisterCommand, Pr
                                          request.TaxRateId);   
         
         ProductDto productDto = _mapper.Map<ProductDto>(await _productRepository.AddAsync(product, cancellationToken));
-        if (await _productRepository.SaveChangesAsync(cancellationToken) == 0)
+        if (await _unitOfWork.SaveChangesAsync(cancellationToken) == 0)
             throw new ProductRegisteringException($"Error registering the Product.");
 
         _logger.Debug(@$"Product Registered successfully with data: {product}");

@@ -4,12 +4,14 @@ using SimplexInvoice.Infra.Data;
 
 namespace SimplexInvoice.Infra.Repositories
 {
-    public class TaxRateRepository : RepositoryBase<TaxRate>, ITaxRateRepository
+    public class TaxRateRepository : CachedRepositoryDecorator<TaxRate>, ITaxRateRepository
     {
-        private readonly EFContext _context;
-        public TaxRateRepository(IUnitOfWork unitOfWork, ICacheService cacheService) : base(unitOfWork, cacheService)
+        public TaxRateRepository(EFContext context, 
+                                 ICacheService cacheService, 
+                                 IRepository<TaxRate> repository,
+                                 ICustomLogger logger)
+            : base(context, cacheService, repository, logger)
         {
-            _context = unitOfWork.GetContext();
         }
 
     }
