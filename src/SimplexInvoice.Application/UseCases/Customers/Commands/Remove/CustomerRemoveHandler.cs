@@ -8,12 +8,15 @@ namespace SimplexInvoice.Application.Customers.Commands;
 
 public class CustomerRemoveHandler : IRequestHandler<CustomerRemoveCommand, bool>
 {
+    private readonly IUnitOfWork _unitOfWork;
     private readonly ICustomerRepository _customerRepository;
     private readonly ICustomLogger _logger;
 
-    public CustomerRemoveHandler(ICustomerRepository customerRepository,
-                               ICustomLogger logger)
+    public CustomerRemoveHandler(IUnitOfWork unitOfWork, 
+                                 ICustomerRepository customerRepository,
+                                 ICustomLogger logger)
     {
+        _unitOfWork = unitOfWork;
         _customerRepository = customerRepository;
         _logger = logger;
     }
@@ -21,7 +24,7 @@ public class CustomerRemoveHandler : IRequestHandler<CustomerRemoveCommand, bool
     public async Task<bool> Handle(CustomerRemoveCommand request, CancellationToken cancellationToken)
     {
         await _customerRepository.DeleteAsync(request.Id, cancellationToken);
-        if (await _customerRepository.SaveChangesAsync(cancellationToken) == 0)
+        if (await _unitOfWork.SaveChangesAsync(cancellationToken) == 0)
             throw new CustomerRemovingException($"Error removing the Customer.");
 
         _logger.Debug(@$"Customer with id {request.Id} removed.");

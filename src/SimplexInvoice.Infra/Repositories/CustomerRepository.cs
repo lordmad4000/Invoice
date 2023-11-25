@@ -12,12 +12,14 @@ using System.Threading.Tasks;
 
 namespace SimplexInvoice.Infra.Repositories
 {
-    public class CustomerRepository : RepositoryBase<Customer>, ICustomerRepository
+    public class CustomerRepository : CachedRepositoryDecorator<Customer>, ICustomerRepository
     {
-        private readonly EFContext _context;
-        public CustomerRepository(IUnitOfWork unitOfWork, ICacheService cacheService) : base(unitOfWork, cacheService)
+        public CustomerRepository(EFContext context, 
+                                  ICacheService cacheService, 
+                                  IRepository<Customer> repository,
+                                  ICustomLogger logger)
+            : base(context, cacheService, repository, logger)
         {
-            _context = unitOfWork.GetContext();
         }
 
         public async Task<IEnumerable<BasicCustomer>> GetBasicCustomersContainsFullName(string fullName, CancellationToken cancellationToken, bool tracking = false)

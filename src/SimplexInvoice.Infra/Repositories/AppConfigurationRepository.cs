@@ -11,34 +11,32 @@ namespace SimplexInvoice.Infra.Repositories
     public class AppConfigurationRepository : IAppConfigurationRepository
     {
         private Guid defaultId = new AppConfiguration().Id;
-        private readonly DbSet<AppConfiguration> _dbSet;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly EFContext _context;
 
-        public AppConfigurationRepository(IUnitOfWork unitOfWork)
+        public AppConfigurationRepository(EFContext context)
         {
-            _unitOfWork = unitOfWork;
-            _dbSet = _unitOfWork.GetContext().Set<AppConfiguration>();
+            _context = context;
         }
 
         public async Task<AppConfiguration> AddAsync(AppConfiguration appConfiguration)
         {
             appConfiguration.Id = defaultId;
-            await _dbSet.AddAsync(appConfiguration);
+            await _context.AppConfiguration.AddAsync(appConfiguration);
 
             return appConfiguration;
         }
         
         public void Update(AppConfiguration appConfiguration)
         {
-            _dbSet.Update(appConfiguration);
+            _context.AppConfiguration.Update(appConfiguration);
         }
 
         public async Task<AppConfiguration> GetAsync()
         {
             try
             {
-                var result = await _dbSet.AsNoTracking()
-                                         .FirstOrDefaultAsync(c => c.Id == defaultId);
+                var result = await _context.AppConfiguration.AsNoTracking()
+                                                            .FirstOrDefaultAsync(c => c.Id == defaultId);
 
                 return result;
             }
@@ -46,11 +44,6 @@ namespace SimplexInvoice.Infra.Repositories
             {
                 throw new DataBaseException(ex.InnerException.Message);
             }
-        }
-
-        public async Task<int> SaveChangesAsync()
-        {
-            return await _unitOfWork.SaveChangesAsync();
         }
 
     }
