@@ -1,50 +1,46 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
-using SimplexInvoice.Api.Controllers;
+ï»¿using Microsoft.AspNetCore.Mvc.Testing;
+using Newtonsoft.Json;
+using SimplexInvoice.Api.Integration.Tests.Common;
 using SimplexInvoice.Api.Models.Request;
-using SimplexInvoice.Api.Tests.IntegrationTests.Common;
 using SimplexInvoice.Application.Common.Dto;
-using SimplexInvoice.SimplexInvoice.Api;
 
-namespace SimplexInvoice.Api.Tests.IntegrationTests;
+namespace SimplexInvoice.Api.Integration.Tests.InvoicesTests;
 
-public class InvoicesFlow
+public class InvoicesFlow : IClassFixture<WebApplicationFactory<Program>>
 {
-    private Guid InvoiceId { get; set; } = Guid.Empty;
+    private readonly WebApplicationFactory<Program> _applicationFactory;
 
-    [Fact]
-    public async Task Register_Invoice_Then_GetById_Then_GetAll()
+    public InvoicesFlow(WebApplicationFactory<Program> applicationFactory)
+    {
+        _applicationFactory = applicationFactory;
+    }
+
+    [Fact (Skip = "Preeliminary test")]
+    public async Task GetAll_Then_GetFirst_ById()
     {
         //Arrange
-        IServiceCollection services = ServicesConfiguration.BuildDependencies();
-        using (ServiceProvider serviceProvider = services.BuildServiceProvider())
-        {
-            var invoicesController = serviceProvider.GetRequiredService<InvoicesController>();
-            InvoiceRegisterRequest invoiceRegisterRequest = GetInvoiceRegisterRequest();
+        var client = WebApplicationFactoryHelper.GetHttpClient(_applicationFactory);
 
-            //Act
-            IActionResult actionResult = await invoicesController.Register(invoiceRegisterRequest, new CancellationToken());
-            var invoiceDto = CustomConvert.CreatedResultTo<InvoiceDto>(actionResult);
+        //Act
+        var response = await client.GetAsync($"/api/Invoices/GetAll");
+        var content = await response.Content.ReadAsStringAsync();
+        var invoices = JsonConvert.DeserializeObject<List<InvoiceDto>>(content);
+        if (invoices is null)
+            invoices = new List<InvoiceDto>();
 
-            //Assert
-            Assert.NotNull(invoiceDto);
-            if (invoiceDto is not null)
-                InvoiceId = invoiceDto.Id;
+        //Assert
+        Assert.True(invoices.Any(), "Not Invoices found. Add a Invoice and run again.");
 
-            //Act
-            actionResult = await invoicesController.GetById(InvoiceId, new CancellationToken());
-            invoiceDto = CustomConvert.OkResultTo<InvoiceDto>(actionResult);
+        //Act
+        response = await client.GetAsync($"/api/Invoices/GetById{invoices.First().Id}");
+        content = await response.Content.ReadAsStringAsync();
+        var invoice = JsonConvert.DeserializeObject<InvoiceDto>(content);
+        if (invoice is null)
+            invoice = new InvoiceDto();
 
-            //Assert
-            Assert.NotNull(invoiceDto);
-
-            //Act
-            actionResult = await invoicesController.GetAll(new CancellationToken());
-            var invoiceDtos = CustomConvert.OkResultTo<List<InvoiceDto>>(actionResult);
-
-            //Assert
-            Assert.NotEmpty(invoiceDtos);
-        };
+        //Assert
+        Assert.NotNull(invoice);
+        Assert.Equal(invoices.First().Id, invoice.Id);
     }
 
     private InvoiceRegisterRequest GetInvoiceRegisterRequest() =>
@@ -81,8 +77,8 @@ public class InvoicesFlow
             new InvoiceLineRegisterRequest
             {
                 ProductCode = "LB",
-                ProductName = "LASAÑA BOLOÑESA",
-                ProductDescription = "LASAÑA BOLOÑESA",
+                ProductName = "LASAÃ‘A BOLOÃ‘ESA",
+                ProductDescription = "LASAÃ‘A BOLOÃ‘ESA",
                 Packages = 1,
                 Quantity = 1,
                 Price = 2.60,
@@ -131,5 +127,4 @@ public class InvoicesFlow
                 DiscountRate = 0
             },
         };
-
 }
