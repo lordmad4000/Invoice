@@ -30,6 +30,7 @@
     <MicrosoftAspNetCoreAuthenticationJwtBearer>7.0.5</MicrosoftAspNetCoreAuthenticationJwtBearer>
     <MicrosoftAspNetCoreJsonPatch>7.0.5</MicrosoftAspNetCoreJsonPatch>
     <MicrosoftAspNetCoreMvcNewtonsoftJson>3.1.1</MicrosoftAspNetCoreMvcNewtonsoftJson>
+    <MicrosoftAspNetCoreMvcTesting>7.0.0</MicrosoftAspNetCoreMvcTesting>
     <MicrosoftAspNetCoreSpaProxy>7.0.2</MicrosoftAspNetCoreSpaProxy>
     <MicrosoftEntityFrameworkCore>7.0.5</MicrosoftEntityFrameworkCore>
     <MicrosoftEntityFrameworkCoreTools>7.0.5</MicrosoftEntityFrameworkCoreTools>    

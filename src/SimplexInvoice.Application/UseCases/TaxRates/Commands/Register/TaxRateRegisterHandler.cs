@@ -10,13 +10,16 @@ using System.Threading.Tasks;
 namespace SimplexInvoice.Application.TaxRates.Commands;
 public class TaxRateRegisterHandler : IRequestHandler<TaxRateRegisterCommand, TaxRateDto>
 {
+    private readonly IUnitOfWork _unitOfWork;
     private readonly ITaxRateRepository _taxrateRepository;
     private readonly IMapper _mapper;
     private readonly ICustomLogger _logger;
-    public TaxRateRegisterHandler(ITaxRateRepository taxrateRepository, 
+    public TaxRateRegisterHandler(IUnitOfWork unitOfWork,
+                                  ITaxRateRepository taxrateRepository, 
                                   IMapper mapper, 
                                   ICustomLogger logger)
     {
+        _unitOfWork = unitOfWork;
         _taxrateRepository = taxrateRepository;
         _mapper = mapper;
         _logger = logger;
@@ -27,8 +30,8 @@ public class TaxRateRegisterHandler : IRequestHandler<TaxRateRegisterCommand, Ta
         TaxRate taxrate = TaxRate.Create(request.Name, 
                                          request.Value);
         TaxRateDto taxrateDto = _mapper.Map<TaxRateDto>(await _taxrateRepository.AddAsync(taxrate, cancellationToken));
-        //if (await _taxrateRepository.SaveChangesAsync(cancellationToken) == 0)
-        //    throw new TaxRateRegisteringException($"Error registering the TaxRate.");
+        if (await _unitOfWork.SaveChangesAsync(cancellationToken) == 0)
+            throw new TaxRateRegisteringException($"Error registering the TaxRate.");
 
         _logger.Debug(@$"TaxRate Registered successfully with data: {taxrate}");
 

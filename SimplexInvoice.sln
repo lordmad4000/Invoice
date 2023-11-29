@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimplexInvoice.Application.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{76E362B0-49E9-41C7-A587-FD37A265A946}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimplexInvoice.Api.Tests", "test\SimplexInvoice.Api.Tests\SimplexInvoice.Api.Tests.csproj", "{3341F921-22FA-47A1-AF31-0DDB7F526F48}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimplexInvoice.Api.Integration.Tests", "test\SimplexInvoice.Api.Integration.Tests\SimplexInvoice.Api.Integration.Tests.csproj", "{3F397D25-D66D-443F-9975-7BBC487294A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,10 +57,10 @@ Global
 		{0EDDBD09-87D7-467F-BADD-37845E522E79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EDDBD09-87D7-467F-BADD-37845E522E79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EDDBD09-87D7-467F-BADD-37845E522E79}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3341F921-22FA-47A1-AF31-0DDB7F526F48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3341F921-22FA-47A1-AF31-0DDB7F526F48}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3341F921-22FA-47A1-AF31-0DDB7F526F48}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3341F921-22FA-47A1-AF31-0DDB7F526F48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F397D25-D66D-443F-9975-7BBC487294A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F397D25-D66D-443F-9975-7BBC487294A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F397D25-D66D-443F-9975-7BBC487294A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F397D25-D66D-443F-9975-7BBC487294A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,7 +73,7 @@ Global
 		{7F15F3D4-095D-4D33-9F60-90FD4B03F002} = {76E362B0-49E9-41C7-A587-FD37A265A946}
 		{35FB738A-F7CF-4E6F-9294-41C6FD642199} = {76E362B0-49E9-41C7-A587-FD37A265A946}
 		{0EDDBD09-87D7-467F-BADD-37845E522E79} = {76E362B0-49E9-41C7-A587-FD37A265A946}
-		{3341F921-22FA-47A1-AF31-0DDB7F526F48} = {76E362B0-49E9-41C7-A587-FD37A265A946}
+		{3F397D25-D66D-443F-9975-7BBC487294A7} = {76E362B0-49E9-41C7-A587-FD37A265A946}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F32322D8-84B2-49FE-8205-A8046BA9906D}
