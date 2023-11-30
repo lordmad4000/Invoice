@@ -6,7 +6,7 @@ using SimplexInvoice.Infra.Data;
 namespace SimplexInvoice.Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class Data_Seed : Migration
+    public partial class Seed_Data : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

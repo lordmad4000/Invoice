@@ -209,6 +209,8 @@ namespace SimplexInvoice.Infra.Data
                                    VALUES('b3d9bb06-9514-45ed-a028-022867727d0a',
                                           '1',
                                           'Test Invoice',
+                                          '',
+                                          'null',
                                           '2023-10-19',
                                           'Default Company',
                                           'CIF',

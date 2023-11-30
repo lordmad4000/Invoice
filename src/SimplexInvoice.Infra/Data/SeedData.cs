@@ -229,6 +229,8 @@ public static class SeedData
 
         Invoice invoice = Invoice.Create("FFFFFFFFFF",
                                          "Test Invoice",
+                                         "",
+                                         null,
                                          company.Name,
                                          company.IdDocumentType.Name,
                                          company.IdDocumentNumber,

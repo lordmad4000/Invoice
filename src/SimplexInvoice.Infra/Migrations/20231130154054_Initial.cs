@@ -52,6 +52,9 @@ namespace SimplexInvoice.Infra.Migrations
                     Description = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: false, defaultValue: "")
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Date = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CorrectionNumber = table.Column<string>(type: "longtext", nullable: false, defaultValue: "")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CorrectionDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     CompanyName = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CompanyIdDocumentType = table.Column<string>(type: "longtext", nullable: false)

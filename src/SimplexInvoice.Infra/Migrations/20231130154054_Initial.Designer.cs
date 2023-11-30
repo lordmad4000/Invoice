@@ -11,8 +11,8 @@ using SimplexInvoice.Infra.Data;
 namespace SimplexInvoice.Infra.Migrations
 {
     [DbContext(typeof(EFContext))]
-    [Migration("20231120163623_Data_Seed")]
-    partial class Data_Seed
+    [Migration("20231130154054_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -156,6 +156,15 @@ namespace SimplexInvoice.Infra.Migrations
                         .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("varchar(40)");
+
+                    b.Property<DateTime?>("CorrectionDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("CorrectionNumber")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("longtext")
+                        .HasDefaultValue("");
 
                     b.Property<string>("CustomerDocumentNumber")
                         .IsRequired()

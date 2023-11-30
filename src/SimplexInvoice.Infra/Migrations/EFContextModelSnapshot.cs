@@ -154,6 +154,15 @@ namespace SimplexInvoice.Infra.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("varchar(40)");
 
+                    b.Property<DateTime?>("CorrectionDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("CorrectionNumber")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("longtext")
+                        .HasDefaultValue("");
+
                     b.Property<string>("CustomerDocumentNumber")
                         .IsRequired()
                         .HasMaxLength(40)
