@@ -14,6 +14,8 @@ public partial class Invoice
     public string Number { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
     public DateTime Date { get; private set; } = DateTime.UtcNow;
+    public string CorrectionNumber { get; private set; } = string.Empty;
+    public DateTime? CorrectionDate { get; private set; } = null;
     public string CompanyName { get; private set; } = string.Empty;
     public string CompanyIdDocumentType { get; private set; } = string.Empty;
     public string CompanyDocumentNumber { get; private set; } = string.Empty;

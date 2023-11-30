@@ -13,6 +13,11 @@ namespace SimplexInvoice.Domain.Invoices.Validations
                                   .MaximumLength(20);
         }
 
+        public void ValidateCorrectionNumber()
+        {
+            RuleFor(c => c.CorrectionNumber).MaximumLength(20);
+        }
+
         public void ValidateDescription()
         {
             RuleFor(c => c.Description).NotNull()
