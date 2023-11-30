@@ -19,6 +19,7 @@ namespace SimplexInvoice.Application.Tests.UnitTests
     public class UserRegisterHandlerTests
     {
         private readonly IMapper _mapper;
+        private readonly Mock<IUnitOfWork> _mockUnitOfWork;
         private readonly Mock<IUserRepository> _mockUserRepository;
         private readonly Mock<IPasswordService> _mockPasswordService;
         private readonly Mock<ICustomLogger> _mockLogger;
@@ -30,6 +31,7 @@ namespace SimplexInvoice.Application.Tests.UnitTests
                 cfg.AddProfile(new EntityToDtoMappingProfile());
             });
             _mapper = mapperConfig.CreateMapper();
+            _mockUnitOfWork = new Mock<IUnitOfWork>();
             _mockUserRepository = new Mock<IUserRepository>();
             _mockPasswordService = new Mock<IPasswordService>();
             _mockLogger = new Mock<ICustomLogger>();
@@ -41,11 +43,12 @@ namespace SimplexInvoice.Application.Tests.UnitTests
             // Arrange
             var user = GetUser();
             var userRegisterCommand = GetUserRegisterCommand();
+            _mockUnitOfWork.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
             _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<CancellationToken>(), It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<string[]>())).ReturnsAsync(default(User));
             _mockUserRepository.Setup(x => x.AddAsync(It.IsAny<User>(), It.IsAny<CancellationToken>())).ReturnsAsync(user);
-            _mockUserRepository.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
             _mockPasswordService.Setup(x => x.GeneratePassword(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())).Returns("12345678");
-            var userRegisterHandler = new UserRegisterHandler(_mockUserRepository.Object,
+            var userRegisterHandler = new UserRegisterHandler(_mockUnitOfWork.Object,
+                                                              _mockUserRepository.Object,
                                                               _mockPasswordService.Object,
                                                               _mapper,
                                                               _mockLogger.Object);
@@ -63,8 +66,10 @@ namespace SimplexInvoice.Application.Tests.UnitTests
             // Arrange
             var user = GetUser();
             var userRegisterCommand = GetUserRegisterCommand();
+            _mockUnitOfWork.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
             _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<CancellationToken>(), It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<string[]>())).ReturnsAsync(user);
-            var userRegisterHandler = new UserRegisterHandler(_mockUserRepository.Object,
+            var userRegisterHandler = new UserRegisterHandler(_mockUnitOfWork.Object, 
+                _mockUserRepository.Object,
                                                               _mockPasswordService.Object,
                                                               _mapper,
                                                               _mockLogger.Object);
@@ -80,11 +85,12 @@ namespace SimplexInvoice.Application.Tests.UnitTests
             // Arrange
             var user = GetUser();
             var userRegisterCommand = GetUserRegisterCommand();
+            _mockUnitOfWork.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(0);
             _mockUserRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<CancellationToken>(), It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<string[]>())).ReturnsAsync(default(User));
             _mockUserRepository.Setup(x => x.AddAsync(It.IsAny<User>(), It.IsAny<CancellationToken>())).ReturnsAsync(user);
-            _mockUserRepository.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(0);
             _mockPasswordService.Setup(x => x.GeneratePassword(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())).Returns("12345678");
-            var userRegisterHandler = new UserRegisterHandler(_mockUserRepository.Object,
+            var userRegisterHandler = new UserRegisterHandler(_mockUnitOfWork.Object, 
+                                                              _mockUserRepository.Object,
                                                               _mockPasswordService.Object,
                                                               _mapper,
                                                               _mockLogger.Object);

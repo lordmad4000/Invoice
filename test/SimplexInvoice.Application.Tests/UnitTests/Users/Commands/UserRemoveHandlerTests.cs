@@ -1,18 +1,14 @@
 using AutoMapper;
 using SimplexInvoice.Application.AutoMapper;
 using SimplexInvoice.Application.Users.Commands;
-using SimplexInvoice.Application.Common.Dto;
 using SimplexInvoice.Application.Common.Interfaces.Persistance;
 using SimplexInvoice.Application.Interfaces;
-using SimplexInvoice.Domain.ValueObjects;
 using Moq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
 using Xunit;
 using SimplexInvoice.Domain.Users;
-using SimplexInvoice.Domain.Exceptions;
 using SimplexInvoice.Application.Users.Exceptions;
 
 namespace SimplexInvoice.Application.Tests.UnitTests
@@ -20,6 +16,7 @@ namespace SimplexInvoice.Application.Tests.UnitTests
     public class UserRemoveHandlerTests
     {
         private readonly IMapper _mapper;
+        private readonly Mock<IUnitOfWork> _mockUnitOfWork;
         private readonly Mock<IUserRepository> _mockUserRepository;
         private readonly Mock<IValidatorService> _mockValidatorService;
         private readonly Mock<IPasswordService> _mockPasswordService;
@@ -32,6 +29,7 @@ namespace SimplexInvoice.Application.Tests.UnitTests
                 cfg.AddProfile(new EntityToDtoMappingProfile());
             });
             _mapper = mapperConfig.CreateMapper();
+            _mockUnitOfWork = new Mock<IUnitOfWork>();
             _mockUserRepository = new Mock<IUserRepository>();
             _mockValidatorService = new Mock<IValidatorService>();
             _mockPasswordService = new Mock<IPasswordService>();  
@@ -44,9 +42,10 @@ namespace SimplexInvoice.Application.Tests.UnitTests
             // Arrange
             var user = GetUser();
             var userRemoveCommand = GetUserRemoveCommand();
+            _mockUnitOfWork.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
             _mockUserRepository.Setup(x => x.DeleteAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()));
-            _mockUserRepository.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
-            var userRemoveHandler = new UserRemoveHandler(_mockUserRepository.Object, 
+            var userRemoveHandler = new UserRemoveHandler(_mockUnitOfWork.Object,
+                                                          _mockUserRepository.Object, 
                                                           _mockLogger.Object);
 
             //Act
@@ -62,9 +61,10 @@ namespace SimplexInvoice.Application.Tests.UnitTests
             // Arrange
             var user = GetUser();
             var userRemoveCommand = GetUserRemoveCommand();
+            _mockUnitOfWork.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(0);
             _mockUserRepository.Setup(x => x.DeleteAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()));
-            _mockUserRepository.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(0);
-            var userRemoveHandler = new UserRemoveHandler(_mockUserRepository.Object,
+            var userRemoveHandler = new UserRemoveHandler(_mockUnitOfWork.Object,
+                                                          _mockUserRepository.Object,
                                                           _mockLogger.Object);
 
             //Act & Assert

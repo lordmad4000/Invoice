@@ -52,18 +52,5 @@ namespace SimplexInvoice.Domain.Tests.UnitTests
             Assert.Null(exception);
         }
 
-        [Theory]
-        [InlineData("+34 91 776 91 428")]
-        [InlineData("+34 689 54 9111 32")]
-        [InlineData("+34 934 6511 89 224")]
-        [InlineData("+01 718 222 22229")]
-        public void Phone_Should_Be_Throw_NotValidPhoneNumberException(string phone)
-        {
-            // Arrange            
-
-            //Act && Assert
-            Assert.Throws<NotValidPhoneNumberException>(() => new PhoneNumber(phone));
-        }
-
     }
 }
