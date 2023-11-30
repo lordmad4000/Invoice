@@ -15,6 +15,8 @@ namespace SimplexInvoice.Domain.Invoices
 
         public static Invoice Create(string number,
                                      string description,
+                                     string correctionNumber,
+                                     DateTime? correctionDate,
                                      string companyName,
                                      string companyIdDocumentType,
                                      string companyDocumentNumber,
@@ -32,6 +34,8 @@ namespace SimplexInvoice.Domain.Invoices
             var invoice = new Invoice(Guid.NewGuid());
             invoice.Update(number,
                            description,
+                           correctionNumber,
+                           correctionDate,
                            companyName,
                            companyIdDocumentType,
                            companyDocumentNumber,
@@ -50,6 +54,8 @@ namespace SimplexInvoice.Domain.Invoices
         }
         public void Update(string number,
                            string description,
+                           string correctionNumber,
+                           DateTime? correctionDate,
                            string companyName,
                            string companyIdDocumentType,
                            string companyDocumentNumber,
@@ -68,6 +74,8 @@ namespace SimplexInvoice.Domain.Invoices
             Description = description;
             CompanyName = companyName;
             Date = DateTime.UtcNow;
+            CorrectionNumber = correctionNumber;
+            CorrectionDate = correctionDate;
             CompanyIdDocumentType = companyIdDocumentType;
             CompanyDocumentNumber = companyDocumentNumber;
             CompanyAddress = companyAddress;

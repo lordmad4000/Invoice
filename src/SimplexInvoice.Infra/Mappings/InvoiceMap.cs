@@ -11,7 +11,7 @@ public class InvoiceMap : IEntityTypeConfiguration<Invoice>
         builder.HasIndex(c => c.Id)
                .IsUnique();
 
-        builder.HasIndex(c => c.Number)        
+        builder.HasIndex(c => c.Number)
                .IsUnique();
 
         builder.Property(c => c.Number)
@@ -23,6 +23,13 @@ public class InvoiceMap : IEntityTypeConfiguration<Invoice>
 
         builder.Property(c => c.Date)
                .IsRequired();
+
+        builder.Property(c => c.CorrectionNumber)
+               .HasDefaultValue("")
+               .IsRequired();
+
+        builder.Property(c => c.CorrectionDate)
+               .HasDefaultValue(null);
 
         builder.Property(c => c.CompanyName)
                .HasMaxLength(40)

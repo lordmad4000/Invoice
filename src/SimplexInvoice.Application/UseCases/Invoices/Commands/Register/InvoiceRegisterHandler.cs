@@ -46,6 +46,8 @@ public class InvoiceRegisterHandler : IRequestHandler<InvoiceRegisterCommand, In
         string invoiceNumber = _documentService.GetNextInvoiceNumber(configuration.LastInvoiceNumber);
         Invoice invoice = Invoice.Create(invoiceNumber,
                                          request.Description,
+                                         "",
+                                         null,
                                          request.CompanyName,
                                          request.CompanyIdDocumentType,
                                          request.CompanyDocumentNumber,
