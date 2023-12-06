@@ -4,6 +4,8 @@ export class InvoiceRegisterRequest {
     number: string = '';
     description: string = '';
     date: string = '';
+    correctionNumber: string = '';
+    correctionDate: string = '';
     companyName: string = '';
     companyIdDocumentType: string = '';
     companyDocumentNumber: string = '';
