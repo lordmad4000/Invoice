@@ -1,5 +1,6 @@
 using AutoMapper;
 using SimplexInvoice.Application.Common.Dto;
+using SimplexInvoice.Application.Extensions;
 using SimplexInvoice.Domain.Companies;
 using SimplexInvoice.Domain.Customers;
 using SimplexInvoice.Domain.Entities;
@@ -112,6 +113,8 @@ namespace SimplexInvoice.Application.AutoMapper
 
             CreateMap<Invoice, InvoiceDto>().ForMember(c => c.Date,
                                                        x => x.MapFrom(src => DateOnly.FromDateTime(src.Date)))
+                                            .ForMember(c => c.CorrectionDate,
+                                                       x => x.MapFrom(src => src.CorrectionDate.ToDateOnly()))
                                             .ForMember(c => c.CompanyStreet,
                                                        x => x.MapFrom(src => src.CompanyAddress.Street))
                                             .ForMember(c => c.CompanyCity,
@@ -153,6 +156,8 @@ namespace SimplexInvoice.Application.AutoMapper
 
             CreateMap<InvoiceDto, Invoice>().ForMember(c => c.Date,
                                                        x => x.MapFrom(src => src.Date.ToDateTime(TimeOnly.MinValue)))
+                                            .ForMember(c => c.CorrectionDate,
+                                                       x => x.MapFrom(src => src.CorrectionDate.ToDateTime()))
                                             .ForMember(c => c.CompanyAddress,
                                                        x => x.MapFrom(src => new Address(src.CompanyStreet, src.CompanyCity, src.CompanyState, src.CompanyCountry, src.CompanyPostalCode)))
                                             .ForMember(c => c.CompanyPhoneNumber,

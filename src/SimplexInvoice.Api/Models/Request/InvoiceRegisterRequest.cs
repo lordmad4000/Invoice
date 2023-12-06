@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 namespace SimplexInvoice.Api.Models.Request;
 public class InvoiceRegisterRequest
 {    
-    [Required(ErrorMessage = "Number is required.")]
     [StringLength(20, ErrorMessage = "Number cannot be longer than 20 characters.")]
     public string Number { get; set; } = string.Empty;
     [Required(ErrorMessage = "Description is required.")]
@@ -12,6 +11,8 @@ public class InvoiceRegisterRequest
     public string Description { get; set; } = string.Empty;
     [Required(ErrorMessage = "Date is required.")]
     public DateOnly Date { get; set; }
+    public string CorrectionNumber { get; set; } = string.Empty;
+    public DateOnly? CorrectionDate { get; set; }
     [Required(ErrorMessage = "CompanyName is required.")]
     [StringLength(40, ErrorMessage = "CompanyName cannot be longer than 40 characters.")]
     public string CompanyName { get; set; } = string.Empty;

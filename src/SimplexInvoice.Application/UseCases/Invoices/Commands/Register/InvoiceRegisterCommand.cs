@@ -7,6 +7,8 @@ namespace SimplexInvoice.Application.Invoices.Commands;
 
 public record InvoiceRegisterCommand(string Description,
                                      DateOnly Date,
+                                     string CorrectionNumber,
+                                     DateOnly? CorrectionDate,
                                      string CompanyName,
                                      string CompanyIdDocumentType,
                                      string CompanyDocumentNumber,
