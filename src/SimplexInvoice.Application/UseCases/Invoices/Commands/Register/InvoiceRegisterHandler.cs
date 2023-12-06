@@ -10,6 +10,7 @@ using SimplexInvoice.Domain.ValueObjects;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
+using SimplexInvoice.Application.Extensions;
 
 namespace SimplexInvoice.Application.Invoices.Commands;
 public class InvoiceRegisterHandler : IRequestHandler<InvoiceRegisterCommand, InvoiceDto>
@@ -46,8 +47,8 @@ public class InvoiceRegisterHandler : IRequestHandler<InvoiceRegisterCommand, In
         string invoiceNumber = _documentService.GetNextInvoiceNumber(configuration.LastInvoiceNumber);
         Invoice invoice = Invoice.Create(invoiceNumber,
                                          request.Description,
-                                         "",
-                                         null,
+                                         request.CorrectionNumber,
+                                         request.CorrectionDate.ToDateTime(),
                                          request.CompanyName,
                                          request.CompanyIdDocumentType,
                                          request.CompanyDocumentNumber,
